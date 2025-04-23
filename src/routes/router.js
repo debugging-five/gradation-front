@@ -15,13 +15,11 @@ import AuctionPaymentContainer from "../pages/auction/auctionPayment/AuctionPaym
 import AuctionRegistrationContainer from "../pages/auction/auctionRegistration/AuctionRegistrationContainer";
 import AuctionRejectedContainer from "../pages/auction/auctionRejected/AuctionRejectedContainer";
 import AuctionSoldContainer from "../pages/auction/auctionSold/AuctionSoldContainer";
-import AuctionAgreementTermsAndConditionsContainer from "../pages/auction/auctionAgreementTermsAndConditions/AuctionAgreementTermsAndConditionsContainer";
 import ArtistMainContainer from "../pages/artist/artistMain/ArtistMainContainer";
 import ArtistDetailContainer from "../pages/artist/artistDetail/ArtistDetailContainer";
 import UpcyclingMainController from "../pages/upcycling/upcyclingMain/UpcyclingMainController";
 import UpcyclingRegistrationContainer from "../pages/upcycling/upcyclingRegistration/UpcyclingRegistrationContainer";
 import ExhibitionGradationContainer from "../pages/exhibition/exhibitionGradation/ExhibitionGradationContainer";
-import ExhibitionGradationAdminContainer from "../pages/exhibition/exhibitionGradationAdmin/ExhibitionGradationAdminContainer";
 import ExhibitionGradationPastContainer from "../pages/exhibition/exhibitionGradationPast/ExhibitionGradationPastContainer";
 import ExhibitionRegistrationContainer from "../pages/exhibition/exhibitionRegistration/ExhibitionRegistrationContainer";
 import ExhibitionUniversityContainer from "../pages/exhibition/exhibitionUniversity/ExhibitionUniversityContainer";
@@ -31,6 +29,7 @@ import AuctionAgreementPrivacyPolicy from "../pages/auction/auctionAgreementPriv
 import DisplayMain from "../pages/display/displayMain/DisplayMain";
 import DisplayDetail from "../pages/display/displayDetail/DisplayDetail";
 import DisplayRegistration from "../pages/display/displayRegistration/DisplayRegistration";
+import AuctionAgreementAuctionPolicyContainer from "../pages/auction/auctionAgreementAuctionPolicy/AuctionAgreementAuctionPolicyContainer";
 
 const router = createBrowserRouter([
   {
@@ -103,8 +102,8 @@ const router = createBrowserRouter([
         ]
       },
       {
-        path : "/auction/agreement-term-conditions",
-        element : <AuctionAgreementTermsAndConditionsContainer />,  // auction 약관2  여기부터 칠드런 수정
+        path : "/auction/agreement-auction-policy",
+        element : <AuctionAgreementAuctionPolicyContainer />,  // auction 약관2  여기부터 칠드런 수정
         children : [
           {
             index : true,
