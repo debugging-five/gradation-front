@@ -1,18 +1,55 @@
 import React from 'react';
-import S from './style';
-import BasicButton2 from '../../components/button/BasicButton2';
-import BasicButton from '../../components/button/BasicButton';
+import AlertOkButton from '../../components/button/AlertOkButton';
+import AlertCancelButton from '../../components/button/AlertCancelButton';
+import UncheckButton from '../../components/button/UncheckButton';
+import CheckButton from '../../components/button/CheckButton';
+import PrimaryButton from '../../components/button/PrimaryButton';
+import SubButton from '../../components/button/SubButton';
+
 
 const TestContainer = () => {
   return (
     <div>
-      <BasicButton2>
-        버튼
-      </BasicButton2>
-{/* 
-      <BasicButton>
-        버튼2
-      </BasicButton> */}
+
+      <div>
+        <AlertOkButton>
+          버튼
+        </AlertOkButton>
+      </div>
+
+      <div>
+        <AlertCancelButton>
+          버튼
+        </AlertCancelButton>
+      </div>
+
+      <div>
+        <UncheckButton>
+          버튼
+        </UncheckButton>
+      </div>
+
+      <div>
+        <CheckButton>
+          버튼
+        </CheckButton>
+      </div>
+
+      <div>
+        <PrimaryButton>
+          버튼
+        </PrimaryButton>
+      </div>
+
+      <div>
+        <SubButton>
+          버튼
+        </SubButton>
+      </div>
+
+
+
+
     </div>
   );
 };

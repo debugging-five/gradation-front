@@ -53,31 +53,31 @@ const fontSizeCSS = {
 
 const fontWeightCSS = {
   h1 : css`
-    font-size: ${({theme}) => theme.FONT_WEIGHT_KR["bold"]};
+    font-weight: ${({theme}) => theme.FONT_WEIGHT_KR["bold"]};
   `,
   h2 : css`
-    font-size: ${({theme}) => theme.FONT_WEIGHT_KR["bold"]};
+    font-weight: ${({theme}) => theme.FONT_WEIGHT_KR["bold"]};
   `,
   h3 : css`
-    font-size: ${({theme}) => theme.FONT_WEIGHT_KR["bold"]};
+    font-weight: ${({theme}) => theme.FONT_WEIGHT_KR["bold"]};
   `,
   h4 : css`
-    font-size: ${({theme}) => theme.FONT_WEIGHT_KR["medium"]};
+    font-weight: ${({theme}) => theme.FONT_WEIGHT_KR["medium"]};
   `,
   h5 : css`
-    font-size: ${({theme}) => theme.FONT_WEIGHT_KR["semibold"]};
+    font-weight: ${({theme}) => theme.FONT_WEIGHT_KR["semibold"]};
   `,
   h6 : css`
-    font-size: ${({theme}) => theme.FONT_WEIGHT_KR["medium"]};
+    font-weight: ${({theme}) => theme.FONT_WEIGHT_KR["medium"]};
   `,
   h7 : css`
-    font-size: ${({theme}) => theme.FONT_WEIGHT_KR["regular"]};
+    font-weight: ${({theme}) => theme.FONT_WEIGHT_KR["regular"]};
   `,
   h8 : css`
-    font-size: ${({theme}) => theme.FONT_WEIGHT_KR["light"]};
+    font-weight: ${({theme}) => theme.FONT_WEIGHT_KR["light"]};
   `,
   h9 : css`
-    font-size: ${({theme}) => theme.FONT_WEIGHT_KR["light"]};
+    font-weight: ${({theme}) => theme.FONT_WEIGHT_KR["light"]};
   `
 }
 
@@ -124,34 +124,28 @@ const borderColorCSS = {
 }
 
 const sizeCSS = {
+// AlertButton
   small : css`
     width: 60px;
     height: 24px;
     padding: 5px 0;
+    border : 1px solid;
   `,
 
+// CheckButton, UncheckButton
   medium : css`
     width: 120px;
-    height: 45px;
-    padding: 7px 0 ;
+    height: 35px;
+    padding: 8px 0;
+    border: 1.2px solid;
   `,
 
+// PrimaryButton, SubButton
   large : css`
-    width: 190px;
-    height: 64px;
-    padding: 20px 0;
-  `,
-
-  extraLarge : css`
-    width: 300px;
-    height : 60px;
-    padding: 18px 0;
-  `,
-
-  full : css`
-    width : 760px;
-    height : 58px;
-    padding : 17px 0;
+    width: 120px;
+    height: 45px;
+    padding: 12px 0 ;
+    border: 1.5px solid;
   `
 }
 
@@ -161,20 +155,12 @@ const shapeCSS = {
   `,
 
   medium : css`
-    border-radius: 3px;
+    border-radius: 2px;
   `,
 
   large : css`
     border-radius: 3px;
   `,
-
-  extraLarge : css`
-    border-radius: 3px;
-  `,
-
-  full : css`
-    border-radius: 3px;
-  `
 }
 
 const Button = styled.button`
