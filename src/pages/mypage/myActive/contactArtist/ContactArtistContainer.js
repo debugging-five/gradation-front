@@ -1,13 +1,13 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-const ContactArtistDetail = () => {
+const ContactArtistContainer = () => {
   return (
     <div>
-      ContactArtistDetail
+      내활동 / 작가와 연락
       <Outlet />
     </div>
   );
 };
 
-export default ContactArtistDetail;
+export default ContactArtistContainer;

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-const ContactArtistDetail = () => {
+const AuctionAgreementContainer = () => {
   return (
     <div>
-      ContactArtistDetail
+      고양이 사진 배너
       <Outlet />
     </div>
   );
 };
 
-export default ContactArtistDetail;
+export default AuctionAgreementContainer;

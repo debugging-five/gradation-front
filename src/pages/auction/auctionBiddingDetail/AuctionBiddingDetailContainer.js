@@ -1,13 +1,12 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-const ContactArtistDetail = () => {
+const AuctionBiddingDetailContainer = () => {
   return (
     <div>
-      ContactArtistDetail
       <Outlet />
     </div>
   );
 };
 
-export default ContactArtistDetail;
+export default AuctionBiddingDetailContainer;

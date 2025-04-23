@@ -1,13 +1,13 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-const ContactArtistDetail = () => {
+const AuctionExpectedDetail = () => {
   return (
     <div>
-      ContactArtistDetail
+      AuctionExpectedDetail 상세정보
       <Outlet />
     </div>
   );
 };
 
-export default ContactArtistDetail;
+export default AuctionExpectedDetail;

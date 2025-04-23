@@ -3,7 +3,7 @@ import React from 'react';
 const ArtistDetailModify = () => {
   return (
     <div>
-      ArtistDetailModify
+      ArtistDetailModify 회원정보수정폼
     </div>
   );
 };

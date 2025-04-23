@@ -1,5 +1,6 @@
 import React from 'react';
 import { Outlet, useLocation, Navigate } from 'react-router-dom';
+import AuctionBidding from './AuctionBidding';
 
 const AuctionBiddingContainer = () => {
 
@@ -9,8 +10,8 @@ const AuctionBiddingContainer = () => {
   
   return (
     <div>
-      비딩!
       <Outlet />
+      <AuctionBidding />
     </div>
   );
 };

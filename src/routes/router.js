@@ -6,8 +6,6 @@ import ArtistDetail from "../pages/artist/artistDetail/ArtistDetail";
 import LoginLayout from "../pages/layout/LoginLayout";
 import DisplayCategory from "../pages/display/DisplayCategory";
 import DisplayRegistration from "../pages/display/displayRegistration/DisplayRegistration";
-import Test01 from "../pages/display/displayTest/Test01";
-import Test02 from "../pages/display/displayTest/Test02";
 import DisplayContainer from "../pages/display/DisplayContainer";
 import DisplayDetailContainer from "../pages/display/displayDetail/DisplayDetailContainer";
 import DisplayDetail from "../pages/display/displayDetail/DisplayDetail";
@@ -19,14 +17,45 @@ import AuctionContainer from "../pages/auction/AuctionContainer";
 import AuctionBiddingContainer from "../pages/auction/auctionBidding/AuctionBiddingContainer";
 import AuctionCompleteContainer from "../pages/auction/auctionComplete/AuctionCompleteContainer";
 import AuctionCategory from "../pages/auction/AuctionCategory";
-import AuctionTest01 from "../pages/auction/auctionTest/AuctionTest01";
-import AuctionTest02 from "../pages/auction/auctionTest/AuctionTest02";
 import ExhibitionContainer from "../pages/exhibition/ExhibitionContainer";
 import ExhibitionGradation from "../pages/exhibition/exhibitionGradation/ExhibitionGradation";
 import ExhibitionUniversity from "../pages/exhibition/exhibitionUniversity/ExhibitionUniversity";
 import MyPageContainer from "../pages/mypage/MyPageContainer";
 import UserRead from "../pages/mypage/myInfo/userInfo/read/UserRead";
 import ArtistDetailModify from "../pages/mypage/myInfo/artistDetailModify/ArtistDetailModify";
+import KoreanPainting from "../pages/display/displayCategoryDetail/KoreanPainting";
+import Painting from "../pages/display/displayCategoryDetail/Painting";
+import Sculpture from "../pages/display/displayCategoryDetail/Sculpture";
+import Craft from "../pages/display/displayCategoryDetail/Craft";
+import Architecture from "../pages/display/displayCategoryDetail/Architecture";
+import Calligraphy from "../pages/display/displayCategoryDetail/Calligraphy";
+import AuctionExpectedContainer from "../pages/auction/auctionExpected/AuctionExpectedContainer";
+import AuctionBiddingDetailContainer from "../pages/auction/auctionBiddingDetail/AuctionBiddingDetailContainer";
+import AuctionBiddingDetail from "../pages/auction/auctionBiddingDetail/AuctionBiddingDetail";
+import AuctionCompleteDetailContainer from "../pages/auction/auctionCompleteDetail/AuctionCompleteDetailContainer";
+import AuctionCompleteDetail from "../pages/auction/auctionCompleteDetail/AuctionCompleteDetail";
+import AuctionExpectedDetailContainer from "../pages/auction/auctionExpectedDetail/AuctionExpectedDetailContainer";
+import AuctionExpectedDetail from "../pages/auction/auctionExpectedDetail/AuctionExpectedDetail";
+import AuctionExpectedModify from "../pages/auction/auctionExpectedModify/AuctionExpectedModify";
+import AuctionRegistration from "../pages/auction/auctionRegistration/AuctionRegistration";
+import AuctionAgreementContainer from "../pages/auction/auctionAgreement/AuctionAgreementContainer";
+import AuctionAgreementExplanation from "../pages/auction/auctionAgreement/AuctionAgreementExplanation";
+import AuctionAgreementPrivacyPolicy from "../pages/auction/auctionAgreement/AuctionAgreementPrivacyPolicy";
+import AuctionAgreementAuctionPolicy from "../pages/auction/auctionAgreement/AuctionAgreementAuctionPolicy";
+import AuctionPayment from "../pages/auction/auctionPayment/AuctionPayment";
+import ExhibitionCategory from "../pages/exhibition/ExhibitionCategory";
+import ExhibitionGradationPastContainer from "../pages/exhibition/exhibitionGradationPast/ExhibitionGradationPastContainer";
+import ExhibitionGradationPast from "../pages/exhibition/exhibitionGradationPast/ExhibitionGradationPast";
+import ExhibitionRegistration from "../pages/exhibition/exhibitionRegistration/ExhibitionRegistration";
+import Modify from "../pages/mypage/myInfo/userInfo/modify/Modify";
+import ChangePassword from "../pages/mypage/myInfo/changePassword/ChangePassword";
+import ChangePasswordOk from "../pages/mypage/myInfo/changePassword/ChangePasswordOk";
+import UniversityCheck from "../pages/mypage/myInfo/universityCheck/UniversityCheck";
+import CommentList from "../pages/mypage/myActive/comment/CommentList";
+import ContactArtistContainer from "../pages/mypage/myActive/contactArtist/ContactArtistContainer";
+import ContactArtistDetail from "../pages/mypage/myActive/contactArtist/ContactArtistDetail";
+import ContactArtistDetailContainer from "../pages/mypage/myActive/contactArtist/ContactArtistDetailContainer";
+import ContactArtistDetailModify from "../pages/mypage/myActive/contactArtist/ContactArtistDetailModify";
 
 const router = createBrowserRouter([
   {
@@ -46,12 +75,28 @@ const router = createBrowserRouter([
             element : <DisplayCategory />,
             children : [
               {
-                path : "korea",
-                element : <Test01 />
+                path : "KoreanPainting",
+                element : <KoreanPainting />
               },
               {
-                path : "jokak",
-                element : <Test02 />
+                path : "Painting",
+                element : <Painting />
+              },
+              {
+                path : "Sculpture",
+                element : <Sculpture />
+              },
+              {
+                path : "Craft",
+                element : <Craft />
+              },
+              {
+                path : "Architecture",
+                element : <Architecture />
+              },
+              {
+                path : "Calligraphy",
+                element : <Calligraphy />
               }
             ]
           },
@@ -120,12 +165,28 @@ const router = createBrowserRouter([
                 element : <AuctionCategory />,
                 children : [
                   {
-                    path : "korea",
-                    element : <AuctionTest01 />
+                    path : "KoreanPainting",
+                    element : <KoreanPainting />
                   },
                   {
-                    path : "seoyea",
-                    element : <AuctionTest02 />
+                    path : "Painting",
+                    element : <Painting />
+                  },
+                  {
+                    path : "Sculpture",
+                    element : <Sculpture />
+                  },
+                  {
+                    path : "Craft",
+                    element : <Craft />
+                  },
+                  {
+                    path : "Architecture",
+                    element : <Architecture />
+                  },
+                  {
+                    path : "Calligraphy",
+                    element : <Calligraphy />
                   }
                 ]
               }
@@ -140,12 +201,64 @@ const router = createBrowserRouter([
                 element : <AuctionCategory />,
                 children : [
                   {
-                    path : "korea",
-                    element : <AuctionTest01 />
+                    path : "KoreanPainting",
+                    element : <KoreanPainting />
                   },
                   {
-                    path : "seoyea",
-                    element : <AuctionTest02 />
+                    path : "Painting",
+                    element : <Painting />
+                  },
+                  {
+                    path : "Sculpture",
+                    element : <Sculpture />
+                  },
+                  {
+                    path : "Craft",
+                    element : <Craft />
+                  },
+                  {
+                    path : "Architecture",
+                    element : <Architecture />
+                  },
+                  {
+                    path : "Calligraphy",
+                    element : <Calligraphy />
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            path : "expected",
+            element : <AuctionExpectedContainer />,
+            children : [
+              {
+                path : "",
+                element : <AuctionCategory />,
+                children : [
+                  {
+                    path : "KoreanPainting",
+                    element : <KoreanPainting />
+                  },
+                  {
+                    path : "Painting",
+                    element : <Painting />
+                  },
+                  {
+                    path : "Sculpture",
+                    element : <Sculpture />
+                  },
+                  {
+                    path : "Craft",
+                    element : <Craft />
+                  },
+                  {
+                    path : "Architecture",
+                    element : <Architecture />
+                  },
+                  {
+                    path : "Calligraphy",
+                    element : <Calligraphy />
                   }
                 ]
               }
@@ -160,14 +273,106 @@ const router = createBrowserRouter([
                 element : <AuctionCategory />,
                 children : [
                   {
-                    path : "korea",
-                    element : <AuctionTest01 />
+                    path : "koreanPainting",
+                    element : <KoreanPainting />
                   },
                   {
-                    path : "seoyea",
-                    element : <AuctionTest02 />
+                    path : "painting",
+                    element : <Painting />
+                  },
+                  {
+                    path : "sculpture",
+                    element : <Sculpture />
+                  },
+                  {
+                    path : "craft",
+                    element : <Craft />
+                  },
+                  {
+                    path : "architecture",
+                    element : <Architecture />
+                  },
+                  {
+                    path : "calligraphy",
+                    element : <Calligraphy />
                   }
                 ]
+              }
+            ]
+          },
+          {
+            path : "bidding-detail",
+            element : <AuctionBiddingDetailContainer />,
+            children : [
+              {
+                path : ":id",
+                element : <AuctionBiddingDetail />
+              }
+            ]
+          },
+          {
+            path : "complete-detail",
+            element : <AuctionCompleteDetailContainer />,
+            children : [
+              {
+                path : ":id",
+                element : <AuctionCompleteDetail />
+              }
+            ]
+          },
+          {
+            path : "expected-detail",
+            element : <AuctionExpectedDetailContainer />,
+            children : [
+              {
+                path : ":id",
+                element : <AuctionExpectedDetail />
+              },
+              {
+                path : ":id/modify",
+                element : <ContactArtistDetailModify />
+              }
+            ]
+          },
+          {
+            path : "payment",
+            element : <LoginLayout />,
+            children : [
+              {
+                index : true,
+                element : <AuctionPayment />
+              }
+            ]
+          },
+          {
+            path : "agreement",
+            element : <AuctionAgreementContainer />,
+            children : [
+              {
+                index : true,
+                element : <AuctionAgreementExplanation />
+              },
+              {
+                path : "explanation",
+                element : <AuctionAgreementExplanation />
+              },
+              {
+                path : "privacy-policy",
+                element : <AuctionAgreementPrivacyPolicy />
+              },
+              {
+                path : "auction-policy",
+                element : <AuctionAgreementAuctionPolicy />
+              }
+            ]
+          },
+          {
+            path : "resgistration",
+            element : <LoginLayout />,
+            children : [
+              {
+                index : true,
+                element : <AuctionRegistration />
               }
             ]
           }
@@ -178,13 +383,39 @@ const router = createBrowserRouter([
         element : <ExhibitionContainer />,
         children : [
           {
-            path : "gradation",
-            element : <ExhibitionGradation />
+            path : "",
+            element : <ExhibitionCategory />,
+            children : [
+              {
+                path : "gradation",
+                element : <ExhibitionGradation />
+              },
+              {
+                path : "university",
+                element : <ExhibitionUniversity />
+              }
+            ]
           },
           {
-            path : "university",
-            element : <ExhibitionUniversity />
+            path : "gradation/past",
+            element : <ExhibitionGradationPastContainer />,
+            children : [
+              {
+                path : ":id",
+                element : <ExhibitionGradationPast />
+              }
+            ]
           },
+          {
+            path : "university/registration",
+            element : <LoginLayout />,
+            children : [
+              {
+                index : true,
+                element : <ExhibitionRegistration />
+              }
+            ]
+          }
         ]
       },
       {
@@ -200,8 +431,48 @@ const router = createBrowserRouter([
             element : <UserRead />
           },
           {
-            path : "my-artist",
+            path : "modify",
+            element : <Modify />
+          },
+          {
+            path : "artist-datail-modify",
             element : <ArtistDetailModify />
+          },
+          {
+            path : "change-password",
+            element : <ChangePassword />
+          },
+          {
+            path : "change-password-ok",
+            element : <ChangePasswordOk />
+          },
+          {
+            path : "university-check",
+            element : <UniversityCheck />
+          },
+          {
+            path : "comment-list",
+            element : <CommentList />
+          },
+          {
+            path : "contact-artist-list",
+            element : <ContactArtistContainer />,
+            children : [
+              {
+                path : "detail",
+                element : <ContactArtistDetailContainer />,
+                children : [
+                  {
+                    path: ":id",
+                    element: <ContactArtistDetail />
+                  },
+                  {
+                    path: ":id/modify",
+                    element: <ContactArtistDetailModify />
+                  }
+                ]
+              },
+            ]
           }
         ]
       }

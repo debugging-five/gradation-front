@@ -7,10 +7,8 @@ const ExhibitionContainer = () => {
 
   return (
     <div>
-      <div>
-        <NavLink to={""}>그라데이션 전시회</NavLink>
-        <NavLink to={""}>대학교 전시회</NavLink>
-      </div>
+      <p>exhibition</p>
+
       <Outlet />
 
       {/* <p>일반 사용자</p> */}

@@ -3,7 +3,7 @@ import React from 'react';
 const ExhibitionRegistration = () => {
   return (
     <div>
-      ExhibitionRegistration
+      ExhibitionRegistration 양식 폼
     </div>
   );
 };
