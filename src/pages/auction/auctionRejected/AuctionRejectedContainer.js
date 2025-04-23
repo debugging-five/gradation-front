@@ -1,10 +1,10 @@
 import React from 'react';
-import AuctionRejected from './AuctionRejected';
+import { Outlet } from 'react-router-dom';
 
 const AuctionRejectedContainer = () => {
   return (
     <div>
-      <AuctionRejected />
+      <Outlet />
     </div>
   );
 };

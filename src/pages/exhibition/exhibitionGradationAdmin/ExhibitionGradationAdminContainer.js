@@ -1,10 +1,10 @@
 import React from 'react';
-import ExhibitionGradationAdmin from './ExhibitionGradationAdmin';
+import { Outlet } from 'react-router-dom';
 
 const ExhibitionGradationAdminContainer = () => {
   return (
     <div>
-      <ExhibitionGradationAdmin />
+      <Outlet />
     </div>
   );
 };

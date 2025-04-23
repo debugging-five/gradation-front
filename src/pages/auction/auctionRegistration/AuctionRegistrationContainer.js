@@ -1,12 +1,12 @@
 import React from 'react';
-import AuctionRegistration from './AuctionRegistration';
+import { Outlet } from 'react-router-dom';
 
 const AuctionRegistrationContainer = () => {
   return (
     <div>
-      <AuctionRegistration />
+      <Outlet />
     </div>
   );
 };
 
-export default AuctionRegistrationContainer;<AuctionRegistration />
+export default AuctionRegistrationContainer;

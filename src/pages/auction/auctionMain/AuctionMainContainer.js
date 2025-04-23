@@ -1,10 +1,10 @@
 import React from 'react';
-import AuctionMain from './AuctionMain';
+import { Outlet } from 'react-router-dom';
 
 const AuctionMainContainer = () => {
   return (
     <div>
-      <AuctionMain />
+      <Outlet />
     </div>
   );
 };

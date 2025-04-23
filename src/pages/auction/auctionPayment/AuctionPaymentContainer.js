@@ -1,10 +1,10 @@
 import React from 'react';
-import AuctionPayment from './AuctionPayment';
+import { Outlet } from 'react-router-dom';
 
 const AuctionPaymentContainer = () => {
   return (
     <div>
-      <AuctionPayment />
+      <Outlet />
     </div>
   );
 };

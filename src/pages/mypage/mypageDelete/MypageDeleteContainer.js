@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-const DisplayMainContainer = () => {
+const MypageDeleteContainer = () => {
   return (
     <div>
       <Outlet />
@@ -9,4 +9,4 @@ const DisplayMainContainer = () => {
   );
 };
 
-export default DisplayMainContainer;
+export default MypageDeleteContainer;

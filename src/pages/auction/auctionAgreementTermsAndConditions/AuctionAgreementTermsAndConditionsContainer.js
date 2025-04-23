@@ -1,10 +1,10 @@
 import React from 'react';
-import AuctionAgreementTermsAndConditions from './AuctionAgreementTermsAndConditions';
+import { Outlet } from 'react-router-dom';
 
 const AuctionAgreementTermsAndConditionsContainer = () => {
   return (
     <div>
-      <AuctionAgreementTermsAndConditions />
+      <Outlet />
     </div>
   );
 };

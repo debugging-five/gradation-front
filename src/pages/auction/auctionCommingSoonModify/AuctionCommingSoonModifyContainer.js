@@ -1,10 +1,10 @@
 import React from 'react';
-import AuctionCommingSoonModify from './AuctionCommingSoonModify';
+import { Outlet } from 'react-router-dom';
 
 const AuctionCommingSoonModifyContainer = () => {
   return (
     <div>
-      <AuctionCommingSoonModify />
+      <Outlet />
     </div>
   );
 };

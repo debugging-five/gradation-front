@@ -1,10 +1,10 @@
 import React from 'react';
-import DisplayRegistration from './DisplayRegistration';
+import { Outlet } from 'react-router-dom';
 
 const DisplayRegistrationContainer = () => {
   return (
     <div>
-      <DisplayRegistration />
+      <Outlet />
     </div>
   );
 };
