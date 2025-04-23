@@ -1,10 +1,10 @@
 import React from 'react';
-import ExhibitionUniversity from './ExhibitionUniversity';
+import { Outlet } from 'react-router-dom';
 
 const ExhibitionUniversityContainer = () => {
   return (
     <div>
-      <ExhibitionUniversity />
+      <Outlet />
     </div>
   );
 };

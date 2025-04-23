@@ -1,10 +1,10 @@
 import React from 'react';
-import AuctionAgreementPrivacyPolicy from './AuctionAgreementPrivacyPolicy';
+import { Outlet } from 'react-router-dom';
 
 const AuctionAgreementPrivacyPolicyContainer = () => {
   return (
     <div>
-      <AuctionAgreementPrivacyPolicy />
+      <Outlet />
     </div>
   );
 };

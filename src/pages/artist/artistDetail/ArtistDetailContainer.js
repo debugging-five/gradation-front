@@ -1,10 +1,10 @@
 import React from 'react';
-import ArtistDetail from './ArtistDetail';
+import { Outlet } from 'react-router-dom';
 
 const ArtistDetailContainer = () => {
   return (
     <div>
-      <ArtistDetail />
+      <Outlet />
     </div>
   );
 };

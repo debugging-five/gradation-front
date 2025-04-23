@@ -1,10 +1,10 @@
 import React from 'react';
-import DisplayDetail from './DisplayDetail';
+import { Outlet } from 'react-router-dom';
 
 const DisplayDetailContainer = () => {
   return (
     <div>
-      <DisplayDetail />
+      <Outlet />
     </div>
   );
 };
