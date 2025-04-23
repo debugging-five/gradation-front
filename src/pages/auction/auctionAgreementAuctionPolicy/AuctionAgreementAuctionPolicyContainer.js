@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-const AuctionAgreementTermsAndConditionsContainer = () => {
+const AuctionAgreementAuctionPolicyContainer = () => {
   return (
     <div>
       <Outlet />
@@ -9,4 +9,4 @@ const AuctionAgreementTermsAndConditionsContainer = () => {
   );
 };
 
-export default AuctionAgreementTermsAndConditionsContainer;
+export default AuctionAgreementAuctionPolicyContainer;
