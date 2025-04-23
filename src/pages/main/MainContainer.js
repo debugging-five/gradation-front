@@ -1,11 +1,10 @@
 import React from 'react';
-// import S from './style';
-import { Outlet } from 'react-router-dom';
 
 const MainContainer = () => {
   return (
     <div>
-      <Outlet />
+      <p>슬라이드 배너 컴포넌트</p>
+      <p>배너 컴포넌트</p>
     </div>
   );
 };

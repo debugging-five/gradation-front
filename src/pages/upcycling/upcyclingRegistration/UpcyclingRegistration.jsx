@@ -3,7 +3,7 @@ import React from 'react';
 const UpcyclingRegistration = () => {
   return (
     <div>
-      UpcyclingRegistration
+      등록 페이지
     </div>
   );
 };

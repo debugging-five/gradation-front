@@ -1,10 +1,11 @@
 import React from 'react';
-import DisplayMain from './displayMain/DisplayMain';
+import { Outlet } from 'react-router-dom';
 
 const DisplayContainer = () => {
   return (
     <div>
-      
+      <h1>Display</h1>
+      <Outlet />
     </div>
   );
 };
