@@ -1,13 +1,12 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-const ArtistContainer = () => {
+const MyMailReceivedDetailContainer = () => {
   return (
     <div>
-      artist
       <Outlet />
     </div>
   );
 };
 
-export default ArtistContainer;
+export default MyMailReceivedDetailContainer;

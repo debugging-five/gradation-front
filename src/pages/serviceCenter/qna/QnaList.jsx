@@ -3,7 +3,10 @@ import React from 'react';
 const QnaList = () => {
   return (
     <div>
-      QnaList
+      <p>QnaList</p>
+      <p>QnaList</p>
+      <p>QnaList</p>
+      <p>QnaList</p>
     </div>
   );
 };

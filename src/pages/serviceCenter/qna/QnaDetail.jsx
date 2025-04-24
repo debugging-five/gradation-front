@@ -3,7 +3,8 @@ import React from 'react';
 const QnaDetail = () => {
   return (
     <div>
-      QnaDetail
+      경매 금액을 잘못올렸어요 ㅠ
+      
     </div>
   );
 };
