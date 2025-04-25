@@ -3,7 +3,7 @@ import React from 'react';
 const DisplayRegistration = () => {
   return (
     <div>
-      <p>upcycling</p>
+      <p>신청양식</p>
       DisplayRegistration
     </div>
   );

@@ -3,7 +3,7 @@ import React from 'react';
 const Modify = () => {
   return (
     <div>
-      Modify
+      회원정보 수정
     </div>
   );
 };

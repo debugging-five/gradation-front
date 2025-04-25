@@ -1,22 +1,24 @@
 import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 
 const ArtistCategory = () => {
   return (
     <div>
-       <div>
-        <Link to={"/artist"}>한국화</Link>
-        <Link to={"jokak"}>조각</Link>
-        <Link to={"kongyeo"}>공예</Link>
-        <Link to={"kunchuk"}>건축</Link>
-        <Link to={"seoyeo"}>서예</Link>
-        <Link to={"hehe"}>회화</Link>
+      <div>
+        <NavLink to={"korean"}>한국화</NavLink>
+        <NavLink to={"painting"}>조각</NavLink>
+        <NavLink to={"sculpture"}>공예</NavLink>
+        <NavLink to={"craft"}>건축</NavLink>
+        <NavLink to={"architecture"}>서예</NavLink>
+        <NavLink to={"calligraphy"}>회화</NavLink>
       </div>
       <div>
         업로드
         검색
       </div>
-      <Outlet />
+      <div>
+        <Outlet />
+      </div>
     </div>
   );
 };

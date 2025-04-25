@@ -3,7 +3,8 @@ import { Outlet } from 'react-router-dom';
 
 const ExhibitionGradationPastContainer = () => {
   return (
-    <div>
+    <div >
+      sidebar
       <Outlet />
     </div>
   );

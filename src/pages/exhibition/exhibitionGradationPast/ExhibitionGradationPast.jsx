@@ -4,6 +4,7 @@ const ExhibitionGradationPast = () => {
   return (
     <div>
       ExhibitionGradationPast
+      사진 사진 사진  
     </div>
   );
 };

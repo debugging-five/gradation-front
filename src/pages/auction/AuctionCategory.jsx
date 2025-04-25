@@ -9,12 +9,12 @@ const AuctionCategory = () => {
   return (
     <div>
     <div>
-      <NavLink to={pathName === "/auction/bidding" ? "" : "korea"}>한국화</NavLink>
-      <NavLink to={"jokak"}>조각</NavLink>
-      <NavLink to={"kongyeo"}>공예</NavLink>
-      <NavLink to={"kunchuk"}>건축</NavLink>
-      <NavLink to={"seoyea"}>서예</NavLink>
-      <NavLink to={"hehe"}>회화</NavLink>
+      <NavLink to={pathName === "/auction/bidding" ? "" : "koreanPainting"}>한국화</NavLink>
+      <NavLink to={"sculpture"}>조각</NavLink>
+      <NavLink to={"craft"}>공예</NavLink>
+      <NavLink to={"architecture"}>건축</NavLink>
+      <NavLink to={"calligraphy"}>서예</NavLink>
+      <NavLink to={"painting"}>회화</NavLink>
    </div>
    <div>
      업로드

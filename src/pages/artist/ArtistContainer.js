@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 const ArtistContainer = () => {
   return (
     <div>
-      컨테이너
+      artist
       <Outlet />
     </div>
   );

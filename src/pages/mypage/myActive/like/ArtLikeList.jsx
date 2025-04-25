@@ -3,7 +3,7 @@ import React from 'react';
 const ArtLikeList = () => {
   return (
     <div>
-      ArtLikeList
+      ArtLikeList 사진 사진 
     </div>
   );
 };
