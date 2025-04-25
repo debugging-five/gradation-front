@@ -8,25 +8,15 @@ import DisplayCategory from "../pages/display/DisplayCategory";
 import DisplayRegistration from "../pages/display/displayRegistration/DisplayRegistration";
 import DisplayContainer from "../pages/display/DisplayContainer";
 import DisplayDetailContainer from "../pages/display/displayDetail/DisplayDetailContainer";
-import DisplayDetail from "../pages/display/displayDetail/DisplayDetail";
 import ArtistContainer from "../pages/artist/ArtistContainer";
 import AuctionContainer from "../pages/auction/AuctionContainer";
 import AuctionBiddingContainer from "../pages/auction/auctionBidding/AuctionBiddingContainer";
-import AuctionCompleteContainer from "../pages/auction/auctionComplete/AuctionCompleteContainer";
 import AuctionCategory from "../pages/auction/AuctionCategory";
 import ExhibitionContainer from "../pages/exhibition/ExhibitionContainer";
 import ExhibitionGradation from "../pages/exhibition/exhibitionGradation/ExhibitionGradation";
 import ExhibitionUniversity from "../pages/exhibition/exhibitionUniversity/ExhibitionUniversity";
 import MyPageContainer from "../pages/mypage/MyPageContainer";
-import UserRead from "../pages/mypage/myInfo/userInfo/read/UserRead";
 import ArtistDetailModify from "../pages/mypage/myInfo/artistDetailModify/ArtistDetailModify";
-import AuctionExpectedContainer from "../pages/auction/auctionExpected/AuctionExpectedContainer";
-import AuctionBiddingDetailContainer from "../pages/auction/auctionBiddingDetail/AuctionBiddingDetailContainer";
-import AuctionBiddingDetail from "../pages/auction/auctionBiddingDetail/AuctionBiddingDetail";
-import AuctionCompleteDetailContainer from "../pages/auction/auctionCompleteDetail/AuctionCompleteDetailContainer";
-import AuctionCompleteDetail from "../pages/auction/auctionCompleteDetail/AuctionCompleteDetail";
-import AuctionExpectedDetailContainer from "../pages/auction/auctionExpectedDetail/AuctionExpectedDetailContainer";
-import AuctionExpectedDetail from "../pages/auction/auctionExpectedDetail/AuctionExpectedDetail";
 import AuctionRegistration from "../pages/auction/auctionRegistration/AuctionRegistration";
 import AuctionAgreementContainer from "../pages/auction/auctionAgreement/AuctionAgreementContainer";
 import AuctionAgreementExplanation from "../pages/auction/auctionAgreement/AuctionAgreementExplanation";
@@ -37,33 +27,10 @@ import ExhibitionCategory from "../pages/exhibition/ExhibitionCategory";
 import ExhibitionGradationPastContainer from "../pages/exhibition/exhibitionGradationPast/ExhibitionGradationPastContainer";
 import ExhibitionGradationPast from "../pages/exhibition/exhibitionGradationPast/ExhibitionGradationPast";
 import ExhibitionRegistration from "../pages/exhibition/exhibitionRegistration/ExhibitionRegistration";
-import Modify from "../pages/mypage/myInfo/userInfo/modify/Modify";
-import ChangePassword from "../pages/mypage/myInfo/changePassword/ChangePassword";
-import ChangePasswordOk from "../pages/mypage/myInfo/changePassword/ChangePasswordOk";
 import UniversityCheck from "../pages/mypage/myInfo/universityCheck/UniversityCheck";
 import CommentList from "../pages/mypage/myActive/comment/CommentList";
 import ContactArtistContainer from "../pages/mypage/myActive/contactArtist/ContactArtistContainer";
 import ContactArtistDetail from "../pages/mypage/myActive/contactArtist/ContactArtistDetail";
-import ContactArtistDetailContainer from "../pages/mypage/myActive/contactArtist/ContactArtistDetailContainer";
-import ContactArtistDetailModify from "../pages/mypage/myActive/contactArtist/ContactArtistDetailModify";
-import DisplayKorean from "../pages/display/displayCategoryDetail/DisplayKorean";
-import DisplayPainting from "../pages/display/displayCategoryDetail/DisplayPainting";
-import DisplaySculpture from "../pages/display/displayCategoryDetail/DisplaySculpture";
-import DisplayCraft from "../pages/display/displayCategoryDetail/DisplayCraft";
-import DisplayArchitecture from "../pages/display/displayCategoryDetail/DisplayArchitecture";
-import DisplayCalligraphy from "../pages/display/displayCategoryDetail/DisplayCalligraphy";
-import AuctionArchitecture from "../pages/auction/auctionCategoryDetail/AuctionArchitecture";
-import AuctionKorean from "../pages/auction/auctionCategoryDetail/AuctionKorean";
-import AuctionPainting from "../pages/auction/auctionCategoryDetail/AuctionPainting";
-import AuctionSculpture from "../pages/auction/auctionCategoryDetail/AuctionSculpture";
-import AuctionCraft from "../pages/auction/auctionCategoryDetail/AuctionCraft";
-import AuctionCalligraphy from "../pages/auction/auctionCategoryDetail/AuctionCalligraphy";
-import ArtistKorean from "../pages/artist/artistCategoryDetail/ArtistKorean";
-import ArtistPainting from "../pages/artist/artistCategoryDetail/ArtistPainting";
-import ArtistSculpture from "../pages/artist/artistCategoryDetail/ArtistSculpture";
-import ArtistCraft from "../pages/artist/artistCategoryDetail/ArtistCraft";
-import ArtistArchitecture from "../pages/artist/artistCategoryDetail/ArtistArchitecture";
-import ArtistCalligraphy from "../pages/artist/artistCategoryDetail/ArtistCalligraphy";
 import ArtistCategory from "../pages/artist/ArtistCategory";
 import ContactArtistWrite from "../pages/mypage/myActive/contactArtist/ContactArtistWrite";
 import ArtLikeContainer from "../pages/mypage/myActive/like/ArtLikeContainer";
@@ -77,15 +44,7 @@ import MyPaymentList from "../pages/mypage/myPayment/MyPaymentList";
 import MyAuctionList from "../pages/mypage/myPayment/MyAuctionList";
 import MyPaymentDeliveryInfo from "../pages/mypage/myPayment/MyPaymentDeliveryInfo";
 import MypageDelete from "../pages/mypage/mypageDelete/MypageDelete";
-import MyMailContainer from "../pages/mypage/myMail/MyMailContainer";
-import MyMailReceived from "../pages/mypage/myMail/MyMailReceived";
-import MyMailSended from "../pages/mypage/myMail/MyMailSended";
-import MyMailListContainer from "../pages/mypage/myMail/MyMailListContainer";
-import MyMailReceivedDetail from "../pages/mypage/myMail/MyMailReceivedDetail";
-import MyMailSendedDetail from "../pages/mypage/myMail/MyMailSendedDetail";
 import MyPaymentDeliveryInfoContainer from "../pages/mypage/myPayment/MyPaymentDeliveryInfoContainer";
-import MyMailReceivedDetailContainer from "../pages/mypage/myMail/MyMailReceivedDetailContainer";
-import MyMailSendedDetailContainer from "../pages/mypage/myMail/MyMailSendedDetailContainer";
 import ServiceCenterContainer from "../pages/serviceCenter/ServiceCenterContainer";
 import QnaList from "../pages/serviceCenter/qna/QnaList";
 import QnaSend from "../pages/serviceCenter/qna/QnaSend";
@@ -96,9 +55,30 @@ import AdminContainer from "../pages/admin/AdminContainer";
 import AdminFaqList from "../pages/admin/faq/AdminFaqList";
 import AdminFaqDetail from "../pages/admin/faq/AdminFaqDetail";
 import AdminFaqRegistration from "../pages/admin/faq/AdminFaqRegistration";
-import AdminFaqDetailModify from "../pages/admin/faq/AdminFaqDetailModify";
-import UserManagement from "../pages/admin/userManagement/UserManagement";
 import NotFound from "../pages/notFound/NotFound";
+import AdminLayout from "../pages/admin/AdminLayout";
+import AdminFaqModify from "../pages/admin/faq/AdminFaqModify";
+import AdminQnaLayout from "../pages/admin/qna/AdminQnaLayout";
+import AdminQnaWaitingList from "../pages/admin/qna/AdminQnaWaitingList";
+import AdminQnaDetail from "../pages/admin/qna/AdminQnaDetail";
+import AdminQnaCompletedList from "../pages/admin/qna/AdminQnaCompletedList";
+import FormManagementLayout from "../pages/admin/formManagement/FormManagementLayout";
+import FormManagementApprovedList from "../pages/admin/formManagement/list/FormManagementApprovedList";
+import FormManagementDetailContainer from "../pages/admin/formManagement/detail/FormManagementDetailContainer";
+import FormManageMentCategory from "../pages/admin/formManagement/FormManageMentCategory";
+import UserManagementContainer from "../pages/admin/userManagement/UserManagementContainer";
+import UserInfoContainer from "../pages/mypage/myInfo/userInfo/UserInfoContainer";
+import ChangePasswordContainer from "../pages/mypage/myInfo/changePassword/ChangePasswordContainer";
+import AuctionLayout from "../pages/auction/AuctionLayout";
+import AuctionDetailContainer from "../pages/auction/auctionDetail/AuctionDetailContainer";
+import AuctionListContainer from "../pages/auction/auctionList/AuctionListContainer";
+import AuctionExpectedModify from "../pages/auction/auctionExpectedModify/AuctionExpectedModify";
+import DisplayListContainer from "../pages/display/displayList/DisplayListContainer";
+import ArtistListContainer from "../pages/artist/artistList/ArtistListContainer";
+import ArtistMyProfile from "../pages/artist/artistMyProfile/ArtistMyProfile";
+import MyApprovedContainer from "../pages/mypage/myApproved/MyApprovedContainer";
+import MyApprovedCategory from "../pages/mypage/myApproved/MyApprovedCategory";
+import MyApprovedListContainer from "../pages/mypage/myApproved/myApprovedList/MyApprovedListContainer";
 
 const router = createBrowserRouter([
   {
@@ -118,40 +98,14 @@ const router = createBrowserRouter([
             element : <DisplayCategory />,
             children : [
               {
-                path : "korean",
-                element : <DisplayKorean />
+                path : ":category",
+                element : <DisplayListContainer />
               },
-              {
-                path : "painting",
-                element : <DisplayPainting />
-              },
-              {
-                path : "sculpture",
-                element : <DisplaySculpture />
-              },
-              {
-                path : "craft",
-                element : <DisplayCraft />
-              },
-              {
-                path : "architecture",
-                element : <DisplayArchitecture />
-              },
-              {
-                path : "calligraphy",
-                element : <DisplayCalligraphy />
-              }
             ]
           },
           {
-            path : "detail",
+            path : ":category/detail/:id",
             element : <DisplayDetailContainer />,
-            children : [
-              {
-                path : ":id",
-                element : <DisplayDetail />
-              }
-            ]
           },
           {
             path : "registration",
@@ -174,33 +128,19 @@ const router = createBrowserRouter([
             element : <ArtistCategory />,
             children : [
               {
-                path : "korean",
-                element : <ArtistKorean />
-              },
-              {
-                path : "painting",
-                element : <ArtistPainting />
-              },
-              {
-                path : "sculpture",
-                element : <ArtistSculpture />
-              },
-              {
-                path : "craft",
-                element : <ArtistCraft />
-              },
-              {
-                path : "architecture",
-                element : <ArtistArchitecture />
-              },
-              {
-                path : "calligraphy",
-                element : <ArtistCalligraphy />
+                path : "",
+                element : <ArtistMyProfile />,
+                children : [
+                  {
+                    path : ":category",
+                    element : <ArtistListContainer />
+                  },
+                ]
               }
             ]
           },
           {
-            path : "detail",
+            path : ":category/detail",
             element : <ArtistDetailContainer />,
             children : [
               {
@@ -217,181 +157,33 @@ const router = createBrowserRouter([
         children : [
           {
             path : "",
-            element : <AuctionBiddingContainer />,
+            element : <AuctionLayout />,
             children : [
               {
-                path : "",
-                element : <AuctionCategory />,
+                path : ":type",
+                element : <AuctionBiddingContainer />,
                 children : [
                   {
-                    path : "korean",
-                    element : <AuctionKorean />
-                  },
-                  {
-                    path : "painting",
-                    element : <AuctionPainting />
-                  },
-                  {
-                    path : "sculpture",
-                    element : <AuctionSculpture />
-                  },
-                  {
-                    path : "craft",
-                    element : <AuctionCraft />
-                  },
-                  {
-                    path : "architecture",
-                    element : <AuctionArchitecture />
-                  },
-                  {
-                    path : "calligraphy",
-                    element : <AuctionCalligraphy />
+                    path : "",
+                    element : <AuctionCategory />,
+                    children : [
+                      {
+                        path : ":category",
+                        element : <AuctionListContainer />
+                      },
+                    ]
                   }
                 ]
               }
             ]
           },
           {
-            path : "bidding",
-            element : <AuctionBiddingContainer />,
-            children : [
-              {
-                path : "",
-                element : <AuctionCategory />,
-                children : [
-                  {
-                    path : "korean",
-                    element : <AuctionKorean />
-                  },
-                  {
-                    path : "painting",
-                    element : <AuctionPainting />
-                  },
-                  {
-                    path : "sculpture",
-                    element : <AuctionSculpture />
-                  },
-                  {
-                    path : "craft",
-                    element : <AuctionCraft />
-                  },
-                  {
-                    path : "architecture",
-                    element : <AuctionArchitecture />
-                  },
-                  {
-                    path : "calligraphy",
-                    element : <AuctionCalligraphy />
-                  }
-                ]
-              }
-            ]
+            path : ":type/:category/detail/:id",
+            element : <AuctionDetailContainer />
           },
           {
-            path : "expected",
-            element : <AuctionExpectedContainer />,
-            children : [
-              {
-                path : "",
-                element : <AuctionCategory />,
-                children : [
-                  {
-                    path : "korean",
-                    element : <AuctionKorean />
-                  },
-                  {
-                    path : "painting",
-                    element : <AuctionPainting />
-                  },
-                  {
-                    path : "sculpture",
-                    element : <AuctionSculpture />
-                  },
-                  {
-                    path : "craft",
-                    element : <AuctionCraft />
-                  },
-                  {
-                    path : "architecture",
-                    element : <AuctionArchitecture />
-                  },
-                  {
-                    path : "calligraphy",
-                    element : <AuctionCalligraphy />
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            path : "complete",
-            element : <AuctionCompleteContainer />,
-            children : [
-              {
-                path : "",
-                element : <AuctionCategory />,
-                children : [
-                  {
-                    path : "korean",
-                    element : <AuctionKorean />
-                  },
-                  {
-                    path : "painting",
-                    element : <AuctionPainting />
-                  },
-                  {
-                    path : "sculpture",
-                    element : <AuctionSculpture />
-                  },
-                  {
-                    path : "craft",
-                    element : <AuctionCraft />
-                  },
-                  {
-                    path : "architecture",
-                    element : <AuctionArchitecture />
-                  },
-                  {
-                    path : "calligraphy",
-                    element : <AuctionCalligraphy />
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            path : "bidding-detail",
-            element : <AuctionBiddingDetailContainer />,
-            children : [
-              {
-                path : ":id",
-                element : <AuctionBiddingDetail />
-              }
-            ]
-          },
-          {
-            path : "complete-detail",
-            element : <AuctionCompleteDetailContainer />,
-            children : [
-              {
-                path : ":id",
-                element : <AuctionCompleteDetail />
-              }
-            ]
-          },
-          {
-            path : "expected-detail",
-            element : <AuctionExpectedDetailContainer />,
-            children : [
-              {
-                path : ":id",
-                element : <AuctionExpectedDetail />
-              },
-              {
-                path : ":id/modify",
-                element : <ContactArtistDetailModify />
-              }
-            ]
+            path : ":type/:category/modify/:id",
+            element : <AuctionExpectedModify />
           },
           {
             path : "payment",
@@ -426,11 +218,11 @@ const router = createBrowserRouter([
             ]
           },
           {
-            path : "resgistration",
+            path : "registration",
             element : <LoginLayout />,
             children : [
               {
-                index : true,
+                path : ":id",
                 element : <AuctionRegistration />
               }
             ]
@@ -487,15 +279,7 @@ const router = createBrowserRouter([
             children : [
               {
                 path : "",
-                element : <UserRead />
-              },
-              {
-                path : "user-info",
-                element : <UserRead />
-              },
-              {
-                path : "modify",
-                element : <Modify />
+                element : <UserInfoContainer />
               },
               {
                 path : "artist-datail-modify",
@@ -503,11 +287,7 @@ const router = createBrowserRouter([
               },
               {
                 path : "change-password",
-                element : <ChangePassword />
-              },
-              {
-                path : "change-password-ok",
-                element : <ChangePasswordOk />
+                element : <ChangePasswordContainer />,
               },
               {
                 path : "university-check",
@@ -526,21 +306,11 @@ const router = createBrowserRouter([
                 element : <ContactArtistContainer />,
                 children : [
                   {
-                    path : "detail",
-                    element : <ContactArtistDetailContainer />,
-                    children : [
-                      {
-                        path: ":id",
-                        element: <ContactArtistDetail />
-                      },
-                      {
-                        path: ":id/modify",
-                        element: <ContactArtistDetailModify />
-                      }
-                    ]
+                    path : "detail/:id",
+                    element : <ContactArtistDetail />,
                   },
                   {
-                    path : "write",
+                    path : "write/:email",
                     element : <ContactArtistWrite />
                   }
                 ]
@@ -610,33 +380,119 @@ const router = createBrowserRouter([
                 ]
               },
               {
-                path: "my-mail",
-                element: <MyMailContainer />,
-                children: [
+                path : "mypage-approved-list",
+                element : <MyApprovedContainer />,
+                children : [
                   {
-                    path: "",
-                    element: <MyMailListContainer />,
-                    children: [
+                    path : ":category",
+                    element : <MyApprovedCategory />,
+                    children : [
                       {
-                        path: "received",
-                        element: <MyMailReceived />
-                      },
-                      {
-                        path: "sended",
-                        element: <MyMailSended />
+                        path : "",
+                        element : <MyApprovedListContainer />
                       }
                     ]
-                  },
-                  {
-                    path: "received/detail/:id",
-                    element: <MyMailReceivedDetail />
-                  },
-                  {
-                    path: "sended/detail/:id",
-                    element: <MyMailSendedDetail />
                   }
                 ]
-              }
+              },
+              // {
+              //   path: "my-mail",
+              //   element: <MyMailContainer />,
+              //   children: [
+              //     {
+              //       path: "",
+              //       element: <MyMailListContainer />,
+              //       children: [
+              //         {
+              //           path: "received",
+              //           element: <MyMailReceived />
+              //         },
+              //         {
+              //           path: "sended",
+              //           element: <MyMailSended />
+              //         }
+              //       ]
+              //     },
+              //     {
+              //       path: "received/detail/:id",
+              //       element: <MyMailReceivedDetail />
+              //     },
+              //     {
+              //       path: "sended/detail/:id",
+              //       element: <MyMailSendedDetail />
+              //     }
+              //   ]
+              // },
+              {
+                path : "admin",
+                element : <AdminLayout />,
+                children : [
+                  {
+                    path : "",
+                    element : <AdminContainer />,
+                    children : [
+                      {
+                        path : "faq",
+                        element : <AdminFaqList />
+                      },
+                      {
+                        path : "faq/detail/:id",
+                        element : <AdminFaqDetail />,
+                      },
+                      {
+                        path : "faq/modify/:id",
+                        element : <AdminFaqModify />
+                      },
+                      {
+                        path : "faq/registration",
+                        element : <AdminFaqRegistration />
+                      },
+                      {
+                        path : "qna",
+                        element : <AdminQnaLayout />,
+                        children : [
+                          {
+                            path : "",
+                            element : <AdminQnaWaitingList />
+                          },
+                          {
+                            path : "complete",
+                            element : <AdminQnaCompletedList />
+                          },
+                        ]
+                      },
+                      {
+                        path : "form-management",
+                        element : <FormManagementLayout />,
+                        children : [
+                          {
+                            path : "",
+                            element : <FormManageMentCategory />,
+                            children : [
+                              {
+                                path : ":type",
+                                element : <FormManagementApprovedList />,
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        path : "form-management/detail/:type/:id",
+                        element : <FormManagementDetailContainer />,
+                      },
+                      {
+                        path : "qna/detail/:id",
+                        element : <AdminQnaDetail />
+                      },
+                      {
+                        path : "user-management",
+                        element : <UserManagementContainer />
+                      }
+                    ]
+                  }
+                ]
+              },
             ]
           }
         ]
@@ -676,42 +532,6 @@ const router = createBrowserRouter([
           {
             path : "detail/:id",
             element : <FaqDetail />
-          }
-        ]
-      },
-      {
-        path : "admin",
-        element : <LoginLayout />,
-        children : [
-          {
-            path : "",
-            element : <AdminContainer />,
-            children : [
-              {
-                path : "faq",
-                element : <AdminFaqList />
-              },
-              {
-                path : "faq/detail/:id",
-                element : <AdminFaqDetail />,
-              },
-              {
-                path : "faq/detail/:id/modify",
-                element : <AdminFaqDetailModify />
-              },
-              {
-                path : "faq/registration",
-                element : <AdminFaqRegistration />
-              },
-              // {
-              //   path : "qna-waiting",
-              //   element : <AdminFaqRegistration />
-              // },
-              {
-                path : "user-management",
-                element : <UserManagement />
-              }
-            ]
           }
         ]
       },

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-const MyMailContainer = () => {
+const MyApprovedContainer = () => {
   return (
     <div>
-      <p>내 쪽지</p>
+      컨테이너
       <Outlet />
     </div>
   );
 };
 
-export default MyMailContainer;
+export default MyApprovedContainer;
