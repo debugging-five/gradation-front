@@ -10,9 +10,8 @@ import TestContainer from './pages/test/TestContainer';
 function App() {
   return (
     <>
-      {/* <GlobalStyle /> */}
-      {/* <RouterProvider router={router} /> */}
-      <TestContainer />
+      <GlobalStyle />
+      <RouterProvider router={router} />
     </>
   );
 }
