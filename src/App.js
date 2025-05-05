@@ -6,12 +6,15 @@ import MainContainer from './pages/main/MainContainer';
 import { ThemeProvider } from 'styled-components';
 import theme from './styles/theme';
 import TestContainer from './pages/test/TestContainer';
+import JoinContainer from './pages/account/join/JoinContainer';
+import Join from './pages/account/join/Join';
 
 function App() {
   return (
     <>
       <GlobalStyle />
-      <RouterProvider router={router} />
+      {/* <RouterProvider router={router} /> */}
+      <Join />
     </>
   );
 }
