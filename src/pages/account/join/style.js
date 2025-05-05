@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { H2, H5, H7 } from '../../../styles/common';
+import { H2, H4, H5, H7 } from '../../../styles/common';
 import UncheckButton from '../../../components/button/UncheckButton';
 
 const S = {};
@@ -23,7 +23,7 @@ S.H2 = styled.p`
 `
 
 S.InputContainer = styled.div`
-  margin: 76px 0 48px 0;
+  margin: 76px 0 0 0;
 `
 
 S.Border = styled.div`
@@ -55,6 +55,8 @@ S.H5 = styled.p`
 S.Input = styled.input`
 border: none;
 background-color: #FBFCFC;
+outline: none;
+width: 320px;
 
 &::placeholder {
   ${H7}
@@ -63,6 +65,47 @@ background-color: #FBFCFC;
 
 S.ButtonWrapper = styled.div`
   margin-left: auto;
+`
+
+S.CheckboxContainer = styled.div`
+  margin : 0 0 50px 0;
+  width: 760px;
+`
+
+S.JoinButton = styled.button`
+  width: 760px;
+  height: 58px;
+  background-color: #C0C5C7;
+  border-radius: 3px;
+  border-color: #C0C5C7;
+`
+
+S.H4 = styled.p`
+  ${H4}
+  color : #FBFCFC;
+`
+
+S.CheckboxWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 0 0 10px 0;
+  color: #C0C5C7;
+
+  &.detail {
+    margin-left: 20px;
+  }
+
+`
+
+S.Checkbox = styled.img`
+  width : 20px;
+  height : 20px;
+  margin: 0 5px 0 0;
+`
+
+S.Terms = styled.span`
+  ${H7}
+  color: ${({ checked }) => (checked ? "#333333" : "#C0C5C7")};
 `
 
 
