@@ -5,6 +5,8 @@ const Join = () => {
     <div>
       Join
     </div>
+
+
   );
 };
 
