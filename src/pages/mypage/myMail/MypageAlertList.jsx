@@ -1,12 +1,13 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-const LoginContainer = () => {
+const MypageAlertList = () => {
   return (
     <div>
+      내 알림
       <Outlet />
     </div>
   );
 };
 
-export default LoginContainer;
+export default MypageAlertList;
