@@ -79,6 +79,12 @@ import ArtistMyProfile from "../pages/artist/artistMyProfile/ArtistMyProfile";
 import MyApprovedContainer from "../pages/mypage/myApproved/MyApprovedContainer";
 import MyApprovedCategory from "../pages/mypage/myApproved/MyApprovedCategory";
 import MyApprovedListContainer from "../pages/mypage/myApproved/myApprovedList/MyApprovedListContainer";
+import Login from "../pages/account/login/Login";
+import FindId from "../pages/account/login/FindId";
+import FindPassword from "../pages/account/login/FindPassword";
+import Join from "../pages/account/join/Join";
+import MypageAlertList from "../pages/mypage/myMail/MypageAlertList";
+import MypageAlertDetail from "../pages/mypage/myMail/MypageAlertDetail";
 
 const router = createBrowserRouter([
   {
@@ -94,8 +100,16 @@ const router = createBrowserRouter([
         element : <Join />
       },
       {
-        path : "/join",
-        element : <Join />
+        path : "/login",
+        element : <Login />
+      },
+      {
+        path : "/find-id",
+        element : <FindId />
+      },
+      {
+        path : "/find-password",
+        element : <FindPassword />
       },
       {
         path : "/display",
@@ -403,34 +417,16 @@ const router = createBrowserRouter([
                   }
                 ]
               },
-              // {
-              //   path: "my-mail",
-              //   element: <MyMailContainer />,
-              //   children: [
-              //     {
-              //       path: "",
-              //       element: <MyMailListContainer />,
-              //       children: [
-              //         {
-              //           path: "received",
-              //           element: <MyMailReceived />
-              //         },
-              //         {
-              //           path: "sended",
-              //           element: <MyMailSended />
-              //         }
-              //       ]
-              //     },
-              //     {
-              //       path: "received/detail/:id",
-              //       element: <MyMailReceivedDetail />
-              //     },
-              //     {
-              //       path: "sended/detail/:id",
-              //       element: <MyMailSendedDetail />
-              //     }
-              //   ]
-              // },
+              {
+                path : "alert",
+                element : <MypageAlertList />,
+                children : [
+                  {
+                    path : "detail/:id",
+                    element : <MypageAlertDetail />
+                  }
+                ]
+              },
               {
                 path : "admin",
                 element : <AdminLayout />,
