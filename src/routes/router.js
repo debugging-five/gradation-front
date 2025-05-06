@@ -84,8 +84,6 @@ import MyMailListContainer from "../pages/mypage/myMail/MyMailListContainer";
 import MyMailReceivedDetail from "../pages/mypage/myMail/MyMailReceivedDetail";
 import MyMailSendedDetail from "../pages/mypage/myMail/MyMailSendedDetail";
 import MyPaymentDeliveryInfoContainer from "../pages/mypage/myPayment/MyPaymentDeliveryInfoContainer";
-import MyMailReceivedDetailContainer from "../pages/mypage/myMail/MyMailReceivedDetailContainer";
-import MyMailSendedDetailContainer from "../pages/mypage/myMail/MyMailSendedDetailContainer";
 import ServiceCenterContainer from "../pages/serviceCenter/ServiceCenterContainer";
 import QnaList from "../pages/serviceCenter/qna/QnaList";
 import QnaSend from "../pages/serviceCenter/qna/QnaSend";
@@ -99,6 +97,7 @@ import AdminFaqRegistration from "../pages/admin/faq/AdminFaqRegistration";
 import AdminFaqDetailModify from "../pages/admin/faq/AdminFaqDetailModify";
 import UserManagement from "../pages/admin/userManagement/UserManagement";
 import NotFound from "../pages/notFound/NotFound";
+import Join from "../pages/account/join/Join";
 
 const router = createBrowserRouter([
   {
@@ -108,6 +107,14 @@ const router = createBrowserRouter([
       {
         path : "",
         element : <MainContainer />
+      },
+      {
+        path : "/join",
+        element : <Join />
+      },
+      {
+        path : "/join",
+        element : <Join />
       },
       {
         path : "/display",
