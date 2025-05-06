@@ -13,8 +13,8 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      {/* <RouterProvider router={router} /> */}
-      <Join />
+      <RouterProvider router={router} />
+      {/* <Join /> */}
     </>
   );
 }
