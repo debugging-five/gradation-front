@@ -109,6 +109,4 @@ S.Terms = styled.span`
 `
 
 
-
-
 export default S;
