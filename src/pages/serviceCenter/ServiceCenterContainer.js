@@ -1,23 +1,38 @@
 import React from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import { BarContent, BarContentWapper, BarTitle, Category, EndBar, Leftbar, MainWrapper, Title } from './serviceCenterContainerStyle';
 
 const ServiceCenterContainer = () => {
+    const location = useLocation()
+    const path = location.pathname;
+    console.log(path)
+    let title = ""
+    if(path.includes("faq")){
+      title = "자주 묻는 질문"
+    }else if(path.includes("registration")){
+      title = "1 : 1 문의하기"
+    }else{
+      title = "내 문의 목록"
+    }
+
   return (
-    <div style={{display : "flex"}}>
-      <div style={{
-        display : "flex",
-        flexDirection : "column"
-        }}>
-        <h1>고객센터</h1>
-        <NavLink to={"/service-center/qna"}>내 문의 목록</NavLink>
-        <NavLink to={"/service-center/qna/registration"}>1 : 1 문의하기</NavLink>
-        <NavLink to={"/service-center/faq"}>자주 묻는 질문</NavLink>
-      </div>
-      <div>
-        <h1>고객센터 / (내 문의 목록 / 1 : 1 문의 / 자주 묻는 질문) </h1>
+    <MainWrapper>
+      <Leftbar>
+        <BarTitle>고객센터</BarTitle>
+          <BarContentWapper>
+            <BarContent  as={NavLink} to="/service-center/qna" end>내 문의 목록</BarContent>
+            <BarContent  as={NavLink} to="/service-center/qna/registration" end>1 : 1 문의하기</BarContent>
+            <BarContent  as={NavLink} to="/service-center/faq" end>자주 묻는 질문</BarContent>
+          </BarContentWapper>
+        <EndBar></EndBar>  
+      </Leftbar>
+
+      <Category>
+        <Title> 고객센터 / {title} </Title>
         <div><Outlet /></div>
-      </div>
-    </div>
+      </Category>
+      
+    </MainWrapper>
   );
 };
 
