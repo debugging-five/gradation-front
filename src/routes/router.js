@@ -85,6 +85,7 @@ import FindPassword from "../pages/account/login/FindPassword";
 import Join from "../pages/account/join/Join";
 import MypageAlertList from "../pages/mypage/myMail/MypageAlertList";
 import MypageAlertDetail from "../pages/mypage/myMail/MypageAlertDetail";
+import Sms from "../pages/account/join/Sms";
 
 const router = createBrowserRouter([
   {
@@ -98,6 +99,10 @@ const router = createBrowserRouter([
       {
         path : "/join",
         element : <Join />
+      },
+      {
+        path : "/sms",
+        element : <Sms />
       },
       {
         path : "/login",
