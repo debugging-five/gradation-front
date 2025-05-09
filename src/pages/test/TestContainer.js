@@ -1,10 +1,10 @@
 import React from 'react';
 import AlertOkButton from '../../components/button/AlertOkButton';
 import AlertCancelButton from '../../components/button/AlertCancelButton';
-import UncheckButton from '../../components/button/UncheckButton';
-import CheckButton from '../../components/button/CheckButton';
 import PrimaryButton from '../../components/button/PrimaryButton';
 import SubButton from '../../components/button/SubButton';
+import UncheckedButton from '../../components/button/UncheckedButton';
+import CheckedButton from '../../components/button/CheckedButton';
 
 
 const TestContainer = () => {
@@ -24,15 +24,15 @@ const TestContainer = () => {
       </div>
 
       <div>
-        <UncheckButton>
+        <UncheckedButton>
           버튼
-        </UncheckButton>
+        </UncheckedButton>
       </div>
 
       <div>
-        <CheckButton>
+        <CheckedButton>
           버튼
-        </CheckButton>
+        </CheckedButton>
       </div>
 
       <div>

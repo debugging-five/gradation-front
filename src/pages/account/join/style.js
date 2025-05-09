@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { H2, H4, H5, H7 } from '../../../styles/common';
-import UncheckButton from '../../../components/button/UncheckButton';
+import UncheckButton from '../../../components/button/UncheckedButton';
 
 const S = {};
 
