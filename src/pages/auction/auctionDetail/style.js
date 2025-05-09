@@ -154,6 +154,55 @@ S.BiddingButton = styled.button`
   color: ${gray100};
 `
 
+S.AuctionList = styled.div`
+  height : 269px;
+  margin : 20px 0 38px 0;
+`
+
+S.AuctionIng = styled.div`
+  border-bottom : solid 1px ${gray500};
+	width : 1920px;
+	display : flex;
+	justify-content : center;
+`
+
+S.AuctionIngTitle = styled.div`
+  margin : 0 0 10px 0;
+	width : 1160px;
+`
+
+S.ArtWrapper = styled.div`
+  display : flex;
+  align-items : center;
+  justify-content : center;
+	gap : 120px;
+	margin : 38px 0;
+`
+
+S.ArtList = styled.div`
+  width: 200px;
+  height: 200px;
+  background-color: #f0f0f0; /* 여백 확인용 */
+  overflow: hidden;
+`
+
+S.ArtListImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+`
+
+S.NoneButton = styled.button`
+  border: none;
+  background-color: ${gray100};
+`
+
+S.buttonImg = styled.img`
+  width: 48px;
+  height: 48px;
+`
+
 
 
 
