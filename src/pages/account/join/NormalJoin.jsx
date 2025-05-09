@@ -3,7 +3,6 @@ import S from './style';
 import UncheckButton from '../../../components/button/UncheckButton';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import Sms from './Sms';
 
 const NormalJoin = () => {
 
@@ -37,12 +36,18 @@ const NormalJoin = () => {
     '[필수] 개인정보 수집 및 이용 동의',
     '[선택] 개인정보 수집 및 이용 동의',
   ];
-
-  const [sms, setSms] = useState(false);
+  
   const [email, setEmail] = useState("");
   const [userIdentification, setUserIdentification] = useState("");
-
+  
+  // 아이디 중복 검사
   const checkId = async () => {
+    console.log("userIdentification", userIdentification)
+    
+    if(!userIdentification) {
+      alert("아이디를 입력하세요");
+      return;
+    }
     await fetch(`http://localhost:10000/users/api/check-id/${userIdentification}`, {
       method : "GET"
     })
@@ -54,7 +59,6 @@ const NormalJoin = () => {
       }
       return res.json()
     })
-    // 성공한 res
     .then((res) => {
       console.log(res)
       alert(res.message)
@@ -64,7 +68,6 @@ const NormalJoin = () => {
 
   return (
     <form onSubmit={handleSubmit(async (data) => {
-
       const {
         userIdentification,
         userPassword,
@@ -83,7 +86,7 @@ const NormalJoin = () => {
         userEmail : userEmail
       }
 
-      await fetch("http://localhost:10000/users/api/join", {
+      await fetch("http://localhost:10000/users/api/join/normal", {
         method : "POST",
         headers : {
           "Content-Type" : "application/json"
@@ -132,8 +135,8 @@ const NormalJoin = () => {
                   <p>아이디 양식에 맞게 입력해주세요.</p>
                 )}
                 </S.Label>
-                <S.ButtonWrapper>
-                  <UncheckButton type="button" onClick={checkId}>중복 체크</UncheckButton>
+                <S.ButtonWrapper type="button" onClick={checkId}>
+                  <UncheckButton>중복 체크</UncheckButton>
                 </S.ButtonWrapper>
               </S.InputWrapper>
             </S.Border>
@@ -259,13 +262,12 @@ const NormalJoin = () => {
                 )}
                 </S.Label>
                 <S.ButtonWrapper>
-                  <UncheckButton type="button" onClick={() => setSms(true)}>
+                  <UncheckButton>
                     이메일 인증
                   </UncheckButton>
                 </S.ButtonWrapper>
               </S.InputWrapper>
             </S.Border>
-            {sms && <Sms email={email}/>}
 
             <S.Border>
               <S.InputWrapper>

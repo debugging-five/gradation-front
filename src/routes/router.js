@@ -96,22 +96,7 @@ const router = createBrowserRouter([
         path : "",
         element : <MainContainer />
       },
-      {
-        path : "/join",
-        element : <Join />
-      },
-      {
-        path : "/sms",
-        element : <Sms />
-      },
-      {
-        path : "/login",
-        element : <Login />
-      },
-      {
-        path : "/find-id",
-        element : <FindId />
-      },
+ 
       {
         path : "/find-password",
         element : <FindPassword />
@@ -549,7 +534,23 @@ const router = createBrowserRouter([
         element : <NotFound />
       }
     ]
-  }
+  },
+  {
+    path : "/join",
+    element : <Join />
+  },
+  {
+    path : "/sms",
+    element : <Sms />
+  },
+  {
+    path : "/login",
+    element : <Login />
+  },
+  {
+    path : "/find-id",
+    element : <FindId />
+  },
 ])
 
 export default router;
