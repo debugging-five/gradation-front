@@ -1,6 +1,7 @@
 import React from 'react';
-import { Wrapper, MainWrapper, ListHeader, ContentBox, Category, Number, Title, Content, Emptybox, Button, ButtonDiv, TitleNavigate } from './qnaListStyle';
+import {Button, ButtonDiv} from './qnaListStyle';
 import { NavLink } from 'react-router-dom';
+import { Category, Content, ContentBox, Emptybox, ListHeader, MainWrapper, Number, Title, TitleNavigate, Wrapper } from '../../mypage/style';
 
 const QnaList = () => {
   return (

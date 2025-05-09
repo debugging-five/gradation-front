@@ -1,10 +1,11 @@
 import React from 'react';
+import { MainWrapper } from '../../style';
 
 const UniversityLikeList = () => {
   return (
-    <div>
+    <MainWrapper>
       UniversityLikeList
-    </div>
+    </MainWrapper>
   );
 };
 

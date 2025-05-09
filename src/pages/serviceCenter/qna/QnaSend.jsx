@@ -1,6 +1,7 @@
 import React from 'react';
-import { Box, Title, Important, Line, MainWrapper, OneLine, Wrapper, Category, InputTitle, 
+import { Box, Title, Important, Line, OneLine, Wrapper, Category, InputTitle, 
   ButtonDiv, CategoryWrapper, InputContent, ButtonSend, ButtonPhoto } from '../qna/qnaSendStyle';
+import { MainWrapper } from '../../mypage/style';
 
 const QnaSend = () => {
   return (

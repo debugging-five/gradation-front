@@ -1,10 +1,11 @@
 import React from 'react';
+import { MainWrapper } from '../style';
 
 const MyAuctionList = () => {
   return (
-    <div>
+    <MainWrapper>
       MyAuctionList
-    </div>
+    </MainWrapper>
   );
 };
 

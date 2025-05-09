@@ -1,11 +1,5 @@
 import styled from 'styled-components';
 
-export const MainWrapper = styled.div`
-    display : flex;
-    width: 800px;
-    flex-direction: column;
-`;
-
 export const Wrapper = styled.div`
     margin-bottom: 60px;
 `;
