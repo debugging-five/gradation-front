@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import S from './style';
-import UncheckButton from '../../../components/button/UncheckButton';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import CheckedButton from '../../../components/button/CheckedButton';
+import UncheckedButton from '../../../components/button/UncheckedButton';
 
 const NormalJoin = () => {
 
@@ -39,6 +40,9 @@ const NormalJoin = () => {
   
   const [email, setEmail] = useState("");
   const [userIdentification, setUserIdentification] = useState("");
+  const [isChecked, setIsChecked] = useState(false);
+  const [isEmailChecked, setIsEmailChecked] = useState(false);
+
   
   // 아이디 중복 검사
   const checkId = async () => {
@@ -62,9 +66,14 @@ const NormalJoin = () => {
     .then((res) => {
       console.log(res)
       alert(res.message)
+      setIsChecked(true)
     })
     .catch(console.error)
   }
+
+  // 이메일 인증
+  
+
 
   return (
     <form onSubmit={handleSubmit(async (data) => {
@@ -135,8 +144,13 @@ const NormalJoin = () => {
                   <p>아이디 양식에 맞게 입력해주세요.</p>
                 )}
                 </S.Label>
-                <S.ButtonWrapper type="button" onClick={checkId}>
-                  <UncheckButton>중복 체크</UncheckButton>
+                <S.ButtonWrapper type="button" onClick={checkId} isChecked={isChecked}>
+                  {/* <UncheckButton isChecked={isChecked}>중복 체크</UncheckButton> */}
+                  {isChecked ? (
+                    <CheckedButton>중복 체크 완료</CheckedButton>
+                  ) : (
+                    <UncheckedButton onClick={checkId}>중복 체크</UncheckedButton>
+                  )}
                 </S.ButtonWrapper>
               </S.InputWrapper>
             </S.Border>
@@ -262,9 +276,9 @@ const NormalJoin = () => {
                 )}
                 </S.Label>
                 <S.ButtonWrapper>
-                  <UncheckButton>
+                  <UncheckedButton>
                     이메일 인증
-                  </UncheckButton>
+                  </UncheckedButton>
                 </S.ButtonWrapper>
               </S.InputWrapper>
             </S.Border>
@@ -276,7 +290,7 @@ const NormalJoin = () => {
                   <S.Input type='text' placeholder='인증번호를 입력하세요.'/>
                 </S.Label>
                 <S.ButtonWrapper>
-                  <UncheckButton>인증번호 확인</UncheckButton>
+                  <UncheckedButton>인증번호 확인</UncheckedButton>
                 </S.ButtonWrapper>
               </S.InputWrapper>
             </S.Border>

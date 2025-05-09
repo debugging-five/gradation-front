@@ -31,7 +31,6 @@ const Sms = ({email}) => {
   }
 
   const getIsVerificationCode = async () => {
-
     await fetch("http://localhost:10000/auth/verifyCode", {
       method : "POST",
       headers : {
