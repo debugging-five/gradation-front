@@ -21,7 +21,7 @@ const SocialJoin = ({email, provider}) => {
 
       console.log("userVO", userVO)
 
-      await fetch("http://localhost:10000/users/api/user/login", {
+      await fetch("http://localhost:10000/users/api/join/social", {
         method : "POST",
         headers : {
           "Content-Type" : "application/json"
@@ -48,6 +48,13 @@ const SocialJoin = ({email, provider}) => {
           {...register("userName")}
         />
       </label>
+
+      {/* <label>
+        <p>아이디</p>
+        <input type="text" placeholder='아이디를 입력하세요.' 
+          {...register("userIdentification")}
+        />
+      </label> */}
 
       <label>
         <p>닉네임</p>
