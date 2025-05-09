@@ -8,18 +8,27 @@ export const setPreviousUrl = createAction(SET_PREVIOUS_URL, (previousUrl) => pr
 export const setUser = createAction(SET_USER, (curruentUser) => curruentUser);
 export const setUserStatus = createAction(SET_USER_STATUS, (isLogin) => isLogin);
 
-const userInitalValue = {
-    curruentUser : {},
+const UserInitialValue = {
+    curruentUser : {
+        id : 0,
+        userIdentification : "",
+        userPassword : "",
+        userName : "",
+        userNickName : "",
+        userPhone : "",
+        userEmail : "",
+        userProvider : ""
+    },
     isLogin : false,
     previousUrl : "",
 };
  
 const user = handleActions({
 
-    [SET_PREVIOUS_URL] : (state , action) => ({...state, previousUrl: action.payload}),
-    [SET_USER] : (state, action) => ({...state, curruentUser: action.payload}),
-    [SET_USER_STATUS] : (state, action) => ({...state, isLogin: action.payload})
+    [SET_PREVIOUS_URL] : (state = UserInitialValue, action) => ({...state, previousUrl: action.payload}),
+    [SET_USER] : (state = UserInitialValue, action) => ({...state, currentUser: action.payload}),
+    [SET_USER_STATUS] : (state = UserInitialValue, action) => ({...state, isLogin: action.payload})
 
-}, userInitalValue );
+}, UserInitialValue );
 
 export default user;

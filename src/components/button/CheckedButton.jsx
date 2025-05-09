@@ -2,7 +2,7 @@ import React from 'react';
 import BasicButton from './BasicButton'; 
 
 // 인증 활성화 버튼 (이메일 인증, 학교 검색 ..)
-const CheckButton = (props) => {
+const CheckedButton = (props) => {
   return (
     <BasicButton
       variant="primary"
@@ -18,4 +18,4 @@ const CheckButton = (props) => {
   );
 };
 
-export default CheckButton;
+export default CheckedButton;

@@ -2,7 +2,7 @@ import React from 'react';
 import BasicButton from './BasicButton'; 
 
 // 인증 비활성화 버튼 (이메일 인증, 학교 검색 ..)
-const UncheckButton = (props) => {
+const UncheckedButton = (props) => {
   return (
     <BasicButton
       variant="gray500"
@@ -18,4 +18,4 @@ const UncheckButton = (props) => {
   );
 };
 
-export default UncheckButton;
+export default UncheckedButton;
