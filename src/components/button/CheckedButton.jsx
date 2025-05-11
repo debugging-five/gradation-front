@@ -5,6 +5,7 @@ import BasicButton from './BasicButton';
 const CheckedButton = (props) => {
   return (
     <BasicButton
+      {...props}
       variant="primary"
       color="gray100"
       fontSize="h7"
