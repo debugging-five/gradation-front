@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { EN_H2, H2, H3, H4, H5, H7, H8 } from '../../../styles/common';
-import theme from '../../../styles/theme';
 const primary = "#EE3333";
 const gray100 = "#FBFCFC";
 const gray500 = "#C0C5C7";
@@ -30,13 +29,13 @@ S.Wrapper = styled.div`
   flex-direction : column;
   align-items: center; 
   justify-content: center;
-  margin-bottom: 200px;
+  margin-bottom: 173px;
 `
 
 S.AuctionDetail = styled.div`
   display: flex;
   width : 1160px;
-  margin : 70px 0 94px 0 ;
+  margin-top : 70px;
   gap : 120px;
 `
 
@@ -55,7 +54,6 @@ S.AuctionImg = styled.img`
 `
 
 S.AuctionInfo = styled.div`
-  height : 560px;
 `
 
 S.AuctionInfo1 = styled.div`
@@ -156,7 +154,6 @@ S.BiddingButton = styled.button`
 
 S.AuctionList = styled.div`
   height : 269px;
-  margin : 20px 0 38px 0;
 `
 
 S.AuctionIng = styled.div`
@@ -203,7 +200,26 @@ S.buttonImg = styled.img`
   height: 48px;
 `
 
+S.PopupBody = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(110, 116, 118, 0.3);
+  z-index: 999;
+`
+S.PopupContainer1 = styled.div`
+  display : flex; 
+  flex-direction : column;
+  align-items: center; 
+  justify-content: center;
+`
 
+S.PopupPosition = styled.div`
+  position: absolute;
+
+`
 
 
 

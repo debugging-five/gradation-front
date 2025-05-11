@@ -13,36 +13,47 @@ const AuctionDetailContainer = () => {
   const [cursor, setCursor] = useState(1);
   const [list, setList] = useState([]);
 
+  // 현재 커서에 해당하는 리스트를 가져오는 useEffect
   useEffect(() => {
-    const auctionList = async () => {
-      try {
-        const response = await fetch(`http://localhost:10000/auction/api/footer/${cursor}`);
-        const lists = await response.json();
-        setList(lists);
-
-        // lists.forEach((data) => {
-        //   console.log(data.artImgName);
-        //   console.log(data.artImgPath);
-        // });
-      } catch (error) {
-        console.error("API 호출 실패:", error);
-      }
+    const fetchList = async () => {
+      const response = await fetch(`http://localhost:10000/auction/api/footer/${cursor}`);
+      const data = await response.json();
+      setList(data);
     };
 
-    auctionList();
+    fetchList();
   }, [cursor]);
 
-  const cursorDown = () => {
-    if (cursor !== 1) {
+  // 최대 커서 찾기
+  const cursorUp = async () => {
+    const nextCursor = cursor + 1;
+    const response = await fetch(`http://localhost:10000/auction/api/footer/${nextCursor}`);
+    const data = await response.json();
+      if (data.length === 0) {
+        setCursor(1);
+      } else {
+        setCursor(nextCursor);
+      }
+  };
+  const cursorDown = async () => {
+    if (cursor === 1) {
+      let tempCursor = 1;
+      let data = [];
+
+      do {
+        const response = await fetch(`http://localhost:10000/auction/api/footer/${tempCursor}`);
+        data = await response.json();
+        if (data.length === 4) tempCursor++;
+      } while (data.length === 4);
+
+      setCursor(tempCursor - 1);
+    } else {
       setCursor(prev => prev - 1);
     }
   };
 
-  const cursorUp = () => {
-    if (list.length === 4) {
-      setCursor(prev => prev + 1);
-    }
-  };
+  // console.log(list);
+  
 
   return (
     <>
@@ -69,7 +80,7 @@ const AuctionDetailContainer = () => {
           </S.ArtList>
           <S.ArtList>
           {list.length > 1 && (
-            <Link>
+            <Link to={`/auction/bidding/${list[1].artCategory}/detail/${list[1].id}`}>
                 <S.ArtListImg
                   src={`http://localhost:10000/files/api/get/${list[1].artImgName}?filePath=${list[1].artImgPath}`}
                   alt="이미지 호출 오류"
