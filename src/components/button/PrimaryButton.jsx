@@ -5,6 +5,7 @@ import BasicButton from './BasicButton';
 const PrimaryButton = (props) => {
   return (
     <BasicButton
+      {...props}
       variant="primary"
       color="gray100"
       fontSize="h5"

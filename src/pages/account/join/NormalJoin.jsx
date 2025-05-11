@@ -7,16 +7,29 @@ import UncheckedButton from '../../../components/button/UncheckedButton';
 
 const NormalJoin = () => {
 
-  const { register, handleSubmit, getValues, formState: {isSubmitting, isSubmitted, errors}} = useForm({mode:"onChange"});
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[!@#])[\da-zA-Z!@#]{8,}$/;
-  const identificationRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[!@#])[\da-zA-Z!@#]{8,}$/; // 조건 변경
-  const phoneRegex = /^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$/;
-
+  const { register, handleSubmit, getValues, trigger, formState: {isSubmitting, isSubmitted, errors}} = useForm({mode:"onChange"});
   const navigate = useNavigate();
 
+  const identificationRegex =  /^[a-zA-Z0-9]{6,20}$/; 
+  const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#])[a-zA-Z\d!@#]{8,12}$/;
+  const phoneRegex = /^01[016789][0-9]{7,8}$/;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
   const [agreement, setAgreement] = useState([false, false, false, false]);
-  const isAllAgreed = agreement[0] && agreement[1] && agreement[2] && agreement[3]
+  const isAllAgreed = agreement[0] && agreement[1] && agreement[2] && agreement[3] // 전체동의
+  const isAllRequiredAgreed = agreement[0] && agreement[1] && agreement[2] // 필수동의 3개
+  
+  const [userIdentification, setUserIdentification] = useState(""); 
+  const [userEmail, setUserEmail] = useState(""); 
+  const [code, setCode] = useState("") 
+
+  const [idCheckMessage, setIdCheckMessage] = useState("") // 아이디 중복 체크 결과 메시지
+  const [isIdAvailable, setIsIdAvailable] = useState(null) // 아이디 사용 가능 여부
+  const [emailCheckMessage, setEmailCheckMessage] = useState("")
+  const [isSendVerificationCode, setIsSendVerificationCode] = useState(false) // 인증번호 이메일 전송 성공 여부
+  const [confirmVerificationCode, setConfirmVerificationCode] = useState(false) // 인증번호 검증 성공 여부
+  const [verificationMessage, setVerificationMessage] = useState("") // 인증 완료 실패 메시지
+  const [errorCount, setErrorCount] = useState(1); // 인증번호 실패 횟수
 
   // 전체 동의
   const agreementAll = () => {
@@ -38,18 +51,13 @@ const NormalJoin = () => {
     '[선택] 개인정보 수집 및 이용 동의',
   ];
   
-  const [email, setEmail] = useState("");
-  const [userIdentification, setUserIdentification] = useState("");
-  const [isChecked, setIsChecked] = useState(false);
-  const [isEmailChecked, setIsEmailChecked] = useState(false);
-
   
   // 아이디 중복 검사
   const checkId = async () => {
     console.log("userIdentification", userIdentification)
-    
-    if(!userIdentification) {
-      alert("아이디를 입력하세요");
+
+    const isUserIdentificationValid = await trigger("userIdentification")
+    if(!isUserIdentificationValid) {
       return;
     }
     await fetch(`http://localhost:10000/users/api/check-id/${userIdentification}`, {
@@ -58,32 +66,134 @@ const NormalJoin = () => {
     .then((res) => {
       if(!res.ok) {
         return res.json().then((res) => {
-          alert(`${res.message}`)
+          setIdCheckMessage(res.message)
+          setIsIdAvailable(false)
         })
       }
       return res.json()
     })
     .then((res) => {
       console.log(res)
-      alert(res.message)
-      setIsChecked(true)
+      setIdCheckMessage(res.message)
+      setIsIdAvailable(true)
     })
     .catch(console.error)
   }
 
-  // 이메일 인증
-  
+  // 이메일 중복 체크 + 이메일 인증번호 전송
+  const getVerificationCodeEmail = async () => {
+    const isUserEmailValid = await trigger("userEmail")
+    if(!isUserEmailValid) {
+      return;
+    }
 
+    // 이메일 중복 체크
+    await fetch(`http://localhost:10000/users/api/check-email/${userEmail}`, {
+      method : "GET"
+    })
+    .then((res) => {
+      if(!res.ok) {
+        res.json().then((res) => {
+          setEmailCheckMessage(res.message)
+        })
+      }
+      return res.json();
+    })
+    .then(() => {
+      setEmailCheckMessage("");
+      setIsSendVerificationCode(true)
+      setErrorCount(0);
+      setConfirmVerificationCode(false);
+
+      // 인증번호 발송
+      fetch("http://localhost:10000/auth/sendEmail", {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify(userEmail)
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res)
+        })
+        .catch(console.error)
+      })
+    
+    .catch(console.error)
+  }
+
+  // 인증번호 검증
+  const getIsVerificationCode = async () => {
+    const isCodeValid = await trigger("code")
+      if(!isCodeValid) {
+      return;
+    }
+
+    if(!isSendVerificationCode) {
+      alert("이메일을 인증해주세요.")
+      return;
+    }
+
+    await fetch("http://localhost:10000/auth/verifyCode", {
+      method : "POST",
+      headers : {
+        "Content-Type" : "application/json"
+      },
+      body : JSON.stringify(code)
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res)
+        if(!res.isFlag){
+          const updateErrorCount = errorCount + 1;
+          if(updateErrorCount >= 3) {
+            setVerificationMessage(`인증코드 ${updateErrorCount}회 실패! \n다시 인증해주세요.`)
+            setIsSendVerificationCode(false)
+            setErrorCount(0)
+            return;
+          }
+          setErrorCount(updateErrorCount)
+          setVerificationMessage(`인증코드가 일치하지 않습니다. (${updateErrorCount}회)`)
+          return;
+        }
+        setConfirmVerificationCode(true);
+        setVerificationMessage("인증이 완료되었습니다.")
+      })
+      .catch(console.error)
+    }
+
+  console.log("confirmVerificationCode", confirmVerificationCode)
+  
 
   return (
     <form onSubmit={handleSubmit(async (data) => {
+
+      // 아이디 중복 체크
+      if(!isIdAvailable) {
+        alert("아이디 중복 체크 필수입니다.")
+        return;
+      }
+
+      // 인증번호
+      if(!confirmVerificationCode) {
+        alert("인증번호 확인은 필수입니다.")
+        return
+      }
+
+      // 필수약관동의
+      if(!isAllRequiredAgreed) {
+        alert("필수 약관에 동의해주세요.")
+        return
+      }
+
       const {
         userIdentification,
         userPassword,
         userName,
         userNickName,
         userPhone,
-        userEmail
+        userEmail,
       } = data;
 
       const userVO = {
@@ -92,7 +202,7 @@ const NormalJoin = () => {
         userName : userName,
         userNickName : userNickName,
         userPhone : userPhone,
-        userEmail : userEmail
+        userEmail : userEmail,
       }
 
       await fetch("http://localhost:10000/users/api/join/normal", {
@@ -105,16 +215,15 @@ const NormalJoin = () => {
       .then((res) => {
         if(!res.ok) {
           return res.json().then((res) => {
-            alert(`${res.message}`)
+            console.log(res)
+            // alert(`${res.message}`)
           })
         }
         return res.json()
       })
-      // 성공한 res
       .then((res) => {
         console.log(res)
         alert(res.message)
-        // 페이지 이동
         navigate("/login")
       })
       .catch(console.error)
@@ -129,13 +238,18 @@ const NormalJoin = () => {
                 <S.Label>
                   <S.H5>아이디<span>*</span></S.H5>
                   <S.Input type='text' placeholder='6~20자 영문, 숫자 조합으로 입력하세요.'
+                  
                   {...register("userIdentification", {
                     required : true,
                     pattern : {
-                      // value : identificationRegex,
+                    value : identificationRegex,
                     }
                   })}
-                  onChange={(e) => setUserIdentification(e.target.value)}
+                   onChange={(e) => { 
+                  setUserIdentification(e.target.value)
+                  setIsIdAvailable(null);
+                  setIdCheckMessage("")
+                }}
                 />
                 {errors && errors?.userIdentification?.type === "required" && (
                   <p>필수 항목입니다.</p>
@@ -143,13 +257,16 @@ const NormalJoin = () => {
                 {errors && errors?.userIdentification?.type === "pattern" && (
                   <p>아이디 양식에 맞게 입력해주세요.</p>
                 )}
+
+                {idCheckMessage && (
+                  <p>{idCheckMessage}</p>
+                )}
                 </S.Label>
-                <S.ButtonWrapper type="button" onClick={checkId} isChecked={isChecked}>
-                  {/* <UncheckButton isChecked={isChecked}>중복 체크</UncheckButton> */}
-                  {isChecked ? (
-                    <CheckedButton>중복 체크 완료</CheckedButton>
+                <S.ButtonWrapper>
+                  {isIdAvailable ? (
+                    <CheckedButton type="button">중복 체크 완료</CheckedButton>
                   ) : (
-                    <UncheckedButton onClick={checkId}>중복 체크</UncheckedButton>
+                    <UncheckedButton type="button" onClick={checkId}>중복 체크</UncheckedButton>
                   )}
                 </S.ButtonWrapper>
               </S.InputWrapper>
@@ -163,7 +280,7 @@ const NormalJoin = () => {
                   {...register("userPassword", {
                     required : true,
                     pattern : {
-                      // value : passwordRegex,
+                    value : passwordRegex,
                     }
                   })}
                 />
@@ -220,7 +337,7 @@ const NormalJoin = () => {
             <S.Border>
               <S.InputWrapper>
                 <S.Label>
-                  <S.H5>닉네임<span>*</span></S.H5>
+                  <S.H5>닉네임</S.H5>
                   <S.Input type='text' placeholder='닉네임을 입력하세요.'
                   {...register("userNickName")}
                   />
@@ -238,7 +355,7 @@ const NormalJoin = () => {
                   {...register("userPhone", {
                     required : true,
                     pattern : {
-                      // value : phoneRegex,
+                    value : phoneRegex,
                     }
                   })}
                 />
@@ -248,7 +365,6 @@ const NormalJoin = () => {
                 {errors && errors?.userPhone?.type === "pattern" && (
                   <p>휴대폰 번호 양식에 맞게 입력해주세요.</p>
                 )}
-
                 </S.Label>
                 <S.ButtonWrapper>
                 </S.ButtonWrapper>
@@ -259,14 +375,21 @@ const NormalJoin = () => {
               <S.InputWrapper>
                 <S.Label>
                   <S.H5>이메일<span>*</span></S.H5>
-                  <S.Input type='text' placeholder='이메일을 입력하세요.'
+                  <S.Input type='text' placeholder='이메일을 입력하세요.' 
                   {...register("userEmail", {
                     required : true,
                     pattern : {
-                      // value : emailRegex,
+                    value : emailRegex,
                     }
                   })}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => { 
+                  setUserEmail(e.target.value)
+                  setConfirmVerificationCode(false)
+                  setIsSendVerificationCode(false)
+                  setErrorCount(0)
+                  setEmailCheckMessage("");
+                  setVerificationMessage("")
+                }}
                 />
                 {errors && errors?.userEmail?.type === "required" && (
                   <p>필수 항목입니다.</p>
@@ -274,12 +397,20 @@ const NormalJoin = () => {
                 {errors && errors?.userEmail?.type === "pattern" && (
                   <p>이메일 양식에 맞게 입력해주세요.</p>
                 )}
+                {emailCheckMessage && (
+                  <p>{emailCheckMessage}</p>
+                )}
+                {isSendVerificationCode && !errors.userEmail && (
+                  <p>인증코드가 발송되었습니다.</p>
+                )}
                 </S.Label>
                 <S.ButtonWrapper>
-                  <UncheckedButton>
-                    이메일 인증
-                  </UncheckedButton>
-                </S.ButtonWrapper>
+                  {isSendVerificationCode ? (
+                    <CheckedButton type="button" onClick={getVerificationCodeEmail}>이메일 재전송</CheckedButton>
+                  ) : (
+                    <UncheckedButton type="button" onClick={getVerificationCodeEmail}>이메일 인증</UncheckedButton>
+                  )}
+                </S.ButtonWrapper> 
               </S.InputWrapper>
             </S.Border>
 
@@ -287,10 +418,26 @@ const NormalJoin = () => {
               <S.InputWrapper>
                 <S.Label>
                   <S.H5>인증번호<span>*</span></S.H5>
-                  <S.Input type='text' placeholder='인증번호를 입력하세요.'/>
+                  <S.Input placeholder='인증번호를 입력하세요.' 
+                    {...register("code", {
+                    required : true
+                  })}
+                  onChange={(e) => setCode(e.target.value)}
+                  />
+                  {errors && errors?.code?.type === "required" && (
+                    <p>필수 항목입니다.</p>
+                  )}
+
+                  {verificationMessage && (
+                    <p>{verificationMessage}</p>
+                  )}
                 </S.Label>
                 <S.ButtonWrapper>
-                  <UncheckedButton>인증번호 확인</UncheckedButton>
+                  {confirmVerificationCode ? (
+                    <CheckedButton type="button">인증 완료</CheckedButton>
+                  ): (
+                    <UncheckedButton onClick={getIsVerificationCode} type="button">인증번호 확인</UncheckedButton>
+                  )}
                 </S.ButtonWrapper>
               </S.InputWrapper>
             </S.Border>
@@ -312,7 +459,7 @@ const NormalJoin = () => {
             ))}
           </S.CheckboxContainer>
 
-          <S.JoinButton disabled={isSubmitting}>
+          <S.JoinButton>
             <S.H4 disabled={isSubmitting}>회원가입</S.H4>
           </S.JoinButton>
       </S.Wrapper>
