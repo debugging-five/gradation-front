@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import CheckedButton from '../../../components/button/CheckedButton';
 import UncheckedButton from '../../../components/button/UncheckedButton';
-import Sms from './Sms';
 
 const NormalJoin = () => {
 
