@@ -45,7 +45,8 @@ S.Label = styled.label`
 
 S.H5 = styled.p`
   ${H5}
-  width : 108px;
+  /* width : 108px; */
+  width : 120px;
 
   span {
     color: #EE3333;

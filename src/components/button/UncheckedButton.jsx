@@ -5,6 +5,7 @@ import BasicButton from './BasicButton';
 const UncheckedButton = (props) => {
   return (
     <BasicButton
+      {...props}
       variant="gray500"
       color="gray100"
       fontSize="h7"

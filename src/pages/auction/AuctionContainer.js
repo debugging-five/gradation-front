@@ -1,12 +1,14 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { Link, Outlet } from 'react-router-dom';
+import S from './style';
 
 const AuctionContainer = () => {
   return (
-    <div>
-      <h1>Auction</h1>
+    <S.Wrapper>
+      <S.EN_H2>auction</S.EN_H2>
       <Outlet />
-    </div>
+      
+    </S.Wrapper>
   );
 };
 
