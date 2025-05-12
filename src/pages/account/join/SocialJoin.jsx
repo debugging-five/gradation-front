@@ -1,11 +1,11 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 const SocialJoin = ({email, provider}) => {
 
   const { register, handleSubmit, getValues, formState: {isSubmitting, isSubmitted, errors}} = useForm({mode:"onChange"});
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[!@#])[\da-zA-Z!@#]{8,}$/;
+  const navigate = useNavigate();
 
   return (
     <form onSubmit={handleSubmit(async (data) => {
@@ -37,7 +37,9 @@ const SocialJoin = ({email, provider}) => {
         return res.json()
       })
       .then((res) => {
-        console.log(res)
+        // console.log(res)
+        alert(res.message)
+        navigate("/")
       })
       .catch(console.error)
 
