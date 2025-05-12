@@ -7,7 +7,7 @@ import UncheckedButton from '../../../components/button/UncheckedButton';
 
 const NormalJoin = () => {
 
-  const { register, handleSubmit, getValues, trigger, formState: {isSubmitting, isSubmitted, errors}} = useForm({mode:"onChange"});
+  const { register, handleSubmit, getValues, formState: {isSubmitting, isSubmitted, errors}} = useForm({mode:"onChange"});
   const navigate = useNavigate();
 
   const identificationRegex =  /^[a-zA-Z0-9]{6,20}$/; 
@@ -56,10 +56,10 @@ const NormalJoin = () => {
   const checkId = async () => {
     console.log("userIdentification", userIdentification)
 
-    const isUserIdentificationValid = await trigger("userIdentification")
-    if(!isUserIdentificationValid) {
-      return;
+    if(!userIdentification) {
+      alert("아이디를 입력하세요.")
     }
+  
     await fetch(`http://localhost:10000/users/api/check-id/${userIdentification}`, {
       method : "GET"
     })
@@ -82,8 +82,8 @@ const NormalJoin = () => {
 
   // 이메일 중복 체크 + 이메일 인증번호 전송
   const getVerificationCodeEmail = async () => {
-    const isUserEmailValid = await trigger("userEmail")
-    if(!isUserEmailValid) {
+    if(!userEmail) {
+      alert("이메일을 입력하세요.")
       return;
     }
 
@@ -125,9 +125,9 @@ const NormalJoin = () => {
 
   // 인증번호 검증
   const getIsVerificationCode = async () => {
-    const isCodeValid = await trigger("code")
-      if(!isCodeValid) {
-      return;
+
+    if(!code) {
+      alert("인증번호를 입력하세요.")
     }
 
     if(!isSendVerificationCode) {
