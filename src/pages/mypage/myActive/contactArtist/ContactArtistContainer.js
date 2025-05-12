@@ -1,16 +1,15 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import { MainWrapper } from '../../style';
+import { ChooseBar, ChooseBarWapper, MainTitle, MainWrapper } from '../../style';
 
 const ContactArtistContainer = () => {
   return (
     <MainWrapper>
-      <p>내활동 / 작가와 연락</p>
-      <div>
-        {/* 임시 */}
-        <NavLink to={"sended"}>쪽지 수신함</NavLink>
-        <NavLink to={"received"}>내가 보낸 쪽지</NavLink>
-      </div>
+      <MainTitle>내활동 / 작가와 연락</MainTitle>
+      <ChooseBarWapper>
+        <ChooseBar as={NavLink} to="received" end>쪽지 수신함</ChooseBar>
+        <ChooseBar as={NavLink} to="sended" end>내가 보낸 쪽지</ChooseBar>
+      </ChooseBarWapper>
       <div>
         <Outlet />
       </div>

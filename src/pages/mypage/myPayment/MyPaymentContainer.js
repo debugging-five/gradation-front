@@ -1,18 +1,31 @@
 import React from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import { ChooseBar, ChooseBarWapper, MainTitle, MainWrapper } from '../style';
 
 const MyPaymentContainer = () => {
+  const location = useLocation()
+  const path = location.pathname;
+  console.log(path)
+  let title = ""
+  if(path.includes("payment-list")){
+    title = "구매 내역"
+  }else{
+    title = "경매 내역"
+  }
+
   return (
-    <div>
-      <p>내 결제내역 / (경매 / 구매) 내역</p>
-      <div>
-        <NavLink to={"auction-list"}>경매 내역</NavLink>
-        <NavLink to={"payment-list"}>구매 내역</NavLink>
-      </div>
+    <MainWrapper>
+      <MainTitle>내 결제내역 / {title}</MainTitle>
+      <ChooseBarWapper>
+        <ChooseBar as={NavLink} to="auction-list" end>경매 내역</ChooseBar>
+        <ChooseBar as={NavLink} to="payment-list" end>구매 내역</ChooseBar>
+      </ChooseBarWapper>
+
       <div>
         <Outlet />
       </div>
-    </div>
+      
+    </MainWrapper>
   );
 };
 

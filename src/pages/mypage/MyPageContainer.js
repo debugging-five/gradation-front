@@ -42,7 +42,7 @@ const MyPageContainer = () => {
 
         <BarTitle>내 알림</BarTitle>
         <BarContentWapper>
-          <BarContent  as={NavLink} to="my-mail" end onClick={() => window.scrollTo(0, 0)}>내 쪽지</BarContent>
+          <BarContent  as={NavLink} to="alert" end onClick={() => window.scrollTo(0, 0)}>내 알림</BarContent>
         </BarContentWapper>
         <EndBar></EndBar>
 

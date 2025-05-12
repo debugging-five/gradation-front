@@ -94,17 +94,18 @@ width: 120px;
 text-align: center;
 `;
 export const Title = styled.div`
-width: 400px;
+width: 320px;
 text-align: center;
 `;
 export const Content = styled.div`
-width: 400px;
+width: 320px;
 overflow: hidden;
 text-overflow: ellipsis;
 white-space: nowrap;
+text-align: center;
 `;
 export const Emptybox = styled.div`
-width: 80px;
+width: 120px;
 text-align: center;
 `;
 
