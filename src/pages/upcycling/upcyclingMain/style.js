@@ -1,5 +1,21 @@
-import styled from "styled-components";
 import * as CS from "../../../styles/common";
+import styled, { keyframes } from "styled-components";
+
+const fadeSlideDown = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+    max-height: 0;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 800px;
+  }
+`;
 
 export const UpcyclingWrapper = styled.div`
   width: 100%;
@@ -10,14 +26,15 @@ export const UpcyclingWrapper = styled.div`
 `;
 
 export const UpcycleTitle = styled.h1`
-  ${CS.EN_H1};
+  ${CS.EN_H2};
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 95px;
 `;
 
 export const BannerContainer = styled.section`
   width: 100%;
   ${CS.flexCenter};
+  margin-bottom: 275px;
 `;
 
 export const BannerImgContainer = styled.div`
@@ -32,87 +49,115 @@ export const BannerImg = styled.img`
 export const BannerText = styled.div`
   ${CS.H1};
   text-align: center;
-  color: white;
+  color: #FBFCFC;
   position: absolute;
-  top: 40%;
+  top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
   line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
 `;
 
 export const Chapter1 = styled.section`
-  ${CS.flexCenterColumn};
-  margin: 100px 0;
+  width: 1160px;               
+  margin: 100px auto 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const Chapter1Title = styled.h1`
   ${CS.H1};
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 100px;
+  line-height: 1.2;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
 `;
 
 export const ChapterStats = styled.div`
   display: flex;
-  gap: 80px;
+  justify-content: space-between;
+  align-items: stretch;
+
 `;
 
 export const ChapterBox = styled.div`
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 30px;
+  border-right: 3px solid #333333;
+  position: relative;
+
+  &:last-child {
+    border-right: none;
+  }
 `;
 
 export const StatsTitle = styled.h2`
   ${CS.H1};
+  text-align: center;
+  line-height: 1.2;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+  height: 50px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 `;
 
 export const StatsDesc = styled.div`
   ${CS.H3};
-  margin-top: 10px;
+  margin-top: 20px;
   line-height: 1.5;
+  text-align: center;
+  word-break: keep-all;
 `;
 
 export const Chapter2 = styled.section`
   ${CS.flexCenter};
-  margin: 80px 0;
+  margin: 80px;
 `;
 
 export const Chapter2Img = styled.img`
   width: 1160px;
   height: 653px;
+  margin-bottom: 150px;
 `;
 
 export const Chapter3 = styled.section`
   ${CS.flexCenterColumn};
-  margin: 100px 0;
+  margin-top: 230px;
+  margin-bottom: 400px;
 `;
 
 export const Chapter3Title = styled.h1`
   ${CS.H1};
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 70px;
 `;
 
 export const Chapter3TopImg = styled.div`
   display: flex;
   gap: 30px;
-  margin-bottom: 30px;
 `;
 
 export const Chapter3MidImg = styled.div`
   display: flex;
   gap: 30px;
-  margin-bottom: 30px;
 `;
 
 export const Chapter3BottomImg = styled.div`
   display: flex;
   gap: 30px;
-  margin-bottom: 30px;
 `;
 
 export const Chapter3Labels = styled.div`
   ${CS.H5};
   text-align: center;
-  margin-top: 20px;
+  margin-top: 5px;
+  margin-bottom: 25px;
 `;
 
 export const StepImg = styled.img`
@@ -123,6 +168,7 @@ export const StepImg = styled.img`
 export const ArrowImg = styled.img`
   width: 104px;
   height: 134px;
+  margin-top: 30px;
 `;
 
 export const Chapter4 = styled.section`
@@ -189,11 +235,17 @@ export const TimelineTitle = styled.h2`
 
 export const TimelineText = styled.p`
   ${CS.H3};
-  max-height: 0;
-  opacity: 0;
   overflow: hidden;
-  transition: all 0.4s ease;
+  opacity: 0;
+  max-height: 0;
+  transform: translateY(-10px);
+  transition: opacity 2s ease, transform 2s ease;
+  &.visible {
+    animation: ${fadeSlideDown} 2s ease forwards;
+  }
+
   margin-top: 20px;
+  margin-bottom: 0;
 `;
 
 export const Step = styled.div`

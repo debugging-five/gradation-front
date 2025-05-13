@@ -14,6 +14,7 @@ const UpcyclingMain = () => {
     }
   };
 
+
   return (
     <S.UpcyclingWrapper>
       <S.UpcycleTitle>upcycling</S.UpcycleTitle>
@@ -276,9 +277,7 @@ const UpcyclingMain = () => {
       </S.BottomText>
 
       <S.ButtonsWrapper>
-        <S.ApplicationButton
-          onClick={() => handleNavigate("/upcycling/registration")}
-        >
+        <S.ApplicationButton onClick={() => handleNavigate("/upcycling/registration")} >
           업사이클 신청
         </S.ApplicationButton>
         <S.InquiryButton onClick={() => handleNavigate("/service-center/qna")}>
