@@ -58,18 +58,24 @@ export const H6 = css`
 export const H7 = css`
   font-family: ${({ theme }) => theme.FONT_FAMILY.korean};
   font-size: ${({ theme }) => theme.FONT_SIZE_KR.h7};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT_KR.regular};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT_KR.semibold};
 `;
 
 export const H8 = css`
   font-family: ${({ theme }) => theme.FONT_FAMILY.korean};
   font-size: ${({ theme }) => theme.FONT_SIZE_KR.h8};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT_KR.light};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT_KR.regular};
 `;
 
 export const H9 = css`
   font-family: ${({ theme }) => theme.FONT_FAMILY.korean};
   font-size: ${({ theme }) => theme.FONT_SIZE_KR.h9};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT_KR.light};
+`;
+
+export const H10 = css`
+  font-family: ${({ theme }) => theme.FONT_FAMILY.korean};
+  font-size: ${({ theme }) => theme.FONT_SIZE_KR.h10};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT_KR.light};
 `;
 
