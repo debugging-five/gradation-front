@@ -87,6 +87,7 @@ import MypageAlertList from "../pages/mypage/myMail/MypageAlertList";
 import MypageAlertDetail from "../pages/mypage/myMail/MypageAlertDetail";
 import UpcyclingMainContainer from "../pages/upcycling/upcyclingMain/UpcyclingMainContainer";
 import UpcyclingRegistration from "../pages/upcycling/upcyclingRegistration/UpcyclingRegistration";
+import Sms from "../pages/account/join/Sms";
 
 const router = createBrowserRouter([
   {
@@ -100,6 +101,10 @@ const router = createBrowserRouter([
       {
         path : "/join",
         element : <Join />
+      },
+      {
+        path : "/sms",
+        element : <Sms />
       },
       {
         path : "/login",
