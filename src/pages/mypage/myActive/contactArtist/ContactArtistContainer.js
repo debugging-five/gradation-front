@@ -1,12 +1,19 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
+import { ChooseBar, ChooseBarWapper, MainTitle, MainWrapper } from '../../style';
 
 const ContactArtistContainer = () => {
   return (
-    <div>
-      내활동 / 작가와 연락
-      <Outlet />
-    </div>
+    <MainWrapper>
+      <MainTitle>내활동 / 작가와 연락</MainTitle>
+      <ChooseBarWapper>
+        <ChooseBar as={NavLink} to="received" end>쪽지 수신함</ChooseBar>
+        <ChooseBar as={NavLink} to="sended" end>내가 보낸 쪽지</ChooseBar>
+      </ChooseBarWapper>
+      <div>
+        <Outlet />
+      </div>
+    </MainWrapper>
   );
 };
 

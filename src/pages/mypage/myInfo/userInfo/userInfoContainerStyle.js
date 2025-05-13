@@ -36,8 +36,8 @@ export const EndBar = styled.p`
 
 export const Title = styled.div`
     font-weight: bold;
-  display: flex;
-  width: 120px;
+    display: flex;
+    width: 120px;
 `;
 
 export const ButtonDiv = styled.div`
@@ -53,4 +53,5 @@ export const Button = styled.button`
     color: white;
     text-align: center;
     border: none;
+    
 `;
