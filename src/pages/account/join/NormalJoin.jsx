@@ -130,10 +130,10 @@ const NormalJoin = () => {
       alert("인증번호를 입력하세요.")
     }
 
-    if(!isSendVerificationCode) {
-      alert("이메일을 인증해주세요.")
-      return;
-    }
+    // if(!isSendVerificationCode) {
+    //   alert("이메일을 인증해주세요.")
+    //   return;
+    // }
 
     await fetch("http://localhost:10000/auth/verifyCode", {
       method : "POST",
@@ -414,33 +414,35 @@ const NormalJoin = () => {
               </S.InputWrapper>
             </S.Border>
 
-            <S.Border>
-              <S.InputWrapper>
-                <S.Label>
-                  <S.H5>인증번호<span>*</span></S.H5>
-                  <S.Input placeholder='인증번호를 입력하세요.' 
-                    {...register("code", {
-                    required : true
-                  })}
-                  onChange={(e) => setCode(e.target.value)}
-                  />
-                  {errors && errors?.code?.type === "required" && (
-                    <p>필수 항목입니다.</p>
-                  )}
+            {isSendVerificationCode && (
+              <S.Border>
+                <S.InputWrapper>
+                  <S.Label>
+                    <S.H5>인증번호<span>*</span></S.H5>
+                    <S.Input placeholder='인증번호를 입력하세요.' 
+                      {...register("code", {
+                      required : true
+                    })}
+                    onChange={(e) => setCode(e.target.value)}
+                    />
+                    {errors && errors?.code?.type === "required" && (
+                      <p>필수 항목입니다.</p>
+                    )}
 
-                  {verificationMessage && (
-                    <p>{verificationMessage}</p>
-                  )}
-                </S.Label>
-                <S.ButtonWrapper>
-                  {confirmVerificationCode ? (
-                    <CheckedButton type="button">인증 완료</CheckedButton>
-                  ): (
-                    <UncheckedButton onClick={getIsVerificationCode} type="button">인증번호 확인</UncheckedButton>
-                  )}
-                </S.ButtonWrapper>
-              </S.InputWrapper>
-            </S.Border>
+                    {verificationMessage && (
+                      <p>{verificationMessage}</p>
+                    )}
+                  </S.Label>
+                  <S.ButtonWrapper>
+                    {confirmVerificationCode ? (
+                      <CheckedButton type="button">인증 완료</CheckedButton>
+                    ): (
+                      <UncheckedButton onClick={getIsVerificationCode} type="button">인증번호 확인</UncheckedButton>
+                    )}
+                  </S.ButtonWrapper>
+                </S.InputWrapper>
+              </S.Border>
+            )}
           </S.InputContainer>
 
           {/* 전체 동의 */}

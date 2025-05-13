@@ -6,11 +6,11 @@ const S = {};
 
 S.Container = styled.div`
   background-color: #FBFCFC;
-  height: 100dvh;
 `
 
 S.Wrapper = styled.div`
-  margin: 84px 0 200px 0;
+  /* margin: 84px 0 200px 0; */
+  padding: 84px 0 200px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -45,8 +45,7 @@ S.Label = styled.label`
 
 S.H5 = styled.p`
   ${H5}
-  /* width : 108px; */
-  width : 120px;
+  width : 140px;
 
   span {
     color: #EE3333;

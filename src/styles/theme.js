@@ -42,8 +42,9 @@ theme.FONT_SIZE_KR = {
     h5: "18px",
     h6: "18px",
     h7: "16px",
-    h8: "14px",
-    h9: "12px",
+    h8: "16px",
+    h9: "14px",
+    h10: "12px",
 };
   
 theme.FONT_SIZE_EN = {
