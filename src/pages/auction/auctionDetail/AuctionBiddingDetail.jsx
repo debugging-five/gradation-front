@@ -2,6 +2,7 @@ import React, { use, useEffect, useState } from 'react';
 import S from './style';
 import { Navigate, useNavigate } from 'react-router-dom';
 import AuctionPopup from './AuctionBiddingPopup/AuctionModal';
+import dayjs from 'dayjs';
 const AuctionBiddingDetail = ({type, category, id}) => {
 
 	
@@ -14,8 +15,20 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 	const [openBidding, setOpenBidding] = useState(false);
 	
 	const baseDate = new Date(data.auctionStartDate);
-  const deadline = new Date(baseDate.getTime() + 3 * 24 * 60 * 60 * 1000); // 기준일 + 3일
+  const deadline = new Date(baseDate.getTime() + 3 * 24 * 60 * 60 * 1000); // 기준일 + 3일, 마감직전 응찰이 들어오면 deadline에 30초를 더한다.
 	const [timeLeft, setTimeLeft] = useState(deadline - new Date());
+
+	const [bidderCount, setBidderCount] = useState(0);
+	useEffect(() => {
+		const bidderFetch = async () => {
+			const getBidderCount = await fetch(`http://localhost:10000/auction/api/read-bidder-count/${id}`)
+			const count = await getBidderCount.json();
+			
+			setBidderCount(count.count);
+
+		}
+		bidderFetch();
+	}, [id]);
 	
 	useEffect(() => {
 		const fetchAuction = async () => {
@@ -40,8 +53,11 @@ const AuctionBiddingDetail = ({type, category, id}) => {
       if (diff <= 0) {
         clearInterval(interval);
         setTimeLeft(0);
-				alert("종료된 경매입니다.");
-				navigate(`/auction/complete/${category}/detail/${id}`);
+				updateFetch().then(data => {
+					console.log(data);
+					alert("종료된 경매입니다.");
+					navigate(window.location.href = `/auction/complete/${category}/detail/${id}`, { replace: true });
+				});
       } else {
         setTimeLeft(diff);
       }
@@ -50,43 +66,53 @@ const AuctionBiddingDetail = ({type, category, id}) => {
     return () => clearInterval(interval);
 	}, [deadline])
 
-	const auctionVO = {
-		id: id,
-		auctionStartDate: "2025-01-01 15:30:00",
-		auctionStartPrice: 100000,
-		auctionEstimatedMinPrice: "100000",
-		auctionEstimatedMaxPrice: "200000",
-		auctionAttracted: false,
-		auctionBidPrice: 200000,
-		auctionBidDate: "2025-01-01 15:30:00",
-		artId: null,
-		userId: null
-	}
-
 	const updateFetch = async () => {
 		const getBidder = await fetch(`http://localhost:10000/auction/api/read-bidder/${id}`);
 		const bidder = await getBidder.json();
-		console.log(bidder);
+		// console.log(bidder);
+		let auctionVO = {};
 		if(bidder.id === null){
 			console.log("유찰!");
-			const auctionVO = {
+			auctionVO = {
 				id: id,
-				auctionStartDate: "2025-01-01 15:30:00",
-				auctionStartPrice: 100000,
-				auctionEstimatedMinPrice: "100000",
-				auctionEstimatedMaxPrice: "200000",
+				auctionStartDate: data.auctionStartDate,
+				auctionStartPrice: data.auctionStartPrice,
+				auctionEstimatedMinPrice: data.auctionEstimatedMinPrice,
+				auctionEstimatedMaxPrice: data.auctionEstimatedMaxPrice,
 				auctionAttracted: false,
-				auctionBidPrice: 200000,
-				auctionBidDate: "2025-01-01 15:30:00",
-				artId: null,
-				userId: null
+				auctionBidPrice: null,
+				auctionBidDate: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+				artId: data.artId,
+				userId: null,
 			}
+			console.log(auctionVO);
+			
 		}else {
 			console.log("낙찰!");
+			auctionVO = {
+				id: id,
+				auctionStartDate: data.auctionStartDate,
+				auctionStartPrice: data.auctionStartPrice,
+				auctionEstimatedMinPrice: data.auctionEstimatedMinPrice,
+				auctionEstimatedMaxPrice: data.auctionEstimatedMaxPrice,
+				auctionAttracted: true,
+				auctionBidPrice: bidder.auctionBiddingPrice,
+				auctionBidDate: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+				artId: data.artId,
+				userId: bidder.userId,
+			}
+			console.log(auctionVO);
 			
 		}
-		const update = await fetch(`http://localhost:10000/auction/api/modify`);
-		
+		const update = await fetch(`http://localhost:10000/auction/api/modify`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(auctionVO)
+		});
+		const updateData = await update.json();
+		return updateData;
 	}
 
 	const formatTime = (ms) => {
@@ -150,15 +176,15 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 						<S.AuctionInfo2>
 							<S.AuctionInfo2Detail>
 								<S.H5>마감일</S.H5>
-								<S.H7>2025 . 01 . 21 . 8:00:00</S.H7>
+								<S.H7>{dayjs(data.auctionStartDate).add(3, 'day').format('YYYY-MM-DD HH:mm:ss')}</S.H7>
 							</S.AuctionInfo2Detail>
 							<S.AuctionInfo2Detail>
 								<S.H5>추정가</S.H5>
-								<S.H7>KRW {data.auctionEstimatedMinPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ~ {data.auctionEstimatedMaxPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</S.H7>
+								<S.H7>KRW {data?.auctionEstimatedMinPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ~ {data?.auctionEstimatedMaxPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</S.H7>
 							</S.AuctionInfo2Detail>
 							<S.AuctionInfo2Detail>
 								<S.H5>시작가</S.H5>
-								<S.H7>KRW {data.auctionStartPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</S.H7>
+								<S.H7>KRW {data?.auctionStartPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</S.H7>
 							</S.AuctionInfo2Detail>
 						</S.AuctionInfo2>
 						
@@ -172,11 +198,11 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 							<S.PriceWrapper>
 								<S.CurrentPrice>
 										<S.H3>현재 입찰가</S.H3>
-										<S.H3>KRW {(bidding.auctionBiddingPrice || '-').toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</S.H3>
+										<S.H3>KRW {(bidding?.auctionBiddingPrice || '-').toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</S.H3>
 								</S.CurrentPrice>
 								<S.MinPrice>
 										<S.H3>최소 응찰가</S.H3>
-										<S.H3>KRW {((Math.ceil(bidding.auctionBiddingPrice * 1.1 / 1000) * 1000) || data.auctionStartPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</S.H3>
+										<S.H3>KRW {((Math.ceil(bidding?.auctionBiddingPrice * 1.1 / 1000) * 1000) || data.auctionStartPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</S.H3>
 								</S.MinPrice>
 							</S.PriceWrapper>
 						</S.AuctionInfo3>
@@ -186,16 +212,13 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 							<S.BiddingButton onClick={popupAuto}>자동응찰</S.BiddingButton>
 							<S.BiddingButton onClick={popup}>응찰</S.BiddingButton>
 						</S.ButtonWrapper>
-						<button onClick={updateFetch}>테스트버튼</button>
 					</S.AuctionInfo>
 				</S.AuctionDetail>
 					{openBidding ? 
 						<S.PopupBody>
-							<S.PopupContainer1>
 								<S.PopupPosition>
-									<AuctionPopup data={data} bidding={bidding} /> 
+									<AuctionPopup id={id} category={category} bidderCount={bidderCount} timeleft={formatTime(timeLeft)} data={data} bidding={bidding} setBidding={setBidding} openBidding={openBidding} setOpenBidding={setOpenBidding} /> 
 								</S.PopupPosition>
-							</S.PopupContainer1>
 						</S.PopupBody>
 							: null
 					}

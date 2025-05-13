@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { H2, H3, H4, H5, H6, H7, H9 } from "../../../../styles/common";
+import { H10, H2, H3, H4, H5, H6, H7, H8, H9 } from "../../../../styles/common";
 
 const primary = "#EE3333";
 const gray100 = "#FBFCFC";
@@ -73,6 +73,7 @@ S.Bar = styled.div`
 `
 
 S.BarImg = styled.img`
+  cursor: pointer;
   width : 16px;
 	height : 16px;
 	margin : 0 7px 0 0;
@@ -117,6 +118,7 @@ S.PopupInfo2 = styled.div`
 `
 
 S.Input = styled.input`
+  padding-left: 12px;
   width : 392px;
   height : 35px;
   border-radius : 3px;
@@ -140,18 +142,30 @@ S.Info3Bid = styled.div`
 `
 
 S.PopupButton = styled.div`
-  margin : 15px 0 10px 0;
+  margin : 34px 0 0 32px;
 `
 
 S.BiddingButton = styled.button`
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  border-radius : 3px; 
+  border : none;
   width : 190px;
   height : 70px;
   background-color : ${primary};
   color : ${gray100};
-  margin : 34px 0 0 0;
+  ${H3}
+
 `
 
 S.BackButton = styled.button`
+  ${H8}
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  border-radius : 3px; 
+  border : solid 1.5px ${primary};
   width : 190px;
   height : 35px;
   background-color : ${gray100};
@@ -164,7 +178,7 @@ S.Notice = styled.div`
 `
 
 S.NoticeP = styled.p`
-  ${H9}
+  ${H10}
   color : ${gray900};
   
 `
