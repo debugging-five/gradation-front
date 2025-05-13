@@ -1,10 +1,21 @@
 import React from 'react';
+import { ArtGrid, ArtImage, MainWrapper } from '../../style';
+import { LikeDiv } from './artLikeListStyle';
 
 const ArtLikeList = () => {
   return (
-    <div>
-      ArtLikeList 사진 사진 
-    </div>
+    <MainWrapper>
+        <ArtGrid>
+          <div>
+            <ArtImage src="http://localhost:10000/files/api/get/eximage.png?filePath=images/mypage" alt="eximage" />
+            <LikeDiv>
+              <span>♡</span>
+              <span>99</span>
+            </LikeDiv>
+          </div>
+        </ArtGrid>
+
+    </MainWrapper>
   );
 };
 

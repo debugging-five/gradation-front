@@ -1,10 +1,11 @@
 import React from 'react';
+import { MainWrapper } from '../style';
 
 const MyPaymentList = () => {
   return (
-    <div>
+    <MainWrapper>
       MyPaymentList
-    </div>
+    </MainWrapper>
   );
 };
 

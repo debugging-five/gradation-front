@@ -1,16 +1,21 @@
 import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, NavLink, Outlet } from 'react-router-dom';
+import { CategoryWrapper } from './myApprovedCategoryStyle';
+import { BarContent } from '../mypageContainerStyle';
 
 const MyApprovedCategory = () => {
   
   return (
     <div>
-      <div>
-        <Link to={`/mypage/mypage-approved-list/display`}>display</Link>
-        <Link to={`/mypage/mypage-approved-list/exhibition`}>exhibition</Link>
-        <Link to={`/mypage/mypage-approved-list/upcycling`}>upcycling</Link>
-        <Link to={`/mypage/mypage-approved-list/university`}>university</Link>
-      </div>
+      <CategoryWrapper>
+        <BarContent  as={NavLink} to="/mypage/mypage-approved-list/display" end>display</BarContent>
+        |
+        <BarContent  as={NavLink} to="/mypage/mypage-approved-list/exhibition" end>exhibition</BarContent>
+        |
+        <BarContent  as={NavLink} to="/mypage/mypage-approved-list/upcycling" end>upcycling</BarContent>
+        |
+        <BarContent  as={NavLink} to="/mypage/mypage-approved-list/university" end>university</BarContent>
+      </CategoryWrapper>
       <div>
         <Outlet />
       </div>

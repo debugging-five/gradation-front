@@ -78,13 +78,18 @@ import ArtistListContainer from "../pages/artist/artistList/ArtistListContainer"
 import ArtistMyProfile from "../pages/artist/artistMyProfile/ArtistMyProfile";
 import MyApprovedContainer from "../pages/mypage/myApproved/MyApprovedContainer";
 import MyApprovedCategory from "../pages/mypage/myApproved/MyApprovedCategory";
-import MyApprovedListContainer from "../pages/mypage/myApproved/myApprovedList/MyApprovedListContainer";
 import Login from "../pages/account/login/Login";
 import FindId from "../pages/account/login/FindId";
 import FindPassword from "../pages/account/login/FindPassword";
 import Join from "../pages/account/join/Join";
 import MypageAlertList from "../pages/mypage/myMail/MypageAlertList";
 import MypageAlertDetail from "../pages/mypage/myMail/MypageAlertDetail";
+import ReceivedList from "../pages/mypage/myActive/contactArtist/ReceivedList";
+import SendedList from "../pages/mypage/myActive/contactArtist/SendedList";
+import ApprovedDisplayList from "../pages/mypage/myApproved/myApprovedList/ApprovedDisplayList";
+import ApprovedExhibitionList from "../pages/mypage/myApproved/myApprovedList/ApprovedExhibitionList";
+import ApprovedUniversityList from "../pages/mypage/myApproved/myApprovedList/ApprovedUniversityList";
+import ApprovedUpcyclingList from "../pages/mypage/myApproved/myApprovedList/ApprovedUpcyclingList";
 import UpcyclingMainContainer from "../pages/upcycling/upcyclingMain/UpcyclingMainContainer";
 import UpcyclingRegistration from "../pages/upcycling/upcyclingRegistration/UpcyclingRegistration";
 import Sms from "../pages/account/join/Sms";
@@ -311,10 +316,6 @@ const router = createBrowserRouter([
                 element : <ArtistDetailModify />
               },
               {
-                path : "change-password",
-                element : <ChangePasswordContainer />,
-              },
-              {
                 path : "university-check",
                 element : <UniversityCheck />
               },
@@ -331,14 +332,26 @@ const router = createBrowserRouter([
                 element : <ContactArtistContainer />,
                 children : [
                   {
-                    path : "detail/:id",
-                    element : <ContactArtistDetail />,
+                    path : "",
+                    element : <ReceivedList />,
                   },
                   {
-                    path : "write/:email",
-                    element : <ContactArtistWrite />
+                    path : "received",
+                    element : <ReceivedList />,
+                  },
+                  {
+                    path : "sended",
+                    element : <SendedList />,
                   }
                 ]
+              },
+              {
+                path : "contact-artist/detail/:id",
+                element : <ContactArtistDetail />,
+              },
+              {
+                path : "contact-artist/write/:email",
+                element : <ContactArtistWrite />
               },
               {
                 path : "like",
@@ -409,12 +422,24 @@ const router = createBrowserRouter([
                 element : <MyApprovedContainer />,
                 children : [
                   {
-                    path : ":category",
+                    path : "",
                     element : <MyApprovedCategory />,
                     children : [
                       {
-                        path : "",
-                        element : <MyApprovedListContainer />
+                        path : "display",
+                        element : <ApprovedDisplayList />
+                      },
+                      {
+                        path : "exhibition",
+                        element : <ApprovedExhibitionList />
+                      },
+                      {
+                        path : "upcycling",
+                        element : <ApprovedUpcyclingList />
+                      },
+                      {
+                        path : "university",
+                        element : <ApprovedUniversityList />
                       }
                     ]
                   }
@@ -501,7 +526,11 @@ const router = createBrowserRouter([
                 ]
               },
             ]
-          }
+          },
+          {
+            path : "change-password",
+            element : <ChangePasswordContainer />,
+          },
         ]
       },
       {

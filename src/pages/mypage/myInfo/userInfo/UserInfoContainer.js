@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, ButtonDiv, EndBar, IdBar, IdBox, IdContent, IdTitle, Title, UserInfo } from './userInfoContainerStyle copy';
+import { Box, Button, ButtonDiv, EndBar, IdBar, IdBox, IdContent, IdTitle, Title, UserInfo } from './userInfoContainerStyle';
 
 const UserInfoContainer = () => {
 
@@ -60,7 +60,7 @@ const UserInfoContainer = () => {
           {edit ? (
             <input value={"홍길동무"}/>
           ) : (
-            <p>test123@Gmail.com</p>
+            <p>test123@gmail.com</p>
           )}
       </Box>
       <EndBar></EndBar> 

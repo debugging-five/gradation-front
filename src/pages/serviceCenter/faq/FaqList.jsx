@@ -1,6 +1,6 @@
 import React from 'react';
-import { Wrapper, MainWrapper, ListHeader, ContentBox, Category, Number, Title, Content, Emptybox, TitleNavigate } from './faqListStyle';
 import { NavLink } from 'react-router-dom';
+import { Category, Content, ContentBox, Emptybox, ListHeader, MainWrapper, Number, Title, TitleNavigate, Wrapper } from '../../mypage/style';
 
 const FaqList = () => {
   return (
