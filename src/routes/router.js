@@ -90,500 +90,512 @@ import ApprovedDisplayList from "../pages/mypage/myApproved/myApprovedList/Appro
 import ApprovedExhibitionList from "../pages/mypage/myApproved/myApprovedList/ApprovedExhibitionList";
 import ApprovedUniversityList from "../pages/mypage/myApproved/myApprovedList/ApprovedUniversityList";
 import ApprovedUpcyclingList from "../pages/mypage/myApproved/myApprovedList/ApprovedUpcyclingList";
+import UpcyclingMainContainer from "../pages/upcycling/upcyclingMain/UpcyclingMainContainer";
+import UpcyclingRegistration from "../pages/upcycling/upcyclingRegistration/UpcyclingRegistration";
 import MypageAlertContainer from "../pages/mypage/myMail/MypageAlertContainer";
 
 const router = createBrowserRouter([
   {
-    path : "/",
-    element : <Layout />,
-    children : [
+    path: "/",
+    element: <Layout />,
+    children: [
       {
-        path : "",
-        element : <MainContainer />
+        path: "",
+        element: <MainContainer />,
       },
- 
+
       {
-        path : "/find-password",
-        element : <FindPassword />
-      },
-      {
-        path : "/display",
-        element : <DisplayContainer />,  // display 메인
-        children : [
-          {
-            path : "",
-            element : <DisplayCategory />,
-            children : [
-              {
-                path : ":category",
-                element : <DisplayListContainer />
-              },
-            ]
-          },
-          {
-            path : ":category/detail/:id",
-            element : <DisplayDetailContainer />,
-          },
-          {
-            path : "registration",
-            element : <LoginLayout />,
-            children : [
-              {
-                index : true,
-                element : <DisplayRegistration />
-              }
-            ]
-          }
-        ]
+        path: "/find-password",
+        element: <FindPassword />,
       },
       {
-        path : "/artist",
-        element : <ArtistContainer />,  // artist 메인
-        children : [
+        path: "/display",
+        element: <DisplayContainer />, // display 메인
+        children: [
           {
-            path : "",
-            element : <ArtistCategory />,
-            children : [
+            path: "",
+            element: <DisplayCategory />,
+            children: [
               {
-                path : "",
-                element : <ArtistMyProfile />,
-                children : [
-                  {
-                    path : ":category",
-                    element : <ArtistListContainer />
-                  },
-                ]
-              }
-            ]
+                path: ":category",
+                element: <DisplayListContainer />,
+              },
+            ],
           },
           {
-            path : ":category/detail",
-            element : <ArtistDetailContainer />,
-            children : [
+            path: ":category/detail/:id",
+            element: <DisplayDetailContainer />,
+          },
+          {
+            path: "registration",
+            element: <LoginLayout />,
+            children: [
               {
-                path : ":id",
-                element : <ArtistDetail />
-              }
-            ]
-          }
-        ]
+                index: true,
+                element: <DisplayRegistration />,
+              },
+            ],
+          },
+        ],
       },
       {
-        path : "/auction",
-        element : <AuctionContainer />,
-        children : [
+        path: "/artist",
+        element: <ArtistContainer />, // artist 메인
+        children: [
           {
-            path : "",
-            element : <AuctionLayout />,
-            children : [
+            path: "",
+            element: <ArtistCategory />,
+            children: [
               {
-                path : ":type",
-                element : <AuctionBiddingContainer />,
-                children : [
+                path: "",
+                element: <ArtistMyProfile />,
+                children: [
                   {
-                    path : "",
-                    element : <AuctionCategory />,
-                    children : [
-                      {
-                        path : ":category",
-                        element : <AuctionListContainer />
-                      },
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            path : ":type/:category/detail/:id",
-            element : <AuctionDetailContainer />
-          },
-          {
-            path : ":type/:category/modify/:id",
-            element : <AuctionExpectedModify />
-          },
-          {
-            path : "payment",
-            element : <LoginLayout />,
-            children : [
-              {
-                index : true,
-                element : <AuctionPayment />
-              }
-            ]
-          },
-          {
-            path : "agreement",
-            element : <AuctionAgreementContainer />,
-            children : [
-              {
-                index : true,
-                element : <AuctionAgreementExplanation />
+                    path: ":category",
+                    element: <ArtistListContainer />,
+                  },
+                ],
               },
-              {
-                path : "explanation",
-                element : <AuctionAgreementExplanation />
-              },
-              {
-                path : "privacy-policy",
-                element : <AuctionAgreementPrivacyPolicy />
-              },
-              {
-                path : "auction-policy",
-                element : <AuctionAgreementAuctionPolicy />
-              }
-            ]
+            ],
           },
           {
-            path : "registration",
-            element : <LoginLayout />,
-            children : [
+            path: ":category/detail",
+            element: <ArtistDetailContainer />,
+            children: [
               {
-                path : ":id",
-                element : <AuctionRegistration />
-              }
-            ]
-          }
-        ]
+                path: ":id",
+                element: <ArtistDetail />,
+              },
+            ],
+          },
+        ],
       },
       {
-        path : "/exhibition",
-        element : <ExhibitionContainer />,
-        children : [
+        path: "/auction",
+        element: <AuctionContainer />,
+        children: [
           {
-            path : "",
-            element : <ExhibitionCategory />,
-            children : [
+            path: "",
+            element: <AuctionLayout />,
+            children: [
               {
-                path : "gradation",
-                element : <ExhibitionGradation />
+                path: ":type",
+                element: <AuctionBiddingContainer />,
+                children: [
+                  {
+                    path: "",
+                    element: <AuctionCategory />,
+                    children: [
+                      {
+                        path: ":category",
+                        element: <AuctionListContainer />,
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            path: ":type/:category/detail/:id",
+            element: <AuctionDetailContainer />,
+          },
+          {
+            path: ":type/:category/modify/:id",
+            element: <AuctionExpectedModify />,
+          },
+          {
+            path: "payment",
+            element: <LoginLayout />,
+            children: [
+              {
+                index: true,
+                element: <AuctionPayment />,
+              },
+            ],
+          },
+          {
+            path: "agreement",
+            element: <AuctionAgreementContainer />,
+            children: [
+              {
+                index: true,
+                element: <AuctionAgreementExplanation />,
               },
               {
-                path : "university",
-                element : <ExhibitionUniversity />
-              }
-            ]
+                path: "explanation",
+                element: <AuctionAgreementExplanation />,
+              },
+              {
+                path: "privacy-policy",
+                element: <AuctionAgreementPrivacyPolicy />,
+              },
+              {
+                path: "auction-policy",
+                element: <AuctionAgreementAuctionPolicy />,
+              },
+            ],
           },
           {
-            path : "gradation/past",
-            element : <ExhibitionGradationPastContainer />,
-            children : [
+            path: "registration",
+            element: <LoginLayout />,
+            children: [
               {
-                path : ":id",
-                element : <ExhibitionGradationPast />
-              }
-            ]
+                path: ":id",
+                element: <AuctionRegistration />,
+              },
+            ],
           },
-          {
-            path : "university/registration",
-            element : <LoginLayout />,
-            children : [
-              {
-                index : true,
-                element : <ExhibitionRegistration />
-              }
-            ]
-          }
-        ]
+        ],
       },
       {
-        path : "/mypage",
-        element : <LoginLayout />,
-        children : [
+        path: "/exhibition",
+        element: <ExhibitionContainer />,
+        children: [
           {
-            path : "",
-            element : <MyPageContainer />,
-            children : [
+            path: "",
+            element: <ExhibitionCategory />,
+            children: [
               {
-                path : "",
-                element : <UserInfoContainer />
+                path: "gradation",
+                element: <ExhibitionGradation />,
               },
               {
-                path : "artist-datail-modify",
-                element : <ArtistDetailModify />
+                path: "university",
+                element: <ExhibitionUniversity />,
+              },
+            ],
+          },
+          {
+            path: "gradation/past",
+            element: <ExhibitionGradationPastContainer />,
+            children: [
+              {
+                path: ":id",
+                element: <ExhibitionGradationPast />,
+              },
+            ],
+          },
+          {
+            path: "university/registration",
+            element: <LoginLayout />,
+            children: [
+              {
+                index: true,
+                element: <ExhibitionRegistration />,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: "/upcycling",
+        element: <UpcyclingMainContainer />,
+        children: [
+          {
+            path: "registration",
+            element: <UpcyclingRegistration />,
+          },
+        ],
+      },
+      {
+        path: "/mypage",
+        element: <LoginLayout />,
+        children: [
+          {
+            path: "",
+            element: <MyPageContainer />,
+            children: [
+              {
+                path: "",
+                element: <UserInfoContainer />,
               },
               {
-                path : "university-check",
-                element : <UniversityCheck />
+                path: "artist-datail-modify",
+                element: <ArtistDetailModify />,
               },
               {
-                path : "comment-list",
-                element : <CommentList />
+                path: "university-check",
+                element: <UniversityCheck />,
               },
               {
-                path : "delete",
-                element : <MypageDelete />
+                path: "comment-list",
+                element: <CommentList />,
               },
               {
-                path : "contact-artist",
-                element : <ContactArtistContainer />,
-                children : [
-                  {
-                    path : "",
-                    element: <Navigate to="received" replace />
-                  },
-                  {
-                    path : "received",
-                    element : <ReceivedList />,
-                  },
-                  {
-                    path : "sended",
-                    element : <SendedList />,
-                  }
-                ]
+                path: "delete",
+                element: <MypageDelete />,
               },
               {
-                path : "contact-artist/detail/:id",
-                element : <ContactArtistDetail />,
+                path: "contact-artist",
+                element: <ContactArtistContainer />,
+                children: [
+                  {
+                    path: "",
+                    element: <Navigate to="received" replace />,
+                  },
+                  {
+                    path: "received",
+                    element: <ReceivedList />,
+                  },
+                  {
+                    path: "sended",
+                    element: <SendedList />,
+                  },
+                ],
               },
               {
-                path : "contact-artist/write/:email",
-                element : <ContactArtistWrite />
+                path: "contact-artist/detail/:id",
+                element: <ContactArtistDetail />,
               },
               {
-                path : "like",
-                element : <ArtLikeContainer />,
-                children : [
-                  {
-                    path : "",
-                    element: <Navigate to="art" replace />
-                  },
-                  {
-                    path : "art",
-                    element : <ArtLikeList />
-                  },
-                  {
-                    path : "university",
-                    element : <UniversityLikeList />
-                  },
-                ]
+                path: "contact-artist/write/:email",
+                element: <ContactArtistWrite />,
               },
               {
-                path : "my-art",
-                element : <MyArtContainer />,
-                children : [
+                path: "like",
+                element: <ArtLikeContainer />,
+                children: [
                   {
-                    path : "",
-                    element: <Navigate to="art-list" replace />
+                    path: "",
+                    element: <Navigate to="art" replace />,
                   },
                   {
-                    path : "art-list",
-                    element : <MyArtList />
+                    path: "art",
+                    element: <ArtLikeList />,
                   },
                   {
-                    path : "available-auction-art-list",
-                    element : <MyAvailableAuctionArt />
+                    path: "university",
+                    element: <UniversityLikeList />,
                   },
-                ]
+                ],
               },
               {
-                path : "my-payment",
-                element : <MyPaymentContainer />,
-                children : [
+                path: "my-art",
+                element: <MyArtContainer />,
+                children: [
                   {
-                    path : "",
-                    element : <MyAuctionList />
+                    path: "",
+                    element: <Navigate to="art-list" replace />,
                   },
                   {
-                    path : "auction-list",
-                    element : <MyAuctionList />
+                    path: "art-list",
+                    element: <MyArtList />,
                   },
                   {
-                    path : "payment-list",
-                    element : <MyPaymentList />,
+                    path: "available-auction-art-list",
+                    element: <MyAvailableAuctionArt />,
+                  },
+                ],
+              },
+              {
+                path: "my-payment",
+                element: <MyPaymentContainer />,
+                children: [
+                  {
+                    path: "",
+                    element: <MyAuctionList />,
                   },
                   {
-                    path : "payment-list/delivery-info",
-                    element : <MyPaymentDeliveryInfoContainer />,
-                    children : [
+                    path: "auction-list",
+                    element: <MyAuctionList />,
+                  },
+                  {
+                    path: "payment-list",
+                    element: <MyPaymentList />,
+                  },
+                  {
+                    path: "payment-list/delivery-info",
+                    element: <MyPaymentDeliveryInfoContainer />,
+                    children: [
                       {
-                        path : ":id",
-                        element : <MyPaymentDeliveryInfo />
-                      }
-                    ]
-                  }
-                ]
+                        path: ":id",
+                        element: <MyPaymentDeliveryInfo />,
+                      },
+                    ],
+                  },
+                ],
               },
               {
-                path : "mypage-approved-list",
-                element : <MyApprovedContainer />,
-                children : [
+                path: "mypage-approved-list",
+                element: <MyApprovedContainer />,
+                children: [
                   {
-                    path : "",
-                    element : <MyApprovedCategory />,
-                    children : [
+                    path: "",
+                    element: <MyApprovedCategory />,
+                    children: [
                       {
-                        path : "",
-                        element: <Navigate to="display" replace />
+                        path: "",
+                        element: <Navigate to="display" replace />,
                       },
                       {
-                        path : "display",
-                        element : <ApprovedDisplayList />
+                        path: "display",
+                        element: <ApprovedDisplayList />,
                       },
                       {
-                        path : "exhibition",
-                        element : <ApprovedExhibitionList />
+                        path: "exhibition",
+                        element: <ApprovedExhibitionList />,
                       },
                       {
-                        path : "upcycling",
-                        element : <ApprovedUpcyclingList />
+                        path: "upcycling",
+                        element: <ApprovedUpcyclingList />,
                       },
                       {
-                        path : "university",
-                        element : <ApprovedUniversityList />
-                      }
-                    ]
-                  }
-                ]
+                        path: "university",
+                        element: <ApprovedUniversityList />,
+                      },
+                    ],
+                  },
+                ],
               },
               {
-                path : "alert",
-                element : <MypageAlertContainer />,
-                children : [
+                path: "alert",
+                element: <MypageAlertContainer />,
+                children: [
                   {
-                    path : "",
-                    element : <MypageAlertList />
+                    path: "",
+                    element: <MypageAlertList />,
                   },
                   {
-                    path : "detail/:id",
-                    element : <MypageAlertDetail />
-                  }
-                ]
+                    path: "detail/:id",
+                    element: <MypageAlertDetail />,
+                  },
+                ],
               },
               {
-                path : "admin",
-                element : <AdminLayout />,
-                children : [
+                path: "admin",
+                element: <AdminLayout />,
+                children: [
                   {
-                    path : "",
-                    element : <AdminContainer />,
-                    children : [
+                    path: "",
+                    element: <AdminContainer />,
+                    children: [
                       {
-                        path : "faq",
-                        element : <AdminFaqList />
+                        path: "faq",
+                        element: <AdminFaqList />,
                       },
                       {
-                        path : "faq/detail/:id",
-                        element : <AdminFaqDetail />,
+                        path: "faq/detail/:id",
+                        element: <AdminFaqDetail />,
                       },
                       {
-                        path : "faq/modify/:id",
-                        element : <AdminFaqModify />
+                        path: "faq/modify/:id",
+                        element: <AdminFaqModify />,
                       },
                       {
-                        path : "faq/registration",
-                        element : <AdminFaqRegistration />
+                        path: "faq/registration",
+                        element: <AdminFaqRegistration />,
                       },
                       {
-                        path : "qna",
-                        element : <AdminQnaLayout />,
-                        children : [
+                        path: "qna",
+                        element: <AdminQnaLayout />,
+                        children: [
                           {
-                            path : "",
-                            element : <AdminQnaWaitingList />
+                            path: "",
+                            element: <AdminQnaWaitingList />,
                           },
                           {
-                            path : "complete",
-                            element : <AdminQnaCompletedList />
+                            path: "complete",
+                            element: <AdminQnaCompletedList />,
                           },
-                        ]
+                        ],
                       },
                       {
-                        path : "form-management",
-                        element : <FormManagementLayout />,
-                        children : [
+                        path: "form-management",
+                        element: <FormManagementLayout />,
+                        children: [
                           {
-                            path : "",
-                            element : <FormManageMentCategory />,
-                            children : [
+                            path: "",
+                            element: <FormManageMentCategory />,
+                            children: [
                               {
-                                path : ":type",
-                                element : <FormManagementApprovedList />,
-                              }
-                            ]
-                          }
-                        ]
+                                path: ":type",
+                                element: <FormManagementApprovedList />,
+                              },
+                            ],
+                          },
+                        ],
                       },
                       {
-                        path : "form-management/detail/:type/:id",
-                        element : <FormManagementDetailContainer />,
+                        path: "form-management/detail/:type/:id",
+                        element: <FormManagementDetailContainer />,
                       },
                       {
-                        path : "qna/detail/:id",
-                        element : <AdminQnaDetail />
+                        path: "qna/detail/:id",
+                        element: <AdminQnaDetail />,
                       },
                       {
-                        path : "user-management",
-                        element : <UserManagementContainer />
-                      }
-                    ]
-                  }
-                ]
+                        path: "user-management",
+                        element: <UserManagementContainer />,
+                      },
+                    ],
+                  },
+                ],
               },
-            ]
+            ],
           },
           {
-            path : "change-password",
-            element : <ChangePasswordContainer />,
+            path: "change-password",
+            element: <ChangePasswordContainer />,
           },
-        ]
+        ],
       },
       {
-        path : "/service-center/qna",
-        element : <LoginLayout />,
-        children : [
+        path: "/service-center/qna",
+        element: <LoginLayout />,
+        children: [
           {
-            path : "",
-            element : <ServiceCenterContainer />,
-            children : [
+            path: "",
+            element: <ServiceCenterContainer />,
+            children: [
               {
-                path : "",
-                element : <QnaList />
+                path: "",
+                element: <QnaList />,
               },
               {
-                path : "detail/:id",
-                element : <QnaDetail />
+                path: "detail/:id",
+                element: <QnaDetail />,
               },
               {
-                path : "registration",
-                element : <QnaSend />
+                path: "registration",
+                element: <QnaSend />,
               },
-            ]
+            ],
           },
-        ]
+        ],
       },
       {
-        path : "/service-center/faq",
-        element : <ServiceCenterContainer />,
-        children : [
+        path: "/service-center/faq",
+        element: <ServiceCenterContainer />,
+        children: [
           {
-            path : "",
-            element : <FaqList />
+            path: "",
+            element: <FaqList />,
           },
           {
-            path : "detail/:id",
-            element : <FaqDetail />
-          }
-        ]
+            path: "detail/:id",
+            element: <FaqDetail />,
+          },
+        ],
       },
       {
-        path : "*",
-        element : <NotFound />
-      }
-    ]
+        path: "*",
+        element: <NotFound />,
+      },
+    ],
   },
   {
-    path : "/join",
-    element : <Join />
+    path: "/join",
+    element: <Join />,
   },
   {
-    path : "/login",
-    element : <Login />
+    path: "/login",
+    element: <Login />,
   },
   {
-    path : "/find-id",
-    element : <FindId />
+    path: "/find-id",
+    element: <FindId />,
   },
-])
+]);
 
 export default router;
