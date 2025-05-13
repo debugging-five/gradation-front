@@ -32,7 +32,7 @@ export const EndBar = styled.p`
 `;
 
 export const BarContent = styled(NavLink)`
-  font-size: 18px;
+  font-size: 16px;
   text-decoration: none;
   color: #333;
 
@@ -40,8 +40,23 @@ export const BarContent = styled(NavLink)`
     font-weight: bold;
     color: red;
   }
+`;
 
-  &:hover {
-    color: darkgray;
-  }
+export const ImageBox = styled.div`
+  display : flex;
+  align-items: center;
+  margin-bottom: 44px;
+  gap: 40px;
+  font-size: 21px;
+  font-weight: bold;
+`;
+export const ProfileImage = styled.img`
+  width: 80px;
+  height: 80px;
+  border-radius: 50px;
+  border-bottom: solid 1px;
+`;
+
+export const DeleteIdFont = styled.p`
+  color: gray;
 `;

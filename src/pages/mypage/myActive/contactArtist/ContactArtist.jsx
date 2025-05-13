@@ -1,10 +1,11 @@
 import React from 'react';
+import { MainWrapper } from '../../style';
 
 const ContactArtist = () => {
   return (
-    <div>
+    <MainWrapper>
       ContactArtist
-    </div>
+    </MainWrapper>
   );
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import { BarContentWapper, BarTitle, EndBar, Leftbar, MainWrapper } from './mypageContainerStyle';
+import { BarContent, BarContentWapper, BarTitle, DeleteIdFont, EndBar, ImageBox, Leftbar, MainWrapper, ProfileImage } from './mypageContainerStyle';
 
 const MyPageContainer = () => {
 
@@ -9,52 +9,58 @@ const MyPageContainer = () => {
   return (
     <MainWrapper>
       <Leftbar>
+        <ImageBox>
+          <ProfileImage src="http://localhost:10000/files/api/get/defaultProfile.jpg?filePath=images/mypage" alt="default profile" />
+          <span>홍길동</span>
+        </ImageBox>
+
         <BarTitle>내 정보</BarTitle>
         <BarContentWapper>
-          <NavLink to={""}>회원 정보</NavLink>
-          <NavLink to={"artist-datail-modify"}>내 작가페이지 수정</NavLink>
-          <NavLink to={"change-password"}>비민번호 변경</NavLink>
-          <NavLink to={"university-check"}>대학교 인증</NavLink>
+          <BarContent  as={NavLink} to="" end onClick={() => window.scrollTo(0, 0)}>회원 정보</BarContent>
+          <BarContent  as={NavLink} to="artist-datail-modify" end onClick={() => window.scrollTo(0, 0)}>내 작가페이지 수정</BarContent>
+          <BarContent  as={NavLink} to="change-password" end onClick={() => window.scrollTo(0, 0)}>비밀번호 변경</BarContent>
+          <BarContent  as={NavLink} to="university-check" end onClick={() => window.scrollTo(0, 0)}>대학교 인증</BarContent>
         </BarContentWapper>
         <EndBar></EndBar>
 
         <BarTitle>내 활동</BarTitle>
         <BarContentWapper>
-          <NavLink to={"comment-list"}>작성한 댓글</NavLink>
-          <NavLink to={"contact-artist"}>작가와 연락</NavLink>
-          <NavLink to={"like"}>좋아요</NavLink>
-          <NavLink to={"my-art"}>내 작품</NavLink>
-          <NavLink to={"mypage-approved-list/display"}>내 승인내역</NavLink>
+          <BarContent  as={NavLink} to="comment-list" end onClick={() => window.scrollTo(0, 0)}>작성한 댓글</BarContent>
+          <BarContent  as={NavLink} to="contact-artist" end onClick={() => window.scrollTo(0, 0)}>작가와 연락</BarContent>
+          <BarContent  as={NavLink} to="like" end onClick={() => window.scrollTo(0, 0)}>좋아요</BarContent>
+          <BarContent  as={NavLink} to="my-art" end onClick={() => window.scrollTo(0, 0)}>내 작품</BarContent>
+          <BarContent  as={NavLink} to="mypage-approved-list/display" end onClick={() => window.scrollTo(0, 0)}>내 승인내역</BarContent>
         </BarContentWapper>
         <EndBar></EndBar>
 
         <BarTitle>내 결제내역</BarTitle>
         <BarContentWapper>
-          <NavLink to={"my-payment/auction-list"}>경매 내역</NavLink>
-          <NavLink to={"my-payment/payment-list"}>구매 내역</NavLink>
+          <BarContent  as={NavLink} to="my-payment/auction-list" end onClick={() => window.scrollTo(0, 0)}>경매내역</BarContent>
+          <BarContent  as={NavLink} to="my-payment/payment-list" end onClick={() => window.scrollTo(0, 0)}>구매내역</BarContent>
         </BarContentWapper>
         <EndBar></EndBar>
 
         <BarTitle>내 알림</BarTitle>
         <BarContentWapper>
-          <NavLink to={"my-mail"}>내 쪽지</NavLink>
+          <BarContent  as={NavLink} to="alert" end onClick={() => window.scrollTo(0, 0)}>내 알림</BarContent>
         </BarContentWapper>
         <EndBar></EndBar>
 
         <BarContentWapper>
-          <NavLink to={"delete"}>회원 탈퇴</NavLink>
+          <BarContent  as={NavLink} to="delete" end onClick={() => window.scrollTo(0, 0)}><DeleteIdFont>회원 탈퇴</DeleteIdFont></BarContent>          
         </BarContentWapper>
-        <EndBar></EndBar>
+        
 
         
         {isAdmin && (
           <>
+            <EndBar></EndBar>
             <BarTitle>관리자</BarTitle>
             <BarContentWapper>
-              <NavLink to={"admin/faq"}>자주 묻는 질문</NavLink>
-              <NavLink to={"admin/qna"}>1 : 1 문의</NavLink>
-              <NavLink to={"admin/form-management/upcycling"}>양식관리</NavLink>
-              <NavLink to={"admin/user-management"}>회원관리</NavLink>
+              <BarContent  as={NavLink} to="admin/faq" end onClick={() => window.scrollTo(0, 0)}>자주 묻는 질문</BarContent> 
+              <BarContent  as={NavLink} to="admin/qna" end onClick={() => window.scrollTo(0, 0)}>1 : 1 문의</BarContent> 
+              <BarContent  as={NavLink} to="admin/form-management/upcycling" end onClick={() => window.scrollTo(0, 0)}>양식관리</BarContent> 
+              <BarContent  as={NavLink} to="admin/user-management" end onClick={() => window.scrollTo(0, 0)}>회원관리</BarContent> 
             </BarContentWapper>
           </>
         )}
