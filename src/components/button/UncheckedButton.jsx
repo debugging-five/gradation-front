@@ -1,15 +1,16 @@
 import React from 'react';
 import BasicButton from './BasicButton'; 
 
-// 인증 활성화 버튼 (이메일 인증, 학교 검색 ..)
-const CheckButton = (props) => {
+// 인증 비활성화 버튼 (이메일 인증, 학교 검색 ..)
+const UncheckedButton = (props) => {
   return (
     <BasicButton
-      variant="primary"
+      {...props}
+      variant="gray500"
       color="gray100"
       fontSize="h7"
       fontWeight="h7"
-      borderColor="primary"
+      borderColor="gray500"
       size="medium"
       shape="medium">
       {props.children}
@@ -18,4 +19,4 @@ const CheckButton = (props) => {
   );
 };
 
-export default CheckButton;
+export default UncheckedButton;

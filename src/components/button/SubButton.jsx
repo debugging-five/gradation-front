@@ -5,6 +5,7 @@ import BasicButton from './BasicButton';
 const SubButton = (props) => {
   return (
     <BasicButton
+      {...props}
       variant="gray100"
       color="primary"
       fontSize="h5"

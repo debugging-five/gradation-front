@@ -89,6 +89,7 @@ import UpcyclingMainContainer from "../pages/upcycling/upcyclingMain/UpcyclingMa
 import UpcyclingRegistration from "../pages/upcycling/upcyclingRegistration/UpcyclingRegistration";
 import Sms from "../pages/account/join/Sms";
 
+
 const router = createBrowserRouter([
   {
     path : "/",
@@ -98,22 +99,7 @@ const router = createBrowserRouter([
         path : "",
         element : <MainContainer />
       },
-      {
-        path : "/join",
-        element : <Join />
-      },
-      {
-        path : "/sms",
-        element : <Sms />
-      },
-      {
-        path : "/login",
-        element : <Login />
-      },
-      {
-        path : "/find-id",
-        element : <FindId />
-      },
+
       {
         path : "/find-password",
         element : <FindPassword />
@@ -561,7 +547,19 @@ const router = createBrowserRouter([
         element : <NotFound />
       }
     ]
-  }
+  },
+  {
+    path : "/join",
+    element : <Join />
+  },
+  {
+    path : "/login",
+    element : <Login />
+  },
+  {
+    path : "/find-id",
+    element : <FindId />
+  },
 ])
 
 export default router;

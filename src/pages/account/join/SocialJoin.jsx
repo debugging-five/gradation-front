@@ -1,11 +1,11 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 const SocialJoin = ({email, provider}) => {
 
   const { register, handleSubmit, getValues, formState: {isSubmitting, isSubmitted, errors}} = useForm({mode:"onChange"});
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[!@#])[\da-zA-Z!@#]{8,}$/;
+  const navigate = useNavigate();
 
   return (
     <form onSubmit={handleSubmit(async (data) => {
@@ -21,7 +21,7 @@ const SocialJoin = ({email, provider}) => {
 
       console.log("userVO", userVO)
 
-      await fetch("http://localhost:10000/users/api/user/login", {
+      await fetch("http://localhost:10000/users/api/join/social", {
         method : "POST",
         headers : {
           "Content-Type" : "application/json"
@@ -37,7 +37,9 @@ const SocialJoin = ({email, provider}) => {
         return res.json()
       })
       .then((res) => {
-        console.log(res)
+        // console.log(res)
+        alert(res.message)
+        navigate("/")
       })
       .catch(console.error)
 
@@ -48,6 +50,13 @@ const SocialJoin = ({email, provider}) => {
           {...register("userName")}
         />
       </label>
+
+      {/* <label>
+        <p>아이디</p>
+        <input type="text" placeholder='아이디를 입력하세요.' 
+          {...register("userIdentification")}
+        />
+      </label> */}
 
       <label>
         <p>닉네임</p>
