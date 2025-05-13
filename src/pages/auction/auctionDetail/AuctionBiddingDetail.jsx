@@ -3,6 +3,8 @@ import S from './style';
 import { Navigate, useNavigate } from 'react-router-dom';
 import AuctionPopup from './AuctionBiddingPopup/AuctionModal';
 const AuctionBiddingDetail = ({type, category, id}) => {
+
+	
 	
 	// console.log(id);
 	const [auction, setAuction] = useState([]);
@@ -10,7 +12,11 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 	const [data, setData] = useState([]);
 	const navigate = useNavigate();
 	const [openBidding, setOpenBidding] = useState(false);
-
+	
+	const baseDate = new Date(data.auctionStartDate);
+  const deadline = new Date(baseDate.getTime() + 3 * 24 * 60 * 60 * 1000); // 기준일 + 3일
+	const [timeLeft, setTimeLeft] = useState(deadline - new Date());
+	
 	useEffect(() => {
 		const fetchAuction = async () => {
 			const response = await fetch(`http://localhost:10000/auction/api/detail/${id}`);
@@ -26,8 +32,72 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 			setBidding(bidder);
 		}
 		fetchBidding();
-	}, []);
+	}, [id]);
 
+	useEffect(() => {
+		const interval = setInterval(() => {
+      const diff = deadline - new Date();
+      if (diff <= 0) {
+        clearInterval(interval);
+        setTimeLeft(0);
+				alert("종료된 경매입니다.");
+				navigate(`/auction/complete/${category}/detail/${id}`);
+      } else {
+        setTimeLeft(diff);
+      }
+    }, 1000); // 1초마다 갱신
+
+    return () => clearInterval(interval);
+	}, [deadline])
+
+	const auctionVO = {
+		id: id,
+		auctionStartDate: "2025-01-01 15:30:00",
+		auctionStartPrice: 100000,
+		auctionEstimatedMinPrice: "100000",
+		auctionEstimatedMaxPrice: "200000",
+		auctionAttracted: false,
+		auctionBidPrice: 200000,
+		auctionBidDate: "2025-01-01 15:30:00",
+		artId: null,
+		userId: null
+	}
+
+	const updateFetch = async () => {
+		const getBidder = await fetch(`http://localhost:10000/auction/api/read-bidder/${id}`);
+		const bidder = await getBidder.json();
+		console.log(bidder);
+		if(bidder.id === null){
+			console.log("유찰!");
+			const auctionVO = {
+				id: id,
+				auctionStartDate: "2025-01-01 15:30:00",
+				auctionStartPrice: 100000,
+				auctionEstimatedMinPrice: "100000",
+				auctionEstimatedMaxPrice: "200000",
+				auctionAttracted: false,
+				auctionBidPrice: 200000,
+				auctionBidDate: "2025-01-01 15:30:00",
+				artId: null,
+				userId: null
+			}
+		}else {
+			console.log("낙찰!");
+			
+		}
+		const update = await fetch(`http://localhost:10000/auction/api/modify`);
+		
+	}
+
+	const formatTime = (ms) => {
+		const totalSeconds = Math.floor(ms / 1000);
+		const days = Math.floor(totalSeconds / (60 * 60 * 24));
+		const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
+		const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+		const seconds = totalSeconds % 60;
+		return `${days}일 ${hours}시 ${minutes}분 ${seconds.toString().padStart(2, "0")}초`;
+	};
+	
 	const popup = () => {
 		setOpenBidding(true);
 	}
@@ -38,12 +108,8 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 		navigate("../");
 	}
 
-	
-	
-	console.log(auction);
 	if(auction.length !== 0) {
 		const biddingDate = new Date(data.auctionStartDate);
-		console.log(bidding);
 		
 		if(biddingDate > new Date()) {
 			return <Navigate to={`/auction/expected/${category}/detail/${id}`} state={{message: "잘못된 접근"}} replace={true} />
@@ -100,7 +166,7 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 						<S.AuctionInfo3>
 							<S.Deadline>
 									<S.H2>마감시간</S.H2>
-									<S.H2>4일 4시간 44분 44초</S.H2>
+									<S.H2>{isNaN(timeLeft) ? "로딩중" : formatTime(timeLeft)}</S.H2>
 							</S.Deadline>
 							
 							<S.PriceWrapper>
@@ -120,6 +186,7 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 							<S.BiddingButton onClick={popupAuto}>자동응찰</S.BiddingButton>
 							<S.BiddingButton onClick={popup}>응찰</S.BiddingButton>
 						</S.ButtonWrapper>
+						<button onClick={updateFetch}>테스트버튼</button>
 					</S.AuctionInfo>
 				</S.AuctionDetail>
 					{openBidding ? 
