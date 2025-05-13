@@ -1,10 +1,9 @@
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 const SocialJoin = ({email, provider}) => {
 
-  const { register, handleSubmit, getValues, formState: {isSubmitting, isSubmitted, errors}} = useForm({mode:"onChange"});
+  const { register, handleSubmit, formState: {isSubmitting}} = useForm({mode:"onChange"});
   const navigate = useNavigate();
 
   return (
