@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, ButtonDiv} from './qnaListStyle';
 import { NavLink } from 'react-router-dom';
-import { Category, Content, ContentBox, Emptybox, ListHeader, MainWrapper, Number, Title, TitleNavigate, Wrapper } from '../../mypage/style';
+import { Button120x45R, Category, Content, ContentBox, Emptybox, ListHeader, MainWrapper, Number, Title, TitleNavigate, Wrapper } from '../../mypage/style';
 
 const QnaList = () => {
   return (
@@ -31,7 +31,7 @@ const QnaList = () => {
       </Wrapper>
       
       <ButtonDiv>
-        <Button>문의하기</Button>
+        <Button120x45R>문의하기</Button120x45R>
       </ButtonDiv>
       
     </MainWrapper>
