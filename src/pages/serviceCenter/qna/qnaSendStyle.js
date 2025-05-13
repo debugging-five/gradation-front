@@ -21,9 +21,7 @@ export const Title = styled.div`
     width: 100px;
 `;
 
-export const Important = styled.p`
-    color: red;
-`;
+
 
 export const ButtonPhoto = styled.button`
     color: red;
