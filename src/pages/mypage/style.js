@@ -40,12 +40,6 @@ export const InputBox = styled.input`
   outline: none;
 `;
 
-// 우측 하단 버튼
-export const ButtonDiv = styled.div`
-    display: flex;
-    justify-content : end;
-    margin-top: 60px;
-`;
 
 // 상단 바
 export const ChooseBarWapper = styled.div`
@@ -145,4 +139,53 @@ background-color: #C0C5C7;
 export const LikeImage = styled.img`
 width: 16px;
 height: 16px;
+`;
+
+
+
+
+
+
+// 쪽지 공용 디테일
+export const MailTitleBox = styled.div`
+width: 800px;
+height: 100px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+border-top: solid 1px red;
+border-bottom: solid 1px red;
+`;
+export const MailContentBox = styled.div`
+width: 800px;
+padding-top: 48px;
+`;
+
+
+
+// 버튼
+export const Button120x45R = styled.button`
+width: 120px;
+height: 45px;
+border-radius: 3px;
+color: white;
+background-color: red;
+border: solid 1px red;
+font-size: 18px;
+`;
+export const Button120x45W = styled.button`
+width: 120px;
+height: 45px;
+border-radius: 3px;
+color: red;
+background-color: white;
+border: solid 1px red;
+font-size: 18px;
+`;
+// 우측 하단 버튼
+export const ButtonDiv = styled.div`
+    display: flex;
+    justify-content : end;
+    margin-top: 60px;
+    gap: 20px;
 `;

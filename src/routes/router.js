@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import Layout from "../pages/layout/Layout";
 import MainContainer from "../pages/main/MainContainer";
 import ArtistDetailContainer from "../pages/artist/artistDetail/ArtistDetailContainer";
@@ -90,6 +90,7 @@ import ApprovedDisplayList from "../pages/mypage/myApproved/myApprovedList/Appro
 import ApprovedExhibitionList from "../pages/mypage/myApproved/myApprovedList/ApprovedExhibitionList";
 import ApprovedUniversityList from "../pages/mypage/myApproved/myApprovedList/ApprovedUniversityList";
 import ApprovedUpcyclingList from "../pages/mypage/myApproved/myApprovedList/ApprovedUpcyclingList";
+import MypageAlertContainer from "../pages/mypage/myMail/MypageAlertContainer";
 
 const router = createBrowserRouter([
   {
@@ -319,7 +320,7 @@ const router = createBrowserRouter([
                 children : [
                   {
                     path : "",
-                    element : <ReceivedList />,
+                    element: <Navigate to="received" replace />
                   },
                   {
                     path : "received",
@@ -345,7 +346,7 @@ const router = createBrowserRouter([
                 children : [
                   {
                     path : "",
-                    element : <ArtLikeList />
+                    element: <Navigate to="art" replace />
                   },
                   {
                     path : "art",
@@ -363,7 +364,7 @@ const router = createBrowserRouter([
                 children : [
                   {
                     path : "",
-                    element : <MyArtList />
+                    element: <Navigate to="art-list" replace />
                   },
                   {
                     path : "art-list",
@@ -412,6 +413,10 @@ const router = createBrowserRouter([
                     element : <MyApprovedCategory />,
                     children : [
                       {
+                        path : "",
+                        element: <Navigate to="display" replace />
+                      },
+                      {
                         path : "display",
                         element : <ApprovedDisplayList />
                       },
@@ -433,8 +438,12 @@ const router = createBrowserRouter([
               },
               {
                 path : "alert",
-                element : <MypageAlertList />,
+                element : <MypageAlertContainer />,
                 children : [
+                  {
+                    path : "",
+                    element : <MypageAlertList />
+                  },
                   {
                     path : "detail/:id",
                     element : <MypageAlertDetail />

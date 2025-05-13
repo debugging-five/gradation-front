@@ -1,7 +1,7 @@
 import React from 'react';
-import { Category, Content, Emptybox, ListHeader, MainWrapper, Number, Title, TitleNavigate, Wrapper } from '../../style';
+import { Button120x45R, Category, Content, Emptybox, ListHeader, MainWrapper, Number, Title, TitleNavigate, Wrapper } from '../../style';
 import { NavLink } from 'react-router-dom';
-import { Button, ContentBox } from './myAvailableAuctionArtStyle';
+import { ContentBox } from './myAvailableAuctionArtStyle';
 
 const MyAvailableAuctionArt = () => {
   return (
@@ -24,7 +24,7 @@ const MyAvailableAuctionArt = () => {
           <TitleNavigate  as={NavLink} to="/service-center/qna/detail/1" end>
             <Content>빌라모형</Content>
           </TitleNavigate>
-          <Emptybox><Button>경매 등록</Button></Emptybox>
+          <Emptybox><Button120x45R>경매 등록</Button120x45R></Emptybox>
         </ContentBox>
       </Wrapper>
     </MainWrapper>
