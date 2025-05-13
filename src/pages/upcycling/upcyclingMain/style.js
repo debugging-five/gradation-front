@@ -129,48 +129,105 @@ export const Chapter4 = styled.section`
   margin: 100px 0;
 `;
 
-export const Step = styled.div`
+export const CircleContainer = styled.div`
   display: flex;
-  align-items: flex-start;
-  margin-bottom: 60px;
+  align-items: center;
+  gap: 10px;
+  margin-right: 40px;
 `;
 
-export const CircleContainer = styled.div`
-  ${CS.flexCenterColumn};
-  margin-right: 40px;
-  text-align: center;
-`;
 
 export const Number = styled.div`
   ${CS.H1};
+  margin-right: 30px;
+  color: #6E7476;
 `;
 
-export const Circle = styled.div`
+const BaseCircle = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: ${({ color }) => color};
-  margin-top: 10px;
-  border: ${({ color }) => (color === 'white' ? '1px solid #ccc' : 'none')};
+  z-index: 1;
 `;
+
+export const BlueCircle = styled(BaseCircle)`
+  background-color: #295AA0;
+  margin-left: 7px;
+`;
+
+export const GrayCircle = styled(BaseCircle)`
+  background-color: #C0C5C7;
+  margin-left: 2px;
+`;
+
+export const RedCircle = styled(BaseCircle)`
+  background-color: #EE3333;
+`;
+
+export const WhiteCircle = styled(BaseCircle)`
+  background-color: #FFFFFF;
+  border: 1px solid #C0C5C7;
+`;
+
+export const YellowCircle = styled(BaseCircle)`
+  background-color: #FFCF52;
+  margin-left: 2px;
+`;
+
+
 
 export const TimelineContent = styled.div`
   flex: 1;
+  position: relative;
+  margin-bottom: 65px;
 `;
 
 export const TimelineTitle = styled.h2`
   ${CS.H2};
-  margin-bottom: 10px;
+  margin-top: 6px;
 `;
 
 export const TimelineText = styled.p`
   ${CS.H3};
-  margin-bottom: 8px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  margin-top: 20px;
+`;
+
+export const Step = styled.div`
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 60px;
+  position: relative;
+
+  &::before{
+    content: "";
+    position: absolute;
+    top: 36px;
+    left: 114px;
+    width: 5px;
+    height: calc(100% + 60px);
+    background-color: #C0C5C7;
+    z-index: 0;
+  }
+
+  &:last-of-type::before{
+    display: none;
+  }
+
+  &:hover ${TimelineText} {
+    max-height: 500px;
+    opacity: 1;
+    margin-bottom: 8px;
+  }
 `;
 
 export const BottomText = styled.div`
   ${CS.flexCenterColumn};
   text-align: center;
+  margin-top: 160px;
   margin-bottom: 50px;
 `;
 
@@ -180,13 +237,14 @@ export const BottomTextTop = styled.div`
 
 export const BottomTextBottom = styled.div`
   ${CS.H2};
-  margin-top: 10px;
+  margin-top: 30px;
+  margin-bottom: 100px;
 `;
 
 export const ButtonsWrapper = styled.div`
   ${CS.flexCenter};
   gap: 30px;
-  margin-top: 30px;
+
 `;
 
 export const ApplicationButton = styled.button`
