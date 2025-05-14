@@ -20,7 +20,7 @@ const SendedList = () => {
           <Number>1</Number>
           <Category>전시회 관리</Category>
           <Emptybox></Emptybox>
-          <TitleNavigate  as={NavLink} to="/service-center/qna/detail/1" end>
+          <TitleNavigate  as={NavLink} to="detail/1" end>
             <Content>작품이 마음에 듭니다. 후원요청합니다.</Content>
           </TitleNavigate>
           <Emptybox>25.12.25</Emptybox>
