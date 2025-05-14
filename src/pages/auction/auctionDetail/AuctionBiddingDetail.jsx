@@ -2,6 +2,7 @@ import React, { use, useEffect, useState } from 'react';
 import S from './style';
 import { Navigate, useNavigate } from 'react-router-dom';
 import AuctionPopup from './AuctionBiddingPopup/AuctionModal';
+import AuctionAutoPopup from './AuctionAutoBiddingPopup/AuctionAutoModal';
 import dayjs from 'dayjs';
 const AuctionBiddingDetail = ({type, category, id}) => {
 
@@ -13,6 +14,7 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 	const [data, setData] = useState([]);
 	const navigate = useNavigate();
 	const [openBidding, setOpenBidding] = useState(false);
+	const [openAutoBidding, setOpenAutoBidding] = useState(false);
 	
 	const baseDate = new Date(data.auctionStartDate);
   const deadline = new Date(baseDate.getTime() + 3 * 24 * 60 * 60 * 1000); // 기준일 + 3일, 마감직전 응찰이 들어오면 deadline에 30초를 더한다.
@@ -126,10 +128,13 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 	
 	const popup = () => {
 		setOpenBidding(true);
+		setOpenAutoBidding(false);
 	}
 	const popupAuto = () => {
-		
+		setOpenBidding(false);
+		setOpenAutoBidding(true);
 	}
+
 	const backToList = () => {
 		navigate("../");
 	}
@@ -218,6 +223,14 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 						<S.PopupBody>
 								<S.PopupPosition>
 									<AuctionPopup id={id} category={category} bidderCount={bidderCount} timeleft={formatTime(timeLeft)} data={data} bidding={bidding} setBidding={setBidding} openBidding={openBidding} setOpenBidding={setOpenBidding} /> 
+								</S.PopupPosition>
+						</S.PopupBody>
+							: null
+					}
+					{openAutoBidding ? 
+						<S.PopupBody>
+								<S.PopupPosition>
+									<AuctionAutoPopup id={id} category={category} bidderCount={bidderCount} timeleft={formatTime(timeLeft)} data={data} bidding={bidding} setBidding={setBidding} openBidding={openBidding} setOpenBidding={setOpenBidding} /> 
 								</S.PopupPosition>
 						</S.PopupBody>
 							: null
