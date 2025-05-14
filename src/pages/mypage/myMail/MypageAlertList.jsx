@@ -1,7 +1,6 @@
 import React from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
-import { Category, Content, ContentBox, Emptybox, ListHeader, MainTitle, MainWrapper, Number, Title, TitleNavigate, Wrapper } from '../style';
-import { Admin } from './mypageAlertListStyle';
+import { NavLink } from 'react-router-dom';
+import { Category, Content, ContentBox, Emptybox, ListHeader, MainWrapper, Number, RedText, Title, TitleNavigate, Wrapper } from '../style';
 
 const MypageAlertList = () => {
   return (
@@ -20,7 +19,7 @@ const MypageAlertList = () => {
         {/* 리스트 배열 */}
         <ContentBox>
           <Number>1</Number>
-          <Admin>관리자</Admin>
+          <RedText>관리자</RedText>
           <Emptybox></Emptybox>
           <TitleNavigate  as={NavLink} to="/mypage/alert/detail/1" end>
             <Content>업사이클 신청이 기각되었습니다.</Content>

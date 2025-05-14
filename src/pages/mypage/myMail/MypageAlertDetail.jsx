@@ -1,13 +1,13 @@
 import React from 'react';
-import { Button120x45R, Button120x45W, ButtonDiv, MailContentBox, MailTitleBox, MainWrapper, Wrapper } from '../style';
-import { Link, NavLink } from 'react-router-dom';
+import { Button120x45R, Button120x45W, ButtonDiv, MailContentBox, MailTitle, MailTitleBox, MainWrapper, Wrapper } from '../style';
+import { Link} from 'react-router-dom';
 
 const MypageAlertDetail = () => {
   return (
     <MainWrapper>
       <Wrapper>
           <MailTitleBox>
-            <p>홍길동님 작품에 댓글이 달렸습니다.</p>
+            <MailTitle>홍길동님 작품에 댓글이 달렸습니다.</MailTitle>
             <p>25.01.15</p>
           </MailTitleBox>
 

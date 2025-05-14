@@ -13,7 +13,6 @@ export const MainWrapper = styled.div`
 // 감싸는 래퍼
 export const Wrapper = styled.div`
   margin-top: 48px;
-  margin-bottom: 60px;
 `;
 
 // 상단 글씨
@@ -139,6 +138,11 @@ export const Emptybox = styled.div`
   width: 120px;
   text-align: center;
 `;
+export const RedText = styled.div`
+width: 120px;
+text-align: center;
+color: red;
+`;
 
 
 
@@ -185,6 +189,10 @@ border-bottom: solid 1px red;
 export const MailContentBox = styled.div`
 width: 800px;
 padding-top: 48px;
+`;
+export const MailTitle = styled.p`
+  font-size: 21px;
+  font-weight: bold;
 `;
 
 
