@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import S from './style';
 import { Navigate, useNavigate } from 'react-router-dom';
 import AuctionPopup from './AuctionBiddingPopup/AuctionModal';
@@ -16,8 +16,13 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 	const [openBidding, setOpenBidding] = useState(false);
 	const [openAutoBidding, setOpenAutoBidding] = useState(false);
 	
-	const baseDate = new Date(data.auctionStartDate);
-  const deadline = new Date(baseDate.getTime() + 3 * 24 * 60 * 60 * 1000); // 기준일 + 3일, 마감직전 응찰이 들어오면 deadline에 30초를 더한다.
+	const baseDate = useMemo(() => {
+		return new Date(data.auctionStartDate)
+	}, [data.auctionStartDate]);
+  const deadline = useMemo(() => {
+  	return new Date(baseDate.getTime() + 3 * 24 * 60 * 60 * 1000);
+	}, [baseDate]);
+
 	const [timeLeft, setTimeLeft] = useState(deadline - new Date());
 
 	const [bidderCount, setBidderCount] = useState(0);
@@ -49,6 +54,8 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 		fetchBidding();
 	}, [id]);
 
+	let updateFetch;
+
 	useEffect(() => {
 		const interval = setInterval(() => {
       const diff = deadline - new Date();
@@ -57,7 +64,7 @@ const AuctionBiddingDetail = ({type, category, id}) => {
         setTimeLeft(0);
 				updateFetch().then(data => {
 					console.log(data);
-					alert("종료된 경매입니다.");
+					alert("경매가 종료되었습니다.");
 					navigate(window.location.href = `/auction/complete/${category}/detail/${id}`, { replace: true });
 				});
       } else {
@@ -66,9 +73,9 @@ const AuctionBiddingDetail = ({type, category, id}) => {
     }, 1000); // 1초마다 갱신
 
     return () => clearInterval(interval);
-	}, [deadline])
+	}, [category, deadline, id, navigate, updateFetch])
 
-	const updateFetch = async () => {
+	updateFetch = async () => {
 		const getBidder = await fetch(`http://localhost:10000/auction/api/read-bidder/${id}`);
 		const bidder = await getBidder.json();
 		// console.log(bidder);
@@ -230,7 +237,7 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 					{openAutoBidding ? 
 						<S.PopupBody>
 								<S.PopupPosition>
-									<AuctionAutoPopup id={id} category={category} bidderCount={bidderCount} timeleft={formatTime(timeLeft)} data={data} bidding={bidding} setBidding={setBidding} openBidding={openBidding} setOpenBidding={setOpenBidding} /> 
+									<AuctionAutoPopup id={id} category={category} bidderCount={bidderCount} timeleft={formatTime(timeLeft)} data={data} bidding={bidding} setBidding={setBidding} openAutoBidding={openAutoBidding} setOpenAutoBidding={setOpenAutoBidding} /> 
 								</S.PopupPosition>
 						</S.PopupBody>
 							: null

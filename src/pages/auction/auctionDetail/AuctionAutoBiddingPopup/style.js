@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { H10, H2, H3, H4, H5, H6, H7, H8, H9 } from "../../../../styles/common";
+import { H10, H2, H3, H4, H5, H6, H7, H8 } from "../../../../styles/common";
 
 const primary = "#EE3333";
 const gray100 = "#FBFCFC";
-const gray500 = "#C0C5C7";
+// const gray500 = "#C0C5C7";
 const gray900 = "#6E7476";
-const warning = "#E49804";
+// const warning = "#E49804";
 
 const S = {};
 

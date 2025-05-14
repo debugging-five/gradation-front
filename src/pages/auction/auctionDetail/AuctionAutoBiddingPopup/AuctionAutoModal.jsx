@@ -3,9 +3,9 @@ import S from './style';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-const AuctionAutoModal = ({id, category, bidderCount, bidding, setBidding, timeleft, data, setOpenBidding }) => {
-  const { currentUser, isLogin } = useSelector((state) => state.user);
-  const { register, handleSubmit, getValues, formState: {isSubmitting, isSubmitted, errors}} = useForm({mode:"onChange"});
+const AuctionAutoModal = ({id, category, bidderCount, bidding, setBidding, timeleft, data, setOpenAutoBidding }) => {
+  const { currentUser } = useSelector((state) => state.user);
+  const { register, handleSubmit } = useForm({mode:"onChange"});
   const navigate = useNavigate();
   const pricePattern = /^[0-9]+$/;
 
@@ -16,7 +16,7 @@ const AuctionAutoModal = ({id, category, bidderCount, bidding, setBidding, timel
 	      {/* <!-- 팝업 상단바 x 아이콘 --> */}
           <S.Bar>
             <S.BarImg src="/assets/images/icon/close.png" alt="x" onClick={() => {
-                  setOpenBidding(false);
+                  setOpenAutoBidding(false);
                 }}/>
           </S.Bar>
             <S.PopupWrapper>
@@ -51,9 +51,17 @@ const AuctionAutoModal = ({id, category, bidderCount, bidding, setBidding, timel
             </S.PopupWrapper>
             
             <form onSubmit={handleSubmit(async (price) => {
-              const getCurrentBidding = await fetch(`http://localhost:10000/auction/api/read-bidder/${id}`)
+              const getCurrentBidding = await fetch(`http://localhost:10000/auction/api/read-bidder/${id}`);
               const currentBidding = await getCurrentBidding.json();
+              const getCurrentAuction = await fetch(`http://localhost:10000/auction/api/detail/${id}`);
+              const currentAuction = await getCurrentAuction.json();
               
+              if(currentAuction.auctionBiddingTime) {
+                alert("종료된 경매입니다");
+                navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`)
+                return
+              }
+
               if(bidding.id !== currentBidding.id) {
                 alert("응찰가 변동으로 인한 응찰 실패\n다시 응찰 하시겠습니까?");
                 navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`)
@@ -69,7 +77,7 @@ const AuctionAutoModal = ({id, category, bidderCount, bidding, setBidding, timel
 
               if(bidding.userId === currentUser.id){
                 alert("이미 입찰 하셨습니다.");
-                setOpenBidding(false)
+                setOpenAutoBidding(false)
                 navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`, { replace: true })
                 return
               }
@@ -96,7 +104,7 @@ const AuctionAutoModal = ({id, category, bidderCount, bidding, setBidding, timel
                     })
                   }
                   alert("응찰에 성공하셨습니다");
-                  setOpenBidding(false)
+                  setOpenAutoBidding(false)
                   navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`, { replace: true })
                   return res.json()
                 })
@@ -124,7 +132,7 @@ const AuctionAutoModal = ({id, category, bidderCount, bidding, setBidding, timel
                 <S.PopupButton>
                   <S.BiddingButton>응찰하기</S.BiddingButton>
                   <S.BackButton onClick={() => {
-                    setOpenBidding(false);
+                    setOpenAutoBidding(false);
                   }}>돌아가기</S.BackButton>
                 </S.PopupButton>
               </S.PopupInfo2>
