@@ -7,10 +7,10 @@ import UncheckedButton from '../../../components/button/UncheckedButton';
 
 const NormalJoin = () => {
 
-  const { register, handleSubmit, getValues, formState: {isSubmitting, errors, isValid} } = useForm({mode:"onChange", mode: "onBlur"});
+  const { register, handleSubmit, getValues, trigger, formState: {isSubmitting, errors, isValid} } = useForm({mode:"onChange", mode: "onBlur"});
   const navigate = useNavigate();
 
-  const identificationRegex =  /^[a-zA-Z0-9]{6,20}$/; 
+  const identificationRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,20}$/;
   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#])[a-zA-Z\d!@#]{8,12}$/;
   const phoneRegex = /^01[016789][0-9]{7,8}$/;
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -276,7 +276,14 @@ const handlePasswordType = (e) => {
                     {isIdAvailable ? (
                       <CheckedButton type="button">중복 체크 완료</CheckedButton>
                     ) : (
-                      <UncheckedButton type="button" onClick={checkId}>중복 체크</UncheckedButton>
+                      <UncheckedButton type="button"
+                      disabled={errors && errors?.userIdentification?.type === "pattern"}
+                      onClick={checkId}
+                      // onClick={() => {
+                      //   if(errors && errors?.userIdentification?.type === "pattern") return;
+                      //   checkId();
+                      // }}
+                      >중복 체크</UncheckedButton>
                     )}
                     </S.ButtonWrapper>
                 </S.InputWrapper>
@@ -291,7 +298,6 @@ const handlePasswordType = (e) => {
               <S.Error>{idCheckMessage}</S.Error>
             )}
             </S.BorderWrapper>
-
     
             <S.BorderWrapper>
               <S.Border>
@@ -303,6 +309,9 @@ const handlePasswordType = (e) => {
                       required : true,
                       pattern : {
                         value : passwordRegex,
+                      },
+                      onChange : (e) => {
+                        trigger("passwordConfirm")
                       }
                     })}
                   />
@@ -319,7 +328,7 @@ const handlePasswordType = (e) => {
             )}
             </S.BorderWrapper>
 
-            <S.BorderWrapper>
+            {/* <S.BorderWrapper>
               <S.Border>
                 <S.InputWrapper>
                   <S.Label>
@@ -352,6 +361,49 @@ const handlePasswordType = (e) => {
               errors.passwordConfirm.message === "비밀번호가 일치하지 않습니다." && (
                 <S.Error>비밀번호가 일치하지 않습니다.</S.Error>
             )}
+            </S.BorderWrapper> */}
+
+            <S.BorderWrapper>
+              <S.Border>
+                <S.InputWrapper>
+                  <S.Label>
+                    <S.H7>비밀번호 확인<span>*</span></S.H7>
+                    <S.Input type={passwordType.type} placeholder='8~12자 영문, 숫자, 특수문자 조합으로 입력하세요.'
+                    {...register("passwordConfirm", {
+                      // required : true,
+                      validate : {
+                        matchPassword : (passwordConfirm) => {
+                          const userPassword = getValues("userPassword");
+                          // console.log(userPassword, passwordConfirm, userPassword === passwordConfirm );
+                          // return userPassword === passwordConfirm;
+                          if(!passwordConfirm) {
+                            return "필수 항목입니다.";
+                          }
+                          if(!userPassword) {
+                            return "8~12자 영문, 숫자, 특수문자 조합으로 입력하세요.";
+                          }
+                          if(passwordConfirm !== userPassword) {
+                            return "비밀번호가 일치하지 않습니다."
+                          }
+                          return true;
+                        }
+                      }
+                    })}
+                  />
+                  </S.Label>
+                  <S.Icon onClick={handlePasswordType}
+                    src={passwordType.visible ? "/assets/images/icon/open-eye.png" : "assets/images/icon/close-eye.png"}/>
+                </S.InputWrapper>
+              </S.Border>
+              {errors && errors?.passwordConfirm?.message === "필수 항목입니다." && (
+                <S.Warning>필수 항목입니다.</S.Warning>
+              )}
+              {errors && errors?.passwordConfirm?.message === "8~12자 영문, 숫자, 특수문자 조합으로 입력하세요." && (
+                <S.Error>8~12자 영문, 숫자, 특수문자 조합으로 입력하세요.</S.Error>
+              )}
+              {errors && errors?.passwordConfirm?.message === "비밀번호가 일치하지 않습니다." && (
+                <S.Error>비밀번호가 일치하지 않습니다.</S.Error>
+              )}
             </S.BorderWrapper>
 
             <S.BorderWrapper>
@@ -437,7 +489,9 @@ const handlePasswordType = (e) => {
                     {isSendVerificationCode ? (
                       <CheckedButton type="button" onClick={getVerificationCodeEmail}>이메일 재전송</CheckedButton>
                     ) : (
-                      <UncheckedButton type="button" onClick={getVerificationCodeEmail}>이메일 인증</UncheckedButton>
+                      <UncheckedButton type="button" 
+                      disabled={errors && errors?.userEmail?.type === "pattern"}
+                      onClick={getVerificationCodeEmail}>이메일 인증</UncheckedButton>
                     )}
                   </S.ButtonWrapper>
                 </S.InputWrapper>
@@ -456,7 +510,7 @@ const handlePasswordType = (e) => {
               )}
             </S.BorderWrapper>
 
-            <S.BorderWrapper>
+            <S.HiddenBorderWrapper visible={isSendVerificationCode}>
               {isSendVerificationCode && (
                 <S.Border>
                   <S.InputWrapper>
@@ -485,7 +539,7 @@ const handlePasswordType = (e) => {
               {verificationMessage && (
                 <S.Error>{verificationMessage}</S.Error>
               )}
-            </S.BorderWrapper>
+            </S.HiddenBorderWrapper>
           </S.InputContainer>
 
           {/* 전체 동의 */}

@@ -50,12 +50,6 @@ const SocialJoin = ({email, provider}) => {
         />
       </label>
 
-      {/* <label>
-        <p>아이디</p>
-        <input type="text" placeholder='아이디를 입력하세요.' 
-          {...register("userIdentification")}
-        />
-      </label> */}
 
       <label>
         <p>닉네임</p>

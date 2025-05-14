@@ -30,6 +30,11 @@ S.BorderWrapper = styled.div`
   height: 44px;
 `
 
+S.HiddenBorderWrapper = styled.div`
+  margin: ${({visible}) => (visible ? '0 0 30px 0' : '0')};
+  height: ${({visible}) => (visible ? '44px' : '0')};
+`
+
 S.Border = styled.div`
   width: 760px;
   border-bottom: 1px solid #6E7476;

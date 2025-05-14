@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { H10, H2, H4, H5, H6, H7, H8 } from '../../../styles/common';
+import { H10, H2, H4, H7, H8 } from '../../../styles/common';
 
 const S = {};
 
@@ -23,12 +23,12 @@ S.H2 = styled.p`
 `
 
 S.InputContainer = styled.div`
-  margin: 76px 0 0 0;
+  margin: 64px 0 0 0;
 `
 
 S.BorderWrapper = styled.div`
-  margin : 0 0 30px 0;  
-  height: 44px;
+  margin : 0 0 18px 0;  
+  height: 45px;
 `
 
 S.Border = styled.div`
@@ -41,7 +41,7 @@ S.InputWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  height: 26px;
+  height: 27px;
 `
 
 S.Label = styled.label`
@@ -80,10 +80,10 @@ S.CheckboxContainer = styled.div`
   width: 760px;
 `
 
-S.JoinButton = styled.button`
+S.LoginButton = styled.button`
   all: unset;
-  width: 760px;
-  height: 58px;
+  width: 440px;
+  height: 50px;
   background-color: #C0C5C7;
   border-radius: 3px;
   border-color: #C0C5C7;
@@ -102,7 +102,6 @@ S.H4 = styled.p`
 S.CheckboxWrapper = styled.div`
   display: flex;
   align-items: center;
-  margin: 0 0 10px 0;
   color: #C0C5C7;
 
   &.detail {
@@ -127,9 +126,16 @@ S.Terms = styled.span`
   color: ${({ checked }) => (checked ? "#333333" : "#C0C5C7")};
   cursor: pointer;
 `
-
+S.IconWrapper = styled.div`
+  width: 36px;
+`
 
 S.Icon = styled.img`
+  width : 20px;
+  height : 20px;
+`
+
+S.PasswordIcon = styled.img`
   width : 16px;
   height : 10px;
   margin: 0 8px 12px 0;
@@ -139,14 +145,59 @@ S.Icon = styled.img`
 S.Warning = styled.p`
   ${H10}
   color: #E49804;
-  margin: 4px 0 0 140px;
+  margin: 4px 0 0 36px;
 `
 
 S.Error = styled.p`
   ${H10};
   color: #EE3333; 
-  margin: 4px 0 0 140px;
+  margin: 4px 0 0 36px;
+`
+
+S.H8 = styled.p`
+  ${H8}
+
+  .span {
+    margin : 0 0 0 5px;
+  }
+`
+
+S.Service = styled.div`
+  display: flex;
+  gap : 5px;
+  margin : 20px 0 0 0;
+`
+
+S.SocialContainer = styled.div`
+  margin: 68px 0 0 0;
+
+`
+
+S.SocialWrapper = styled.div`
+
+`
+
+S.SocialButton = styled.div`
+  display: flex;
+  gap: 36px;
+  margin: 15px 0 0 0;
+  cursor: pointer;
+`
+
+S.Google = styled.img`
+  width: 40px;
+  height: 40px;
   `
+
+S.Kakao = styled.img`
+  width: 40px;
+  height: 40px;
+  `
+
+S.Naver = styled.img`
+  width: 40px;
+  height: 40px;
+`
 
 
 export default S;

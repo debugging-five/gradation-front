@@ -1,6 +1,5 @@
-import React from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import S from './style';
 
@@ -8,9 +7,17 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const { register, handleSubmit, getValues, formState: {isSubmitting, isSubmitted, errors}} = useForm({mode:"onChange"});
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[!@#])[\da-zA-Z!@#]{8,}$/;
+  const { register, handleSubmit, formState: {isSubmitting, errors}} = useForm({mode:"onChange"});
+
+  const[passwordType, setPasswordType] = useState({type : 'password', visible : false});
+  const handlePasswordType = (e) => {
+    setPasswordType(() => {
+      if(!passwordType.visible) {
+        return {type : 'text', visible : true};
+      }
+      return {type : 'password', visible : false}
+    })
+  }
 
   const navigateGoogleAuth = () => {
     window.location.href = "http://localhost:10000/oauth2/authorization/google"
@@ -57,63 +64,78 @@ const Login = () => {
       <S.Container>
         <S.Wrapper>
           <S.H2>로그인</S.H2>
-          
-          <S.BorderWrapper>
-            <S.Border>
-              <S.InputWrapper>
-                <S.Label>
-                  <S.H7>아이디</S.H7>
-                    <S.Input type="text" placeholder='아이디를 입력하세요.' 
+          <S.InputContainer>
+            <S.BorderWrapper>
+              <S.Border>
+                <S.InputWrapper>
+                  <S.Label>
+                    <S.IconWrapper>
+                      <S.Icon src={'/assets/images/icon/user.png'} />
+                    </S.IconWrapper>
+                    <S.Input type="text" placeholder='아이디' 
                       {...register("userIdentification", {
                         required : true,
-                        // pattern : {
-                        //   value : emailRegex,
-                        // }
                       })}
                     />
-                </S.Label>
-              </S.InputWrapper>
-            </S.Border>
-            {errors && errors?.userIdentification?.type === "required" && (
-              <p>아이디를 입력하세요</p>
-            )}
-            {errors && errors?.userIdentification?.type === "pattern" && (
-              <p>아이디 양식에 맞게 입력해주세요.</p>
-            )}
+                  </S.Label>
+                </S.InputWrapper>
+              </S.Border>
+              {errors && errors?.userIdentification?.type === "required" && (
+                <S.Warning>필수 항목입니다.</S.Warning>
+              )}
             </S.BorderWrapper>
 
-      {/* 비밀번호 로직 */}
-      <S.BorderWrapper>
-        <S.Border>
-         <S.InputWrapper>
-          <S.Label>
-            <S.H7>비밀번호</S.H7>
-            <S.Input type="password" placeholder='비밀번호를 입력하세요.' 
-              {...register("userPassword", {
-                required : true,
-                // pattern : {
-                //   value : passwordRegex,
-                // }
-              })}
-            />
-          </S.Label>
-          </S.InputWrapper>
-          </S.Border>
-        {errors && errors?.userPassword?.type === "required" && (
-          <p>비밀번호를 입력하세요</p>
-        )}
-        {errors && errors?.userPassword?.type === "pattern" && (
-          <p>소문자, 숫자, 특수문자를 각 하나 포함한 8자리 이상이여야 합니다.</p>
-        )}
-        </S.BorderWrapper>
+            <S.BorderWrapper>
+              <S.Border>
+                <S.InputWrapper>
+                  <S.Label>
+                    <S.IconWrapper>
+                      <S.Icon src={'/assets/images/icon/lock.png'} />
+                    </S.IconWrapper>
+                      <S.Input type={passwordType.type} placeholder='비밀번호' 
+                        {...register("userPassword", {
+                          required : true,
+                        })}
+                      />
+                  </S.Label>
+                   <S.PasswordIcon onClick={handlePasswordType}
+                      src={passwordType.visible ? "/assets/images/icon/open-eye.png" : "assets/images/icon/close-eye.png"}/>
+                </S.InputWrapper>
+              </S.Border>
+              {errors && errors?.userPassword?.type === "required" && (
+                <S.Warning>필수 항목입니다.</S.Warning>
+              )}
+            </S.BorderWrapper>
+          </S.InputContainer>
 
-      <button disabled={isSubmitting}>로그인</button>
-      <div>
-        <button onClick={navigateGoogleAuth}>구글 로그인</button>
-        <button onClick={navigateKaKaoAuth}>카카오 로그인</button>
-        <button onClick={navigateNaverAuth}>네이버 로그인</button>
-      </div>
-              </S.Wrapper>
+          {/* <S.CheckboxWrapper>
+              <S.Checkbox>로그인 상태 유지</S.Checkbox>
+              <S.Checkbox>아이디 저장</S.Checkbox>
+          </S.CheckboxWrapper> */}
+
+          <S.LoginButton>
+            <S.H4 disabled={isSubmitting}>로그인</S.H4>
+          </S.LoginButton>
+
+          <S.Service>
+            <S.H8>아이디 찾기<span className='span'>|</span></S.H8>
+            <S.H8>비밀번호 찾기<span className='span'>|</span></S.H8>
+            <S.H8>회원가입</S.H8>
+          </S.Service>
+
+
+          <S.SocialContainer>
+            <S.SocialWrapper>
+              <S.H8>또는 다른 서비스 계정으로 로그인</S.H8>
+            </S.SocialWrapper>
+
+            <S.SocialButton>
+              <S.Google onClick={navigateGoogleAuth} src={'/assets/images/icon/google.png'} />
+              <S.Kakao onClick={navigateKaKaoAuth} src={'/assets/images/icon/kakao.png'} />
+              <S.Naver onClick={navigateNaverAuth} src={'/assets/images/icon/naver.png'} />
+            </S.SocialButton>
+          </S.SocialContainer>
+          </S.Wrapper>
       </S.Container>
     </form>
   );
