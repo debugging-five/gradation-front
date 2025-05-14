@@ -2,6 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import S from './style';
 
 const Login = () => {
 
@@ -53,43 +54,58 @@ const Login = () => {
         .catch(console.error)
 
     })}>
-
-      <label>
-        <p>아이디</p>
-        <input type="text" placeholder='아이디를 입력하세요.' 
-          {...register("userIdentification", {
-            required : true,
-            // pattern : {
-            //   value : emailRegex,
-            // }
-          })}
-        />
-        {errors && errors?.userIdentification?.type === "required" && (
-          <p>아이디를 입력하세요</p>
-        )}
-        {errors && errors?.userIdentification?.type === "pattern" && (
-          <p>아이디 양식에 맞게 입력해주세요.</p>
-        )}
-      </label>
+      <S.Container>
+        <S.Wrapper>
+          <S.H2>로그인</S.H2>
+          
+          <S.BorderWrapper>
+            <S.Border>
+              <S.InputWrapper>
+                <S.Label>
+                  <S.H7>아이디</S.H7>
+                    <S.Input type="text" placeholder='아이디를 입력하세요.' 
+                      {...register("userIdentification", {
+                        required : true,
+                        // pattern : {
+                        //   value : emailRegex,
+                        // }
+                      })}
+                    />
+                </S.Label>
+              </S.InputWrapper>
+            </S.Border>
+            {errors && errors?.userIdentification?.type === "required" && (
+              <p>아이디를 입력하세요</p>
+            )}
+            {errors && errors?.userIdentification?.type === "pattern" && (
+              <p>아이디 양식에 맞게 입력해주세요.</p>
+            )}
+            </S.BorderWrapper>
 
       {/* 비밀번호 로직 */}
-      <label>
-        <p>비밀번호</p>
-        <input type="password" placeholder='비밀번호를 입력하세요.' 
-          {...register("userPassword", {
-            required : true,
-            // pattern : {
-            //   value : passwordRegex,
-            // }
-          })}
-        />
+      <S.BorderWrapper>
+        <S.Border>
+         <S.InputWrapper>
+          <S.Label>
+            <S.H7>비밀번호</S.H7>
+            <S.Input type="password" placeholder='비밀번호를 입력하세요.' 
+              {...register("userPassword", {
+                required : true,
+                // pattern : {
+                //   value : passwordRegex,
+                // }
+              })}
+            />
+          </S.Label>
+          </S.InputWrapper>
+          </S.Border>
         {errors && errors?.userPassword?.type === "required" && (
           <p>비밀번호를 입력하세요</p>
         )}
         {errors && errors?.userPassword?.type === "pattern" && (
           <p>소문자, 숫자, 특수문자를 각 하나 포함한 8자리 이상이여야 합니다.</p>
         )}
-      </label>
+        </S.BorderWrapper>
 
       <button disabled={isSubmitting}>로그인</button>
       <div>
@@ -97,6 +113,8 @@ const Login = () => {
         <button onClick={navigateKaKaoAuth}>카카오 로그인</button>
         <button onClick={navigateNaverAuth}>네이버 로그인</button>
       </div>
+              </S.Wrapper>
+      </S.Container>
     </form>
   );
 };
