@@ -98,8 +98,8 @@ const UpcyclingMain = () => {
             src="http://localhost:10000/files/api/get/step4.png?filePath=images/upcycling/upcycling-main"
             alt="step4"
           />
+          <S.Chapter3Labels>재생 캔버스, 친환경 에코백</S.Chapter3Labels>
         </S.Chapter3TopImg>
-        <S.Chapter3Labels>재생 캔버스, 친환경 에코백</S.Chapter3Labels>
         <S.Chapter3MidImg>
           <S.StepImg
             src="http://localhost:10000/files/api/get/step5.png?filePath=images/upcycling/upcycling-main"

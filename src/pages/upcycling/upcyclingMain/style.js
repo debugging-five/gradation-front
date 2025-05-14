@@ -238,13 +238,14 @@ export const TimelineText = styled.p`
   overflow: hidden;
   opacity: 0;
   max-height: 0;
+  margin-left: 30px;
   transform: translateY(-10px);
-  transition: opacity 2s ease, transform 2s ease;
+  transition: opacity 3s ease, transform 3s ease;
   &.visible {
-    animation: ${fadeSlideDown} 2s ease forwards;
+    animation: ${fadeSlideDown} 5s ease forwards;
   }
 
-  margin-top: 20px;
+  margin-top: 30px;
   margin-bottom: 0;
 `;
 

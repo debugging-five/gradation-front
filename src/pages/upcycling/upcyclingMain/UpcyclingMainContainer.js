@@ -1,9 +1,14 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import UpcyclingMain from './UpcyclingMain';
+import React from "react";
+import { Outlet } from "react-router-dom";
+import UpcyclingMain from "./UpcyclingMain";
 
 const UpcyclingMainContainer = () => {
-  return <UpcyclingMain />;
+  return (
+    <>
+      <UpcyclingMain />;
+      <Outlet />
+    </>
+  );
 };
 
 export default UpcyclingMainContainer;
