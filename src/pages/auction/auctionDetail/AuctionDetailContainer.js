@@ -52,6 +52,15 @@ const AuctionDetailContainer = () => {
     }
   };
 
+  const categoryMap = new Map([
+  ["한국화", "korean"],
+  ["회화", "painting"],
+  ["건축", "architecture"],
+  ["조각", "sculpture"],
+  ["서예", "calligraphy"],
+  ["공예", "craft"]
+  ]);
+
   // console.log(list);
   
 
@@ -70,7 +79,7 @@ const AuctionDetailContainer = () => {
           </S.NoneButton>
           <S.ArtList>
           {list.length > 0 && (
-            <Link>
+            <Link to={`/auction/bidding/${categoryMap.get(list[0].artCategory)}/detail/${list[0].id}`}>
                 <S.ArtListImg
                   src={`http://localhost:10000/files/api/get/${list[0].artImgName}?filePath=${list[0].artImgPath}`}
                   alt="작품1"
@@ -80,7 +89,7 @@ const AuctionDetailContainer = () => {
           </S.ArtList>
           <S.ArtList>
           {list.length > 1 && (
-            <Link to={`/auction/bidding/${list[1].artCategory}/detail/${list[1].id}`}>
+            <Link to={`/auction/bidding/${categoryMap.get(list[1].artCategory)}/detail/${list[1].id}`}>
                 <S.ArtListImg
                   src={`http://localhost:10000/files/api/get/${list[1].artImgName}?filePath=${list[1].artImgPath}`}
                   alt="이미지 호출 오류"
@@ -90,9 +99,9 @@ const AuctionDetailContainer = () => {
           </S.ArtList>
           <S.ArtList>
           {list.length > 2 && (
-            <Link>
+            <Link to={`/auction/bidding/${categoryMap.get(list[2].artCategory)}/detail/${list[2].id}`}>
                 <S.ArtListImg
-                  src={`http://localhost:10000/files/api/get/${list[2].artImgName}?filePath=${list[0].artImgPath}`}
+                  src={`http://localhost:10000/files/api/get/${list[2].artImgName}?filePath=${list[2].artImgPath}`}
                   alt="이미지 호출 오류"
                 />
             </Link>
@@ -100,9 +109,9 @@ const AuctionDetailContainer = () => {
           </S.ArtList>
           <S.ArtList>
           {list.length > 3 && (
-            <Link>
+            <Link to={`/auction/bidding/${categoryMap.get(list[3].artCategory)}/detail/${list[3].id}`}>
               <S.ArtListImg
-                src={`http://localhost:10000/files/api/get/${list[3].artImgName}?filePath=${list[0].artImgPath}`}
+                src={`http://localhost:10000/files/api/get/${list[3].artImgName}?filePath=${list[3].artImgPath}`}
                 alt="이미지 호출 오류"
                 />
               </Link>
