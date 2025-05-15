@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import S from './style';
 
 const Login = () => {
@@ -118,9 +118,13 @@ const Login = () => {
           </S.LoginButton>
 
           <S.Service>
-            <S.H8>아이디 찾기<span className='span'>|</span></S.H8>
-            <S.H8>비밀번호 찾기<span className='span'>|</span></S.H8>
-            <S.H8>회원가입</S.H8>
+            <S.Link to={"/find-id"} className="link">
+              <S.H8 className="service">아이디 찾기<span className='span'>|</span></S.H8>
+            </S.Link>
+            <S.Link to={"/find-password"} className="link">
+            <S.H8 className="service">비밀번호 찾기<span className='span'>|</span></S.H8>
+            </S.Link>
+            <S.H8 className="service">회원가입</S.H8>
           </S.Service>
 
 

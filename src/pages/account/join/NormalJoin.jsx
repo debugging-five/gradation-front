@@ -33,6 +33,7 @@ const [verificationMessage, setVerificationMessage] = useState("") // 인증 완
 const [errorCount, setErrorCount] = useState(1); // 인증번호 실패 횟수
 
 const[passwordType, setPasswordType] = useState({type : 'password', visible : false});
+const[passwordConfirmType, setPasswordConfirmType] = useState({type : 'password', visible : false});
 
 
 const isJoin = isValid && agreement[0] && agreement[1] && agreement[2]
@@ -41,6 +42,15 @@ const isJoin = isValid && agreement[0] && agreement[1] && agreement[2]
 const handlePasswordType = (e) => {
     setPasswordType(() => {
       if(!passwordType.visible) {
+        return {type : 'text', visible : true};
+      }
+      return {type : 'password', visible : false}
+    })
+  }
+  
+const handlePasswordConfirmType = (e) => {
+    setPasswordConfirmType(() => {
+      if(!handlePasswordConfirmType.visible) {
         return {type : 'text', visible : true};
       }
       return {type : 'password', visible : false}
@@ -311,7 +321,8 @@ const handlePasswordType = (e) => {
                         value : passwordRegex,
                       },
                       onChange : (e) => {
-                        trigger("passwordConfirm")
+                        const confirm = getValues("passwordConfirm");
+                        if (confirm) trigger("passwordConfirm");
                       }
                     })}
                   />
@@ -368,7 +379,7 @@ const handlePasswordType = (e) => {
                 <S.InputWrapper>
                   <S.Label>
                     <S.H7>비밀번호 확인<span>*</span></S.H7>
-                    <S.Input type={passwordType.type} placeholder='8~12자 영문, 숫자, 특수문자 조합으로 입력하세요.'
+                    <S.Input type={passwordConfirmType.type} placeholder='8~12자 영문, 숫자, 특수문자 조합으로 입력하세요.'
                     {...register("passwordConfirm", {
                       // required : true,
                       validate : {
@@ -391,8 +402,8 @@ const handlePasswordType = (e) => {
                     })}
                   />
                   </S.Label>
-                  <S.Icon onClick={handlePasswordType}
-                    src={passwordType.visible ? "/assets/images/icon/open-eye.png" : "assets/images/icon/close-eye.png"}/>
+                  <S.Icon onClick={handlePasswordConfirmType}
+                    src={passwordConfirmType.visible ? "/assets/images/icon/open-eye.png" : "assets/images/icon/close-eye.png"}/>
                 </S.InputWrapper>
               </S.Border>
               {errors && errors?.passwordConfirm?.message === "필수 항목입니다." && (

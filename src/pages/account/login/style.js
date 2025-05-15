@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { H10, H2, H4, H7, H8 } from '../../../styles/common';
+import { Link } from 'react-router-dom';
 
 const S = {};
 
@@ -160,12 +161,24 @@ S.H8 = styled.p`
   .span {
     margin : 0 0 0 5px;
   }
+
+  &.service {
+    cursor: pointer;
+  }
 `
 
 S.Service = styled.div`
   display: flex;
   gap : 5px;
   margin : 20px 0 0 0;
+`
+
+S.Link = styled(Link)`
+  text-decoration: none;
+
+  &.link {
+    text-decoration: none;
+  }
 `
 
 S.SocialContainer = styled.div`
