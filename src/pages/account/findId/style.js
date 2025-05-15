@@ -17,7 +17,7 @@ S.Wrapper = styled.div`
 
 S.H2 = styled.p`
   ${H2}
-  width: 104px;
+  width: 136px;
   height: 36px;
 `
 
@@ -36,7 +36,7 @@ S.HiddenBorderWrapper = styled.div`
 `
 
 S.Border = styled.div`
-  width: 760px;
+  width: 440px;
   border-bottom: 1px solid #6E7476;
   /* margin : 0 0 48px 0; */
 `
@@ -55,7 +55,7 @@ S.Label = styled.label`
 
 S.H7 = styled.p`
   ${H7}
-  width : 140px;
+  width : 72px;
 
   span {
     color: #EE3333;
@@ -66,11 +66,11 @@ S.Input = styled.input`
 border: none;
 background-color: #FBFCFC;
 outline: none;
-width: 320px;
+width: 225px;
 /* ${H8} */
 
   &::placeholder {
-    
+    ${H8}
   }
 `
 
@@ -86,8 +86,8 @@ S.CheckboxContainer = styled.div`
 
 S.JoinButton = styled.button`
   all: unset;
-  width: 760px;
-  height: 58px;
+  width: 440px;
+  height: 50px;
   background-color: #C0C5C7;
   border-radius: 3px;
   border-color: #C0C5C7;
@@ -143,13 +143,13 @@ S.Icon = styled.img`
 S.Warning = styled.p`
   ${H10}
   color: #E49804;
-  margin: 4px 0 0 140px;
+  margin: 4px 0 0 82px;
 `
 
 S.Error = styled.p`
   ${H10};
   color: #EE3333; 
-  margin: 4px 0 0 140px;
+  margin: 4px 0 0 82px;
   `
 
 

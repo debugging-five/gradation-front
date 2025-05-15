@@ -7,7 +7,7 @@ import UncheckedButton from '../../../components/button/UncheckedButton';
 
 const NormalJoin = () => {
 
-  const { register, handleSubmit, getValues, trigger, formState: {isSubmitting, errors, isValid} } = useForm({mode:"onChange", mode: "onBlur"});
+  const { register, handleSubmit, getValues, trigger, formState: {isSubmitting, errors, isValid} } = useForm({mode: "onBlur"});
   const navigate = useNavigate();
 
   const identificationRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,20}$/;
@@ -262,7 +262,6 @@ const handlePasswordConfirmType = (e) => {
       <S.Wrapper>
         <S.H2>회원가입</S.H2>
           <S.InputContainer>
-
             <S.BorderWrapper>
               <S.Border>
                 <S.InputWrapper>
