@@ -21,15 +21,6 @@ export const Line = styled.div`
     border-bottom: solid 1px;
 `;
 
-export const Button = styled.button`
-    color: red;
-    border: solid 1px red;
-    background-color: white;
-    width: 125px;
-    height: 50px;
-    font-size: 18px;
-`;
-
 export const Title = styled.div`
     margin-top: 32px;
     width: 800px;

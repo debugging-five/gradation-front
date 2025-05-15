@@ -199,43 +199,59 @@ export const MailTitle = styled.p`
 
 // 120사이즈 빨강버튼
 export const Button120x45R = styled.button`
-width: 120px;
-height: 45px;
-border-radius: 3px;
-color: white;
-background-color: red;
-border: solid 1px red;
-font-size: 18px;
+  width: 120px;
+  height: 45px;
+  border-radius: 3px;
+  color: white;
+  background-color: red;
+  border: solid 1px red;
+  font-size: 18px;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 // 120사이즈 하얀버튼
 export const Button120x45W = styled.button`
-width: 120px;
-height: 45px;
-border-radius: 3px;
-color: red;
-background-color: white;
-border: solid 1px red;
-font-size: 18px;
+  width: 120px;
+  height: 45px;
+  border-radius: 3px;
+  color: red;
+  background-color: white;
+  border: solid 1px red;
+  font-size: 18px;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 // 210사이즈 빨간버튼
 export const Button210R = styled.button`
-    border: solid 1px red;
-    border-radius: 2px;
-    background-color: red;
-    width: 210px;
-    height: 50px;
-    color: white;
-    font-size: 21px;
+  border: solid 1px red;
+  border-radius: 2px;
+  background-color: red;
+  width: 210px;
+  height: 50px;
+  color: white;
+  font-size: 21px;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 // 210사이즈 빨간버튼
 export const Button210W = styled.button`
-    border: solid 1px red;
-    border-radius: 2px;
-    background-color: white;
-    width: 210px;
-    height: 50px;
-    color: red;
-    font-size: 21px;
+  border: solid 1px red;
+  border-radius: 2px;
+  background-color: white;
+  width: 210px;
+  height: 50px;
+  color: red;
+  font-size: 21px;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 
@@ -251,3 +267,133 @@ export const ButtonDiv = styled.div`
 export const Important = styled.span`
     color: red;
 `;
+
+
+// 팝업
+export const PopUpOverlay = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.1); /* 살짝 어두운 배경 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* 최상단 */
+`;
+export const PopUp = styled.div`
+    width: 400px;
+    height: 200px;
+    background-color: white;
+    transform: translateY(-200px); /* 위로 50px 올림 */
+`;
+export const PopUpContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: solid 1px red;
+    border-radius: 2px;
+    padding: 24px;
+    background-color: white;
+`;
+export const PopUpIcon = styled.img`
+    width: 48px;
+    height: 48px;
+`;
+export const PopUpText = styled.div`
+    font-size: 16px;
+    padding: 20px 0 32px;
+`;
+export const PopUpButtonDiv = styled.div`
+    display: flex;
+    gap: 10px;
+`;
+export const PopUpButtonW = styled.button`
+    width: 75px;
+    height: 35px;
+    color: red;
+    background-color: white;
+    border: solid 1px red;
+    border-radius: 2px;
+`;
+export const PopUpButtonR = styled.button`
+    width: 75px;
+    height: 35px;
+    color: white;
+    background-color: red;
+    border: solid 1px red;
+    border-radius: 2px;
+`;
+
+
+// 큰 팝업
+export const BigPopUp = styled.div`
+    width: 640px;
+    height: 388px;
+    background-color: white;
+    transform: translateY(-100px); /* 위로 50px 올림 */
+    border-radius: 5px;
+`;
+export const BigPopUpContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    padding: 30px 0 40px;
+`;
+export const BigPopUpIcon = styled.img`
+    width: 56px;
+    height: 56px;
+`;
+export const BigPopUpCloseBox = styled.div`
+    color: gray;
+    text-align: end;
+    height: 30px;
+    padding: 0 6px;
+    border-bottom: solid 1px gray;
+    font-size: 20px;
+`;
+export const BigPopUpX = styled.span`
+    cursor: pointer;
+`;
+export const BigPopUpTextDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 0 40px;
+`;
+export const BigPopUpTitle = styled.div`
+    font-size: 30px;
+    font-weight: bold;
+    padding-bottom: 40px;
+`;
+export const BigPopUpText = styled.div`
+    font-size: 18px;
+    color: gray;
+`;
+export const BigPopUpButtonDiv = styled.div`
+    display: flex;
+    gap: 20px;
+`;
+export const BigPopUpButtonW = styled.button`
+    width: 120px;
+    height: 45px;
+    color: red;
+    background-color: white;
+    border: solid 1px red;
+    border-radius: 3px;
+    font-size: 18px;
+`;
+export const BigPopUpButtonR = styled.button`
+    width: 120px;
+    height: 45px;
+    color: white;
+    background-color: red;
+    border: solid 1px red;
+    border-radius: 3px;
+    font-size: 18px;
+`;
+
