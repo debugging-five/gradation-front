@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import S from './style';
 
 const Login = () => {
 
   const navigate = useNavigate();
 
-  const { register, handleSubmit, formState: {isSubmitting, errors}} = useForm({mode:"onChange"});
+  const { register, handleSubmit, formState: {isSubmitting, errors, isValid}} = useForm({mode: "onBlur"});
 
+  const [loginMessage, setLoginMessage] = useState("")
   const[passwordType, setPasswordType] = useState({type : 'password', visible : false});
   const handlePasswordType = (e) => {
     setPasswordType(() => {
@@ -46,7 +47,8 @@ const Login = () => {
         .then((res) => {
           if(!res.ok){
             return res.json().then((res) => {
-              alert(res.message)
+              // alert(res.message)
+              setLoginMessage(res.message)
             })
           }
           return res.json()
@@ -75,6 +77,9 @@ const Login = () => {
                     <S.Input type="text" placeholder='아이디' 
                       {...register("userIdentification", {
                         required : true,
+                        onChange : (e) => {
+                          setLoginMessage("")
+                        }
                       })}
                     />
                   </S.Label>
@@ -95,6 +100,9 @@ const Login = () => {
                       <S.Input type={passwordType.type} placeholder='비밀번호' 
                         {...register("userPassword", {
                           required : true,
+                          onChange : (e) => {
+                            setLoginMessage("")
+                          }
                         })}
                       />
                   </S.Label>
@@ -105,6 +113,9 @@ const Login = () => {
               {errors && errors?.userPassword?.type === "required" && (
                 <S.Warning>필수 항목입니다.</S.Warning>
               )}
+              {loginMessage && (
+                <S.Error>{loginMessage}</S.Error>
+              )}
             </S.BorderWrapper>
           </S.InputContainer>
 
@@ -113,18 +124,28 @@ const Login = () => {
               <S.Checkbox>아이디 저장</S.Checkbox>
           </S.CheckboxWrapper> */}
 
-          <S.LoginButton>
+          <S.LoginButton active={isValid}>
             <S.H4 disabled={isSubmitting}>로그인</S.H4>
           </S.LoginButton>
 
           <S.Service>
-            <S.Link to={"/find-id"} className="link">
+            {/* <S.Link to={"/find-id"}>
               <S.H8 className="service">아이디 찾기<span className='span'>|</span></S.H8>
+            </S.Link> */}
+            <S.Link to={"/find-id"}>
+              <S.H8 className="service">아이디 찾기</S.H8>
             </S.Link>
-            <S.Link to={"/find-password"} className="link">
-            <S.H8 className="service">비밀번호 찾기<span className='span'>|</span></S.H8>
+            <S.Line>|</S.Line>
+            {/* <S.Link to={"/find-password"}>
+              <S.H8 className="service">비밀번호 찾기<span className='span'>|</span></S.H8>
+            </S.Link> */}
+            <S.Link to={"/find-password"}>
+              <S.H8 className="service">비밀번호 찾기</S.H8>
             </S.Link>
-            <S.H8 className="service">회원가입</S.H8>
+            <S.Line>|</S.Line>
+            <S.Link to={"/join"}>
+              <S.H8 className="service">회원가입</S.H8>
+            </S.Link>
           </S.Service>
 
 

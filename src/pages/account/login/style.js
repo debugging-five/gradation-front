@@ -10,7 +10,7 @@ S.Container = styled.div`
 
 S.Wrapper = styled.div`
   /* margin: 84px 0 200px 0; */
-  padding: 84px 0 200px 0;
+  padding: 132px 0 200px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,7 +20,7 @@ S.H2 = styled.p`
   ${H2}
   width: 104px;
   height: 36px;
-  margin : 0 0 64px 0;
+  /* margin : 0 0 64px 0; */
 `
 
 S.InputContainer = styled.div`
@@ -48,6 +48,7 @@ S.InputWrapper = styled.div`
 S.Label = styled.label`
   display: flex;
   margin: 0 0 7px 0;
+  align-items: center;
 `
 
 S.H7 = styled.p`
@@ -63,12 +64,14 @@ S.Input = styled.input`
 border: none;
 background-color: #FBFCFC;
 outline: none;
-width: 320px;
-/* ${H8} */
+height: 20px;
+padding: 0;
+margin: 0;
+
 
   &::placeholder {
-    
-  }
+    ${H8}
+}
 `
 
 S.ButtonWrapper = styled.div`
@@ -128,12 +131,19 @@ S.Terms = styled.span`
   cursor: pointer;
 `
 S.IconWrapper = styled.div`
-  width: 36px;
+  /* width: 36px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 16px 0 0;
 `
 
 S.Icon = styled.img`
   width : 20px;
   height : 20px;
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
 `
 
 S.PasswordIcon = styled.img`
@@ -171,18 +181,26 @@ S.Service = styled.div`
   display: flex;
   gap : 5px;
   margin : 20px 0 0 0;
+  /* justify-content: center; */
 `
 
 S.Link = styled(Link)`
   text-decoration: none;
-
-  &.link {
-    text-decoration: none;
-  }
+  color: inherit;
 `
+
+S.Line = styled.p`
+  display: flex;
+  justify-content: center;
+  width: 15px;
+`
+
 
 S.SocialContainer = styled.div`
   margin: 68px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
 `
 
@@ -192,6 +210,7 @@ S.SocialWrapper = styled.div`
 
 S.SocialButton = styled.div`
   display: flex;
+  width: 192px;
   gap: 36px;
   margin: 15px 0 0 0;
   cursor: pointer;
