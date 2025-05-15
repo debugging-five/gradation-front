@@ -10,11 +10,19 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 	
 	// console.log(id);
 	const [auction, setAuction] = useState([]);
-	const [bidding, setBidding] = useState([]);
 	const [data, setData] = useState([]);
+	const [bidding, setBidding] = useState([]);
 	const navigate = useNavigate();
 	const [openBidding, setOpenBidding] = useState(false);
 	const [openAutoBidding, setOpenAutoBidding] = useState(false);
+	const categoryMap = new Map([
+		["한국화", "korean"],
+		["회화", "painting"],
+		["건축", "architecture"],
+		["조각", "sculpture"],
+		["서예", "calligraphy"],
+		["공예", "craft"]
+  ]);
 	
 	const baseDate = useMemo(() => {
 		return new Date(data.auctionStartDate)
@@ -148,13 +156,17 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 
 	if(auction.length !== 0) {
 		const biddingDate = new Date(data.auctionStartDate);
+		const dataCategory = categoryMap.get(data.artCategory);
+		if(category !== dataCategory) {
+			return <Navigate to={`/auction/bidding/${dataCategory}/detail/${id}`} state={{message: "잘못된 접근"}} replace={true} />
+		}
 		
 		if(biddingDate > new Date()) {
-			return <Navigate to={`/auction/expected/${category}/detail/${id}`} state={{message: "잘못된 접근"}} replace={true} />
+			return <Navigate to={`/auction/expected/${dataCategory}/detail/${id}`} state={{message: "잘못된 접근"}} replace={true} />
 		}
 		
 		if(data.auctionBidDate){
-			return <Navigate to={`/auction/complete/${category}/detail/${id}`} state={{message: "잘못된 접근"}} replace={true} />
+			return <Navigate to={`/auction/complete/${dataCategory}/detail/${id}`} state={{message: "잘못된 접근"}} replace={true} />
 		}
 		
 		return (

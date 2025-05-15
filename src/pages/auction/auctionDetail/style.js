@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { EN_H2, H2, H3, H4, H5, H7, H8 } from '../../../styles/common';
+import { EN_H2, EN_H3, H2, H3, H4, H5, H7, H8 } from '../../../styles/common';
 const primary = "#EE3333";
 const gray100 = "#FBFCFC";
 const gray500 = "#C0C5C7";
@@ -223,6 +223,41 @@ S.PopupPosition = styled.div`
   transform: translate(-50%, -50%);
 
 `
+S.AuctionInfo3Detail = styled.div`
+  margin-bottom: 20px;
+  display : flex;
+	justify-content : space-between;
+`
+S.H3Gray900 = styled.p`
+  ${H3};
+	color : ${gray900};
+`
+S.H3Gray500 = styled.p`
+  ${H3};
+	color : ${gray500};
+`
+
+S.EnH2Red = styled.p`
+  ${EN_H3};
+  color: ${primary};
+`
+S.H2Red = styled.span`
+  ${EN_H3};
+  color: ${primary};
+`
+S.H2Gray500 = styled.span`
+  ${EN_H3};
+  color: ${gray500};
+`
+
+S.Notice = styled.div`
+  display : flex;
+	width : 476px;
+	justify-content : space-between;
+	margin : 20px 0 0 0;
+`
+
+
 
 
 
