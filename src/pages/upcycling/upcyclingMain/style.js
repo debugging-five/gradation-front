@@ -1,20 +1,34 @@
 import * as CS from "../../../styles/common";
-import styled, { keyframes } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
-const fadeSlideDown = keyframes`
+const fadeUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const slideIn = keyframes`
   0% {
     opacity: 0;
-    transform: translateY(-10px);
-    max-height: 0;
-  }
-  50% {
-    opacity: 0.4;
+    transform: translateX(-50px);
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
-    max-height: 800px;
+    transform: translateX(0);
   }
+`;
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 40px 0;
 `;
 
 export const UpcyclingWrapper = styled.div`
@@ -26,7 +40,7 @@ export const UpcyclingWrapper = styled.div`
 `;
 
 export const UpcycleTitle = styled.h1`
-  ${CS.EN_H2};
+  font-size: 30px;
   text-align: center;
   margin-bottom: 95px;
 `;
@@ -121,9 +135,21 @@ export const Chapter2 = styled.section`
 `;
 
 export const Chapter2Img = styled.img`
-  width: 1160px;
-  height: 653px;
-  margin-bottom: 150px;
+    width: 100%;
+  max-width: 1160px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 2s ease, transform 2s ease;
+
+  ${({ isVisible }) =>
+    isVisible &&
+    css`
+      opacity: 1;
+      transform: translateY(0);
+    `}
 `;
 
 export const Chapter3 = styled.section`
@@ -141,23 +167,148 @@ export const Chapter3Title = styled.h1`
 export const Chapter3TopImg = styled.div`
   display: flex;
   gap: 30px;
+  justify-content: center;
+  margin-bottom: 10px;
+
+  img {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 3s ease, transform 3s ease;
+  }
+
+  ${({ isVisible }) =>
+    isVisible &&
+    css`
+      img {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      img:nth-child(1) {
+        transition-delay: 0s;
+      }
+      img:nth-child(2) {
+        transition-delay: 0.2s;
+      }
+      img:nth-child(3) {
+        transition-delay: 0.4s;
+      }
+      img:nth-child(4) {
+        transition-delay: 0.6s;
+      }
+      img:nth-child(5) {
+        transition-delay: 0.8s;
+      }
+      img:nth-child(6) {
+        transition-delay: 1s;
+      }
+      img:nth-child(7) {
+        transition-delay: 1.2s;
+      }
+    `}
 `;
 
 export const Chapter3MidImg = styled.div`
   display: flex;
   gap: 30px;
+  justify-content: center;
+  margin-bottom: 10px;
+
+  img {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 3s ease, transform 3s ease;
+  }
+
+  ${({ isVisible }) =>
+    isVisible &&
+    css`
+      img {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      img:nth-child(1) {
+        transition-delay: 0s;
+      }
+      img:nth-child(2) {
+        transition-delay: 0.2s;
+      }
+      img:nth-child(3) {
+        transition-delay: 0.4s;
+      }
+      img:nth-child(4) {
+        transition-delay: 0.6s;
+      }
+      img:nth-child(5) {
+        transition-delay: 0.8s;
+      }
+      img:nth-child(6) {
+        transition-delay: 1s;
+      }
+      img:nth-child(7) {
+        transition-delay: 1.2s;
+      }
+    `}
 `;
 
 export const Chapter3BottomImg = styled.div`
   display: flex;
   gap: 30px;
+  justify-content: center;
+  margin-bottom: 10px;
+
+  img {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 3s ease, transform 3s ease;
+  }
+
+  ${({ isVisible }) =>
+    isVisible &&
+    css`
+      img {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      img:nth-child(1) {
+        transition-delay: 0s;
+      }
+      img:nth-child(2) {
+        transition-delay: 0.2s;
+      }
+      img:nth-child(3) {
+        transition-delay: 0.4s;
+      }
+      img:nth-child(4) {
+        transition-delay: 0.6s;
+      }
+      img:nth-child(5) {
+        transition-delay: 0.8s;
+      }
+      img:nth-child(6) {
+        transition-delay: 1s;
+      }
+      img:nth-child(7) {
+        transition-delay: 1.2s;
+      }
+    `}
 `;
 
 export const Chapter3Labels = styled.div`
   ${CS.H5};
   text-align: center;
-  margin-top: 5px;
-  margin-bottom: 25px;
+  font-size: 18px;
+  color: #333;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
+  transition-delay: 1.5s;
+
+  ${({ isVisible }) =>
+    isVisible &&
+    css`
+      opacity: 1;
+      transform: translateY(0);
+    `}
 `;
 
 export const StepImg = styled.img`
@@ -233,18 +384,13 @@ export const TimelineTitle = styled.h2`
   margin-top: 6px;
 `;
 
-export const TimelineText = styled.p`
-  ${CS.H3};
+export const TimelineText = styled.h3`
   overflow: hidden;
   opacity: 0;
   max-height: 0;
   margin-left: 30px;
   transform: translateY(-10px);
-  transition: opacity 3s ease, transform 3s ease;
-  &.visible {
-    animation: ${fadeSlideDown} 5s ease forwards;
-  }
-
+  transition: all 0.4s ease;
   margin-top: 30px;
   margin-bottom: 0;
 `;
@@ -254,26 +400,34 @@ export const Step = styled.div`
   align-items: flex-start;
   margin-bottom: 60px;
   position: relative;
+  min-height: 200px;
 
-  &::before{
+  &::before {
     content: "";
     position: absolute;
     top: 36px;
     left: 114px;
     width: 5px;
-    height: calc(100% + 60px);
-    background-color: #C0C5C7;
+    height: 0;
+    background-color: #c0c5c7;
     z-index: 0;
+    transition: height 1s ease;
+    opacity: ${({ isLast }) => (isLast ? 0 : 1)};
   }
 
-  &:last-of-type::before{
-    display: none;
-  }
+  ${({ isLast }) =>
+    !isLast &&
+    css`
+      &:hover::before {
+        height: calc(100% + 60px);
+      }
+    `}
 
   &:hover ${TimelineText} {
     max-height: 500px;
     opacity: 1;
     margin-bottom: 8px;
+    transform: translateY(0);
   }
 `;
 

@@ -10,9 +10,9 @@ const UpcyclingRegistration = () => {
     email: "",
     phone: "",
     pickupDate: "",
-    smallCount: 0,
-    mediumCount: 0,
-    largeCount: 0,
+    smallCount: "",
+    mediumCount: "",
+    largeCount: "",
     materials: [],
     notes: "",
     image: null,
@@ -46,9 +46,48 @@ const UpcyclingRegistration = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // 유효성 검사 등 처리 후 서버 전송
-    alert("신청이 완료되었습니다.");
+
+    if (!formData.schoolName) {
+      setAlertMessage("학교명을 입력해주세요.");
+      return;
+    }
+    if (!formData.detailAddress) {
+      setAlertMessage("상세주소를 입력해주세요.");
+      return;
+    }
+    if (!formData.email) {
+      setAlertMessage("이메일을 입력해주세요.");
+      return;
+    }
+    if (!formData.phone) {
+      setAlertMessage("연락처를 입력해주세요.");
+      return;
+    }
+    if (!formData.pickupDate) {
+      setAlertMessage("수거 신청일을 선택해주세요.");
+      return;
+    }
+
+    const totalCount =
+      Number(formData.smallCount) + Number(formData.mediumCount) + Number(formData.largeCount);
+    if (totalCount === 0) {
+      setAlertMessage("작품 개수를 입력해주세요.");
+      return;
+    }
+
+    if (formData.materials.length === 0) {
+      setAlertMessage("주된 재질을 선택해주세요.");
+      return;
+    }
+
+    // 모든 필드 유효할 때만 팝업 띄우기
+    setShowConfirmPopup(true);
   };
+
+
+  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   const handleAddressSearch = () => {
   new window.daum.Postcode({
@@ -83,7 +122,7 @@ const UpcyclingRegistration = () => {
           <S.ImageBox onClick={() => document.getElementById("file-input").click()}>
             {!formData.imagePreview && (
               <>
-                <img src="/assets/images/display/add.png" alt="add-icon" />
+                <S.UploadIcon  src="http://localhost:10000/files/api/get/add.png?filePath=images/icons" alt="add-icon" />
                 <span>첨부파일 업로드</span>
               </>
             )}
@@ -98,54 +137,121 @@ const UpcyclingRegistration = () => {
           />
           <S.UploadDescription>(수거 신청한 폐기 작품 사진 업로드)</S.UploadDescription>
         </S.ImageUploadWrapper>
-
         <S.InputSection>
           <S.InputGroup>
-            <S.Label>학교명 *</S.Label>
-            <S.SchoolSearchRow>
-              <S.Input name="schoolName" placeholder="학교명을 검색하세요." value={formData.schoolName} onChange={handleInputChange} required />
-              <S.SearchButton type="button" onClick={handleAddressSearch}>주소 검색</S.SearchButton>
-            </S.SchoolSearchRow>
+            <S.InfoRow>
+              <S.Label>
+                학교명<S.Required>*</S.Required>
+              </S.Label>
+              <S.SchoolSearchRow>
+                <S.Input
+                  name="schoolName"
+                  placeholder="학교명을 검색하세요."
+                  value={formData.schoolName}
+                  onChange={handleInputChange}
+                />
+                <S.SearchButton type="button" onClick={handleAddressSearch}>
+                  주소 검색
+                </S.SearchButton>
+              </S.SchoolSearchRow>
+            </S.InfoRow>
           </S.InputGroup>
+
           <S.InputGroup>
-            <S.Label>상세주소 *</S.Label>
-            <S.Input name="detailAddress" placeholder="상세주소를 입력하세요" value={formData.detailAddress} onChange={handleInputChange} required />
+            <S.InfoRow>
+              <S.Label>
+                상세주소<S.Required>*</S.Required>
+              </S.Label>
+              <S.Input
+                name="detailAddress"
+                placeholder="상세주소를 입력하세요"
+                value={formData.detailAddress}
+                onChange={handleInputChange}
+              />
+            </S.InfoRow>
           </S.InputGroup>
+
           <S.InputGroup>
-            <S.Label>이메일 *</S.Label>
-            <S.Input name="email" type="email" placeholder="이메일을 입력하세요" value={formData.email} onChange={handleInputChange} required />
+            <S.InfoRow>
+              <S.Label>
+                이메일<S.Required>*</S.Required>
+              </S.Label>
+              <S.Input
+                name="email"
+                type="email"
+                placeholder="이메일을 입력하세요"
+                value={formData.email}
+                onChange={handleInputChange}
+              />
+            </S.InfoRow>
           </S.InputGroup>
+
           <S.InputGroup>
-            <S.Label>연락처 *</S.Label>
-            <S.Input name="phone" placeholder="연락처를 입력하세요" value={formData.phone} onChange={handleInputChange} required />
+            <S.InfoRow>
+              <S.Label>
+                연락처<S.Required>*</S.Required>
+              </S.Label>
+              <S.Input
+                name="phone"
+                placeholder="연락처를 입력하세요"
+                value={formData.phone}
+                onChange={handleInputChange}
+              />
+            </S.InfoRow>
           </S.InputGroup>
-          <S.InputGroup>
-            <S.Label>수거 신청일 *</S.Label>
-            <Flatpickr
-              options={{ dateFormat: "Y-m-d", disableMobile: true }}
-              value={formData.pickupDate}
-              onChange={([date]) => setFormData({ ...formData, pickupDate: date })}
-            />
-          </S.InputGroup>
+
+          <S.InputGroupRow>
+            <S.Label>
+              수거 신청일 <S.Required>*</S.Required>
+            </S.Label>
+            <S.DateWrapper>
+              <Flatpickr
+                options={{ dateFormat: "Y-m-d", disableMobile: true, minDate: "today", }}
+                value={formData.pickupDate}
+                onChange={([date]) => setFormData({ ...formData, pickupDate: date })}
+                render={({ value, ...props }, ref) => (
+                  <S.CalendarInput {...props} ref={ref}>
+                    <S.CalendarIcon src="http://localhost:10000/files/api/get/calendar.png?filePath=images/icons" alt="calendar-icon" />
+                    <span>{formData.pickupDate ? formData.pickupDate.toLocaleDateString('ko-KR') : '날짜를 선택해주세요.'}</span>
+                  </S.CalendarInput>
+                )}
+              />
+            </S.DateWrapper>
+          </S.InputGroupRow>
+
           <S.SizeSection>
-            <S.Label>크기 분류 (작품 개수 선택) *</S.Label>
+            <S.InputSizeGroupRow>
+              <S.Label>
+                크기 분류(작품 개수 선택) <S.Required>*</S.Required>
+              </S.Label>
+            </S.InputSizeGroupRow>
             <S.SizeInputGroup>
-              <S.SizeInput>
-                <S.Input name="smallCount" type="number" min="0" value={formData.smallCount} onChange={handleInputChange} />
-                <span>소형</span>
-              </S.SizeInput>
-              <S.SizeInput>
-                <S.Input name="mediumCount" type="number" min="0" value={formData.mediumCount} onChange={handleInputChange} />
-                <span>중형</span>
-              </S.SizeInput>
-              <S.SizeInput>
-                <S.Input name="largeCount" type="number" min="0" value={formData.largeCount} onChange={handleInputChange} />
-                <span>대형</span>
-              </S.SizeInput>
+              <S.SizeRow>
+                <span>소형(50cm 이하)</span>
+                <S.InputWrapper>
+                  <S.Input name="smallCount" type="number" min="0" value={formData.smallCount} onChange={handleInputChange} />
+                  <span>개</span>
+                </S.InputWrapper>
+              </S.SizeRow>
+              <S.SizeRow>
+                <span>중형(50cm ~ 100cm)</span>
+                <S.InputWrapper>
+                  <S.Input name="mediumCount" type="number" min="0" value={formData.mediumCount} onChange={handleInputChange} />
+                  <span>개</span>
+                </S.InputWrapper>
+              </S.SizeRow>
+              <S.SizeRow>
+                <span>대형(100cm 이상)</span>
+                <S.InputWrapper>
+                  <S.Input name="largeCount" type="number" min="0" value={formData.largeCount} onChange={handleInputChange} />
+                  <span>개</span>
+                </S.InputWrapper>
+              </S.SizeRow>
             </S.SizeInputGroup>
           </S.SizeSection>
+
           <S.MaterialSection>
-            <S.Label>주된 재질 *</S.Label>
+            <S.Label>주된 재질 <S.Required>*</S.Required></S.Label>
             <S.CheckboxGroup>
               {[
                 { label: "캔버스 & 종이류", value: "canvas-paper" },
@@ -178,6 +284,44 @@ const UpcyclingRegistration = () => {
           </S.ButtonGroup>
         </S.InputSection>
       </S.Form>
+
+    {alertMessage && (
+      <S.PopupOverlay>
+        <S.PopupBox>
+          <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/attention.png?filePath=images/icons" alt="attention-icon" />
+          <S.PopupMessage>{alertMessage}</S.PopupMessage>
+          <S.PopupButtonGroup>
+            <S.PopupButton className="confirm" onClick={() => setAlertMessage("")}>확인</S.PopupButton>
+          </S.PopupButtonGroup>
+        </S.PopupBox>
+      </S.PopupOverlay>
+    )}
+    {showConfirmPopup && (
+      <S.PopupOverlay>
+        <S.PopupBox>
+          <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/question.png?filePath=images/icons" alt="question-icon" />
+          <S.PopupMessage>신청하시겠습니까?</S.PopupMessage>
+          <S.PopupButtonGroup>
+            <S.PopupButton className="cancel" onClick={() => setShowConfirmPopup(false)}>취소</S.PopupButton>
+            <S.PopupButton className="confirm" onClick={() => {
+              setShowConfirmPopup(false);
+              setShowSuccessPopup(true);
+            }}>확인</S.PopupButton>
+          </S.PopupButtonGroup>
+        </S.PopupBox>
+      </S.PopupOverlay>
+    )}
+    {showSuccessPopup && (
+      <S.PopupOverlay>
+        <S.PopupBox>
+          <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/ok.png?filePath=images/icons" alt="ok-icon" />
+          <S.PopupMessage>신청이 완료되었습니다!</S.PopupMessage>
+          <S.PopupButtonGroup>
+            <S.PopupButton className="confirm" onClick={() => setShowSuccessPopup(false)}>확인</S.PopupButton>
+          </S.PopupButtonGroup>
+        </S.PopupBox>
+      </S.PopupOverlay>
+    )}
     </S.Container>
   );
 };
