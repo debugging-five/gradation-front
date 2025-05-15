@@ -1,5 +1,5 @@
 import React from 'react';
-import { Category, CategoryBold, Content, ContentBox, Emptybox, EmptyboxBold, ListHeader, MainWrapper, Number, NumberBold, Title, TitleNavigate, Wrapper } from '../style';
+import { Category, CategoryBold, Content, ContentBox, Emptybox, EmptyboxBold, ListHeader, MainWrapper, Number, NumberBold, RedText, Title, TitleNavigate, Wrapper } from '../style';
 import { NavLink } from 'react-router-dom';
 
 const MyAuctionList = () => {
@@ -19,7 +19,7 @@ const MyAuctionList = () => {
         <ContentBox>
           <Number>1</Number>
           <Category>조각</Category>
-          <Emptybox>낙찰</Emptybox>
+          <RedText>낙찰</RedText>
           <TitleNavigate  as={NavLink} to="/service-center/qna/detail/1" end>
             <Content>빌라모형</Content>
           </TitleNavigate>

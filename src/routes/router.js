@@ -30,7 +30,6 @@ import ExhibitionRegistration from "../pages/exhibition/exhibitionRegistration/E
 import UniversityCheck from "../pages/mypage/myInfo/universityCheck/UniversityCheck";
 import CommentList from "../pages/mypage/myActive/comment/CommentList";
 import ContactArtistContainer from "../pages/mypage/myActive/contactArtist/ContactArtistContainer";
-import ContactArtistDetail from "../pages/mypage/myActive/contactArtist/ContactArtistDetail";
 import ArtistCategory from "../pages/artist/ArtistCategory";
 import ContactArtistWrite from "../pages/mypage/myActive/contactArtist/ContactArtistWrite";
 import ArtLikeContainer from "../pages/mypage/myActive/like/ArtLikeContainer";
@@ -93,6 +92,8 @@ import ApprovedUpcyclingList from "../pages/mypage/myApproved/myApprovedList/App
 import UpcyclingMainContainer from "../pages/upcycling/upcyclingMain/UpcyclingMainContainer";
 import UpcyclingRegistration from "../pages/upcycling/upcyclingRegistration/UpcyclingRegistration";
 import MypageAlertContainer from "../pages/mypage/myMail/MypageAlertContainer";
+import ContactArtistReceivedDetail from "../pages/mypage/myActive/contactArtist/ContactArtistReceivedDetail";
+import ContactArtistSendedDetail from "../pages/mypage/myActive/contactArtist/ContactArtistSendedDetail";
 
 const router = createBrowserRouter([
   {
@@ -345,8 +346,12 @@ const router = createBrowserRouter([
                 ],
               },
               {
-                path: "contact-artist/detail/:id",
-                element: <ContactArtistDetail />,
+                path: "contact-artist/received/detail/:id",
+                element: <ContactArtistReceivedDetail />,
+              },
+              {
+                path: "contact-artist/sended/detail/:id",
+                element: <ContactArtistSendedDetail />,
               },
               {
                 path: "contact-artist/write/:email",
@@ -556,11 +561,17 @@ const router = createBrowserRouter([
                 path: "detail/:id",
                 element: <QnaDetail />,
               },
-              {
-                path: "registration",
-                element: <QnaSend />,
-              },
             ],
+          },
+        ],
+      },
+      {
+        path: "/service-center",
+        element: <ServiceCenterContainer />,
+        children: [
+          {
+            path: "registration",
+            element: <QnaSend />,
           },
         ],
       },
