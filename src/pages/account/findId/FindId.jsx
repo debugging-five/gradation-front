@@ -35,12 +35,9 @@ const getVerificationCodeEmail = async () => {
     alert("이메일을 입력하세요.")
     return;
   }
-  
-  // 이메일 존재 여부 확인
-
-      
-      // 인증번호 발송
-      await fetch("http://localhost:10000/auth/sendEmail", {
+    
+  // 인증번호 발송
+      fetch("http://localhost:10000/auth/sendEmail", {
         method : "POST",
         headers : {
           "Content-Type" : "application/json"
@@ -216,7 +213,7 @@ const getVerificationCodeEmail = async () => {
               )}
             </S.BorderWrapper>
 
-            <S.HiddenBorderWrapper visible={isSendVerificationCode}>
+            <S.HiddenBorderWrapper $visible={isSendVerificationCode}>
               {isSendVerificationCode && (
                 <S.Border>
                   <S.InputWrapper>
@@ -248,7 +245,7 @@ const getVerificationCodeEmail = async () => {
             </S.HiddenBorderWrapper>
           </S.InputContainer>
 
-          <S.JoinButton active={isValid}>
+          <S.JoinButton $active={isValid}>
             <S.H4 disabled={isSubmitting}>아이디 찾기</S.H4>
           </S.JoinButton>
       </S.Wrapper>
