@@ -95,7 +95,7 @@ S.LoginButton = styled.button`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background-color: ${({ active }) => (active ? "#EE3333" : "#C0C5C7")};
+  background-color: ${({ $active }) => ($active ? "#EE3333" : "#C0C5C7")};
 `
 
 S.H4 = styled.p`

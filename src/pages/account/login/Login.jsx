@@ -124,7 +124,7 @@ const Login = () => {
               <S.Checkbox>아이디 저장</S.Checkbox>
           </S.CheckboxWrapper> */}
 
-          <S.LoginButton active={isValid}>
+          <S.LoginButton $active={isValid}>
             <S.H4 disabled={isSubmitting}>로그인</S.H4>
           </S.LoginButton>
 
