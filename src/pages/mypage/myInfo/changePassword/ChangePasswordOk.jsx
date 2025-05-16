@@ -1,8 +1,13 @@
-import React from 'react';
-import { BigPopUpButtonDiv, BigPopUpButtonR, BigPopUpButtonW, BigPopUpCloseBox, BigPopUpContent, BigPopUpIcon, BigPopUpTextDiv, BigPopUpTitle, BigPopUpX, Button210R, Button210W, Important, PopUpOverlay } from '../../style';
-import { BigPopUp, BigPopUpText, ButtonDiv, ChangePasswordBox, EmptyBox, EndBar, InputContent, MainWrapper, OkBox, OkTitle1, OkTitle2, PasswordTitle, UserIcon } from './changePasswordStyle';
+import React, { useState } from 'react';
+import { BigPopUpButtonDiv, BigPopUpButtonR, BigPopUpButtonW, BigPopUpCloseBox, BigPopUpIcon, BigPopUpTextDiv, BigPopUpX, Button210R, Button210W, Important, PopUpOverlay } from '../../style';
+import { BigPopUp, BigPopUpContent, BigPopUpText, ButtonDiv, ChangePasswordBox, EmptyBox, EndBar, InputContent, MainWrapper, OkBox, OkTitle1, OkTitle2, PasswordTitle, UserIcon } from './changePasswordStyle';
+import { useNavigate } from 'react-router-dom';
 
 const ChangePasswordOk = () => {
+  const [popupStep, setPopupStep] = useState(0);
+  const navigate = useNavigate();
+  
+  
 
   return (
     <MainWrapper>
@@ -32,15 +37,16 @@ const ChangePasswordOk = () => {
       <EmptyBox/>
       <ButtonDiv>
         <Button210W>이전</Button210W>
-        <Button210R>확인</Button210R>
+        <Button210R onClick={() => setPopupStep(1)}>확인</Button210R>
       </ButtonDiv>
 
       <EmptyBox/><EmptyBox/><EmptyBox/><EmptyBox/>
 
+      {popupStep === 1 && (
       <PopUpOverlay>
         <BigPopUp>
           <BigPopUpCloseBox>
-            <BigPopUpX>⨉</BigPopUpX>
+            <BigPopUpX onClick={() => navigate('/login')}>⨉</BigPopUpX>
           </BigPopUpCloseBox>
           <BigPopUpContent>
             <BigPopUpIcon src="http://localhost:10000/files/api/get/check-circle.png?filePath=images/mypage" alt="check-circle" />
@@ -49,12 +55,13 @@ const ChangePasswordOk = () => {
               <BigPopUpText>다시 로그인 해 주세요.</BigPopUpText>
             </BigPopUpTextDiv>
             <BigPopUpButtonDiv>
-              <BigPopUpButtonW>메인으로</BigPopUpButtonW>
-              <BigPopUpButtonR>로그인</BigPopUpButtonR>
+              <BigPopUpButtonW onClick={() => navigate('/')}>메인으로</BigPopUpButtonW>
+              <BigPopUpButtonR onClick={() => navigate('/login')}>로그인</BigPopUpButtonR>
             </BigPopUpButtonDiv>
           </BigPopUpContent>
         </BigPopUp>
       </PopUpOverlay>
+      )}
 
 
     </MainWrapper>

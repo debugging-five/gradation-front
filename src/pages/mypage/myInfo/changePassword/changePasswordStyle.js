@@ -91,4 +91,12 @@ export const BigPopUpText = styled.p`
     font-size: 21px;
     font-weight: bold;
 `;
+export const BigPopUpContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    padding: 60px 0 40px;
+`;
 

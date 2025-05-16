@@ -53,7 +53,7 @@ const MypageDelete = () => {
       console.error('탈퇴 중 오류 발생:', err);
       alert('서버 오류');
     });
-};
+  };
 
   return (
     <MainWrapper>

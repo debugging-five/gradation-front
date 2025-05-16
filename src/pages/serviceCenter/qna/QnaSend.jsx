@@ -92,7 +92,9 @@ const QnaSend = () => {
       qnaCategory: selectedCategory,
       qnaTitle: title,
       qnaContent: content,
-      userId : currentUser
+      userId : currentUser.id,
+      qnaImgName : selectedFile ? selectedFile.name : '',
+      qnaImgPath : ''
     };
 
     const formData = new FormData();
