@@ -520,7 +520,7 @@ const handlePasswordConfirmType = (e) => {
               )}
             </S.BorderWrapper>
 
-            <S.HiddenBorderWrapper visible={isSendVerificationCode}>
+            <S.HiddenBorderWrapper $visible={isSendVerificationCode}>
               {isSendVerificationCode && (
                 <S.Border>
                   <S.InputWrapper>
@@ -570,7 +570,7 @@ const handlePasswordConfirmType = (e) => {
             ))}
           </S.CheckboxContainer>
 
-          <S.JoinButton active={isJoin}>
+          <S.JoinButton $active={isJoin}>
             <S.H4 disabled={isSubmitting}>회원가입</S.H4>
           </S.JoinButton>
       </S.Wrapper>

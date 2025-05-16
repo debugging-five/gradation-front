@@ -164,13 +164,13 @@ const shapeCSS = {
 }
 
 const Button = styled.button`
-  ${({variant}) => variantCSS[variant]}
-  ${({fontSize}) => fontSizeCSS[fontSize]}
-  ${({fontWeight}) => fontWeightCSS[fontWeight]}
-  ${({color}) => colorCSS[color]}
-  ${({borderColor}) => borderColorCSS[borderColor]}
-  ${({size}) => sizeCSS[size]}
-  ${({shape}) => shapeCSS[shape]}
+  ${({$variant}) => variantCSS[$variant]}
+  ${({$fontSize}) => fontSizeCSS[$fontSize]}
+  ${({$fontWeight}) => fontWeightCSS[$fontWeight]}
+  ${({$color}) => colorCSS[$color]}
+  ${({$borderColor}) => borderColorCSS[$borderColor]}
+  ${({$size}) => sizeCSS[$size]}
+  ${({$shape}) => shapeCSS[$shape]}
   font-family: ${({theme}) => theme.FONT_FAMILY.korean}
 `
 
