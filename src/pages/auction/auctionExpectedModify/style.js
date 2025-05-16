@@ -161,7 +161,6 @@ S.InputBox = styled.div`
 
 S.InputBoxInfo = styled.div`
   display: flex;
-  width: auto;
 `
 
 S.RedStar = styled.p`
@@ -186,6 +185,28 @@ S.InputText = styled.input`
 	outline: none;
 `
 
+S.InputMin = styled.input`
+  ${EN_H6};
+	color: ${gray900};
+	text-align: right;
+	background: none;
+	border: none;
+	outline: none;
+  min-width: 20px;
+  width: auto;
+  `
+
+S.InputMax = styled.input`
+  ${EN_H6};
+	color: ${gray900};
+	text-align: right;
+	background: none;
+	border: none;
+	outline: none;
+  min-width: 20px;
+  width: auto;
+`
+
 S.InputDate = styled.input`
 	text-align: right;
 	${EN_H6};
@@ -202,6 +223,25 @@ S.ButtonWrap = styled.div`
 	gap: 20px;
 	justify-content: flex-end;
 	margin-bottom: 11px;
+`
+
+S.CalendarInput = styled.div`
+  display: flex;
+  align-items: center;
+  height: 100%;
+  cursor: pointer;
+  font-size: 16px;
+  color: #666666;
+  padding: 0 4px;
+`;
+
+S.CalendarIcon = styled.img`
+  display : flex;
+  justify-content : center;
+  align-items : center;
+  height: min-content;
+  width : 12px;
+  margin: 5px;
 `
 
 

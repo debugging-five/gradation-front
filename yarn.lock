@@ -8053,6 +8053,7 @@ react-error-overlay@^6.0.11:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.11.tgz#92835de5841c5cf08ba00ddd2d677b6d17ff9adb"
   integrity sha512-/6UZ2qgEyH2aqzYZgQPxEnz33NJ2gNsnHA2o5+o4wW9bLM/JYQitNP9xPhsXwC08hMMovfGe/8retsdDsczPRg==
 
+<<<<<<< HEAD
 react-flatpickr@^4.0.10:
   version "4.0.10"
   resolved "https://registry.yarnpkg.com/react-flatpickr/-/react-flatpickr-4.0.10.tgz#01280f632d095abe53e61b7dab65168b2446e4d4"
@@ -8061,6 +8062,9 @@ react-flatpickr@^4.0.10:
     flatpickr "^4.6.13"
 
 react-hook-form@^7.56.0:
+=======
+react-hook-form@^7.56.3:
+>>>>>>> 686b2baa93a902f17e1d6bf013c5cf11d509b923
   version "7.56.3"
   resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.56.3.tgz#c459f59fead379db30113951152e13db386cc015"
   integrity sha512-IK18V6GVbab4TAo1/cz3kqajxbDPGofdF0w7VHdCo0Nt8PrPlOZcuuDq9YYIV1BtjcX78x0XsldbQRQnQXWXmw==

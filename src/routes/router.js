@@ -94,6 +94,7 @@ import UpcyclingRegistration from "../pages/upcycling/upcyclingRegistration/Upcy
 import MypageAlertContainer from "../pages/mypage/myMail/MypageAlertContainer";
 import ContactArtistReceivedDetail from "../pages/mypage/myActive/contactArtist/ContactArtistReceivedDetail";
 import ContactArtistSendedDetail from "../pages/mypage/myActive/contactArtist/ContactArtistSendedDetail";
+import UpcyclingMain from "../pages/upcycling/upcyclingMain/UpcyclingMain";
 
 const router = createBrowserRouter([
   {
@@ -304,6 +305,10 @@ const router = createBrowserRouter([
         path: "/upcycling",
         element: <UpcyclingMainContainer />,
         children: [
+          {
+            index: true,
+            element: <UpcyclingMain />,
+          },
           {
             path: "registration",
             element: <UpcyclingRegistration />,
