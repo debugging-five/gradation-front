@@ -6,55 +6,61 @@ import {
   DeleteDiv,
   ErrorMessege
 } from '../qna/qnaSendStyle';
-import { Important, MainWrapper, PopUp, PopUpButtonDiv, PopUpButtonR, PopUpButtonW, PopUpContent, PopUpIcon, PopUpOverlay, PopUpText} from '../../mypage/style';
+import {
+  Important, MainWrapper, PopUp, PopUpButtonDiv, PopUpButtonR, PopUpButtonW,
+  PopUpContent, PopUpIcon, PopUpOverlay, PopUpText
+} from '../../mypage/style';
+import { useSelector } from 'react-redux';
 
 const QnaSend = () => {
+  // 상태 정의
   const [selectedCategory, setSelectedCategory] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [showConfirmation, setShowConfirmation] = useState(false); // 첫 번째 팝업 상태
-  const [showSuccess, setShowSuccess] = useState(false); // 두 번째 팝업 상태
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+    // Redux에서 currentUser 가져오기
+  const currentUser = useSelector(state => state.user.currentUser);
 
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
 
-  // 카테고리
   const categories = ['작품전시', '전시회', '경매', '업사이클', '마이페이지', '기타'];
 
-  // 체크박스처리
   const checkedUrl = 'http://localhost:10000/files/api/get/checked.png?filePath=images/mypage';
   const uncheckedUrl = 'http://localhost:10000/files/api/get/uncheck.png?filePath=images/mypage';
+
+  // 카테고리 선택 핸들러
   const handleSelect = (category) => {
-    if (selectedCategory === category) {
-      setSelectedCategory(''); // 이미 선택된 항목을 클릭하면 해제
-    } else {
-      setSelectedCategory(category); // 새로운 항목 선택
-    }
+    setSelectedCategory(prev => (prev === category ? '' : category));
+    setErrors(prev => ({ ...prev, category: '' }));
   };
 
-  // 첨부파일
-    const handleFileChange = (e) => {
+  // 파일 선택 핸들러
+  const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setSelectedFile(file);
-    }
+    if (file) setSelectedFile(file);
   };
+
+  // 파일 삭제
   const handleDeleteFile = () => {
     setSelectedFile(null);
     if (fileInputRef.current) {
-      fileInputRef.current.value = ''; // input 초기화
+      fileInputRef.current.value = '';
     }
   };
 
-  // 유효성 검사
+  // 유효성 검사 상태
   const [errors, setErrors] = useState({
     category: '',
     title: '',
     content: '',
   });
+
+  // 유효성 검사 함수
   const validate = () => {
+    const newErrors = { category: '', title: '', content: '' };
     let valid = true;
-    let newErrors = { category: '', title: '', content: '' };
 
     if (!selectedCategory) {
       newErrors.category = '필수항목입니다.';
@@ -73,56 +79,98 @@ const QnaSend = () => {
     return valid;
   };
 
-  // 등록 버튼 클릭 시 첫 번째 팝업 띄우기
+  // 등록 버튼 클릭 시 유효성 검사 후 확인 팝업 열기
   const handleConfirm = () => {
     if (validate()) {
-      setShowConfirmation(true); 
-    } // 첫 번째 팝업 열기
+      setShowConfirmation(true);
+    }
   };
 
-  // 첫 번째 팝업에서 "확인" 클릭 시 두 번째 팝업 띄우기
+  // 서버에 데이터 전송
+  const sendQna = async () => {
+    const info = {
+      qnaCategory: selectedCategory,
+      qnaTitle: title,
+      qnaContent: content,
+      userId : currentUser
+    };
+
+    const formData = new FormData();
+    formData.append('info', new Blob([JSON.stringify(info)], { type: 'application/json' }));
+    if (selectedFile) {
+      formData.append('file', selectedFile);
+    } else {
+      // 서버에서 파일 없음을 처리한다면 빈 Blob 보내도 무방
+      formData.append('file', new Blob());
+    }
+
+    try {
+      const response = await fetch('http://localhost:10000/qna/api/register', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('서버 오류가 발생했습니다.');
+      }
+
+      const result = await response.json();
+      console.log('등록 성공:', result);
+
+      // 성공 팝업 띄우기 및 입력 초기화
+      setShowSuccess(true);
+      setSelectedCategory('');
+      setTitle('');
+      setContent('');
+      handleDeleteFile();
+    } catch (error) {
+      console.error('등록 실패:', error);
+      alert('문의 등록에 실패했습니다. 다시 시도해주세요.');
+    }
+  };
+
+  // 확인 팝업에서 확인 클릭 시 처리
   const handleSubmit = () => {
-    setShowConfirmation(false); // 첫 번째 팝업 닫기
-    setShowSuccess(true); // 두 번째 팝업 열기
+    setShowConfirmation(false);
+    sendQna();
   };
 
-  // 첫 번째 팝업에서 "취소" 클릭 시 팝업 닫기
+  // 확인 팝업에서 취소 클릭 시 처리
   const handleCancel = () => {
-    setShowConfirmation(false); // 첫 번째 팝업 닫기
+    setShowConfirmation(false);
   };
 
   return (
     <MainWrapper>
       <Wrapper>
+        {/* 카테고리 선택 */}
         <Box>
           <OneLine>
             <Title>구분<Important>*</Important></Title>
             <CategoryWrapper>
-              {categories.map((status) => (
+              {categories.map(category => (
                 <Category
-                  key={status}
-                  onClick={() => {
-                    handleSelect(status); // 여기서 handleSelect 호출
-                    setErrors(prev => ({ ...prev, category: '' })); // 선택하면 에러 지우기
-                  }}
+                  key={category}
+                  onClick={() => handleSelect(category)}
                   style={{ cursor: 'pointer' }}
                 >
                   <img
-                    src={selectedCategory === status ? checkedUrl : uncheckedUrl}
+                    src={selectedCategory === category ? checkedUrl : uncheckedUrl}
                     alt="check"
                     width={16}
                     height={16}
                     style={{ marginRight: '0.5rem' }}
                   />
-                  {status}
+                  {category}
                 </Category>
               ))}
             </CategoryWrapper>
           </OneLine>
           <Line />
-            {errors.category && <ErrorMessege>{errors.category}</ErrorMessege>}
+          {errors.category && <ErrorMessege>{errors.category}</ErrorMessege>}
         </Box>
 
+        {/* 제목 입력 */}
         <Box>
           <OneLine>
             <Title>제목<Important>*</Important></Title>
@@ -131,14 +179,15 @@ const QnaSend = () => {
               value={title}
               onChange={e => {
                 setTitle(e.target.value);
-                setErrors(prev => ({ ...prev, title: '' })); // 입력하면 에러 지우기
+                setErrors(prev => ({ ...prev, title: '' }));
               }}
             />
           </OneLine>
           <Line />
-            {errors.title && <ErrorMessege>{errors.title}</ErrorMessege>}
+          {errors.title && <ErrorMessege>{errors.title}</ErrorMessege>}
         </Box>
 
+        {/* 내용 입력 */}
         <Box>
           <Title>내용<Important>*</Important></Title>
           <InputContent
@@ -151,27 +200,34 @@ const QnaSend = () => {
           {errors.content && <ErrorMessege>{errors.content}</ErrorMessege>}
         </Box>
 
+        {/* 첨부파일 선택 */}
         <Box>
           <OneLine>
             <Title>첨부파일</Title>
             <ButtonPhoto onClick={() => fileInputRef.current.click()}>첨부파일</ButtonPhoto>
-            <input type="file" accept="image/*" style={{ display: 'none' }} ref={fileInputRef} onChange={handleFileChange}/>
-          {selectedFile && (
-            <DeleteDiv>
-              <span>{selectedFile.name}</span>
-              <DeleteButton onClick={handleDeleteFile}>삭제</DeleteButton>
-            </DeleteDiv>
-          )}
+            <input
+              type="file"
+              accept="image/*"
+              style={{ display: 'none' }}
+              ref={fileInputRef}
+              onChange={handleFileChange}
+            />
+            {selectedFile && (
+              <DeleteDiv>
+                <span>{selectedFile.name}</span>
+                <DeleteButton onClick={handleDeleteFile}>삭제</DeleteButton>
+              </DeleteDiv>
+            )}
           </OneLine>
-
         </Box>
 
+        {/* 등록 버튼 */}
         <ButtonDiv>
           <ButtonSend onClick={handleConfirm}>등록</ButtonSend>
         </ButtonDiv>
       </Wrapper>
 
-      {/* 첫 번째 팝업: 문의 등록 확인 */}
+      {/* 등록 확인 팝업 */}
       {showConfirmation && (
         <PopUpOverlay>
           <PopUp>
@@ -187,7 +243,7 @@ const QnaSend = () => {
         </PopUpOverlay>
       )}
 
-      {/* 두 번째 팝업: 문의 등록 성공 */}
+      {/* 등록 성공 팝업 */}
       {showSuccess && (
         <PopUpOverlay>
           <PopUp>
@@ -199,7 +255,6 @@ const QnaSend = () => {
           </PopUp>
         </PopUpOverlay>
       )}
-
     </MainWrapper>
   );
 };
