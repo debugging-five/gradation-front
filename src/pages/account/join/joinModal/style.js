@@ -48,5 +48,10 @@ S.Icon = styled.img`
   height : 48px;
 `
 
+S.ButtonWrapper = styled.div`
+  display: flex;
+  gap: 20px;
+`
+
 
 export default S;
