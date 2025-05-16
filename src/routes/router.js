@@ -78,8 +78,8 @@ import ArtistMyProfile from "../pages/artist/artistMyProfile/ArtistMyProfile";
 import MyApprovedContainer from "../pages/mypage/myApproved/MyApprovedContainer";
 import MyApprovedCategory from "../pages/mypage/myApproved/MyApprovedCategory";
 import Login from "../pages/account/login/Login";
-import FindId from "../pages/account/login/FindId";
-import FindPassword from "../pages/account/login/FindPassword";
+import FindId from "../pages/account/findId/FindId";
+import FindPassword from "../pages/account/findPassword/FindPassword";
 import Join from "../pages/account/join/Join";
 import MypageAlertList from "../pages/mypage/myMail/MypageAlertList";
 import MypageAlertDetail from "../pages/mypage/myMail/MypageAlertDetail";
@@ -104,7 +104,18 @@ const router = createBrowserRouter([
         path: "",
         element: <MainContainer />,
       },
-
+      {
+        path: "/join",
+        element: <Join />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/find-id",
+        element: <FindId />,
+      },
       {
         path: "/find-password",
         element: <FindPassword />,
@@ -595,18 +606,18 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "/join",
-    element: <Join />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/find-id",
-    element: <FindId />,
-  },
+  // {
+  //   path: "/join",
+  //   element: <Join />,
+  // },
+  // {
+  //   path: "/login",
+  //   element: <Login />,
+  // },
+  // {
+  //   path: "/find-id",
+  //   element: <FindId />,
+  // },
 ]);
 
 export default router;

@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { H10, H2, H4, H7, H8 } from '../../../styles/common';
-import { Link } from 'react-router-dom';
 
 const S = {};
 
@@ -10,7 +9,7 @@ S.Container = styled.div`
 
 S.Wrapper = styled.div`
   /* margin: 84px 0 200px 0; */
-  padding: 132px 0 200px 0;
+  padding: 84px 0 200px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,18 +17,22 @@ S.Wrapper = styled.div`
 
 S.H2 = styled.p`
   ${H2}
-  width: 104px;
+  width: 136px;
   height: 36px;
-  /* margin : 0 0 64px 0; */
 `
 
 S.InputContainer = styled.div`
-  margin: 64px 0 0 0;
+  margin: 76px 0 0 0;
 `
 
 S.BorderWrapper = styled.div`
-  margin : 0 0 18px 0;  
-  height: 45px;
+  margin : 0 0 30px 0;  
+  height: 44px;
+`
+
+S.HiddenBorderWrapper = styled.div`
+  margin: ${({visible}) => (visible ? '0 0 30px 0' : '0')};
+  height: ${({visible}) => (visible ? '44px' : '0')};
 `
 
 S.Border = styled.div`
@@ -42,18 +45,17 @@ S.InputWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  height: 27px;
+  height: 26px;
 `
 
 S.Label = styled.label`
   display: flex;
   margin: 0 0 7px 0;
-  align-items: center;
 `
 
 S.H7 = styled.p`
   ${H7}
-  width : 140px;
+  width : 72px;
 
   span {
     color: #EE3333;
@@ -64,14 +66,12 @@ S.Input = styled.input`
 border: none;
 background-color: #FBFCFC;
 outline: none;
-height: 20px;
-padding: 0;
-margin: 0;
-
+width: 225px;
+/* ${H8} */
 
   &::placeholder {
     ${H8}
-}
+  }
 `
 
 S.ButtonWrapper = styled.div`
@@ -84,7 +84,7 @@ S.CheckboxContainer = styled.div`
   width: 760px;
 `
 
-S.LoginButton = styled.button`
+S.JoinButton = styled.button`
   all: unset;
   width: 440px;
   height: 50px;
@@ -106,6 +106,7 @@ S.H4 = styled.p`
 S.CheckboxWrapper = styled.div`
   display: flex;
   align-items: center;
+  margin: 0 0 10px 0;
   color: #C0C5C7;
 
   &.detail {
@@ -130,23 +131,9 @@ S.Terms = styled.span`
   color: ${({ checked }) => (checked ? "#333333" : "#C0C5C7")};
   cursor: pointer;
 `
-S.IconWrapper = styled.div`
-  /* width: 36px; */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 16px 0 0;
-`
+
 
 S.Icon = styled.img`
-  width : 20px;
-  height : 20px;
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
-`
-
-S.PasswordIcon = styled.img`
   width : 16px;
   height : 10px;
   margin: 0 8px 12px 0;
@@ -156,80 +143,14 @@ S.PasswordIcon = styled.img`
 S.Warning = styled.p`
   ${H10}
   color: #E49804;
-  margin: 4px 0 0 36px;
+  margin: 4px 0 0 82px;
 `
 
 S.Error = styled.p`
   ${H10};
   color: #EE3333; 
-  margin: 4px 0 0 36px;
-`
-
-S.H8 = styled.p`
-  ${H8}
-
-  .span {
-    margin : 0 0 0 5px;
-  }
-
-  &.service {
-    cursor: pointer;
-  }
-`
-
-S.Service = styled.div`
-  display: flex;
-  gap : 5px;
-  margin : 20px 0 0 0;
-  /* justify-content: center; */
-`
-
-S.Link = styled(Link)`
-  text-decoration: none;
-  color: inherit;
-`
-
-S.Line = styled.p`
-  display: flex;
-  justify-content: center;
-  width: 15px;
-`
-
-
-S.SocialContainer = styled.div`
-  margin: 68px 0 0 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-`
-
-S.SocialWrapper = styled.div`
-
-`
-
-S.SocialButton = styled.div`
-  display: flex;
-  width: 192px;
-  gap: 36px;
-  margin: 15px 0 0 0;
-  cursor: pointer;
-`
-
-S.Google = styled.img`
-  width: 40px;
-  height: 40px;
+  margin: 4px 0 0 82px;
   `
-
-S.Kakao = styled.img`
-  width: 40px;
-  height: 40px;
-  `
-
-S.Naver = styled.img`
-  width: 40px;
-  height: 40px;
-`
 
 
 export default S;
