@@ -49,6 +49,10 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 		const fetchAuction = async () => {
 			const response = await fetch(`http://localhost:10000/auction/api/detail/${id}`);
 			const auction = await response.json();
+			if(auction.length === 0) {
+        navigate("/auction")
+        return
+      }
 			setAuction(auction);
 			setData(auction[0]);
 		};
