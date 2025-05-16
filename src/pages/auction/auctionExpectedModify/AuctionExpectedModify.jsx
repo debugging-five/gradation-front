@@ -14,6 +14,7 @@ const AuctionExpectedModify = () => {
   const inputRef = useRef(null);
   const { register, handleSubmit, getValues, formState: { isSubmitting, isSubmitted, errors } } = useForm({ mode: "onChange" });
   const [auctionVO, setAuctionVO] = useState({});
+  const [back, setBack] = useState(false);
 
   useEffect(() => {
     const fetchAuction = async () => {
@@ -21,10 +22,15 @@ const AuctionExpectedModify = () => {
       const auction = await response.json();
       const auctionData = auction[0];
       setData(auctionData);
+      if (auctionData.artistId !== currentUser.id) {
+        alert("수정 권한이 없습니다!")
+        navigate(`/auction/bidding/${category}/detail/${id}`, { replace: true })
+        return
+      }
       setAuctionVO({
         id: id,
         artId: auctionData.artId,
-        auctionStartDate: auctionData.auctionStartDate ? dayjs(auctionData.auctionStartDate).toDate() : null,
+        auctionStartDate: auctionData.auctionStartDate ? auctionData.auctionStartDate : null,
         auctionEstimatedMinPrice: auctionData.auctionEstimatedMinPrice,
         auctionEstimatedMaxPrice: auctionData.auctionEstimatedMaxPrice,
         auctionStartPrice: auctionData.auctionStartPrice
@@ -32,6 +38,12 @@ const AuctionExpectedModify = () => {
     };
     fetchAuction();
   }, [id]);
+
+  const goBack = () => {
+    setBack(true)
+    navigate(`/auction/bidding/${category}/detail/${id}`, { replace: true })
+    return
+  }
 
   if (!data || !auctionVO) return null;
 
@@ -60,7 +72,39 @@ const AuctionExpectedModify = () => {
             <S.H10gray900>2025</S.H10gray900>
           </S.ArtInfo>
 
-          <form>
+          <form onSubmit={handleSubmit(async (auctionData) => {
+            if(back) return
+            const getCurrentAuction = await fetch(`http://localhost:10000/auction/api/detail/${id}`)
+            const currentAuction = await getCurrentAuction.json();
+
+            if(dayjs(currentAuction.auctionStartDate) > dayjs()){
+              alert("이미 시작된 경매입니다.");
+              navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`, { replace: true })
+              return
+            }
+            
+
+            console.log(auctionVO);
+            
+            await fetch("http://localhost:10000/auction/api/modify", {
+              method : "PUT",
+              headers : {
+                "Content-Type" : "application/json"
+              }, 
+              body : JSON.stringify(auctionVO)
+            })
+              .then((res) => {
+                if(!res.ok){
+                return res.json().then((res) => {
+                    alert(res.message)
+                  })
+                }
+                alert("수정에 성공하셨습니다");
+                navigate(window.location.href = `/auction/expected/${category}/detail/${id}`, { replace: true })
+                return res.json()
+              })
+              .catch(console.error)
+          })}>
             <S.InputBoxWrap>
               <S.InputBox>
                 <S.InputBoxInfo><S.H5>경매 개시</S.H5><S.RedStar>*</S.RedStar></S.InputBoxInfo>
@@ -80,11 +124,11 @@ const AuctionExpectedModify = () => {
                     onChange={([date]) =>
                       setAuctionVO(prev => ({
                         ...prev,
-                        auctionStartDate: date
+                        auctionStartDate: dayjs(date).format("YYYY-MM-DD HH:mm:ss")
                       }))
                     }
                     render={({ value, defaultValue, id, name }, ref) => (
-                      <S.CalendarInput ref={ref} id={id} name={name}>
+                      <S.CalendarInput ref={ref} id={id} name={name} >
                         <S.CalendarIcon
                           src="/assets/images/icon/calendar.png"
                           alt="calendar-icon"
@@ -151,7 +195,7 @@ const AuctionExpectedModify = () => {
             </S.InputBoxWrap>
 
             <S.ButtonWrap>
-              <S.CancelButton>취소</S.CancelButton>
+              <S.CancelButton onClick={goBack}>취소</S.CancelButton>
               <S.ModifyButton>수정</S.ModifyButton>
             </S.ButtonWrap>
             <S.Reference>경매가 개시되면 작품 수정 및 삭제가 불가능합니다.</S.Reference>
