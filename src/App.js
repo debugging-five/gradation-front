@@ -6,12 +6,14 @@ import MainContainer from './pages/main/MainContainer';
 import { ThemeProvider } from 'styled-components';
 import theme from './styles/theme';
 import TestContainer from './pages/test/TestContainer';
+import JoinCompleteModal from './pages/account/join/joinModal/JoinCompleteModal';
 
 function App() {
   return (
     <>
       <GlobalStyle />
       <RouterProvider router={router} />
+      {/* <JoinCompleteModal /> */}
     </>
   );
 }

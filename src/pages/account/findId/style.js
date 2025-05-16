@@ -1,3 +1,4 @@
+// 아이디 찾기
 import styled from 'styled-components'
 import { H10, H2, H4, H7, H8 } from '../../../styles/common';
 
