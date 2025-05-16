@@ -1,7 +1,8 @@
-import React, { use, useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import S from './style';
 import { Navigate, useNavigate } from 'react-router-dom';
 import AuctionPopup from './AuctionBiddingPopup/AuctionModal';
+import AuctionAutoPopup from './AuctionAutoBiddingPopup/AuctionAutoModal';
 import dayjs from 'dayjs';
 const AuctionBiddingDetail = ({type, category, id}) => {
 
@@ -9,13 +10,27 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 	
 	// console.log(id);
 	const [auction, setAuction] = useState([]);
-	const [bidding, setBidding] = useState([]);
 	const [data, setData] = useState([]);
+	const [bidding, setBidding] = useState([]);
 	const navigate = useNavigate();
 	const [openBidding, setOpenBidding] = useState(false);
+	const [openAutoBidding, setOpenAutoBidding] = useState(false);
+	const categoryMap = new Map([
+		["한국화", "korean"],
+		["회화", "painting"],
+		["건축", "architecture"],
+		["조각", "sculpture"],
+		["서예", "calligraphy"],
+		["공예", "craft"]
+  ]);
 	
-	const baseDate = new Date(data.auctionStartDate);
-  const deadline = new Date(baseDate.getTime() + 3 * 24 * 60 * 60 * 1000); // 기준일 + 3일, 마감직전 응찰이 들어오면 deadline에 30초를 더한다.
+	const baseDate = useMemo(() => {
+		return new Date(data.auctionStartDate)
+	}, [data.auctionStartDate]);
+  const deadline = useMemo(() => {
+  	return new Date(baseDate.getTime() + 3 * 24 * 60 * 60 * 1000);
+	}, [baseDate]);
+
 	const [timeLeft, setTimeLeft] = useState(deadline - new Date());
 
 	const [bidderCount, setBidderCount] = useState(0);
@@ -47,6 +62,8 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 		fetchBidding();
 	}, [id]);
 
+	let updateFetch;
+
 	useEffect(() => {
 		const interval = setInterval(() => {
       const diff = deadline - new Date();
@@ -55,7 +72,7 @@ const AuctionBiddingDetail = ({type, category, id}) => {
         setTimeLeft(0);
 				updateFetch().then(data => {
 					console.log(data);
-					alert("종료된 경매입니다.");
+					alert("경매가 종료되었습니다.");
 					navigate(window.location.href = `/auction/complete/${category}/detail/${id}`, { replace: true });
 				});
       } else {
@@ -64,9 +81,9 @@ const AuctionBiddingDetail = ({type, category, id}) => {
     }, 1000); // 1초마다 갱신
 
     return () => clearInterval(interval);
-	}, [deadline])
+	}, [category, deadline, id, navigate, updateFetch])
 
-	const updateFetch = async () => {
+	updateFetch = async () => {
 		const getBidder = await fetch(`http://localhost:10000/auction/api/read-bidder/${id}`);
 		const bidder = await getBidder.json();
 		// console.log(bidder);
@@ -126,23 +143,30 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 	
 	const popup = () => {
 		setOpenBidding(true);
+		setOpenAutoBidding(false);
 	}
 	const popupAuto = () => {
-		
+		setOpenBidding(false);
+		setOpenAutoBidding(true);
 	}
+
 	const backToList = () => {
 		navigate("../");
 	}
 
 	if(auction.length !== 0) {
 		const biddingDate = new Date(data.auctionStartDate);
+		const dataCategory = categoryMap.get(data.artCategory);
+		if(category !== dataCategory) {
+			return <Navigate to={`/auction/bidding/${dataCategory}/detail/${id}`} state={{message: "잘못된 접근"}} replace={true} />
+		}
 		
 		if(biddingDate > new Date()) {
-			return <Navigate to={`/auction/expected/${category}/detail/${id}`} state={{message: "잘못된 접근"}} replace={true} />
+			return <Navigate to={`/auction/expected/${dataCategory}/detail/${id}`} state={{message: "잘못된 접근"}} replace={true} />
 		}
 		
 		if(data.auctionBidDate){
-			return <Navigate to={`/auction/complete/${category}/detail/${id}`} state={{message: "잘못된 접근"}} replace={true} />
+			return <Navigate to={`/auction/complete/${dataCategory}/detail/${id}`} state={{message: "잘못된 접근"}} replace={true} />
 		}
 		
 		return (
@@ -218,6 +242,14 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 						<S.PopupBody>
 								<S.PopupPosition>
 									<AuctionPopup id={id} category={category} bidderCount={bidderCount} timeleft={formatTime(timeLeft)} data={data} bidding={bidding} setBidding={setBidding} openBidding={openBidding} setOpenBidding={setOpenBidding} /> 
+								</S.PopupPosition>
+						</S.PopupBody>
+							: null
+					}
+					{openAutoBidding ? 
+						<S.PopupBody>
+								<S.PopupPosition>
+									<AuctionAutoPopup id={id} category={category} bidderCount={bidderCount} timeleft={formatTime(timeLeft)} data={data} bidding={bidding} setBidding={setBidding} openAutoBidding={openAutoBidding} setOpenAutoBidding={setOpenAutoBidding} /> 
 								</S.PopupPosition>
 						</S.PopupBody>
 							: null
