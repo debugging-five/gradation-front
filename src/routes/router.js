@@ -30,7 +30,6 @@ import ExhibitionRegistration from "../pages/exhibition/exhibitionRegistration/E
 import UniversityCheck from "../pages/mypage/myInfo/universityCheck/UniversityCheck";
 import CommentList from "../pages/mypage/myActive/comment/CommentList";
 import ContactArtistContainer from "../pages/mypage/myActive/contactArtist/ContactArtistContainer";
-import ContactArtistDetail from "../pages/mypage/myActive/contactArtist/ContactArtistDetail";
 import ArtistCategory from "../pages/artist/ArtistCategory";
 import ContactArtistWrite from "../pages/mypage/myActive/contactArtist/ContactArtistWrite";
 import ArtLikeContainer from "../pages/mypage/myActive/like/ArtLikeContainer";
@@ -79,8 +78,8 @@ import ArtistMyProfile from "../pages/artist/artistMyProfile/ArtistMyProfile";
 import MyApprovedContainer from "../pages/mypage/myApproved/MyApprovedContainer";
 import MyApprovedCategory from "../pages/mypage/myApproved/MyApprovedCategory";
 import Login from "../pages/account/login/Login";
-import FindId from "../pages/account/login/FindId";
-import FindPassword from "../pages/account/login/FindPassword";
+import FindId from "../pages/account/findId/FindId";
+import FindPassword from "../pages/account/findPassword/FindPassword";
 import Join from "../pages/account/join/Join";
 import MypageAlertList from "../pages/mypage/myMail/MypageAlertList";
 import MypageAlertDetail from "../pages/mypage/myMail/MypageAlertDetail";
@@ -93,6 +92,9 @@ import ApprovedUpcyclingList from "../pages/mypage/myApproved/myApprovedList/App
 import UpcyclingMainContainer from "../pages/upcycling/upcyclingMain/UpcyclingMainContainer";
 import UpcyclingRegistration from "../pages/upcycling/upcyclingRegistration/UpcyclingRegistration";
 import MypageAlertContainer from "../pages/mypage/myMail/MypageAlertContainer";
+import ContactArtistReceivedDetail from "../pages/mypage/myActive/contactArtist/ContactArtistReceivedDetail";
+import ContactArtistSendedDetail from "../pages/mypage/myActive/contactArtist/ContactArtistSendedDetail";
+import UpcyclingMain from "../pages/upcycling/upcyclingMain/UpcyclingMain";
 
 const router = createBrowserRouter([
   {
@@ -103,7 +105,18 @@ const router = createBrowserRouter([
         path: "",
         element: <MainContainer />,
       },
-
+      {
+        path: "/join",
+        element: <Join />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/find-id",
+        element: <FindId />,
+      },
       {
         path: "/find-password",
         element: <FindPassword />,
@@ -293,6 +306,10 @@ const router = createBrowserRouter([
         element: <UpcyclingMainContainer />,
         children: [
           {
+            index: true,
+            element: <UpcyclingMain />,
+          },
+          {
             path: "registration",
             element: <UpcyclingRegistration />,
           },
@@ -345,8 +362,12 @@ const router = createBrowserRouter([
                 ],
               },
               {
-                path: "contact-artist/detail/:id",
-                element: <ContactArtistDetail />,
+                path: "contact-artist/received/detail/:id",
+                element: <ContactArtistReceivedDetail />,
+              },
+              {
+                path: "contact-artist/sended/detail/:id",
+                element: <ContactArtistSendedDetail />,
               },
               {
                 path: "contact-artist/write/:email",
@@ -556,11 +577,17 @@ const router = createBrowserRouter([
                 path: "detail/:id",
                 element: <QnaDetail />,
               },
-              {
-                path: "registration",
-                element: <QnaSend />,
-              },
             ],
+          },
+        ],
+      },
+      {
+        path: "/service-center",
+        element: <ServiceCenterContainer />,
+        children: [
+          {
+            path: "registration",
+            element: <QnaSend />,
           },
         ],
       },
@@ -584,18 +611,18 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "/join",
-    element: <Join />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/find-id",
-    element: <FindId />,
-  },
+  // {
+  //   path: "/join",
+  //   element: <Join />,
+  // },
+  // {
+  //   path: "/login",
+  //   element: <Login />,
+  // },
+  // {
+  //   path: "/find-id",
+  //   element: <FindId />,
+  // },
 ]);
 
 export default router;

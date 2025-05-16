@@ -12,6 +12,7 @@ export const MainWrapper = styled.div`
 
 export const Leftbar = styled.div`
   width: 248px;
+  height: 500px;
   display : flex;
   flex-direction : column;
   gap: 16px;
