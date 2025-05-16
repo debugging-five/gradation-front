@@ -18,7 +18,7 @@ const Layout = () => {
 
   useEffect(() => {
     if(jwtToken) {
-      console.log(jwtToken)
+      console.log("jwtToken", jwtToken)
       localStorage.setItem("jwtToken", jwtToken);
       navigate("/", { replace: true });
     }
@@ -57,7 +57,7 @@ const Layout = () => {
       };
       getUserDatas()
     }
-  }, [localJwtToken]); 
+  }, [jwtToken]); 
 
   console.log("currentUser", currentUser)
 
