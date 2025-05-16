@@ -287,6 +287,7 @@ export const PopUp = styled.div`
     height: 200px;
     background-color: white;
     transform: translateY(-200px); /* 위로 50px 올림 */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5); // 팝업 상자 자체의 그림자
 `;
 export const PopUpContent = styled.div`
     display: flex;
@@ -335,6 +336,7 @@ export const BigPopUp = styled.div`
     background-color: white;
     transform: translateY(-100px); /* 위로 50px 올림 */
     border-radius: 5px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5); // 팝업 상자 자체의 그림자
 `;
 export const BigPopUpContent = styled.div`
     display: flex;

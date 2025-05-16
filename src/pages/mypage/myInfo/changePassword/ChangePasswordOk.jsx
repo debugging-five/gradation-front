@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button210R, Button210W, Important } from '../../style';
-import { ButtonDiv, ChangePasswordBox, EmptyBox, EndBar, InputContent, MainWrapper, OkBox, OkTitle1, OkTitle2, PasswordTitle, UserIcon } from './changePasswordStyle';
+import { BigPopUpButtonDiv, BigPopUpButtonR, BigPopUpButtonW, BigPopUpCloseBox, BigPopUpContent, BigPopUpIcon, BigPopUpTextDiv, BigPopUpTitle, BigPopUpX, Button210R, Button210W, Important, PopUpOverlay } from '../../style';
+import { BigPopUp, BigPopUpText, ButtonDiv, ChangePasswordBox, EmptyBox, EndBar, InputContent, MainWrapper, OkBox, OkTitle1, OkTitle2, PasswordTitle, UserIcon } from './changePasswordStyle';
 
 const ChangePasswordOk = () => {
 
@@ -36,6 +36,27 @@ const ChangePasswordOk = () => {
       </ButtonDiv>
 
       <EmptyBox/><EmptyBox/><EmptyBox/><EmptyBox/>
+
+      <PopUpOverlay>
+        <BigPopUp>
+          <BigPopUpCloseBox>
+            <BigPopUpX>⨉</BigPopUpX>
+          </BigPopUpCloseBox>
+          <BigPopUpContent>
+            <BigPopUpIcon src="http://localhost:10000/files/api/get/check-circle.png?filePath=images/mypage" alt="check-circle" />
+            <BigPopUpTextDiv>
+              <BigPopUpText>새로운 비밀번호가 설정되었습니다.</BigPopUpText>
+              <BigPopUpText>다시 로그인 해 주세요.</BigPopUpText>
+            </BigPopUpTextDiv>
+            <BigPopUpButtonDiv>
+              <BigPopUpButtonW>메인으로</BigPopUpButtonW>
+              <BigPopUpButtonR>로그인</BigPopUpButtonR>
+            </BigPopUpButtonDiv>
+          </BigPopUpContent>
+        </BigPopUp>
+      </PopUpOverlay>
+
+
     </MainWrapper>
   );
 };
