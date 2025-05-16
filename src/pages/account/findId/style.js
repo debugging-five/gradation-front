@@ -8,7 +8,6 @@ S.Container = styled.div`
 `
 
 S.Wrapper = styled.div`
-  /* margin: 84px 0 200px 0; */
   padding: 84px 0 200px 0;
   display: flex;
   flex-direction: column;
@@ -31,8 +30,8 @@ S.BorderWrapper = styled.div`
 `
 
 S.HiddenBorderWrapper = styled.div`
-  margin: ${({visible}) => (visible ? '0 0 30px 0' : '0')};
-  height: ${({visible}) => (visible ? '44px' : '0')};
+  margin: ${({$visible}) => ($visible ? '0 0 30px 0' : '0')};
+  height: ${({$visible}) => ($visible ? '44px' : '0')};
 `
 
 S.Border = styled.div`
@@ -79,10 +78,6 @@ S.ButtonWrapper = styled.div`
   margin: 0 0 4px 0;
 `
 
-S.CheckboxContainer = styled.div`
-  margin : 0 0 50px 0;
-  width: 760px;
-`
 
 S.JoinButton = styled.button`
   all: unset;
@@ -95,43 +90,13 @@ S.JoinButton = styled.button`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background-color: ${({ active }) => (active ? "#EE3333" : "#C0C5C7")};
+  background-color: ${({ $active }) => ($active ? "#EE3333" : "#C0C5C7")};
 `
 
 S.H4 = styled.p`
   ${H4}
   color : #FBFCFC;
 `
-
-S.CheckboxWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 0 0 10px 0;
-  color: #C0C5C7;
-
-  &.detail {
-    margin-left: 20px;
-  }
-
-`
-
-S.Checkbox = styled.div`
-  width : 20px;
-  height : 20px;
-  background-image: url(${({ checked }) => checked ? '/assets/images/join/checked-on.png' : '/assets/images/join/checked-off.png'});
-  margin: 0 5px 0 0;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  cursor: pointer;
-`
-
-S.Terms = styled.span`
-  ${H8}
-  color: ${({ checked }) => (checked ? "#333333" : "#C0C5C7")};
-  cursor: pointer;
-`
-
 
 S.Icon = styled.img`
   width : 16px;
