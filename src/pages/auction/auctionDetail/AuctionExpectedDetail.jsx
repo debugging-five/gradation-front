@@ -17,6 +17,21 @@ const AuctionCompleteDetail = ({type, category, id}) => {
 		["공예", "craft"]
   ]);
   const { currentUser } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    const fetchAuction = async () => {
+      const response = await fetch(`http://localhost:10000/auction/api/detail/${id}`);
+      const auction = await response.json();
+      console.log(auction);
+      if(auction.length === 0) {
+        navigate("/auction")
+        return
+      }
+      setAuction(auction);
+      setData(auction[0]);
+    };
+    fetchAuction();
+  },[id])
   
   const baseDate = useMemo(() => {
     return new Date(data.auctionStartDate)
@@ -35,15 +50,6 @@ const AuctionCompleteDetail = ({type, category, id}) => {
   
   
 
-  useEffect(() => {
-    const fetchAuction = async () => {
-      const response = await fetch(`http://localhost:10000/auction/api/detail/${id}`);
-      const auction = await response.json();
-      setAuction(auction);
-      setData(auction[0]);
-    };
-    fetchAuction();
-  },[id])
 
   useEffect(() => {
       const interval = setInterval(() => {
@@ -108,7 +114,7 @@ const AuctionCompleteDetail = ({type, category, id}) => {
             <S.AuctionInfo1>
               <S.TitleWrapper>
                 <S.Title>{data.artTitle}</S.Title>
-                {currentUser && data.artistId !== currentUser.id?
+                {currentUser && data.artistId === currentUser.id?
                 <S.TitleButtonWrapper>
                   <S.TitleButton1 onClick={modify}>수정하기</S.TitleButton1>
                   <S.TitleButton2 onClick={remove}>삭제하기</S.TitleButton2>

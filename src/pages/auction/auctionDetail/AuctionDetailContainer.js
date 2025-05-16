@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import AuctionBiddingDetail from './AuctionBiddingDetail';
 import AuctionExpectedDetail from './AuctionExpectedDetail';
 import AuctionCompleteDetail from './AuctionCompleteDetail';
@@ -12,6 +12,7 @@ const AuctionDetailContainer = () => {
   // console.log("id", id)
   const [cursor, setCursor] = useState(1);
   const [list, setList] = useState([]);
+  const navigate = useNavigate();
 
   // 현재 커서에 해당하는 리스트를 가져오는 useEffect
   useEffect(() => {
@@ -28,6 +29,9 @@ const AuctionDetailContainer = () => {
   const cursorUp = async () => {
     const nextCursor = cursor + 1;
     const response = await fetch(`http://localhost:10000/auction/api/footer/${nextCursor}`);
+    if (!response.ok) {
+      navigate("../")
+    }
     const data = await response.json();
       if (data.length === 0) {
         setCursor(1);
@@ -62,7 +66,6 @@ const AuctionDetailContainer = () => {
   ]);
 
   // console.log(list);
-  
 
   return (
     <>
