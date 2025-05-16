@@ -35,6 +35,11 @@ const [errorCount, setErrorCount] = useState(1); // 인증번호 실패 횟수
 const[passwordType, setPasswordType] = useState({type : 'password', visible : false});
 const[passwordConfirmType, setPasswordConfirmType] = useState({type : 'password', visible : false});
 
+const[isModalOpen, setIsModalOpen] = useState(false);
+
+const openJoinModal = () => {
+  setIsModalOpen(true);
+}
 
 const isJoin = isValid && agreement[0] && agreement[1] && agreement[2]
 
@@ -253,7 +258,8 @@ const handlePasswordConfirmType = (e) => {
       .then((res) => {
         console.log(res)
         alert(res.message)
-        navigate("/login")
+        setIsModalOpen(true)
+        // navigate("/login")
       })
       .catch(console.error)
       
@@ -570,7 +576,7 @@ const handlePasswordConfirmType = (e) => {
             ))}
           </S.CheckboxContainer>
 
-          <S.JoinButton $active={isJoin}>
+          <S.JoinButton $active={isJoin} onClick={openJoinModal}>
             <S.H4 disabled={isSubmitting}>회원가입</S.H4>
           </S.JoinButton>
       </S.Wrapper>
