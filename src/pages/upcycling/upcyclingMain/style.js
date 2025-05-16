@@ -308,6 +308,8 @@ export const Chapter3Labels = styled.div`
     css`
       opacity: 1;
       transform: translateY(0);
+
+      
     `}
 `;
 

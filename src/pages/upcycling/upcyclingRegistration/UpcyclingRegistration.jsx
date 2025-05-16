@@ -205,6 +205,7 @@ const UpcyclingRegistration = () => {
               수거 신청일 <S.Required>*</S.Required>
             </S.Label>
             <S.DateWrapper>
+              {/* 달력 여기 있습니다! */}
               <Flatpickr
                 options={{ dateFormat: "Y-m-d", disableMobile: true, minDate: "today", }}
                 value={formData.pickupDate}
