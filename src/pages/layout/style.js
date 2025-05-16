@@ -1,108 +1,140 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { H7 } from '../../styles/common';
 
 const S = {};
 
-S.Container = styled.header`
+S.Header = styled.header`
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 70px;
-  padding: 0 60px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #fff;
-  border-bottom: 1px solid #ddd;
-`;
-
-S.Logo = styled(Link)`
-  ${H7}
-  font-weight: bold;
-  font-size: 20px;
-  color: ${({ theme }) => theme.PALLETE.black};
-  text-decoration: none;
-  border: 1px solid ${({ theme }) => theme.PALLETE.black};
-  padding: 5px 10px;
+  background-color: #FBFCFC;
+  height: 56px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  z-index: 1000;
 `;
 
 S.Nav = styled.nav`
   display: flex;
-  gap: 36px;
+  align-items: center;
+  height: 100%;
 `;
 
-S.MenuItem = styled(Link)`
-  ${H7}
-  color: ${({ theme }) => theme.PALLETE.gray[900]};
-  text-decoration: none;
+S.HeaderLogoWrap = styled.div`
+  margin: 11px 52px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+`;
+
+S.HeaderLogo = styled.img`
+  width: 96px;
+  height: 34px;
+`;
+
+// 메뉴
+S.Menu = styled.ul`
+  display: flex;
+  list-style: none;
+  gap: 60px;
+`;
+
+S.MenuItem = styled.li`
   position: relative;
 
-  &.active {
-    color: ${({ theme }) => theme.PALLETE.primary.main};
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background-color: ${({ theme }) => theme.PALLETE.primary.main};
+  a {
+    text-decoration: none;
+    color: ${({ theme }) => theme.PALLETE.gray[900]};
+    font-size: 19px;
+    font-weight: ${({ theme }) => theme.FONT_WEIGHT_EN.regular};
+
+    &:hover {
+      text-decoration: underline;
+      color: ${({ theme }) => theme.PALLETE.primary.main};
+    }
+  }
+
+  &:hover > ul,
+  &:focus-within > ul {
+    visibility: visible;
+    opacity: 1;
+  }
+`;
+
+// 드롭다운
+S.Dropdown = styled.ul`
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #FBFCFC;
+  list-style: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  border: 0.1px solid ${({ theme }) => theme.PALLETE.gray[500]};
+  padding: 8px 16px;
+  transition: visibility 0.2s ease, opacity 0.2s ease;
+
+  li {
+    padding: 10px;
+
+    a {
+      color: ${({ theme }) => theme.PALLETE.gray[900]};
+      font-size: 16px;
+      text-decoration: none;
+      white-space: nowrap;
+
+      &:hover {
+        background-color: #FBFCFC;
+        color: ${({ theme }) => theme.PALLETE.primary.main};
+      }
     }
   }
 `;
 
-S.RightMenu = styled.div`
+// 로그인 영역
+S.LoginSection = styled.div`
   display: flex;
   align-items: center;
-  gap: 12px;
-`;
-
-S.BellIcon = styled.img`
-  width: 20px;
-  height: 20px;
-`;
-
-S.SignIn = styled(Link)`
-  ${H7}
-  color: ${({ theme }) => theme.PALLETE.gray[900]};
-  text-decoration: none;
-`;
-
-// 로그인한 경우
-S.UserMenu = styled.div`
+  margin-left: auto;
+  margin-right: 52px;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+
+  .header-bell {
+    height: 24px;
+    cursor: pointer;
+    margin-right: 24px;
+  }
 `;
 
-S.UserName = styled.span`
-  ${H7}
-  color: ${({ theme }) => theme.PALLETE.black};
-  cursor: pointer;
-`;
+S.SignInWrap = styled.div`
+  position: relative;
 
-S.Dropdown = styled.ul`
-  position: absolute;
-  top: 100%;
-  right: 0;
-  margin-top: 8px;
-  background: #fff;
-  border: 1px solid #ddd;
-  list-style: none;
-  padding: 8px 0;
-  width: 140px;
-  z-index: 100;
-`;
+  .sign-in {
+    text-decoration: none;
+    color: ${({ theme }) => theme.PALLETE.gray[900]};
+    font-size: 19px;
+    font-weight: ${({ theme }) => theme.FONT_WEIGHT_EN.regular};
 
-S.DropdownLink = styled(Link)`
-  ${H7}
-  display: block;
-  padding: 8px 16px;
-  color: ${({ theme }) => theme.PALLETE.gray[900]};
-  text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+      color: ${({ theme }) => theme.PALLETE.primary.main};
+    }
+  }
 
-  &:hover {
-    background-color: ${({ theme }) => theme.PALLETE.gray[100]};
+  &:hover ul {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  ul {
+    top: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
   }
 `;
 

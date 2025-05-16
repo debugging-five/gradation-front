@@ -1,38 +1,75 @@
+// Header.jsx
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import S from './style';
 
 const Header = ({ userName }) => {
-  const location = useLocation();
-
   return (
-    <S.Container>
-      <S.Logo to="/">Gradation</S.Logo>
-
+    <S.Header>
       <S.Nav>
-        <S.MenuItem to="/display" className={location.pathname.includes('display') ? 'active' : ''}>display</S.MenuItem>
-        <S.MenuItem to="/artist" className={location.pathname.includes('artist') ? 'active' : ''}>artist</S.MenuItem>
-        <S.MenuItem to="/auction" className={location.pathname.includes('auction') ? 'active' : ''}>auction</S.MenuItem>
-        <S.MenuItem to="/exhibition" className={location.pathname.includes('exhibition') ? 'active' : ''}>exhibition</S.MenuItem>
-        <S.MenuItem to="/upcycle" className={location.pathname.includes('upcycle') ? 'active' : ''}>upcycle</S.MenuItem>
-      </S.Nav>
+        <S.HeaderLogoWrap>
+          <Link to="/">
+            <S.HeaderLogo src={`${process.env.PUBLIC_URL}/assets/images/icon/logo.png`} alt="Gradation" />
+          </Link>
+        </S.HeaderLogoWrap>
 
-      <S.RightMenu>
-        <S.BellIcon src="/assets/images/icon/bell.png" alt="bell" />
-        {userName ? (
-          <S.UserMenu>
-            <S.UserName>{userName}님</S.UserName>
+        <S.Menu>
+          <S.MenuItem>
+            <Link to="/display/ing">display</Link>
             <S.Dropdown>
-              <li><S.DropdownLink to="/mypage">마이페이지</S.DropdownLink></li>
-              <li><S.DropdownLink to="/qna">고객센터</S.DropdownLink></li>
-              <li><S.DropdownLink to="/logout">로그아웃</S.DropdownLink></li>
+              <li><Link to="/display/ing">전시 중인 작품</Link></li>
+              <li><Link to="/display/coming">전시 예정인 작품</Link></li>
             </S.Dropdown>
-          </S.UserMenu>
-        ) : (
-          <S.SignIn to="/login">sign in</S.SignIn>
-        )}
-      </S.RightMenu>
-    </S.Container>
+          </S.MenuItem>
+
+          <S.MenuItem><Link to="/artist">artist</Link></S.MenuItem>
+
+          <S.MenuItem>
+            <Link to="/auction/bidding">auction</Link>
+            <S.Dropdown>
+              <li><Link to="/auction/bidding">경매중</Link></li>
+              <li><Link to="/auction/coming">경매 예정</Link></li>
+              <li><Link to="/auction/complete">경매 완료</Link></li>
+            </S.Dropdown>
+          </S.MenuItem>
+
+          <S.MenuItem>
+            <Link to="/exhibition/gradation">exhibition</Link>
+            <S.Dropdown>
+              <li><Link to="/exhibition/gradation">그라데이션 전시회</Link></li>
+              <li><Link to="/exhibition/university">대학교 전시회</Link></li>
+              <li><Link to="/exhibition/form">학교 신청</Link></li>
+            </S.Dropdown>
+          </S.MenuItem>
+
+          <S.MenuItem>
+            <Link to="/upcycling">upcycling</Link>
+            <S.Dropdown>
+              <li><Link to="/upcycling">업사이클</Link></li>
+              <li><Link to="/upcycling/form">업사이클 신청</Link></li>
+            </S.Dropdown>
+          </S.MenuItem>
+        </S.Menu>
+
+        <S.LoginSection>
+          <img className="header-bell" src={`${process.env.PUBLIC_URL}/assets/images/icon/bell.png`} alt="bell" />
+          {userName ? (
+            <S.SignInWrap>
+              <span className="sign-in">{userName}님</span>
+              <S.Dropdown>
+                <li><Link to="/mypage">마이페이지</Link></li>
+                <li><Link to="/mypage/qna">고객센터</Link></li>
+                <li><Link to="/logout">로그아웃</Link></li>
+              </S.Dropdown>
+            </S.SignInWrap>
+          ) : (
+            <S.SignInWrap>
+              <Link to="/login" className="sign-in">sign in</Link>
+            </S.SignInWrap>
+          )}
+        </S.LoginSection>
+      </S.Nav>
+    </S.Header>
   );
 };
 
