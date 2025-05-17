@@ -23,40 +23,40 @@ const NormalJoin = () => {
   const [code, setCode] = useState("") 
 
 
-const [idCheckMessage, setIdCheckMessage] = useState("") // 아이디 중복 체크 결과 메시지
-const [isIdAvailable, setIsIdAvailable] = useState(null) // 아이디 사용 가능 여부
-const [emailCheckMessage, setEmailCheckMessage] = useState("")
-const [isSendVerificationCode, setIsSendVerificationCode] = useState(false) // 인증번호 이메일 전송 성공 여부
-const [confirmVerificationCode, setConfirmVerificationCode] = useState(false) // 인증번호 검증 성공 여부
-const [verificationMessage, setVerificationMessage] = useState("") // 인증 완료 실패 메시지
-const [errorCount, setErrorCount] = useState(1); // 인증번호 실패 횟수
-const [isEmailButtonClicked, setIsEmailButtonClicked] = useState(false);
+  const [idCheckMessage, setIdCheckMessage] = useState("") // 아이디 중복 체크 결과 메시지
+  const [isIdAvailable, setIsIdAvailable] = useState(null) // 아이디 사용 가능 여부
+  const [emailCheckMessage, setEmailCheckMessage] = useState("")
+  const [isSendVerificationCode, setIsSendVerificationCode] = useState(false) // 인증번호 이메일 전송 성공 여부
+  const [confirmVerificationCode, setConfirmVerificationCode] = useState(false) // 인증번호 검증 성공 여부
+  const [verificationMessage, setVerificationMessage] = useState("") // 인증 완료 실패 메시지
+  const [errorCount, setErrorCount] = useState(1); // 인증번호 실패 횟수
+  const [isEmailButtonClicked, setIsEmailButtonClicked] = useState(false);
 
-const[passwordType, setPasswordType] = useState({type : 'password', visible : false});
-const[passwordConfirmType, setPasswordConfirmType] = useState({type : 'password', visible : false});
+  const[passwordType, setPasswordType] = useState({type : 'password', visible : false});
+  const[passwordConfirmType, setPasswordConfirmType] = useState({type : 'password', visible : false});
 
-const[isModalOpen, setIsModalOpen] = useState(false);
+  const[isModalOpen, setIsModalOpen] = useState(false);
 
-// const isJoin = isValid && agreement[0] && agreement[1] && agreement[2]
-const isJoin = isValid && isAllRequiredAgreed && isIdAvailable === true && confirmVerificationCode === true
+  // const isJoin = isValid && agreement[0] && agreement[1] && agreement[2]
+  const isJoin = isValid && isAllRequiredAgreed && isIdAvailable === true && confirmVerificationCode === true
 
-const handlePasswordType = (e) => {
-    setPasswordType(() => {
-      if(!passwordType.visible) {
-        return {type : 'text', visible : true};
-      }
-      return {type : 'password', visible : false}
-    })
-  }
-  
-const handlePasswordConfirmType = (e) => {
-    setPasswordConfirmType(() => {
-      if(!handlePasswordConfirmType.visible) {
-        return {type : 'text', visible : true};
-      }
-      return {type : 'password', visible : false}
-    })
-  }
+  const handlePasswordType = (e) => {
+      setPasswordType(() => {
+        if(!passwordType.visible) {
+          return {type : 'text', visible : true};
+        }
+        return {type : 'password', visible : false}
+      })
+    }
+    
+  const handlePasswordConfirmType = (e) => {
+      setPasswordConfirmType(() => {
+        if(!handlePasswordConfirmType.visible) {
+          return {type : 'text', visible : true};
+        }
+        return {type : 'password', visible : false}
+      })
+    }
   
   // 전체 동의
   const agreementAll = () => {

@@ -1,38 +1,39 @@
 import { useState } from 'react';
 import S from './style';
-import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import CheckedButton from '../../../components/button/CheckedButton';
 import UncheckedButton from '../../../components/button/UncheckedButton';
+import FindIdModal from './findIdModal/FindIdModal';
 
 const FindId = () => {
 
-  const { register, handleSubmit, getValues, trigger, formState: {isSubmitting, errors, isValid} } = useForm({mode: "onBlur"});
-  const navigate = useNavigate();
+  const { register, handleSubmit, trigger, formState: {isSubmitting, errors, isValid} } = useForm({mode: "onBlur"});
 
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   
-  const [userIdentification, setUserIdentification] = useState(""); 
   const [userEmail, setUserEmail] = useState(""); 
   const [code, setCode] = useState("") 
+  
+  const [emailCheckMessage, setEmailCheckMessage] = useState("")
+  const [isSendVerificationCode, setIsSendVerificationCode] = useState(false) // 인증번호 이메일 전송 성공 여부
+  const [confirmVerificationCode, setConfirmVerificationCode] = useState(false) // 인증번호 검증 성공 여부
+  const [verificationMessage, setVerificationMessage] = useState("") // 인증 완료 실패 메시지
+  const [errorCount, setErrorCount] = useState(1); // 인증번호 실패 횟수
+  const [isEmailButtonClicked, setIsEmailButtonClicked] = useState(false);
+  
+  const [foundId, setFoundId] = useState("")
+  const [foundEmail, setFoundEmail] = useState("")
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-const [idCheckMessage, setIdCheckMessage] = useState("") // 아이디 중복 체크 결과 메시지
-const [isIdAvailable, setIsIdAvailable] = useState(null) // 아이디 사용 가능 여부
-const [emailCheckMessage, setEmailCheckMessage] = useState("")
-const [isSendVerificationCode, setIsSendVerificationCode] = useState(false) // 인증번호 이메일 전송 성공 여부
-const [confirmVerificationCode, setConfirmVerificationCode] = useState(false) // 인증번호 검증 성공 여부
-const [verificationMessage, setVerificationMessage] = useState("") // 인증 완료 실패 메시지
-const [errorCount, setErrorCount] = useState(1); // 인증번호 실패 횟수
-
-
-          
+  const isFindId = isValid && confirmVerificationCode === true;
 
 
 // 이메일 존재 여부 확인 + 이메일 인증번호 전송
 const getVerificationCodeEmail = async () => {
   if(!userEmail) {
-    alert("이메일을 입력하세요.")
+    // alert("이메일을 입력하세요.")
+    setVerificationMessage("필수 항목입니다.")
     return;
   }
     
@@ -49,6 +50,7 @@ const getVerificationCodeEmail = async () => {
         console.log(res)
         setEmailCheckMessage("");
         setIsSendVerificationCode(true)
+        setIsEmailButtonClicked(true)
         setErrorCount(0);
         setConfirmVerificationCode(false);
       })
@@ -59,7 +61,9 @@ const getVerificationCodeEmail = async () => {
   const getIsVerificationCode = async () => {
     
     if(!code) {
-      alert("인증번호를 입력하세요.")
+      // alert("인증번호를 입력하세요.")
+      setVerificationMessage("필수 항목입니다.")
+      return;
     }
     
     // if(!isSendVerificationCode) {
@@ -81,8 +85,10 @@ const getVerificationCodeEmail = async () => {
           const updateErrorCount = errorCount + 1;
           if(updateErrorCount >= 3) {
             setVerificationMessage(`인증코드 ${updateErrorCount}회 실패! \n다시 인증해주세요.`)
-            setIsSendVerificationCode(false)
+            // setIsSendVerificationCode(false)
             setErrorCount(0)
+            setConfirmVerificationCode(false)
+            setCode("")
             return;
           }
           setErrorCount(updateErrorCount)
@@ -99,158 +105,168 @@ const getVerificationCodeEmail = async () => {
     
     
     return (
-      <form onSubmit={handleSubmit(async (data) => {
+      <div>
+        <form onSubmit={handleSubmit(async (data) => {
         
-        // 인증번호
-        if(!confirmVerificationCode) {
-          alert("인증번호 확인은 필수입니다.")
-          return
-        }
+          // 인증번호
+          if(!confirmVerificationCode) {
+            alert("인증번호 확인은 필수입니다.")
+            return
+          }
         
-        const {
-          userName,
-          userEmail,
-        } = data;
+          const {
+            userName,
+            userEmail,
+          } = data;
         
-        const userVO = {
-          userName : userName,
-          userEmail : userEmail,
-        }
+          const userVO = {
+            userName : userName,
+            userEmail : userEmail,
+          }
         
-        // 아이디 찾기
-          await fetch("http://localhost:10000/users/api/find-id", {
-            method: "POST",
-            headers : {
-              "Content-Type" : "application/json"
-            },
-            body : JSON.stringify(userVO)
-          })
-          .then((res) => {
-            if(!res.ok) {
-              return res.json().then((res) => {
-                console.log(res)
-                alert(res.message)
-              })
-            }
-            return res.json()
-          })
-          .then((res) => {
-            console.log(res)
-            alert(res.message)
-            // popup 띄움
-          })
-          .catch(console.error)
-      
-    })}>
-    <S.Container>
-      <S.Wrapper>
-        <S.H2>아이디 찾기</S.H2>
-          <S.InputContainer>
-            <S.BorderWrapper>
-              <S.Border>
-                <S.InputWrapper>
-                  <S.Label>
-                    <S.H7>이름<span>*</span></S.H7>
-                    <S.Input type='text' placeholder='이름을 입력하세요.'
-                    {...register("userName", {
-                      required : true,
-                    })}
-                    />
-                  </S.Label>
-                  <S.ButtonWrapper>
-                  </S.ButtonWrapper>
-                </S.InputWrapper>
-              </S.Border>
-              {errors && errors?.userName?.type === "required" && (
-                <S.Warning>필수 항목입니다.</S.Warning>
-              )}
-              </S.BorderWrapper>
-
-            <S.BorderWrapper>
-              <S.Border>
-                <S.InputWrapper>
-                  <S.Label>
-                    <S.H7>이메일<span>*</span></S.H7>
-                    <S.Input type='text' placeholder='이메일을 입력하세요.'
-                    {...register("userEmail", {
-                      required : true,
-                      pattern : {
-                        value : emailRegex
-                      }, 
-                      onChange : (e) => {
-                        setUserEmail(e.target.value)
-                        setConfirmVerificationCode(false)
-                        setIsSendVerificationCode(false)
-                        setErrorCount(0)
-                        setEmailCheckMessage("");
-                        setVerificationMessage("")
-                      }
-                    })}
-                  />
-                  </S.Label>
-                  <S.ButtonWrapper>
-                    {isSendVerificationCode ? (
-                      <CheckedButton type="button" onClick={getVerificationCodeEmail}>이메일 재전송</CheckedButton>
-                    ) : (
-                      <UncheckedButton type="button" 
-                      disabled={errors && errors?.userEmail?.type === "pattern"}
-                      onClick={getVerificationCodeEmail}>이메일 인증</UncheckedButton>
-                    )}
-                  </S.ButtonWrapper>
-                </S.InputWrapper>
-              </S.Border>
-              {errors && errors?.userEmail?.type === "required" && (
-                <S.Warning>필수 항목입니다.</S.Warning>
-              )}
-              {errors && errors?.userEmail?.type === "pattern" && (
-                <S.Error>이메일 양식에 맞게 입력해주세요.</S.Error>
-              )}
-              {emailCheckMessage && (
-                <S.Error>{emailCheckMessage}</S.Error>
-              )}
-              {isSendVerificationCode && !errors.userEmail && (
-                <S.Error>인증코드가 발송되었습니다.</S.Error>
-              )}
-            </S.BorderWrapper>
-
-            <S.HiddenBorderWrapper $visible={isSendVerificationCode}>
-              {isSendVerificationCode && (
+          // 아이디 찾기
+            await fetch("http://localhost:10000/users/api/find-id", {
+              method: "POST",
+              headers : {
+                "Content-Type" : "application/json"
+              },
+              body : JSON.stringify(userVO)
+            })
+            .then((res) => {
+              if(!res.ok) {
+                return res.json().then((res) => {
+                  console.log(res)
+                  alert(res.message)
+                })
+              }
+              return res.json()
+            })
+            .then((res) => {
+              console.log(res)
+              // alert(res.message)
+              if(res.foundIdentification) {
+                setFoundId(res.foundIdentification)
+                setFoundEmail(userEmail)
+                setIsModalOpen(true)
+              } else if (res.socialLogin === true) {
+                setIsModalOpen(true)
+              } else {
+                setIsModalOpen(true)
+              }
+            })
+            .catch(console.error)
+        
+            })}>
+            <S.Container>
+        <S.Wrapper>
+          <S.H2>아이디 찾기</S.H2>
+            <S.InputContainer>
+              <S.BorderWrapper>
                 <S.Border>
                   <S.InputWrapper>
                     <S.Label>
-                      <S.H7>인증번호<span>*</span></S.H7>
-                      <S.Input placeholder='인증번호를 입력하세요.'
-                        {...register("code", {
+                      <S.H7>이름<span>*</span></S.H7>
+                      <S.Input type='text' placeholder='이름을 입력하세요.'
+                      {...register("userName", {
                         required : true,
-                        onChange : (e) => setCode(e.target.value)
+                        onChange: (e) => trigger("userName")
                       })}
                       />
                     </S.Label>
                     <S.ButtonWrapper>
-                      {confirmVerificationCode ? (
-                        <CheckedButton type="button">인증 완료</CheckedButton>
-                      ): (
-                        <UncheckedButton onClick={getIsVerificationCode} type="button">인증번호 확인</UncheckedButton>
+                    </S.ButtonWrapper>
+                  </S.InputWrapper>
+                </S.Border>
+                {errors && errors?.userName?.type === "required" && (
+                  <S.Warning>필수 항목입니다.</S.Warning>
+                )}
+                </S.BorderWrapper>
+              <S.BorderWrapper>
+                <S.Border>
+                  <S.InputWrapper>
+                    <S.Label>
+                      <S.H7>이메일<span>*</span></S.H7>
+                      <S.Input type='text' placeholder='이메일을 입력하세요.'
+                      {...register("userEmail", {
+                        required : true,
+                        pattern : {
+                          value : emailRegex
+                        },
+                        onChange : (e) => {
+                          setUserEmail(e.target.value)
+                          setConfirmVerificationCode(false)
+                          setIsEmailButtonClicked(false)
+                          // setIsSendVerificationCode(false)
+                          setErrorCount(0)
+                          setEmailCheckMessage("");
+                          setVerificationMessage("")
+                          trigger("userEmail")
+                        }
+                      })}
+                    />
+                    </S.Label>
+                    <S.ButtonWrapper>
+                      {isEmailButtonClicked ? (
+                        <CheckedButton type="button" onClick={getVerificationCodeEmail}>이메일 재전송</CheckedButton>
+                      ) : (
+                        <UncheckedButton type="button"
+                        disabled={errors && errors?.userEmail?.type === "pattern"}
+                        onClick={getVerificationCodeEmail}>이메일 인증</UncheckedButton>
                       )}
                     </S.ButtonWrapper>
                   </S.InputWrapper>
                 </S.Border>
-              )}
-              {errors && errors?.code?.type === "required" && (
-                <S.Warning>필수 항목입니다.</S.Warning>
-              )}
-              {verificationMessage && (
-                <S.Error>{verificationMessage}</S.Error>
-              )}
-            </S.HiddenBorderWrapper>
-          </S.InputContainer>
-
-          <S.JoinButton $active={isValid}>
-            <S.H4 disabled={isSubmitting}>아이디 찾기</S.H4>
-          </S.JoinButton>
-      </S.Wrapper>
-    </S.Container>
-    </form>
+                {errors && errors?.userEmail?.type === "required" && (
+                  <S.Warning>필수 항목입니다.</S.Warning>
+                )}
+                {errors && errors?.userEmail?.type === "pattern" && (
+                  <S.Error>이메일 양식에 맞게 입력해주세요.</S.Error>
+                )}
+                {emailCheckMessage && (
+                  <S.Error>{emailCheckMessage}</S.Error>
+                )}
+                {isSendVerificationCode && !errors.userEmail && (
+                  <S.Error>인증코드가 발송되었습니다.</S.Error>
+                )}
+              </S.BorderWrapper>
+              <S.HiddenBorderWrapper $visible={isSendVerificationCode}>
+                {isSendVerificationCode && (
+                  <S.Border>
+                    <S.InputWrapper>
+                      <S.Label>
+                        <S.H7>인증번호<span>*</span></S.H7>
+                        <S.Input placeholder='인증번호를 입력하세요.'
+                          onChange = {(e) => setCode(e.target.value)}
+                          value={code}
+                        />
+                      </S.Label>
+                      <S.ButtonWrapper>
+                        {confirmVerificationCode ? (
+                          <CheckedButton type="button">인증 완료</CheckedButton>
+                        ): (
+                          <UncheckedButton onClick={getIsVerificationCode} type="button">인증번호 확인</UncheckedButton>
+                        )}
+                      </S.ButtonWrapper>
+                    </S.InputWrapper>
+                  </S.Border>
+                )}
+                  {verificationMessage && (
+                    verificationMessage === "필수 항목입니다." ? (
+                      <S.Warning>{verificationMessage}</S.Warning>
+                    ) : (
+                      <S.Error>{verificationMessage}</S.Error>
+                    )
+                  )}
+              </S.HiddenBorderWrapper>
+            </S.InputContainer>
+            <S.JoinButton $active={isFindId}>
+              <S.H4 disabled={isSubmitting}>아이디 찾기</S.H4>
+            </S.JoinButton>
+              </S.Wrapper>
+            </S.Container>
+          </form>
+          {isModalOpen && <FindIdModal onClose={() => {setIsModalOpen(false)}} userId={foundId} userEmail={foundEmail} />}
+      </div>
 
   );
 };
