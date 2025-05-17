@@ -59,9 +59,13 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 		fetchAuction();
 
 		const fetchBidding = async () => {
-			const response = await fetch(`http://localhost:10000/auction/api/read-bidder/${id}`);
-			const bidder = await response.json();
-			setBidding(bidder);
+			try {
+				const response = await fetch(`http://localhost:10000/auction/api/read-bidder/${id}`);
+				const bidder = await response.json();
+				setBidding(bidder);
+			} catch (error) {
+				
+			}
 		}
 		fetchBidding();
 	}, [id]);
