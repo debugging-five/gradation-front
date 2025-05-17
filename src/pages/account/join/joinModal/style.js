@@ -1,14 +1,29 @@
 // 회원가입 완료 modal
 import styled from 'styled-components'
-import { H10, H2, H4, H5, H7, H8 } from '../../../../styles/common';
+import { H2, H5} from '../../../../styles/common';
 
 const S = {};
 
 S.Container = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(192, 197, 199, 0.5); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`
+
+S.Wrapper = styled.div`
   background-color: #FBFCFC;
   width: 450px;
   height: 278px;
+  transition: transform 0.5s ease-out;
 `
+
 S.Line = styled.div`
   border-bottom: solid 1px #6E6F76;
   /* margin: 30px 0 0 0; */
@@ -22,9 +37,10 @@ S.CloseIconWrapper = styled.div`
 `
 
 S.CloseIcon = styled.img`
-  width: 11px;
-  height: 11px;
-  margin-left: auto;
+  width: 16px;
+  height: 16px;
+  /* margin-left: auto; */
+  margin: 7px 7px 7px auto;
 `
 
 S.H5 = styled.p`
@@ -37,6 +53,13 @@ S.H2 = styled.p`
   height: 36px;
 `
 
+S.Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 30px 0 0 0; 
+`
+
 S.Notice = styled.div`
   display: flex;
   flex-direction: column;
@@ -46,12 +69,13 @@ S.Notice = styled.div`
 S.Icon = styled.img`
   width : 48px;
   height : 48px;
+  margin: 0 0 20px 0;
 `
 
 S.ButtonWrapper = styled.div`
   display: flex;
   gap: 20px;
+  margin: 40px 0 0 0;
 `
-
 
 export default S;
