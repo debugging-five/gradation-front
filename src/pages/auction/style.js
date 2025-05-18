@@ -43,6 +43,7 @@ S.Wrapper = styled.div`
 S.TypeWrapper = styled.div`
   margin: 24px 0;
   display: flex;
+  justify-content: center;
 `
 
 S.TypeDiv = styled.div`
@@ -54,6 +55,10 @@ S.TypeDiv = styled.div`
 `
 S.Bar = styled.p`
   ${H8}
+`
+
+S.CategoryWrapper = styled.div`
+  display: flex;
 `
 
 
