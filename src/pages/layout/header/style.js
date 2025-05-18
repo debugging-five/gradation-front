@@ -7,7 +7,7 @@ S.Header = styled.header`
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #FBFCFC;
+  background-color: ${({ theme }) => theme.PALLETE.gray[100]};
   height: 56px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
@@ -60,7 +60,6 @@ S.MenuItem = styled.li`
   }
 `;
 
-// 드롭다운
 S.Dropdown = styled.ul`
   visibility: hidden;
   opacity: 0;
@@ -68,7 +67,7 @@ S.Dropdown = styled.ul`
   top: 48px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #FBFCFC;
+  background-color: ${({ theme }) => theme.PALLETE.gray[100]};
   list-style: none;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border-radius: 3px;
@@ -79,21 +78,21 @@ S.Dropdown = styled.ul`
   li {
     padding: 10px;
 
-    a {
+    a, span {
       color: ${({ theme }) => theme.PALLETE.gray[900]};
       font-size: 16px;
-      text-decoration: none;
+      text-decoration: none !important;
       white-space: nowrap;
+      cursor: pointer;
 
       &:hover {
-        background-color: #FBFCFC;
+        background-color: ${({ theme }) => theme.PALLETE.gray[100]};
         color: ${({ theme }) => theme.PALLETE.primary.main};
       }
     }
   }
 `;
 
-// 로그인 영역
 S.LoginSection = styled.div`
   display: flex;
   align-items: center;
