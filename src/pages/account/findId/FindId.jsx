@@ -3,7 +3,9 @@ import S from './style';
 import { useForm } from 'react-hook-form';
 import CheckedButton from '../../../components/button/CheckedButton';
 import UncheckedButton from '../../../components/button/UncheckedButton';
-import FindIdModal from './findIdModal/FindIdModal';
+import FindIdSuccessModal from './findIdModal/successModal/FindIdSuccessModal';
+import SocialModal from './findIdModal/socialModal/SocialModal';
+import NotFoundModal from './findIdModal/notFoundModal/NotFoundModal';
 
 const FindId = () => {
 
@@ -24,7 +26,9 @@ const FindId = () => {
   const [foundId, setFoundId] = useState("")
   const [foundEmail, setFoundEmail] = useState("")
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [isSocialModalOpen, setIsSocialModalOpen] = useState(false);
+  const [isNotFoundModalOpen, setIsNotFoundModalOpen] = useState(false);
 
   const isFindId = isValid && confirmVerificationCode === true;
 
@@ -136,7 +140,9 @@ const getVerificationCodeEmail = async () => {
               if(!res.ok) {
                 return res.json().then((res) => {
                   console.log(res)
-                  alert(res.message)
+                  // alert(res.message)
+                  setIsNotFoundModalOpen(true)
+                  return;
                 })
               }
               return res.json()
@@ -147,11 +153,11 @@ const getVerificationCodeEmail = async () => {
               if(res.foundIdentification) {
                 setFoundId(res.foundIdentification)
                 setFoundEmail(userEmail)
-                setIsModalOpen(true)
+                setIsSuccessModalOpen(true)
               } else if (res.socialLogin === true) {
-                setIsModalOpen(true)
+                setIsSocialModalOpen(true)
               } else {
-                setIsModalOpen(true)
+                setIsNotFoundModalOpen(true)
               }
             })
             .catch(console.error)
@@ -265,7 +271,9 @@ const getVerificationCodeEmail = async () => {
               </S.Wrapper>
             </S.Container>
           </form>
-          {isModalOpen && <FindIdModal onClose={() => {setIsModalOpen(false)}} userId={foundId} userEmail={foundEmail} />}
+          {isSuccessModalOpen && <FindIdSuccessModal userId={foundId} userEmail={foundEmail} />}
+          {isSocialModalOpen && <SocialModal />}
+          {isNotFoundModalOpen && <NotFoundModal />}
       </div>
 
   );

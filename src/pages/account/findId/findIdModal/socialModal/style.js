@@ -1,6 +1,6 @@
-// 아이디 찾기 modal
+// 아이디 찾기 소셜 회원 modal
 import styled from 'styled-components'
-import {EN_H6, H2, H5} from '../../../../styles/common';
+import {EN_H6, H2, H5, H6} from '../../../../../styles/common';
 
 const S = {};
 
@@ -20,7 +20,7 @@ S.Container = styled.div`
 S.Wrapper = styled.div`
   background-color: #FBFCFC;
   width: 600px;
-  height: 395px;
+  height: 333px;
   border-radius: 5px;
   transition: transform 0.5s ease-out;
 `
@@ -62,7 +62,7 @@ S.Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 30px 0 0 0; 
+  margin: 40px 0 0 0; 
 `
 
 S.Notice = styled.div`
@@ -79,10 +79,10 @@ S.Icon = styled.img`
 
 S.Info = styled.div`
   margin: 40px 0 0 0;
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-  height: 64px;
+`
+
+S.H6 = styled.p`
+  ${H6}
 `
 
 S.Id = styled.div`

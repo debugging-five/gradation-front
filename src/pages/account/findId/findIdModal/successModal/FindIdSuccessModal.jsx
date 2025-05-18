@@ -1,17 +1,17 @@
 import S from './style';
-import SubButton from '../../../../components/button/SubButton';
-import PrimaryButton from '../../../../components/button/PrimaryButton';
+import SubButton from '../../../../../components/button/SubButton';
+import PrimaryButton from '../../../../../components/button/PrimaryButton'
 import { Link } from 'react-router-dom';
 
-const FindIdModal = ({onClose, userId, userEmail}) => {
+const FindIdSuccessModal = ({userId, userEmail}) => {
   return (
     <S.Container>
 
       <S.Wrapper>
-        <S.Line>
-          <S.CloseIconWrapper>
-          <S.CloseIcon onClick={onClose} src={'/assets/images/icon/close.png'}/>
-          </S.CloseIconWrapper>
+        {/* <S.Line> */}
+          {/* <S.CloseIconWrapper> */}
+          {/* <S.CloseIcon onClick={onClose} src={'/assets/images/icon/close.png'}/> */}
+          {/* </S.CloseIconWrapper> */}
           <S.Content>
             <S.Notice>
               <S.Icon src={'/assets/images/icon/user.png'}/>
@@ -29,24 +29,19 @@ const FindIdModal = ({onClose, userId, userEmail}) => {
               </S.Email>
             </S.Info>
 
-            <S.Info>
-              <S.H5>소셜 로그인 한 회원입니다.</S.H5>
-            </S.Info>
-
-
             <S.ButtonWrapper>
               <Link to={"/find-password"}>
-                <PrimaryButton>비밀번호 찾기</PrimaryButton>
+                <SubButton>비밀번호 찾기</SubButton>
               </Link>
               <Link to={"/login"}>
-                <SubButton>로그인</SubButton>
+                <PrimaryButton>로그인</PrimaryButton>
               </Link>
             </S.ButtonWrapper>
           </S.Content>
-        </S.Line>
+        {/* </S.Line> */}
       </S.Wrapper>
     </S.Container>
   );
 };
 
-export default FindIdModal;
+export default FindIdSuccessModal;
