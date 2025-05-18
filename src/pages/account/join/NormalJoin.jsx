@@ -309,7 +309,7 @@ const NormalJoin = () => {
                 <S.Warning>필수 항목입니다.</S.Warning>
               )}
               {errors && errors?.userIdentification?.type === "pattern" && (
-                <S.Error>아이디 양식에 맞게 입력해주세요.</S.Error>
+                <S.Error>소문자, 특수문자를 각 하나 포함한 6~20자리여야 합니다.</S.Error>
               )}
               {idCheckMessage && (
                 <S.Error>{idCheckMessage}</S.Error>
@@ -342,7 +342,7 @@ const NormalJoin = () => {
                 <S.Warning>필수 항목입니다.</S.Warning>
               )}
               {errors && errors?.userPassword?.type === "pattern" && (
-                <S.Error>소문자, 숫자, 특수문자를 각 하나 포함한 8자리 이상이여야 합니다.</S.Error>
+                <S.Error>소문자, 숫자, 특수문자를 각 하나 포함한 8~12자여야 합니다.</S.Error>
               )}
               </S.BorderWrapper>
 

@@ -93,6 +93,7 @@ const getVerificationCodeEmail = async () => {
             setErrorCount(0)
             setConfirmVerificationCode(false)
             setCode("")
+            setIsEmailButtonClicked(false)
             return;
           }
           setErrorCount(updateErrorCount)
@@ -206,6 +207,7 @@ const getVerificationCodeEmail = async () => {
                           setErrorCount(0)
                           setEmailCheckMessage("");
                           setVerificationMessage("")
+                          setCode("")
                           trigger("userEmail")
                         }
                       })}
