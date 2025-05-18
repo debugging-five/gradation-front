@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 const S = {};
 
@@ -33,7 +32,6 @@ S.HeaderLogo = styled.img`
   height: 34px;
 `;
 
-// 메뉴
 S.Menu = styled.ul`
   display: flex;
   list-style: none;
