@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, NavLink, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import S from './style';
 
 const AuctionCategory = () => {
@@ -76,7 +76,7 @@ const AuctionCategory = () => {
         </S.TypeDiv>
       </S.CategoryWrapper>
       <div>
-        옥션 안내
+        <Link to={"/auction/agreement"}>이용약관</Link>
         검색
       </div>
       <Outlet />

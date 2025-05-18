@@ -274,7 +274,7 @@ S.ManualUnChoose = styled.div`
 S.ManualContainer = styled.div`
   display: flex;
   justify-content: center;
-  width: 1160px;
+  width: 1158px;
   height: 1160px;
   overflow-y: auto;
   border: solid 1px ${gray500};
