@@ -78,3 +78,25 @@ export const OkTitle2 = styled.p`
     font-size: 21px;
     font-weight: bold;
 `;
+
+export const BigPopUp = styled.div`
+    width: 640px;
+    height: 352px;
+    background-color: white;
+    transform: translateY(-100px); /* 위로 50px 올림 */
+    border-radius: 5px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5); // 팝업 상자 자체의 그림자
+`;
+export const BigPopUpText = styled.p`
+    font-size: 21px;
+    font-weight: bold;
+`;
+export const BigPopUpContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    padding: 60px 0 40px;
+`;
+

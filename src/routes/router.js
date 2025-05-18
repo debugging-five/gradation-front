@@ -192,6 +192,10 @@ const router = createBrowserRouter([
             element: <AuctionLayout />,
             children: [
               {
+                path: "",
+                element: <Navigate to="/auction/bidding/korean" replace />
+              },
+              {
                 path: ":type",
                 element: <AuctionBiddingContainer />,
                 children: [

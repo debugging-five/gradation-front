@@ -213,7 +213,7 @@ S.ArtWrapper = styled.div`
 S.ArtList = styled.div`
   width: 200px;
   height: 200px;
-  background-color: #f0f0f0; /* 여백 확인용 */
+  background-color: ${gray100};
   overflow: hidden;
 `
 
