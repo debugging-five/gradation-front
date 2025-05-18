@@ -8,8 +8,8 @@ const AuctionAgreementExplanation = () => {
         <S.FlexWrapper>
           <S.H2>그라데이션 경매 안내</S.H2>
           <S.StyledLink to="privacy-policy" style={{ textDecoration: 'none' }}>
-            <label>
-              경매 약관
+            <label style={{ cursor: 'pointer' }}>
+              경매약관
               <S.Icon18 src="/assets/images/icon/right_black.png" alt='>'/>
             </label>
           </S.StyledLink>
@@ -114,10 +114,53 @@ const AuctionAgreementExplanation = () => {
                   <S.H5> &nbsp;&nbsp; 낙찰일로부터 21일 이내에 완납해 주시기 바랍니다.</S.H5>
                 </S.TextDiv>
               </S.Step4_1>
-                <S.TextDiv>
-                  <S.H5> 낙찰대금은 계좌이체, 신용카드 등으로 결제가 가능합니다.</S.H5>
-                </S.TextDiv>
-
+              <S.TextDiv>
+                <S.H5> 낙찰대금은 계좌이체, 신용카드 등으로 결제가 가능합니다.</S.H5>
+              </S.TextDiv>
+              <S.Step4_2>
+                <S.H5>온라인 경매</S.H5>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>· 온라인 경매 낙찰수수료는 일괄 낙찰가의 15% (VAT 별도)입니다.</S.H5>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>· 낙찰가(Hammer Price) : 경매가 종료된 시점에서 낙찰자가 최종 선언한 금액입니다.</S.H5>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>· 구매가(Purchase Price) : 낙찰가+낙찰수수료+부가가치세가 합산된 금액입니다.</S.H5>
+              </S.Step4_2>
+              <S.Step4_2>
+                <S.H5>[예시]</S.H5>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>낙찰가 2,000만원일 경우</S.H5>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>낙찰 수수료 2,000만원(낙찰가)x15%(낙찰수수료) = 300만원</S.H5>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>부가가치세 300만원(낙찰수수료)x10% = 30만원</S.H5>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>총 구매대금 2,000만원(낙찰가)+300만원(낙찰수수료)+30만원(부가가치세) = 2,330만원</S.H5>
+              </S.Step4_2>
+              <S.Step4_2>
+                <S.H5Red>[계좌입금]</S.H5Red>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>(주)그라데이션 신한 111-2222-3333-44 (입금 후 전화(02-000-0000)로 연락 주시기 바랍니다.)</S.H5>
+              </S.Step4_2>
+              <S.Step4_2>
+                <S.H5Red>[해외송금]</S.H5Red>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>GRADATION Ltd Bank details.</S.H5>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>Account Name : GRADATION  AUCTION</S.H5>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>Back Name : SHINHAN BANK</S.H5>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>Bank Address : 20, 9GIL, SEJONGDAE-RO, JUMG-GU, SEOUL, REAPUBLIC OF KOREA</S.H5>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>Account Number : 1111 222 333 4444</S.H5>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>Swift Code : AR3KOR231</S.H5>
+              </S.Step4_2>
+              <S.Step3Content>
+                <S.H5>낙찰자는 낙찰을 철회할 수 없습니다. 부득이 철회를 하는 경우에는 낙찰일로부터 7일 이내에 서면으로 철회의사를 통보해야하고
+                  <br/>만약 낙찰 후 결제를 거부할 시 사이트 이용이 제한될 수 있습니다.</S.H5>
+              </S.Step3Content>
             </S.ContentDiv>
           </S.StepWrapper>
         </S.Step>
@@ -128,7 +171,45 @@ const AuctionAgreementExplanation = () => {
               <S.StepImg src='/assets/images/icon/auction_step_05.png' alt='step1' />
             </S.TitleDiv>
             <S.ContentDiv>
-
+              <S.Step4_2>
+                <S.H5>수령 절차</S.H5>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>· 온라인 경매 낙찰시 홈페이지에제공되는 예상 배송비는 회원가입시 등록된 주소지로 산정됩니다. 작품 수령지 변동이 있을 경우 </S.H5>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>&nbsp;&nbsp;당사에 알려주시기 바랍니다.</S.H5>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>· 작품 인도는 구매대금이 입금된 작품에 한하여 이루어지며 직접 수령 시 수령 희망일자와 시간을 알려주시면 수령 장소를 안내해</S.H5>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>&nbsp;&nbsp;드립니다. 직접 수령이 어려울 경우 낙찰자의 책임과 비용 부담 하에 작품 운송을 주선해드립니다.</S.H5>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>· 낙찰일로부터 당사가 고지한 기한(낙찰가 3억원 미만 : 7일, 3억원 초과 : 21일) 이후 입금여부와 무관하게 인수하지 않은 작품에</S.H5>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>&nbsp;&nbsp;대해서는 건당 1일 1만원의 보관료(부가세 별도)가 발생합니다.</S.H5>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>· 당사의 경매 작품 보증은 낙찰 일로부터 3년까지입니다.</S.H5>
+              </S.Step4_2>
+              <S.Step4_2>
+                <S.H5Red>배송비 안내</S.H5Red>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>서울 : KRW 50,000</S.H5>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>수도권 : KRW 100,000</S.H5>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>수도권 이외의 지역은 배송처 확인 후 거리에 따라 배송비가 추가로 부가될 수 있습니다. </S.H5>
+                <S.Margin10Block></S.Margin10Block>
+                <S.H5>해외 배송은 별도 문의 부탁드리겠습니다.</S.H5>
+              </S.Step4_2>
+              <S.Step4_2>
+                <S.H5Red>기타 경매와 관련된 사항은 당사 온라인 경매의 이용약관을 참고하시기 바랍니다.</S.H5Red>
+                <S.Margin10Block></S.Margin10Block>
+                <S.StyledLink to="privacy-policy" style={{ textDecoration: 'none' }}>
+                  <label style={{ cursor: 'pointer' }}>
+                    이용약관 바로가기
+                    <S.Icon18 src="/assets/images/icon/right_black.png" alt='>'/>
+                  </label>
+                </S.StyledLink>
+                
+              </S.Step4_2>
             </S.ContentDiv>
 
           </S.StepWrapper>

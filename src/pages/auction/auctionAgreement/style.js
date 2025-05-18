@@ -6,9 +6,15 @@ const gray100 = "#FBFCFC";
 const gray500 = "#C0C5C7";
 const gray900 = "#6E7476";
 const warning = "#E49804";
-const black = "#333333"
+const black = "#333333";
+
 
 const S = {};
+
+S.MainLink = styled.a`
+  color: inherit;
+  text-decoration: none;
+`
 
 S.H3 = styled.p`
   ${H3}
@@ -230,6 +236,67 @@ S.Step4_1 = styled.div`
   margin-bottom: 40px;
 `
 
+S.Step4_2 = styled.div`
+margin: 40px 0;
+gap: 10px;
+`
+S.ManualOptions = styled.div`
+  margin-top: 56px;
+  width: 1160px;
+  height: 50px;
+  display: flex;
+  border-top: solid 1px ${gray500};
+`
+
+S.ManualChoose = styled.div`
+  width: 580px;
+  height: 50px;
+  border-left: solid 1px ${gray500};
+  border-right: solid 1px ${gray500};
+  background-color: ${gray500};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`
+S.ManualUnChoose = styled.div`
+  width: 580px;
+  height: 50px;
+  border-left: solid 1px ${gray500};
+  border-right: solid 1px ${gray500};
+  background-color: ${gray100};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`
+
+S.ManualContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 1160px;
+  height: 1160px;
+  overflow-y: auto;
+  border: solid 1px ${gray500};
+  background-color: ${gray100};
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: ${gray900};
+    border-radius: 1px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: ${gray500};
+  }
+`
+
+S.H7Content = styled.p`
+  margin-top: 40px;
+  width: 1000px;
+
+`
 
 
 
