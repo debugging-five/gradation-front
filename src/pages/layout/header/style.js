@@ -97,7 +97,7 @@ S.LoginSection = styled.div`
   display: flex;
   align-items: center;
   margin-left: auto;
-  margin-right: 52px;
+  margin-right: 24px;
   position: relative;
 
   .header-bell {

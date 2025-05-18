@@ -62,7 +62,7 @@ const Header = ({ onLogout }) => {
               <span className="sign-in">{currentUser.userName}님</span>
               <S.Dropdown>
                 <li><Link to="/mypage">마이페이지</Link></li>
-                <li><Link to="/mypage/service-center/qna">고객센터</Link></li>
+                <li><Link to="/service-center/qna">고객센터</Link></li>
                 <li><span onClick={onLogout}>로그아웃</span></li>
               </S.Dropdown>
             </S.SignInWrap>

@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { H10, H8 } from '../../../styles/common';
+import { Link } from 'react-router-dom';
 
 const S = {};
 
@@ -13,10 +15,10 @@ S.FooterWrap = styled.footer`
 
 S.FooterInner = styled.div`
   width: 100%;
-  max-width: 100%;
 `;
 
 S.FooterMenu = styled.div`
+  ${H8}
   display: flex;
   gap: 60px;
   margin: 80px 12px 80px 52px;
@@ -30,20 +32,16 @@ S.Menu = styled.div`
   .menu-wrap {
     font-weight: bold;
   }
-
-  a {
-    text-decoration: none;
-    color: #6E7476;
-  }
 `;
+
+S.Link = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+`;
+
 
 S.IconWrap = styled.p`
   margin-left: auto;
-
-  .icon {
-    color: #333333;
-    margin-left: 10px;
-  }
 `;
 
 S.FooterInfoWrap = styled.div`
@@ -53,13 +51,14 @@ S.FooterInfoWrap = styled.div`
 `;
 
 S.FooterInfo = styled.div`
+  ${H10}
   padding: 0 0 84px 52px;
-  font-size: var(--font-size-h9);
-  color: var(--color-gray900);
   white-space: nowrap;
 `;
 
-S.FooterLogoWrap = styled.div``;
+S.FooterLogoWrap = styled.div`
+  margin-right: 24px;
+`;
 
 S.FooterLogo = styled.img`
   width: 167px;
