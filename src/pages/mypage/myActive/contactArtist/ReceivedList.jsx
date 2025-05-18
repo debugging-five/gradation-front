@@ -1,8 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Category, Content, ContentBox, Emptybox, ListHeader, MainWrapper, Number, Title, TitleNavigate, Wrapper } from '../../style';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const ReceivedList = () => {
+  const [mails, setMails] = useState([]);
+
+  const currentUser = useSelector(state => state.user.currentUser);
+  
+    useEffect(() => {
+      if (currentUser?.id) {
+        fetch(`http://localhost:10000/mail/api/received-list?receiveUserId=${currentUser.id}`)
+          .then(res => res.json())
+          .then(data => setMails(data))
+          .catch(err => console.error('메일 리스트 불러오기 실패:', err));
+      }
+    }, [currentUser]);
+  
+    if (!currentUser?.id) {
+      return <div>사용자 정보를 불러오는 중입니다...</div>;
+    }
+
   return (
     <MainWrapper>
       <Wrapper>
@@ -15,16 +33,17 @@ const ReceivedList = () => {
           <Emptybox>작성일</Emptybox>
         </ListHeader>
 
-        {/* 리스트 배열 */}
-        <ContentBox>
-          <Number>1</Number>
-          <Category>전시회 관리</Category>
+        {mails.map((mail, index) => (
+        <ContentBox key={mail.id}>
+          <Number>{index + 1}</Number>
+          <Category>{mail.sendUserName}</Category>
           <Emptybox></Emptybox>
-          <TitleNavigate  as={NavLink} to="detail/1" end>
-            <Content>작품이 마음에 듭니다. 후원요청합니다.</Content>
+          <TitleNavigate  as={NavLink} to={`detail/${mail.id}`} end>
+            <Content>{mail.mailTitle}</Content>
           </TitleNavigate>
-          <Emptybox>25.12.25</Emptybox>
+          <Emptybox>{new Date(mail.mailSendTime).toLocaleDateString('ko-KR')}</Emptybox>
         </ContentBox>
+      ))}
       </Wrapper>
     </MainWrapper>
   );

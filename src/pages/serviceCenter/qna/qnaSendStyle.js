@@ -23,6 +23,8 @@
     export const Title = styled.div`
         display: flex ;
         width: 100px;
+        font-size: 16px;
+        font-weight: bold;
     `;
 
 
@@ -53,14 +55,18 @@
         gap: 48px;
     `;
     export const Category = styled.div`
+        display: flex;
+        align-items: center;
     `;
 
     export const InputTitle = styled.input`
         border: none;
         width: 100%;
         max-width: 680px;
+        font-size: 16px;
         &:focus {
         outline: none;
+        
     }
     `;
 
@@ -75,6 +81,26 @@
     `;
 
     export const ButtonDiv = styled.div`
+        margin-top: 60px;
         display: flex;
         justify-content : end;
     `;
+    export const DeleteDiv = styled.div`
+        margin-top: 8px;
+        display: flex; 
+        align-items: center; 
+        font-size: 16px;
+        padding-left: 20px;
+    `;
+    export const DeleteButton = styled.button`
+        color: red;
+        cursor: pointer;
+        border: none;
+        background-color: white;
+    `;
+    export const ErrorMessege = styled.p`
+        color: #E49804;
+        margin-top: 0.2rem;
+        text-align: end;
+    `;
+    // #EE3333
