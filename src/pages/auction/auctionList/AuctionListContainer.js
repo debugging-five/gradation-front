@@ -1,10 +1,15 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Navigate, useParams } from 'react-router-dom';
 
 const AuctionListContainer = () => {
   let { type, category, id } = useParams()
-  id = 1
+  id = 36
 
+  if(!(category === "korean" || category === "sculpture" || category === "craft" || category === "architecture" || category === "calligraphy" || category === "painting" || category === null)) {
+    return <Navigate to="/auction/bidding/korean"></Navigate>
+  }
+  
+  
   return (
     <div>
       리스트 페이지

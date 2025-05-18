@@ -202,9 +202,7 @@ S.InputMax = styled.input`
 	text-align: right;
 	background: none;
 	border: none;
-	outline: none;
-  min-width: 20px;
-  width: auto;
+  outline: none;
 `
 
 S.InputDate = styled.input`
@@ -215,7 +213,6 @@ S.InputDate = styled.input`
 	outline: none;
   color: ${gray900};
   user-select: none;
-  /* font-size: 0%; */
 `
 
 S.ButtonWrap = styled.div`
