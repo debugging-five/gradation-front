@@ -42,7 +42,7 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 			setBidderCount(count.count);
 
 		}
-		bidderFetch();
+		bidderFetch()
 	}, [id]);
 	
 	useEffect(() => {
@@ -56,18 +56,30 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 			setAuction(auction);
 			setData(auction[0]);
 		};
-		fetchAuction();
-
-		const fetchBidding = async () => {
-			try {
+		fetchAuction().then(() => {
+			const biddingDate = new Date(data.auctionStartDate);
+			const dataCategory = categoryMap.get(data.artCategory);
+			if(category !== dataCategory) {
+				return <Navigate to={`/auction/bidding/${dataCategory}/detail/${id}`} state={{message: "잘못된 접근"}} replace={true} />
+			}
+			
+			if(biddingDate > new Date()) {
+				return <Navigate to={`/auction/expected/${dataCategory}/detail/${id}`} state={{message: "잘못된 접근"}} replace={true} />
+			}
+			
+			if(data.auctionBidDate){
+				return <Navigate to={`/auction/complete/${dataCategory}/detail/${id}`} state={{message: "잘못된 접근"}} replace={true} />
+			}
+			
+			const fetchBidding = async () => {
 				const response = await fetch(`http://localhost:10000/auction/api/read-bidder/${id}`);
 				const bidder = await response.json();
 				setBidding(bidder);
-			} catch (error) {
-				
 			}
-		}
-		fetchBidding();
+			fetchBidding();
+		});;
+
+		
 	}, [id]);
 
 	let updateFetch;

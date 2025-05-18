@@ -18,6 +18,9 @@ S.Wrapper = styled.div`
   justify-content: center;
 `
 
+S.TypeWrapper = styled.div`
+  display: flex;
+`
 
 
 export default S;
