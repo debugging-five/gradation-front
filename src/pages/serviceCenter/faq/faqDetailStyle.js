@@ -40,15 +40,21 @@ export const Title = styled.div`
 
 export const QSize = styled.p`
     font-size: 30px;
+    font-weight: bold;
 `;
 export const QTitle = styled.p`
     font-size: 21px;
+    font-weight: bold;
 `;
 
 export const QContent = styled.p`
     margin-top: 24px;
     font-size: 18px;
     width: 800px;
+`;
+export const Category = styled.p`
+    font-size: 18px;
+    font-weight: bold;
 `;
 
 export const ButtonDiv = styled.div`

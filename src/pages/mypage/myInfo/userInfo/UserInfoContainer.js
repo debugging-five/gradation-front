@@ -1,10 +1,34 @@
 import React, { useState } from 'react';
-import { Box, Button, ButtonDiv, EndBar, IdBar, IdBox, IdContent, IdTitle, Title, UserInfo } from './userInfoContainerStyle';
+import { useSelector } from 'react-redux';
+import {
+  Box, ButtonDiv, EndBar, IdBar,
+  IdBox, IdContent, IdTitle, Title, UserInfo
+} from './userInfoContainerStyle';
+import { Button120x45R } from '../../style';
 
 const UserInfoContainer = () => {
-
   const [edit, setEdit] = useState(false);
-  const handleEdit = () => setEdit(!edit)
+  const handleEdit = () => setEdit(!edit);
+
+  // Redux에서 로그인한 사용자 정보 가져오기
+  const currentUser = useSelector(state => state.user.currentUser);
+
+  const formatPhoneNumber = (phone) => {
+    if (!phone) return '';
+    const onlyNums = phone.replace(/[^\d]/g, '');
+  
+    if (onlyNums.length === 11) {
+      return onlyNums.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+    } else if (onlyNums.length === 10) {
+      return onlyNums.replace(/(\d{3})(\d{3,4})(\d{4})/, '$1-$2-$3');
+    } else {
+      return phone; // 하이픈 없는 원본 그대로 반환
+    }
+  };
+
+  if (!currentUser) {
+    return <div>회원 정보를 불러오는 중입니다...</div>;
+  }
 
   return (
     <div>
@@ -13,103 +37,86 @@ const UserInfoContainer = () => {
       <IdBox>
         <IdTitle>아이디</IdTitle>
         <IdBar>|</IdBar>
-        <IdContent>test123</IdContent>
+        <IdContent>{currentUser.userIdentification}</IdContent>
       </IdBox>  
 
       <Box>
-      <Title>
-        <span>닉네임</span>
-      </Title>
+        <Title><span>닉네임</span></Title>
         {edit ? (
-          <input value={"홍길동무"}/>
+          <input value={currentUser.userNickName || ''} />
         ) : (
-          <p>홍길동무</p>
+          <p>{currentUser.userNickName || '-'}</p>
         )}
       </Box>
-      <EndBar></EndBar>
-      
+      <EndBar />
 
       <Box>
-      <Title>
-        <span>이름</span>
-      </Title>
+        <Title><span>이름</span></Title>
         {edit ? (
-          <input value={"홍길동무"}/>
+          <input value={currentUser.userName || ''} />
         ) : (
-          <p>홍길동</p>
+          <p>{currentUser.userName || '-'}</p>
         )}
       </Box>
-      <EndBar></EndBar>
+      <EndBar />
 
       <Box>
-        <Title>
-          <span>전화번호</span>
-        </Title>
-          {edit ? (
-            <input value={"홍길동무"}/>
-          ) : (
-            <p>010-1234-1234</p>
-          )}
+        <Title><span>전화번호</span></Title>
+        {edit ? (
+          <input value={currentUser.userPhone || ''} />
+        ) : (
+          <p>{formatPhoneNumber(currentUser.userPhone)}</p>
+        )}
       </Box>
-      <EndBar></EndBar>
+      <EndBar />
 
       <Box>
-        <Title>
-          <span>이메일</span>
-        </Title>
-          {edit ? (
-            <input value={"홍길동무"}/>
-          ) : (
-            <p>test123@gmail.com</p>
-          )}
+        <Title><span>이메일</span></Title>
+        {edit ? (
+          <input value={currentUser.userEmail || ''} />
+        ) : (
+          <p>{currentUser.userEmail || '-'}</p>
+        )}
       </Box>
-      <EndBar></EndBar> 
+      <EndBar />
 
       <Box>
-        <Title>
-          <span>주소</span>
-        </Title>
-          {edit ? (
-            <input value={"홍길동무"}/>
-          ) : (
-            <p>서울시 인천구 논현1동 청담로 5길</p>
-          )}
+        <Title><span>주소</span></Title>
+        {edit ? (
+          <input value={currentUser.userAddress || ''} />
+        ) : (
+          <p>{currentUser.userAddress || '-'}</p>
+        )}
       </Box>
-      <EndBar></EndBar> 
+      <EndBar />
 
       <Box>
-        <Title>
-          <span>상세주소</span>
-        </Title>
-          {edit ? (
-            <input value={"홍길동무"}/>
-          ) : (
-            <p>1145호</p>
-          )}
+        <Title><span>상세주소</span></Title>
+        {edit ? (
+          <input value={currentUser.userDetailAddress || ''} />
+        ) : (
+          <p>{currentUser.userDetailAddress || '-'}</p>
+        )}
       </Box>
-      <EndBar></EndBar> 
+      <EndBar />
 
       <Box>
-        <Title>
-          <span>대학교</span>
-        </Title>
-          {edit ? (
-            <input value={"홍길동무"}/>
-          ) : (
-            <p>서울대학교</p>
-          )}
+        <Title><span>대학교</span></Title>
+        {edit ? (
+          <input value={currentUser.userProvider || ''} />
+        ) : (
+          <p>{currentUser.userProvider || '-'}</p>
+        )}
       </Box>
-      <EndBar></EndBar> 
-
+      <EndBar />
 
       <ButtonDiv>
         {edit ? (
-          <Button onClick={handleEdit}>저장</Button>
+          <Button120x45R onClick={() => { handleEdit(); window.scrollTo(0, 0);}}>저장</Button120x45R>
         ) : (
-          <Button onClick={handleEdit}>수정</Button>
+          <Button120x45R onClick={() => { handleEdit(); window.scrollTo(0, 0);}}>수정</Button120x45R>
         )}
       </ButtonDiv>
-
     </div>
   );
 };
