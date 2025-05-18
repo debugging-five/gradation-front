@@ -46,3 +46,11 @@ export const ButtonDiv = styled.div`
     display: flex;
     justify-content : end;
 `;
+export const ImageDiv = styled.div`
+    display: flex;
+    justify-content : center;
+`;
+export const QnaImage = styled.img`
+    width: 500px;
+    height: 500p;
+`;

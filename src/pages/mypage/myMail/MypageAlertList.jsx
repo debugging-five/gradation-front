@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import {
-  Category, Content, ContentBox, Emptybox,
-  ListHeader, MainWrapper, Number, RedText,
-  Title, TitleNavigate, Wrapper
-} from '../style';
+import { Category, Content, ContentBox, Emptybox, ListHeader, MainWrapper, Number, RedText, Title, TitleNavigate, Wrapper} from '../style';
 
 const MypageAlertList = () => {
   const [alerts, setAlerts] = useState([]);

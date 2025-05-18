@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Line, MainWrapper, QContent, QSize, QTitle, Title, Wrapper } from './qnaDetailStyle';
+import { ImageDiv, Line, MainWrapper, QContent, QnaImage, QSize, QTitle, Title, Wrapper } from './qnaDetailStyle';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Category } from '../faq/faqDetailStyle';
 import { Button120x45R, Button120x45W, ButtonDiv, PopUp, PopUpButtonDiv, PopUpButtonR, PopUpButtonW, PopUpContent, PopUpIcon, PopUpOverlay, PopUpText } from '../../mypage/style';
@@ -62,7 +62,7 @@ const QnaDetail = () => {
   return (
     <MainWrapper>
       <Wrapper>
-        <Category>{qna.qnaCategory}경매 관련 문의</Category>
+        <Category>{qna.qnaCategory} 관련 문의</Category>
         <Title>
           <QSize>Q</QSize>
           <QTitle>{qna.qnaTitle}</QTitle>
@@ -70,6 +70,10 @@ const QnaDetail = () => {
         <Line/>
         <QContent>{qna.qnaContent}</QContent>
       </Wrapper>
+      
+      <ImageDiv>
+        {qna.qnaImgName && (<QnaImage src={`http://localhost:10000/files/api/get/${qna.qnaImgName}?filePath=images/qna`} alt="qnaImage"/>)}
+      </ImageDiv>
 
       <ButtonDiv>
         <Button120x45W onClick={() => navigate(-1)}>목록</Button120x45W>
