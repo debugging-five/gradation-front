@@ -68,7 +68,7 @@ const AuctionDetailContainer = () => {
   // console.log(list);
 
   return (
-    <>
+    <div>
       { type === "bidding" && <AuctionBiddingDetail type={type} category={category} id={id} />}
       { type === "expected" && <AuctionExpectedDetail type={type} category={category} id={id} />}
       { type === "complete" && <AuctionCompleteDetail type={type} category={category} id={id} />}
@@ -125,7 +125,7 @@ const AuctionDetailContainer = () => {
           </S.NoneButton>
         </S.ArtWrapper>
       </S.AuctionList>
-    </>
+    </div>
   );
 };
 
