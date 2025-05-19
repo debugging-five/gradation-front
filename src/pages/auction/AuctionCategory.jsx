@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import S from './style';
 
 const AuctionCategory = () => {

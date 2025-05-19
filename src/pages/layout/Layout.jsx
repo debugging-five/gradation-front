@@ -4,6 +4,7 @@ import Header from './header/Header';
 import Footer from './footer/Footer';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, setUserStatus } from '../../modules/user';
+import S from './style';
 
 const Layout = () => {
 
@@ -78,13 +79,13 @@ const Layout = () => {
   };
 
   return (
-    <div>
+    <S.Container>
       <Header onLogout={handleLogout} />
       <main>
         <Outlet />
       </main>
       <Footer />
-    </div>
+    </S.Container>
   );
 };
 
