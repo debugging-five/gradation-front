@@ -38,7 +38,7 @@ const AuctionExpectedModify = () => {
       });
       
       if (auction.likeCount < 50 || auctionData.userId !== currentUser.id) {
-        alert("등록 권한이 없습니다!")
+        navigate("/auction");
         return
       }
       
