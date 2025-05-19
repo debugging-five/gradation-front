@@ -1,3 +1,4 @@
+import * as CS from "../../../styles/common";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -20,13 +21,13 @@ export const TitleWrapper = styled.div`
 `;
 
 export const PageTitle = styled.h1`
-  font-size: 30px;
+  ${CS.EN_H2}
   color: #000000;
   margin-bottom: 70px;
 `;
 
 export const RegistrationLabel = styled.div`
-  font-size: 21px;
+  ${CS.EN_H3}
   color: #ee3333;
   border-bottom: 2px solid #ee3333;
   padding-bottom: 4px;
@@ -60,7 +61,7 @@ export const ImageBox = styled.div`
   align-items: center;
   cursor: pointer;
   span {
-    font-size: 18px;
+    ${CS.H6}
     color: #000000;
   }
 `;
@@ -81,7 +82,7 @@ export const UploadIcon = styled.img`
 
 export const UploadDescription = styled.p`
   margin-top: 12px;
-  font-size: 14px;
+  ${CS.H8}
   color: #666666;
   text-align: center;
 `;
@@ -106,9 +107,8 @@ export const InfoRow = styled.div`
 `;
 
 export const Label = styled.label`
+  ${CS.H5}
   width: 80px;
-  font-size: 18px;
-  font-weight: 600;
   color: #000000;
   text-align: left;
   white-space: nowrap;
@@ -127,10 +127,10 @@ export const SchoolSearchRow = styled.div`
 `;
 
 export const Input = styled.input`
+  ${CS.H8}
   flex: 1;
   padding: 10px;
   border: none;
-  font-size: 16px;
   background: transparent;
   &:focus {
     outline: none;

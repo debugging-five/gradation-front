@@ -21,15 +21,6 @@ export const Line = styled.div`
     border-bottom: solid 1px;
 `;
 
-export const Button = styled.button`
-    color: red;
-    border: solid 1px red;
-    background-color: white;
-    width: 125px;
-    height: 50px;
-    font-size: 18px;
-`;
-
 export const Title = styled.div`
     margin-top: 32px;
     width: 800px;
@@ -54,4 +45,12 @@ export const QContent = styled.p`
 export const ButtonDiv = styled.div`
     display: flex;
     justify-content : end;
+`;
+export const ImageDiv = styled.div`
+    display: flex;
+    justify-content : center;
+`;
+export const QnaImage = styled.img`
+    width: 500px;
+    height: 500p;
 `;

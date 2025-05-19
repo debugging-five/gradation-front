@@ -1,13 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Category, Content, ContentBox, Emptybox, ListHeader, MainWrapper, Number, RedText, Title, TitleNavigate, Wrapper } from '../style';
+import { useSelector } from 'react-redux';
+import { Category, Content, ContentBox, Emptybox, ListHeader, MainWrapper, Number, RedText, Title, TitleNavigate, Wrapper} from '../style';
 
 const MypageAlertList = () => {
+  const [alerts, setAlerts] = useState([]);
+
+  // Redux에서 현재 로그인한 사용자 정보 가져오기
+  const currentUser = useSelector(state => state.user.currentUser);
+
+  useEffect(() => {
+    if (currentUser?.id) {
+      fetch(`http://localhost:10000/mail/api/alert-list?receiveUserId=${currentUser.id}`)
+        .then(res => res.json())
+        .then(data => setAlerts(data))
+        .catch(err => console.error('알림 리스트 불러오기 실패:', err));
+    }
+  }, [currentUser]);
+
+  if (!currentUser?.id) {
+    return <div>사용자 정보를 불러오는 중입니다...</div>;
+  }
+
   return (
     <MainWrapper>
-
       <Wrapper>
-        {/* 리스트 헤더 */}
         <ListHeader>
           <Number>번호</Number>
           <Category>발신인</Category>
@@ -16,18 +33,18 @@ const MypageAlertList = () => {
           <Emptybox>작성일</Emptybox>
         </ListHeader>
 
-        {/* 리스트 배열 */}
-        <ContentBox>
-          <Number>1</Number>
-          <RedText>관리자</RedText>
-          <Emptybox></Emptybox>
-          <TitleNavigate  as={NavLink} to="/mypage/alert/detail/1" end>
-            <Content>업사이클 신청이 기각되었습니다.</Content>
-          </TitleNavigate>
-          <Emptybox>25.12.25</Emptybox>
-        </ContentBox>
+        {alerts.map((alert, index) => (
+          <ContentBox key={alert.id}>
+            <Number>{index + 1}</Number>
+            <RedText>{alert.sendUserName}</RedText>
+            <Emptybox></Emptybox>
+            <TitleNavigate as={NavLink} to={`/mypage/alert/detail/${alert.id}`} end>
+              <Content>{alert.mailTitle}</Content>
+            </TitleNavigate>
+            <Emptybox>{new Date(alert.mailSendTime).toLocaleDateString('ko-KR')}</Emptybox>
+          </ContentBox>
+        ))}
       </Wrapper>
-
     </MainWrapper>
   );
 };

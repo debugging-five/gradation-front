@@ -14,6 +14,7 @@ const ServiceCenterContainer = () => {
     }else{
       title = "내 문의 목록"
     }
+    
 
   return (
     <MainWrapper>
