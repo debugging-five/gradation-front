@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import * as S from "./style";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/light.css";
+import { useSelector } from "react-redux";
 
 const UpcyclingRegistration = () => {
   const [formData, setFormData] = useState({
@@ -18,12 +19,21 @@ const UpcyclingRegistration = () => {
     image: null,
     imagePreview: null,
   });
-
+  
   // input 값 받아서 폼데이터에 반영.
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  // 커런트 유저 받아오기
+  const currentUser = useSelector((state) => state.user.currentUser);
+
+  // 팝업이랑 알럿
+  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+
   // 업로드 이미지 미리보기URL 만들기
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -35,6 +45,29 @@ const UpcyclingRegistration = () => {
       reader.readAsDataURL(file);
     }
   };
+  
+  // 주소 찾기
+  const handleAddressSearch = () => {
+  new window.daum.Postcode({
+    oncomplete: function (data) {
+      let fullAddress = data.address;
+      let extraAddress = '';
+
+      if (data.addressType === 'R') {
+        if (data.bname) extraAddress += data.bname;
+        if (data.buildingName) {
+          extraAddress += (extraAddress ? ', ' + data.buildingName : data.buildingName);
+        }
+        if (extraAddress) {
+          fullAddress += `(${extraAddress})`;
+        }
+      }
+
+      setFormData(prev => ({ ...prev, schoolName: fullAddress }));
+    }
+  }).open();
+  };
+
   // 체크박스 배열로 추가, 제거
   const handleCheckboxChange = (e) => {
     const { value, checked } = e.target;
@@ -84,30 +117,46 @@ const UpcyclingRegistration = () => {
     setShowConfirmPopup(true);
   };
 
+  const handleRegisterSubmit = async () => {
+  setShowConfirmPopup(false);
 
-  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
-  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
+  const { image, imagePreview, ...rest } = formData;
 
-  const handleAddressSearch = () => {
-  new window.daum.Postcode({
-    oncomplete: function (data) {
-      let fullAddress = data.address;
-      let extraAddress = '';
+  const upcyclingData = {
+    upcyclingAddress: formData.schoolName,
+    upcyclingDetailAddress: formData.detailAddress,
+    upcyclingEmail: formData.email,
+    upcyclingPhone: formData.phone,
+    upcyclingDate: formData.pickupDate,
+    upcyclingSizeSmall: parseInt(formData.smallCount || 0),
+    upcyclingSizeMedium: parseInt(formData.mediumCount || 0),
+    upcyclingSizeLarge: parseInt(formData.largeCount || 0),
+    upcyclingMaterials: formData.materials.join(","),
+    upcyclingSignificant: formData.notes,
+    userId: currentUser?.id || null,
+  };
 
-      if (data.addressType === 'R') {
-        if (data.bname) extraAddress += data.bname;
-        if (data.buildingName) {
-          extraAddress += (extraAddress ? ', ' + data.buildingName : data.buildingName);
-        }
-        if (extraAddress) {
-          fullAddress += `(${extraAddress})`;
-        }
-      }
+  const payload = new FormData();
+  payload.append("info", new Blob([JSON.stringify(upcyclingData)], { type: "application/json" }));
+  if (image) {
+    payload.append("file", image);
+  }
 
-      setFormData(prev => ({ ...prev, schoolName: fullAddress }));
-    }
-  }).open();
+  try {
+    const res = await fetch("http://localhost:10000/upcycling/api/register", {
+      method: "POST",
+      body: payload,
+    });
+
+    if (!res.ok) throw new Error("등록 실패");
+
+    const result = await res.json();
+    console.log("등록 성공:", result);
+    setShowSuccessPopup(true);
+  } catch (error) {
+    console.error("업사이클링 등록 에러:", error);
+    alert("신청 중 오류가 발생했습니다.");
+  }
 };
 
 
@@ -318,7 +367,13 @@ const UpcyclingRegistration = () => {
           <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/ok.png?filePath=images/icons" alt="ok-icon" />
           <S.PopupMessage>신청이 완료되었습니다!</S.PopupMessage>
           <S.PopupButtonGroup>
-            <S.PopupButton className="confirm" onClick={() => setShowSuccessPopup(false)}>확인</S.PopupButton>
+            <S.PopupButton
+            className="confirm"
+            onClick={handleRegisterSubmit}
+            >
+              확인
+            </S.PopupButton>
+
           </S.PopupButtonGroup>
         </S.PopupBox>
       </S.PopupOverlay>

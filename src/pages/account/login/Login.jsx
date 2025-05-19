@@ -7,7 +7,7 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const { register, handleSubmit, formState: {isSubmitting, errors, isValid}} = useForm({mode: "onBlur"});
+  const { register, handleSubmit, trigger, formState: {isSubmitting, errors, isValid}} = useForm({mode: "onChange", reValidateMode: "onBlur"});
 
   const [loginMessage, setLoginMessage] = useState("")
   const[passwordType, setPasswordType] = useState({type : 'password', visible : false});
@@ -81,6 +81,7 @@ const Login = () => {
                           setLoginMessage("")
                         }
                       })}
+                      onBlur={() => trigger("userIdentification")}
                     />
                   </S.Label>
                 </S.InputWrapper>
@@ -104,6 +105,7 @@ const Login = () => {
                             setLoginMessage("")
                           }
                         })}
+                        onBlur={() => trigger("userPassword")}
                       />
                   </S.Label>
                    <S.PasswordIcon onClick={handlePasswordType}

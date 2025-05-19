@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Layout from "../pages/layout/Layout";
-import MainContainer from "../pages/main/MainContainer";
+import Main from "../pages/main/main";
 import ArtistDetailContainer from "../pages/artist/artistDetail/ArtistDetailContainer";
 import ArtistDetail from "../pages/artist/artistDetail/ArtistDetail";
 import LoginLayout from "../pages/layout/LoginLayout";
@@ -95,6 +95,7 @@ import MypageAlertContainer from "../pages/mypage/myMail/MypageAlertContainer";
 import ContactArtistReceivedDetail from "../pages/mypage/myActive/contactArtist/ContactArtistReceivedDetail";
 import ContactArtistSendedDetail from "../pages/mypage/myActive/contactArtist/ContactArtistSendedDetail";
 import UpcyclingMain from "../pages/upcycling/upcyclingMain/UpcyclingMain";
+import NewPassword from "../pages/account/newPassword/NewPassword";
 
 const router = createBrowserRouter([
   {
@@ -103,7 +104,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <MainContainer />,
+        element: <Main />,
       },
       {
         path: "/join",
@@ -120,6 +121,10 @@ const router = createBrowserRouter([
       {
         path: "/find-password",
         element: <FindPassword />,
+      },
+      {
+        path: "/new-password",
+        element: <NewPassword />,
       },
       {
         path: "/display",

@@ -9,7 +9,7 @@ S.Container = styled.div`
 `
 
 S.Wrapper = styled.div`
-  padding: 84px 0 200px 0;
+  padding: 224px 0 200px 0;
   display: flex;
   flex-direction: column;
   align-items: center;

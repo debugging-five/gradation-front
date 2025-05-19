@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { H10, H2, H4, H7, H8 } from '../../../styles/common';
+import { H10, H2, H3, H4, H7, H8 } from '../../../styles/common';
 
 const S = {};
 
@@ -8,11 +8,28 @@ S.Container = styled.div`
 `
 
 S.Wrapper = styled.div`
-  /* margin: 84px 0 200px 0; */
-  padding: 140px 0 200px 0;
+  padding: 200px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+`
+
+S.UserIcon = styled.img`
+  width: 72px;
+  height: 72px;
+`
+
+S.Info = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 28px 0 0 0;
+`
+
+S.H3 = styled.p`
+  ${H3}
+  height: 25px;
 `
 
 S.H2 = styled.p`
@@ -36,7 +53,7 @@ S.HiddenBorderWrapper = styled.div`
 `
 
 S.Border = styled.div`
-  width: 760px;
+  width: 440px;
   border-bottom: 1px solid #6E7476;
   /* margin : 0 0 48px 0; */
 `
@@ -55,7 +72,7 @@ S.Label = styled.label`
 
 S.H7 = styled.p`
   ${H7}
-  width : 140px;
+  width : 127px;
 
   span {
     color: #EE3333;
@@ -66,11 +83,10 @@ S.Input = styled.input`
 border: none;
 background-color: #FBFCFC;
 outline: none;
-width: 320px;
-/* ${H8} */
+width: 225px;
 
   &::placeholder {
-    
+    ${H8}
   }
 `
 
@@ -86,8 +102,8 @@ S.CheckboxContainer = styled.div`
 
 S.JoinButton = styled.button`
   all: unset;
-  width: 760px;
-  height: 58px;
+  width: 440px;
+  height: 50px;
   background-color: #C0C5C7;
   border-radius: 3px;
   border-color: #C0C5C7;

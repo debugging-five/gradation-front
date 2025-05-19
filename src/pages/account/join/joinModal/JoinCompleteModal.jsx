@@ -1,26 +1,34 @@
-import React from 'react';
 import S from './style';
 import SubButton from '../../../../components/button/SubButton';
 import PrimaryButton from '../../../../components/button/PrimaryButton';
+import { Link } from 'react-router-dom';
 
-const JoinCompleteModal = () => {
+const JoinCompleteModal = ({onClose}) => {
   return (
     <S.Container>
-      <S.Line>
-        <S.CloseIconWrapper>
-        <S.CloseIcon src={'/assets/images/icon/close.png'}/>
-        </S.CloseIconWrapper>
-        <S.Notice>
-          <S.Icon src={'/assets/images/icon/check.png'}/>
-          <S.H5>회원가입이 완료되었습니다.</S.H5>
-        </S.Notice>
 
-        <S.ButtonWwrapper>
-          <PrimaryButton>메인으로</PrimaryButton>
-          <SubButton>로그인</SubButton>
-        </S.ButtonWwrapper>
+      <S.Wrapper>
+        <S.Line>
+          <S.CloseIconWrapper>
+          <S.CloseIcon onClick={onClose} src={'/assets/images/icon/close.png'}/>
+          </S.CloseIconWrapper>
+          <S.Content>
+            <S.Notice>
+              <S.Icon src={'/assets/images/icon/check.png'}/>
+              <S.H5>회원가입이 완료되었습니다.</S.H5>
+            </S.Notice>
 
-      </S.Line>
+            <S.ButtonWrapper>
+              <Link to={"/"}>
+                <PrimaryButton>메인으로</PrimaryButton>
+              </Link>
+              <Link to={"/login"}>
+                <SubButton>로그인</SubButton>
+              </Link>
+            </S.ButtonWrapper>
+          </S.Content>
+        </S.Line>
+      </S.Wrapper>
     </S.Container>
   );
 };
