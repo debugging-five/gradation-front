@@ -1,10 +1,12 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { BarContent, BarContentWapper, BarTitle, DeleteIdFont, EndBar, ImageBox, Leftbar, MainWrapper, ProfileImage } from './mypageContainerStyle';
+import { useSelector } from 'react-redux';
 
 const MyPageContainer = () => {
+  const currentUser = useSelector(state => state.user.currentUser);
+  const isAdmin = currentUser?.id === 1;
 
-  const isAdmin = true;
 
   return (
     <MainWrapper>

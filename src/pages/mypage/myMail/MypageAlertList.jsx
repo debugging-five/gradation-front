@@ -33,7 +33,8 @@ const MypageAlertList = () => {
           <Emptybox>작성일</Emptybox>
         </ListHeader>
 
-        {alerts.map((alert, index) => (
+      {Array.isArray(alerts) && alerts.length > 0 ? (
+        alerts.map((alert, index) => (
           <ContentBox key={alert.id}>
             <Number>{index + 1}</Number>
             <RedText>{alert.sendUserName}</RedText>
@@ -43,7 +44,10 @@ const MypageAlertList = () => {
             </TitleNavigate>
             <Emptybox>{new Date(alert.mailSendTime).toLocaleDateString('ko-KR')}</Emptybox>
           </ContentBox>
-        ))}
+        ))
+      ) : (
+        <div style={{ padding: "1rem", textAlign: "center" }}>알림이 없습니다.</div>
+      )}
       </Wrapper>
     </MainWrapper>
   );

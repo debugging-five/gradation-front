@@ -33,17 +33,21 @@ const SendedList = () => {
           <Emptybox>작성일</Emptybox>
         </ListHeader>
 
-        {mails.map((mail, index) => (
-        <ContentBox key={mail.id}>
-          <Number>{index + 1}</Number>
-          <Category>{mail.receiveUserName}</Category>
-          <Emptybox></Emptybox>
-          <TitleNavigate  as={NavLink} to={`detail/${mail.id}`} end>
-            <Content>{mail.mailTitle}</Content>
-          </TitleNavigate>
-          <Emptybox>{new Date(mail.mailSendTime).toLocaleDateString('ko-KR')}</Emptybox>
-        </ContentBox>
-      ))}
+        {Array.isArray(mails) && mails.length > 0 ? (
+          mails.map((mail, index) => (
+          <ContentBox key={mail.id}>
+            <Number>{index + 1}</Number>
+            <Category>{mail.receiveUserName}</Category>
+            <Emptybox></Emptybox>
+            <TitleNavigate  as={NavLink} to={`detail/${mail.id}`} end>
+              <Content>{mail.mailTitle}</Content>
+            </TitleNavigate>
+            <Emptybox>{new Date(mail.mailSendTime).toLocaleDateString('ko-KR')}</Emptybox>
+          </ContentBox>
+          ))
+        ) : (
+          <div style={{ padding: "1rem", textAlign: "center" }}>쪽지가 없습니다.</div>
+        )}
       </Wrapper>
     </MainWrapper>
   );
