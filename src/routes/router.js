@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Layout from "../pages/layout/Layout";
-import Main from "../pages/main/Main";
+import Main from "../pages/main/main";
 import ArtistDetailContainer from "../pages/artist/artistDetail/ArtistDetailContainer";
 import ArtistDetail from "../pages/artist/artistDetail/ArtistDetail";
 import LoginLayout from "../pages/layout/LoginLayout";
