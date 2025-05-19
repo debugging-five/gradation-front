@@ -3,8 +3,10 @@ import * as S from "./style";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/light.css";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const UpcyclingRegistration = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     schoolName: "",
     detailAddress: "",
@@ -368,11 +370,15 @@ const UpcyclingRegistration = () => {
           <S.PopupMessage>신청이 완료되었습니다!</S.PopupMessage>
           <S.PopupButtonGroup>
             <S.PopupButton
-            className="confirm"
-            onClick={handleRegisterSubmit}
+              className="confirm"
+              onClick={async () => {
+                await handleRegisterSubmit();
+                navigate("/upcycling");
+              }}
             >
               확인
             </S.PopupButton>
+
 
           </S.PopupButtonGroup>
         </S.PopupBox>
