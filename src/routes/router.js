@@ -1,6 +1,5 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Layout from "../pages/layout/Layout";
-import Main from "../pages/main/main";
 import ArtistDetailContainer from "../pages/artist/artistDetail/ArtistDetailContainer";
 import ArtistDetail from "../pages/artist/artistDetail/ArtistDetail";
 import LoginLayout from "../pages/layout/LoginLayout";
@@ -96,6 +95,7 @@ import ContactArtistReceivedDetail from "../pages/mypage/myActive/contactArtist/
 import ContactArtistSendedDetail from "../pages/mypage/myActive/contactArtist/ContactArtistSendedDetail";
 import UpcyclingMain from "../pages/upcycling/upcyclingMain/UpcyclingMain";
 import NewPassword from "../pages/account/newPassword/NewPassword";
+import Main from "../pages/main/Main";
 
 const router = createBrowserRouter([
   {
