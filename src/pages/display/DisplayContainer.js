@@ -1,12 +1,15 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
+import S from './style';
 
 const DisplayContainer = () => {
   return (
-    <div>
-      <h1>Display</h1>
-      <Outlet />
-    </div>
+    <S.Container>
+      <S.Link to="/display">
+        <S.EN_H2>display</S.EN_H2>
+      </S.Link>
+        <Outlet />
+    </S.Container>
   );
 };
 

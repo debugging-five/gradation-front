@@ -27,7 +27,7 @@ const NewPassword = ({email, provider}) => {
     })
   }
   
-  console.log("userIdentification: ", userIdentification); 
+  // console.log("userIdentification", userIdentification); 
 
   const handlePasswordConfirmType = (e) => {
       setPasswordConfirmType(() => {
@@ -47,6 +47,8 @@ const NewPassword = ({email, provider}) => {
           userIdentification : userIdentification,
           userPassword : userPassword
         }
+        console.log("userIdentification", userIdentification);
+        console.log("userPassword", userPassword)
         console.log("userVO", userVO)
         await fetch("http://localhost:10000/users/api/modify-password", {
           method : "PUT",
@@ -69,7 +71,9 @@ const NewPassword = ({email, provider}) => {
           // console.log(res)
           if(res.status === "success") {
             setIsSuccessModalOpen(true)
-          }
+          } else if(res.status === "fail") {
+            alert(res.message)
+          } 
         })
         .catch(console.error)
       })}>

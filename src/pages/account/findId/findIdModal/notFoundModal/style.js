@@ -20,7 +20,7 @@ S.Container = styled.div`
 S.Wrapper = styled.div`
   background-color: #FBFCFC;
   width: 600px;
-  height: 374px;
+  height: 366px;
   border-radius: 5px;
   transition: transform 0.5s ease-out;
 `
@@ -81,11 +81,12 @@ S.Info = styled.div`
   margin: 40px 0 0 0;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;
 `
 
 S.H6 = styled.p`
   ${H6}
+  color: #6E7476;
 `
 
 S.Id = styled.div`

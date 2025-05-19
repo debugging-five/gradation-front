@@ -111,7 +111,7 @@ S.JoinButton = styled.button`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background-color: ${({ $active }) => ($active ? "#EE3333" : "#C0C5C7")};
+  background-color: ${({ $active }) => ( $active ? "#EE3333" : "#C0C5C7" )};
 `
 
 S.H4 = styled.p`
@@ -144,7 +144,7 @@ S.Checkbox = styled.div`
 
 S.Terms = styled.span`
   ${H8}
-  color: ${({ checked }) => (checked ? "#333333" : "#C0C5C7")};
+  color: ${({ checked }) => ( checked ? "#333333" : "#C0C5C7" )};
   cursor: pointer;
 `
 

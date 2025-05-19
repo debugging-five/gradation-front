@@ -55,7 +55,7 @@ S.H2 = styled.p`
 
 S.H6 = styled.p`
   ${H6}
-  color: #6E7476
+  color: #6E7476;
 `
 
 S.EnH7 = styled.p`

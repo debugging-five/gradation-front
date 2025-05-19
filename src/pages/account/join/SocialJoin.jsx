@@ -46,7 +46,7 @@ const SocialJoin = ({email, provider}) => {
     })}>
     <S.Container>
       <S.Wrapper>
-        <S.H2>회원가입</S.H2>
+        <S.H2>소셜 회원가입</S.H2>
           <S.InputContainer>
             <S.BorderWrapper>
               <S.Border>
