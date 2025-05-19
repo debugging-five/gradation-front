@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
-import Header from './Header';
-import Footer from './Footer';
+import Header from './header/Header';
+import Footer from './footer/Footer';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, setUserStatus } from '../../modules/user';
 
@@ -79,7 +79,7 @@ const Layout = () => {
 
   return (
     <div>
-      <Header />
+      <Header onLogout={handleLogout} />
       <main>
         <Outlet />
       </main>
