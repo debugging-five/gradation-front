@@ -11,7 +11,15 @@ S.Header = styled.header`
   height: 56px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
+  transform: translateY(0);
   z-index: 1000;
+
+  &.hide {
+    transform: translateY(-100%);
+  }
+  &.show {
+    transform: translateY(0);
+  }
 `;
 
 S.Nav = styled.nav`

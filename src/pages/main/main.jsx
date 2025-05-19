@@ -3,7 +3,7 @@ import React from 'react';
 const main = () => {
   return (
     <div>
-      main 페이지 입니다.
+      메인 페이지
     </div>
   );
 };
