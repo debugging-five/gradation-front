@@ -169,7 +169,7 @@ const AuctionExpectedModify = () => {
                 </S.InputBox>
               </S.InputBoxWrap> 
             </S.NeedWriteDiv>
-            ): (
+            ) : (
             <S.InputBoxWrap>
               <S.InputBox>
                 <S.InputBoxInfo>

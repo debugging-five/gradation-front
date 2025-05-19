@@ -10,6 +10,7 @@ const warning = "#E49804";
 const S = {};
 S.EN_H2 = styled.p`
   ${EN_H2}
+  margin-top: 133px;
 `
 
 S.H8 = styled.p`
@@ -60,6 +61,7 @@ S.Bar = styled.p`
 S.CategoryWrapper = styled.div`
   display: flex;
 `
+
 
 
 
