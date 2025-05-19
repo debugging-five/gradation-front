@@ -1,10 +1,9 @@
-import PrimaryButton from '../../../../components/button/PrimaryButton';
-import SubButton from '../../../../components/button/SubButton';
 import S from './style';
-import { Link, useNavigate } from 'react-router-dom';
+import SubButton from '../../../../../components/button/SubButton';
+import PrimaryButton from '../../../../../components/button/PrimaryButton'
+import { Link } from 'react-router-dom';
 
-const PasswordModal = () => {
-  const navigate = useNavigate();
+const SocialModal = () => {
   return (
     <S.Container>
 
@@ -20,13 +19,12 @@ const PasswordModal = () => {
             </S.Notice>
 
             <S.Info>
-              <S.H6>일치하는 비밀번호를 찾을 수 없습니다.</S.H6>
-              <S.H6>입력하신 정보를 다시 확인해주세요.</S.H6>
+              <S.H6>해당 이메일은 소셜 로그인으로 가입된 계정입니다.</S.H6>
             </S.Info>
 
             <S.ButtonWrapper>
-              <Link to={"/find-password"}>
-                <SubButton onClick={() => navigate(0)}>비밀번호 찾기</SubButton>
+              <Link to={"/"}>
+                <SubButton>메인으로</SubButton>
               </Link>
               <Link to={"/login"}>
                 <PrimaryButton>로그인</PrimaryButton>
@@ -39,4 +37,4 @@ const PasswordModal = () => {
   );
 };
 
-export default PasswordModal;
+export default SocialModal;

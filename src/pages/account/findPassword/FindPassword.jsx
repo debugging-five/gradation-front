@@ -4,7 +4,8 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import CheckedButton from '../../../components/button/CheckedButton';
 import UncheckedButton from '../../../components/button/UncheckedButton';
-import PasswordModal from './findPasswordModal/PasswordModal';
+import NotFoundModal from './findPasswordModal/notFoundModal/NotFoundModal';
+import SocialModal from './findPasswordModal/socialModal/SocialModal';
 
 const FindPassword = () => {
 
@@ -24,8 +25,8 @@ const FindPassword = () => {
   const [errorCount, setErrorCount] = useState(1); // 인증번호 실패 횟수
   const [isEmailButtonClicked, setIsEmailButtonClicked] = useState(false);
 
-
-  const [isNotFoundModalOpen, setIsNotFoundModalOpen] = useState(false);
+    const [isSocialModalOpen, setIsSocialModalOpen] = useState(false);
+    const [isNotFoundModalOpen, setIsNotFoundModalOpen] = useState(false);
 
   const isFindPassword = isValid && confirmVerificationCode === true;
 
@@ -112,13 +113,22 @@ const getVerificationCodeEmail = async () => {
           }
         
           const {
+            userName,
             userEmail
           } = data;
-        
+
+          const userVO = {
+            userName : userName,
+            userEmail : userEmail,
+          }
         
           // 비밀번호 찾기
-            await fetch(`http://localhost:10000/users/api/find-password/${userEmail}`, {
-              method: "GET",
+            await fetch("http://localhost:10000/users/api/find-password", {
+              method: "POST",
+              headers : {
+                "Content-Type" : "application/json"
+              },
+              body : JSON.stringify(userVO)
             })
             .then((res) => {
               if(!res.ok) {
@@ -134,21 +144,16 @@ const getVerificationCodeEmail = async () => {
             .then((res) => {
               console.log(res)
               // alert(res.message)
-              if(res.foundPassword) {
-                navigate("/new-password", {state : {userEmail}})
+              if(res.status === "success") {
+                navigate("/new-password", {state : {userIdentification : res.userIdentification}})
+
+              } else if (res.status === "social") {
+                setIsSocialModalOpen(true)
+              } else {
+                setIsNotFoundModalOpen(true)
               }
-              // if(res.foundIdentification) {
-              //   setFoundId(res.foundIdentification)
-              //   setFoundEmail(userEmail)
-              //   setIsSuccessModalOpen(true)
-              // } else if (res.socialLogin === true) {
-              //   setIsSocialModalOpen(true)
-              // } else {
-              //   setIsNotFoundModalOpen(true)
-              // }
             })
             .catch(console.error)
-        
             })}>
             <S.Container>
         <S.Wrapper>
@@ -285,7 +290,8 @@ const getVerificationCodeEmail = async () => {
               </S.Wrapper>
             </S.Container>
           </form>
-          {isNotFoundModalOpen && <PasswordModal />}
+          {isNotFoundModalOpen && <NotFoundModal />}
+          {isSocialModalOpen && <SocialModal />}
       </div>
 
   );

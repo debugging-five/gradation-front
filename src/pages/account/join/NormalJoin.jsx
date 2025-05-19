@@ -51,7 +51,7 @@ const NormalJoin = () => {
     
   const handlePasswordConfirmType = (e) => {
       setPasswordConfirmType(() => {
-        if(!handlePasswordConfirmType.visible) {
+        if(!passwordConfirmType.visible) {
           return {type : 'text', visible : true};
         }
         return {type : 'password', visible : false}
