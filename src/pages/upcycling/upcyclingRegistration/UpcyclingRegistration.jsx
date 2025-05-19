@@ -19,12 +19,15 @@ const UpcyclingRegistration = () => {
     imagePreview: null,
   });
 
-  // input 값 받아서 폼데이터에 반영.
+  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  // 업로드 이미지 미리보기URL 만들기
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -35,7 +38,7 @@ const UpcyclingRegistration = () => {
       reader.readAsDataURL(file);
     }
   };
-  // 체크박스 배열로 추가, 제거
+
   const handleCheckboxChange = (e) => {
     const { value, checked } = e.target;
     const updatedMaterials = checked
@@ -44,72 +47,89 @@ const UpcyclingRegistration = () => {
     setFormData({ ...formData, materials: updatedMaterials });
   };
 
+  const handleAddressSearch = () => {
+    new window.daum.Postcode({
+      oncomplete: function (data) {
+        let fullAddress = data.address;
+        let extraAddress = "";
+
+        if (data.addressType === "R") {
+          if (data.bname) extraAddress += data.bname;
+          if (data.buildingName) {
+            extraAddress += (extraAddress ? ", " + data.buildingName : data.buildingName);
+          }
+          if (extraAddress) {
+            fullAddress += `(${extraAddress})`;
+          }
+        }
+
+        setFormData((prev) => ({ ...prev, schoolName: fullAddress }));
+      },
+    }).open();
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!formData.schoolName) {
-      setAlertMessage("학교명을 입력해주세요.");
-      return;
-    }
-    if (!formData.detailAddress) {
-      setAlertMessage("상세주소를 입력해주세요.");
-      return;
-    }
-    if (!formData.email) {
-      setAlertMessage("이메일을 입력해주세요.");
-      return;
-    }
-    if (!formData.phone) {
-      setAlertMessage("연락처를 입력해주세요.");
-      return;
-    }
-    if (!formData.pickupDate) {
-      setAlertMessage("수거 신청일을 선택해주세요.");
-      return;
-    }
+    if (!formData.schoolName) return setAlertMessage("학교명을 입력해주세요.");
+    if (!formData.detailAddress) return setAlertMessage("상세주소를 입력해주세요.");
+    if (!formData.email) return setAlertMessage("이메일을 입력해주세요.");
+    if (!formData.phone) return setAlertMessage("연락처를 입력해주세요.");
+    if (!formData.pickupDate) return setAlertMessage("수거 신청일을 선택해주세요.");
 
     const totalCount =
       Number(formData.smallCount) + Number(formData.mediumCount) + Number(formData.largeCount);
-    if (totalCount === 0) {
-      setAlertMessage("작품 개수를 입력해주세요.");
-      return;
-    }
+    if (totalCount === 0) return setAlertMessage("작품 개수를 입력해주세요.");
 
-    if (formData.materials.length === 0) {
-      setAlertMessage("주된 재질을 선택해주세요.");
-      return;
-    }
+    if (formData.materials.length === 0) return setAlertMessage("주된 재질을 선택해주세요.");
 
-    // 모든 필드 유효할 때만 팝업 띄우기
-    setShowConfirmPopup(true);
+    setShowConfirmPopup(true); // 팝업 열기
   };
 
+  const handleConfirmSubmit = async () => {
+    setShowConfirmPopup(false);
 
-  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
-  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
 
-  const handleAddressSearch = () => {
-  new window.daum.Postcode({
-    oncomplete: function (data) {
-      let fullAddress = data.address;
-      let extraAddress = '';
+    const { image, imagePreview, ...rest } = formData;
 
-      if (data.addressType === 'R') {
-        if (data.bname) extraAddress += data.bname;
-        if (data.buildingName) {
-          extraAddress += (extraAddress ? ', ' + data.buildingName : data.buildingName);
-        }
-        if (extraAddress) {
-          fullAddress += `(${extraAddress})`;
-        }
-      }
+    const upcyclingData = {
+      upcyclingAddress: formData.schoolName,
+      upcyclingDetailAddress: formData.detailAddress,
+      upcyclingEmail: formData.email,
+      upcyclingPhone: formData.phone,
+      upcyclingDate: formData.pickupDate,
+      upcyclingSizeSmall: parseInt(formData.smallCount || 0),
+      upcyclingSizeMedium: parseInt(formData.mediumCount || 0),
+      upcyclingSizeLarge: parseInt(formData.largeCount || 0),
+      upcyclingMaterials: formData.materials.join(","),
+      upcyclingSignificant: formData.notes,
+      userId: userId || null,
+    };
 
-      setFormData(prev => ({ ...prev, schoolName: fullAddress }));
+    const payload = new FormData();
+    payload.append("info", new Blob([JSON.stringify(upcyclingData)], { type: "application/json" }));
+    if (image) payload.append("file", image);
+
+    try {
+      const res = await fetch("http://localhost:10000/upcycling/api/register", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: payload,
+      });
+
+      if (!res.ok) throw new Error("등록 실패");
+
+      const result = await res.json();
+      console.log("📦 upcyclingData:", upcyclingData);
+      console.log("✅ 등록 성공:", result);
+      setShowSuccessPopup(true);
+    } catch (error) {
+      console.error("업사이클링 등록 에러:", error);
+      alert("신청 중 오류가 발생했습니다.");
     }
-  }).open();
-};
-
+  };
 
   return (
     <S.Container>
@@ -287,42 +307,39 @@ const UpcyclingRegistration = () => {
       </S.Form>
 
     {alertMessage && (
-      <S.PopupOverlay>
-        <S.PopupBox>
-          <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/attention.png?filePath=images/icons" alt="attention-icon" />
-          <S.PopupMessage>{alertMessage}</S.PopupMessage>
-          <S.PopupButtonGroup>
-            <S.PopupButton className="confirm" onClick={() => setAlertMessage("")}>확인</S.PopupButton>
-          </S.PopupButtonGroup>
-        </S.PopupBox>
-      </S.PopupOverlay>
-    )}
-    {showConfirmPopup && (
-      <S.PopupOverlay>
-        <S.PopupBox>
-          <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/question.png?filePath=images/icons" alt="question-icon" />
-          <S.PopupMessage>신청하시겠습니까?</S.PopupMessage>
-          <S.PopupButtonGroup>
-            <S.PopupButton className="cancel" onClick={() => setShowConfirmPopup(false)}>취소</S.PopupButton>
-            <S.PopupButton className="confirm" onClick={() => {
-              setShowConfirmPopup(false);
-              setShowSuccessPopup(true);
-            }}>확인</S.PopupButton>
-          </S.PopupButtonGroup>
-        </S.PopupBox>
-      </S.PopupOverlay>
-    )}
-    {showSuccessPopup && (
-      <S.PopupOverlay>
-        <S.PopupBox>
-          <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/ok.png?filePath=images/icons" alt="ok-icon" />
-          <S.PopupMessage>신청이 완료되었습니다!</S.PopupMessage>
-          <S.PopupButtonGroup>
-            <S.PopupButton className="confirm" onClick={() => setShowSuccessPopup(false)}>확인</S.PopupButton>
-          </S.PopupButtonGroup>
-        </S.PopupBox>
-      </S.PopupOverlay>
-    )}
+        <S.PopupOverlay>
+          <S.PopupBox>
+            <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/attention.png?filePath=images/icons" alt="attention-icon" />
+            <S.PopupMessage>{alertMessage}</S.PopupMessage>
+            <S.PopupButtonGroup>
+              <S.PopupButton className="confirm" onClick={() => setAlertMessage("")}>확인</S.PopupButton>
+            </S.PopupButtonGroup>
+          </S.PopupBox>
+        </S.PopupOverlay>
+      )}
+      {showConfirmPopup && (
+        <S.PopupOverlay>
+          <S.PopupBox>
+            <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/question.png?filePath=images/icons" alt="question-icon" />
+            <S.PopupMessage>신청하시겠습니까?</S.PopupMessage>
+            <S.PopupButtonGroup>
+              <S.PopupButton className="cancel" onClick={() => setShowConfirmPopup(false)}>취소</S.PopupButton>
+              <S.PopupButton className="confirm" onClick={handleConfirmSubmit}>확인</S.PopupButton>
+            </S.PopupButtonGroup>
+          </S.PopupBox>
+        </S.PopupOverlay>
+      )}
+      {showSuccessPopup && (
+        <S.PopupOverlay>
+          <S.PopupBox>
+            <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/ok.png?filePath=images/icons" alt="ok-icon" />
+            <S.PopupMessage>신청이 완료되었습니다!</S.PopupMessage>
+            <S.PopupButtonGroup>
+              <S.PopupButton className="confirm" onClick={() => setShowSuccessPopup(false)}>확인</S.PopupButton>
+            </S.PopupButtonGroup>
+          </S.PopupBox>
+        </S.PopupOverlay>
+      )}
     </S.Container>
   );
 };
