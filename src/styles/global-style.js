@@ -80,6 +80,8 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
     color: #333333;
     font-family: 'Pretendard', sans-serif !important;
+    
+    background-color : #FBFCFC;
   }
 
   .sub {
