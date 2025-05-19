@@ -29,7 +29,7 @@ const UpcyclingRegistration = () => {
   // 커런트 유저 받아오기
   const currentUser = useSelector((state) => state.user.currentUser);
 
-  // 팝업
+  // 팝업이랑 알럿
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
