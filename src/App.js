@@ -2,18 +2,19 @@ import { RouterProvider } from 'react-router-dom';
 import './App.css';
 import GlobalStyle from './styles/global-style';
 import router from './routes/router';
-import MainContainer from './pages/main/MainContainer';
-import { ThemeProvider } from 'styled-components';
-import theme from './styles/theme';
-import TestContainer from './pages/test/TestContainer';
-import JoinCompleteModal from './pages/account/join/joinModal/JoinCompleteModal';
+import NotFoundModal from './pages/account/findId/findIdModal/notFoundModal/NotFoundModal';
+import SocialModal from './pages/account/findId/findIdModal/socialModal/SocialModal';
+import FindIdSuccessModal from './pages/account/findId/findIdModal/successModal/FindIdSuccessModal';
 
 function App() {
   return (
     <>
       <GlobalStyle />
       <RouterProvider router={router} />
-      {/* <JoinCompleteModal /> */}
+      {/* <NotFoundModal /> */}
+      {/* <SocialModal /> */}
+      {/* <FindIdSuccessModal /> */}
+    
     </>
   );
 }
