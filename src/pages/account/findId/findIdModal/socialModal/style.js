@@ -1,6 +1,6 @@
-// 회원가입 완료 modal
+// 아이디 찾기 소셜 회원 modal
 import styled from 'styled-components'
-import { H2, H5} from '../../../../styles/common';
+import {EN_H6, H2, H5, H6} from '../../../../../styles/common';
 
 const S = {};
 
@@ -19,17 +19,16 @@ S.Container = styled.div`
 
 S.Wrapper = styled.div`
   background-color: #FBFCFC;
-  width: 450px;
-  height: 278px;
+  width: 600px;
+  height: 333px;
   border-radius: 5px;
   transition: transform 0.5s ease-out;
 `
 
 S.Line = styled.div`
   border-bottom: solid 1px #6E6F76;
-  /* margin: 30px 0 0 0; */
   height: 30px;
-  width: 450px;
+  width: 600px;
   margin: 0 0 30px 0;
 `
 
@@ -50,15 +49,20 @@ S.H5 = styled.p`
 
 S.H2 = styled.p`
   ${H2}
-  width: 136px;
+  width: 195px;
   height: 36px;
+`
+
+S.EnH7 = styled.p`
+  ${EN_H6}
+  margin: 0 0 0 30px;
 `
 
 S.Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 30px 0 0 0; 
+  margin: 40px 0 0 0; 
 `
 
 S.Notice = styled.div`
@@ -68,9 +72,29 @@ S.Notice = styled.div`
 `
 
 S.Icon = styled.img`
-  width : 48px;
-  height : 48px;
-  margin: 0 0 20px 0;
+  width : 56px;
+  height : 56px;
+  margin: 0 0 15px 0;
+`
+
+S.Info = styled.div`
+  margin: 40px 0 0 0;
+`
+
+S.H6 = styled.p`
+  ${H6}
+`
+
+S.Id = styled.div`
+  display: flex;
+  align-items: center;
+  height: 18px;
+`
+
+S.Email = styled.div`
+  display: flex;
+  align-items: center;
+  height: 18px;
 `
 
 S.ButtonWrapper = styled.div`
