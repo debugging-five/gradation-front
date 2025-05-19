@@ -1,18 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import S from './style';
 import Flatpickr from "react-flatpickr";
 import dayjs from 'dayjs';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 
 const AuctionExpectedModify = () => {
   let { id } = useParams();
   const [data, setData] = useState(null);
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
-  const inputRef = useRef(null);
-  const { register, handleSubmit, getValues, formState: { isSubmitting, isSubmitted, errors } } = useForm({ mode: "onChange" });
+  const { register, handleSubmit, control, getValues, formState: { isSubmitting, isSubmitted, errors } } = useForm({ mode: "onChange", shouldFocusError: false });
   const [auctionVO, setAuctionVO] = useState({});
   const [back, setBack] = useState(false);
   const [imageData, setImageData] = useState({});
@@ -116,46 +115,154 @@ const AuctionExpectedModify = () => {
               })
               .catch(console.error)
           })}>
+          {errors.auctionStartDate ? (
+            <S.NeedWriteDiv>
+              <S.InputBoxWrap>
+                <S.InputBox>
+                  <S.InputBoxInfo>
+                    <S.H5>경매 개시</S.H5>
+                    <S.RedStar>*</S.RedStar>
+                  </S.InputBoxInfo>
+                  <S.InputBoxInfo>
+                    <Controller
+                      name="auctionStartDate"
+                      control={control}
+                      rules={{ required: "필수항목입니다" }}
+                      render={({ field }) => (
+                        <Flatpickr
+                          {...field}
+                          options={{
+                            enableTime: true,
+                            enableSeconds: true,
+                            noCalendar: false,
+                            dateFormat: "Y-m-d H:i:S",
+                            disableMobile: true,
+                            minDate: new Date().fp_incr(1),
+                            time_24hr: true,
+                            closeOnSelect: false,
+                          }}
+                          onChange={([date]) => {
+                            const formatted = dayjs(date).format("YYYY-MM-DD HH:mm:ss");
+                            field.onChange(formatted);
+                            setAuctionVO(prev => ({
+                              ...prev,
+                              auctionStartDate: formatted,
+                            }));
+                          }}
+                          render={({ value, defaultValue, id, name }, ref) => (
+                            <S.CalendarInput ref={ref} id={id} name={name}>
+                              <S.CalendarIcon
+                                src="/assets/images/icon/calendar_warning.png"
+                                alt="calendar_warning-icon"
+                              />
+                              <span>
+                                {value
+                                  ? dayjs(value).format("YYYY-MM-DD HH:mm:ss")
+                                  : "날짜를 선택해주세요"}
+                              </span>
+                            </S.CalendarInput>
+                          )}
+                        />
+                      )}
+                    />
+                  </S.InputBoxInfo>
+                </S.InputBox>
+              </S.InputBoxWrap> 
+            </S.NeedWriteDiv>
+            ): (
             <S.InputBoxWrap>
               <S.InputBox>
-                <S.InputBoxInfo><S.H5>경매 개시</S.H5><S.RedStar>*</S.RedStar></S.InputBoxInfo>
                 <S.InputBoxInfo>
-                  <Flatpickr
-                    options={{
-                      enableTime: true,
-                      enableSeconds: true,
-                      noCalendar: false,
-                      dateFormat: "Y-m-d H:i:S",
-                      disableMobile: true,
-                      minDate: new Date().fp_incr(1),
-                      time_24hr: true,
-                      closeOnSelect: false,
-                    }}
-                    value={auctionVO.auctionStartDate}
-                    onChange={([date]) =>
-                      setAuctionVO(prev => ({
-                        ...prev,
-                        auctionStartDate: dayjs(date).format("YYYY-MM-DD HH:mm:ss")
-                      }))
-                    }
-                    render={({ value, defaultValue, id, name }, ref) => (
-                      <S.CalendarInput ref={ref} id={id} name={name} >
-                        <S.CalendarIcon
-                          src="/assets/images/icon/calendar.png"
-                          alt="calendar-icon"
-                        />
-                        <span>
-                          {auctionVO.auctionStartDate
-                            ? dayjs(auctionVO.auctionStartDate).format("YYYY-MM-DD HH:mm:ss")
-                            : "날짜를 선택해주세요."}
-                        </span>
-                      </S.CalendarInput>
+                  <S.H5>경매 개시</S.H5>
+                  <S.RedStar>*</S.RedStar>
+                </S.InputBoxInfo>
+                <S.InputBoxInfo>
+                  <Controller
+                    name="auctionStartDate"
+                    control={control}
+                    rules={{ required: "필수항목입니다" }}
+                    render={({ field }) => (
+                      <Flatpickr
+                        {...field}
+                        options={{
+                          enableTime: true,
+                          enableSeconds: true,
+                          noCalendar: false,
+                          dateFormat: "Y-m-d H:i:S",
+                          disableMobile: true,
+                          minDate: new Date().fp_incr(1),
+                          time_24hr: true,
+                          closeOnSelect: false,
+                        }}
+                        onChange={([date]) => {
+                          const formatted = dayjs(date).format("YYYY-MM-DD HH:mm:ss");
+                          field.onChange(formatted);
+                          setAuctionVO(prev => ({
+                            ...prev,
+                            auctionStartDate: formatted,
+                          }));
+                        }}
+                        render={({ value, defaultValue, id, name }, ref) => (
+                          <S.CalendarInput ref={ref} id={id} name={name}>
+                            <S.CalendarIcon
+                              src="/assets/images/icon/calendar.png"
+                              alt="calendar-icon"
+                            />
+                            <span>
+                              {value
+                                ? dayjs(value).format("YYYY-MM-DD HH:mm:ss")
+                                : "날짜를 선택해주세요"}
+                            </span>
+                          </S.CalendarInput>
+                        )}
+                      />
                     )}
                   />
                 </S.InputBoxInfo>
               </S.InputBox>
             </S.InputBoxWrap>
-
+            )}
+            <S.WarningArea>
+              {errors.auctionStartDate && (
+                <S.NeedWrite>{errors.auctionStartDate.message}</S.NeedWrite>
+              )}
+            </S.WarningArea>
+            {(errors.auctionEstimatedMaxPrice || errors.auctionEstimatedMinPrice) ? ( 
+            <S.NeedWriteDiv>
+              <S.InputBoxWrap>
+                <S.InputBox>
+                  <S.H5>추정가</S.H5>
+                  <S.InputBoxInfo>
+                    <S.InputMin
+                      type="text"
+                      value={auctionVO.auctionEstimatedMinPrice || ''}
+                      placeholder="최소추정가를 입력하세요"
+                      {...register("auctionEstimatedMinPrice", {
+                        required: true,
+                      })}
+                      onChange={(e) =>
+                        setAuctionVO(prev => ({ ...prev, auctionEstimatedMinPrice: e.target.value }))
+                      }
+                      autoComplete="off"
+                    />
+                    <span>~</span>
+                    <S.InputMax
+                      type="text"
+                      value={auctionVO.auctionEstimatedMaxPrice || ''}
+                      placeholder="최대추정가를 입력하세요"
+                      {...register("auctionEstimatedMaxPrice", {
+                        required: true,
+                      })}
+                      onChange={(e) =>
+                        setAuctionVO(prev => ({ ...prev, auctionEstimatedMaxPrice: e.target.value }))
+                      }
+                      autoComplete="off"
+                    />
+                  </S.InputBoxInfo>
+                </S.InputBox>
+              </S.InputBoxWrap>
+            </S.NeedWriteDiv>
+            ) : (
             <S.InputBoxWrap>
               <S.InputBox>
                 <S.H5>추정가</S.H5>
@@ -188,23 +295,58 @@ const AuctionExpectedModify = () => {
                 </S.InputBoxInfo>
               </S.InputBox>
             </S.InputBoxWrap>
-
-            <S.InputBoxWrap>
-              <S.InputBox>
-                <S.InputBoxInfo><S.H5>시작가</S.H5><S.RedStar>*</S.RedStar></S.InputBoxInfo>
-                <S.InputBoxInfo>
-                  <S.InputText
-                    placeholder="시작입찰가를 입력해주세요"
-                    autoComplete="off"
-                    value={auctionVO.auctionStartPrice || ''}
-                    onChange={(e) =>
-                      setAuctionVO(prev => ({ ...prev, auctionStartPrice: e.target.value }))
-                    }
-                  />
-                </S.InputBoxInfo>
-              </S.InputBox>
-            </S.InputBoxWrap>
-
+            )}
+            <S.WarningArea>
+              {(errors.auctionEstimatedMaxPrice || errors.auctionEstimatedMinPrice) && (
+              <S.NeedWrite>필수항목입니다</S.NeedWrite>
+              )}
+            </S.WarningArea>
+            {errors.auctionStartPrice ? (
+              <S.NeedWriteDiv>
+                <S.InputBoxWrap>
+                  <S.InputBox>
+                    <S.InputBoxInfo><S.H5>시작가</S.H5><S.RedStar>*</S.RedStar></S.InputBoxInfo>
+                    <S.InputBoxInfo>
+                      <S.InputText
+                        placeholder="시작입찰가를 입력해주세요"
+                        autoComplete="off"
+                        value={auctionVO.auctionStartPrice || ''}
+                        {...register("auctionStartPrice", {
+                          required: true,
+                        })}
+                        onChange={(e) =>
+                          setAuctionVO(prev => ({ ...prev, auctionStartPrice: e.target.value }))
+                        }
+                      />
+                    </S.InputBoxInfo>
+                  </S.InputBox>
+                </S.InputBoxWrap>
+              </S.NeedWriteDiv>
+            ) : (
+              <S.InputBoxWrap>
+                <S.InputBox>
+                  <S.InputBoxInfo><S.H5>시작가</S.H5><S.RedStar>*</S.RedStar></S.InputBoxInfo>
+                  <S.InputBoxInfo>
+                    <S.InputText
+                      placeholder="시작입찰가를 입력해주세요"
+                      autoComplete="off"
+                      value={auctionVO.auctionStartPrice || ''}
+                      {...register("auctionStartPrice", {
+                        required: true,
+                      })}
+                      onChange={(e) =>
+                        setAuctionVO(prev => ({ ...prev, auctionStartPrice: e.target.value }))
+                      }
+                    />
+                  </S.InputBoxInfo>
+                </S.InputBox>
+              </S.InputBoxWrap>
+            )}
+            <S.WarningArea>
+              {errors.auctionStartPrice && (
+              <S.NeedWrite>필수항목입니다</S.NeedWrite>
+              )}
+            </S.WarningArea>
             <S.ButtonWrap>
               <S.CancelButton onClick={goBack}>취소</S.CancelButton>
               <S.ModifyButton>등록</S.ModifyButton>

@@ -146,7 +146,6 @@ S.H10gray900 = styled.p`
 
 S.InputBoxWrap = styled.div`
   width: 480px;
-	margin-bottom: 48px;
 	border-bottom: solid 1px ${gray900};
 `
 
@@ -237,6 +236,31 @@ S.CalendarIcon = styled.img`
   height: min-content;
   width : 12px;
   margin: 5px;
+`
+
+S.WarningArea = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  width: 480px;
+  height: 48px;
+`
+
+S.NeedWrite = styled.p`
+  margin-top: 2px;;
+  color: ${warning};
+  ${H10}
+  `
+
+S.NeedWriteDiv = styled.p`
+  * {
+    color: ${warning};
+    border-color: ${warning}
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: ${warning}
+  }
 `
 
 
