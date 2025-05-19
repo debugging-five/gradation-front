@@ -40,7 +40,7 @@ export const UpcyclingWrapper = styled.div`
 `;
 
 export const UpcycleTitle = styled.h1`
-  font-size: 30px;
+  ${CS.EN_H2};
   text-align: center;
   margin-bottom: 95px;
 `;
@@ -387,6 +387,7 @@ export const TimelineTitle = styled.h2`
 `;
 
 export const TimelineText = styled.h3`
+  ${CS.H3};
   overflow: hidden;
   opacity: 0;
   max-height: 0;
@@ -457,21 +458,21 @@ export const ButtonsWrapper = styled.div`
 `;
 
 export const ApplicationButton = styled.button`
+  ${CS.H4};
   width: 300px;
   height: 60px;
   border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.PALLETE.primary.main};
-  ${CS.H4};
   background-color: white;
   color: ${({ theme }) => theme.PALLETE.primary.main};
 `;
 
 export const InquiryButton = styled.button`
+  ${CS.H4};
   width: 300px;
   height: 60px;
   border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.PALLETE.primary.main};
-  ${CS.H4};
   background-color: ${({ theme }) => theme.PALLETE.primary.main};
   color: ${({ theme }) => theme.PALLETE.gray[100]};
 `;
