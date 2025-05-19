@@ -95,6 +95,7 @@ import MypageAlertContainer from "../pages/mypage/myMail/MypageAlertContainer";
 import ContactArtistReceivedDetail from "../pages/mypage/myActive/contactArtist/ContactArtistReceivedDetail";
 import ContactArtistSendedDetail from "../pages/mypage/myActive/contactArtist/ContactArtistSendedDetail";
 import UpcyclingMain from "../pages/upcycling/upcyclingMain/UpcyclingMain";
+import NewPassword from "../pages/account/newPassword/NewPassword";
 
 const router = createBrowserRouter([
   {
@@ -120,6 +121,10 @@ const router = createBrowserRouter([
       {
         path: "/find-password",
         element: <FindPassword />,
+      },
+      {
+        path: "/new-password",
+        element: <NewPassword />,
       },
       {
         path: "/display",
