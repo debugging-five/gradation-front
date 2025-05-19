@@ -95,7 +95,7 @@ import ContactArtistReceivedDetail from "../pages/mypage/myActive/contactArtist/
 import ContactArtistSendedDetail from "../pages/mypage/myActive/contactArtist/ContactArtistSendedDetail";
 import UpcyclingMain from "../pages/upcycling/upcyclingMain/UpcyclingMain";
 import NewPassword from "../pages/account/newPassword/NewPassword";
-import Main from "../pages/main/Main";
+import MainContainer from "../pages/main/MainContainer";
 
 const router = createBrowserRouter([
   {
@@ -104,7 +104,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Main />,
+        element: <MainContainer />,
       },
       {
         path: "/join",
