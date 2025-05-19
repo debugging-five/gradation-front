@@ -61,15 +61,15 @@ const AuctionExpectedModify = () => {
 
         <S.InfoDiv>
           <S.ArtName>
-            <S.H2>멋진 고양이</S.H2>
+            <S.H2>{data.artTitle}</S.H2>
           </S.ArtName>
           <S.ArtArtist>
-            <S.H3>작가명 | 박세현</S.H3>
+            <S.H3>작가명 | {data.artistName}</S.H3>
           </S.ArtArtist>
           <S.ArtInfo>
-            <S.H10gray900>팔레트에 아크릴물감</S.H10gray900>
-            <S.H10gray900>50 X 50</S.H10gray900>
-            <S.H10gray900>2025</S.H10gray900>
+            <S.H10gray900>{data.artMaterial}</S.H10gray900>
+            <S.H10gray900>{data.artSize}</S.H10gray900>
+            <S.H10gray900>{data.artEndDate.split('-')[0]}년</S.H10gray900>
           </S.ArtInfo>
 
           <form onSubmit={handleSubmit(async (auctionData) => {

@@ -99,10 +99,8 @@ S.EN_H4Primary = styled.div`
 
 S.ImageWrap = styled.div`
 	width: 560px;
-	height: 560px;
 	display: flex;
 	justify-content: center;
-	align-items: center;
 	margin-right: 120px;
 `
 
