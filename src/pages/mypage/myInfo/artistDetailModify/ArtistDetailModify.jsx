@@ -1,85 +1,85 @@
 import React from 'react';
-import { ArtImage, Button120x45R, ButtonDiv, Emptybox, EndBar, MainTitle, MainWrapper, OneLine } from '../../style';
-import { ArtGrid, CategoryBox, Chepter, Icon, InputContent, SmallTitle, Social, SocialBox, Title } from './artistDetailModifyStyle';
+import * as S from '../../style';
+import * as SA from './artistDetailModifyStyle';
 
 const ArtistDetailModify = () => {
   return (
-    <MainWrapper>
-        <MainTitle>내 작가페이지 수정</MainTitle>
+    <S.MainWrapper>
+        <S.MainTitle>내 작가페이지 수정</S.MainTitle>
 
-      <Chepter>
-        <Title>작가 소개</Title>
-        <InputContent/>
-      </Chepter>
+      <SA.Chepter>
+        <SA.Title>작가 소개</SA.Title>
+        <SA.InputContent/>
+      </SA.Chepter>
 
-      <Chepter>
-        <CategoryBox>
-          <Title>작품분야</Title>
+      <SA.Chepter>
+        <SA.CategoryBox>
+          <SA.Title>작품분야</SA.Title>
           <div>한국화</div>
           <div>회화</div>
           <div>조각</div>
           <div>공예</div>
           <div>건축</div>
           <div>서예</div>
-        </CategoryBox>
-        <EndBar/>
-      </Chepter>
+        </SA.CategoryBox>
+        <S.EndBar/>
+      </SA.Chepter>
 
-      <Chepter>
-        <Title>작가 이력</Title>
+      <SA.Chepter>
+        <SA.Title>작가 이력</SA.Title>
 
-        <EndBar/>
-      </Chepter>
+        <S.EndBar/>
+      </SA.Chepter>
 
-      <Chepter>
-        <OneLine>
-          <Title>외부 링크 및 아이디</Title>
-          <SmallTitle>기재한 외부링크 및 아이디는 작가 소개창에 공유됩니다.</SmallTitle>
-        </OneLine>
+      <SA.Chepter>
+        <S.OneLine>
+          <SA.Title>외부 링크 및 아이디</SA.Title>
+          <SA.SmallTitle>기재한 외부링크 및 아이디는 작가 소개창에 공유됩니다.</SA.SmallTitle>
+        </S.OneLine>
 
-        <SocialBox>
-          <Social>Instagram</Social>
-          <Icon src="http://localhost:10000/files/api/get/insta.png?filePath=images/mypage" alt="default profile" />
-          <Emptybox/>
+        <SA.SocialBox>
+          <SA.Social>Instagram</SA.Social>
+          <SA.Icon src="http://localhost:10000/files/api/get/insta.png?filePath=images/mypage" alt="default profile" />
+          <S.Emptybox/>
           <p>gradation</p>
-        </SocialBox>
-        <EndBar/>
+        </SA.SocialBox>
+        <S.EndBar/>
 
-        <SocialBox>
-          <Social>Youtube</Social>
-          <Icon src="http://localhost:10000/files/api/get/youtube.png?filePath=images/mypage" alt="default profile" />
-          <Emptybox/>
+        <SA.SocialBox>
+          <SA.Social>Youtube</SA.Social>
+          <SA.Icon src="http://localhost:10000/files/api/get/youtube.png?filePath=images/mypage" alt="default profile" />
+          <S.Emptybox/>
           <p>www.test.com/sdkajhfgshvbjsk</p>
-        </SocialBox>
-        <EndBar/>
+        </SA.SocialBox>
+        <S.EndBar/>
 
-        <SocialBox>
-          <Social>Blog</Social>
-          <Icon src="http://localhost:10000/files/api/get/blog.png?filePath=images/mypage" alt="default profile" />
-          <Emptybox/>
+        <SA.SocialBox>
+          <SA.Social>Blog</SA.Social>
+          <SA.Icon src="http://localhost:10000/files/api/get/blog.png?filePath=images/mypage" alt="default profile" />
+          <S.Emptybox/>
           <p>www.test.com/sdkajhfgshvbjsk</p>
-        </SocialBox>
-        <EndBar/>
-      </Chepter>
+        </SA.SocialBox>
+        <S.EndBar/>
+      </SA.Chepter>
 
-      <Chepter>
-        <OneLine>
-          <Title>작가 작품</Title>
-          <SmallTitle>체크된 작품은 작가 배경화면으로 등록됩니다.</SmallTitle>
-        </OneLine>
+      <SA.Chepter>
+        <S.OneLine>
+          <SA.Title>작가 작품</SA.Title>
+          <SA.SmallTitle>체크된 작품은 작가 배경화면으로 등록됩니다.</SA.SmallTitle>
+        </S.OneLine>
 
-          <ArtGrid>
+          <SA.ArtGrid>
             <div>
-              <ArtImage src="http://localhost:10000/files/api/get/eximage.png?filePath=images/mypage" alt="eximage" />
+              <S.ArtImage src="http://localhost:10000/files/api/get/eximage.png?filePath=images/mypage" alt="eximage" />
             </div>
-          </ArtGrid>
-      </Chepter>
+          </SA.ArtGrid>
+      </SA.Chepter>
 
-      <ButtonDiv>
-        <Button120x45R>페이지 수정</Button120x45R>
-      </ButtonDiv>
+      <S.ButtonDiv>
+        <S.Button120x45R>페이지 수정</S.Button120x45R>
+      </S.ButtonDiv>
 
-    </MainWrapper>
+    </S.MainWrapper>
   );
 };
 

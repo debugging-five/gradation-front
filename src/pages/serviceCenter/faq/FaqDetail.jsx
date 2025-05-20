@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Button, ButtonDiv, Category, Line, MainWrapper, QContent, QSize, QTitle, Title, Wrapper } from './faqDetailStyle';
 import { useNavigate, useParams } from 'react-router-dom';
+import * as SF from './faqDetailStyle';
 
 const FaqDetail = () => {
   const { id } = useParams(); // URL에서 id 꺼냄
@@ -26,21 +26,21 @@ const FaqDetail = () => {
     }
   
   return (
-    <MainWrapper>
-      <Wrapper>
-        <Category>{faq.faqCategory} 관련 문의</Category> 
-        <Title>
-          <QSize>Q</QSize>
-          <QTitle>{faq.faqTitle}</QTitle> 
-        </Title>
-        <Line />
-        <QContent>{faq.faqContent}</QContent> 
-      </Wrapper>
+    <SF.MainWrapper>
+      <SF.Wrapper>
+        <SF.Category>{faq.faqCategory} 관련 문의</SF.Category> 
+        <SF.Title>
+          <SF.QSize>Q</SF.QSize>
+          <SF.QTitle>{faq.faqTitle}</SF.QTitle> 
+        </SF.Title>
+        <SF.Line />
+        <SF.QContent>{faq.faqContent}</SF.QContent> 
+      </SF.Wrapper>
 
-      <ButtonDiv>
-        <Button onClick={() => navigate(-1)}>목록</Button>
-      </ButtonDiv>
-    </MainWrapper>
+      <SF.ButtonDiv>
+        <SF.Button onClick={() => navigate(-1)}>목록</SF.Button>
+      </SF.ButtonDiv>
+    </SF.MainWrapper>
   );
 };
 

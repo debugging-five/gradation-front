@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import { ChooseBar, ChooseBarWapper, MainTitle, MainWrapper } from '../../style';
+import * as S from '../../style';
 
 const MyArtContainer = () => {
   const location = useLocation()
@@ -14,18 +14,18 @@ const MyArtContainer = () => {
   }
 
   return (
-    <MainWrapper>
-      <MainTitle>내 활동 / {title}</MainTitle>
-      <ChooseBarWapper>
-        <ChooseBar as={NavLink} to="art-list" end>내 작품</ChooseBar>
-        <ChooseBar as={NavLink} to="available-auction-art-list" end>경매 등록 가능작품</ChooseBar>
-      </ChooseBarWapper>
+    <S.MainWrapper>
+      <S.MainTitle>내 활동 / {title}</S.MainTitle>
+      <S.ChooseBarWapper>
+        <S.ChooseBar as={NavLink} to="art-list" end>내 작품</S.ChooseBar>
+        <S.ChooseBar as={NavLink} to="available-auction-art-list" end>경매 등록 가능작품</S.ChooseBar>
+      </S.ChooseBarWapper>
 
       <div>
         <Outlet />
       </div>
 
-    </MainWrapper>
+    </S.MainWrapper>
   );
 };
 

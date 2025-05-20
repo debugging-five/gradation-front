@@ -1,42 +1,42 @@
 import React from 'react';
-import { ButtonDiv, EndBar, InputBox, MainTitle, MainWrapper, OneLine, TitleBox } from '../../style';
-import { AddBox, AddButton, Box, CheckButton } from './universityCheckStyle';
+import * as S from '../../style';
+import * as SU from './universityCheckStyle';
 
 const UniversityCheck = () => {
   return (
-    <MainWrapper>
-      <MainTitle>대학교 인증</MainTitle>
+    <S.MainWrapper>
+      <S.MainTitle>대학교 인증</S.MainTitle>
 
-      <Box>
-        <OneLine>
-          <TitleBox>학교</TitleBox>
-          <InputBox placeholder='학교를 입력하세요.'/>
-        </OneLine>
-        <EndBar></EndBar>
-      </Box>
+      <SU.Box>
+        <S.OneLine>
+          <S.TitleBox>학교</S.TitleBox>
+          <S.InputBox placeholder='학교를 입력하세요.'/>
+        </S.OneLine>
+        <S.EndBar></S.EndBar>
+      </SU.Box>
       
-      <Box>
-        <OneLine>
-          <TitleBox>학과</TitleBox>
-          <InputBox placeholder='학과를 입력하세요.'/>
-        </OneLine>
-        <EndBar></EndBar>  
-      </Box>
+      <SU.Box>
+        <S.OneLine>
+          <S.TitleBox>학과</S.TitleBox>
+          <S.InputBox placeholder='학과를 입력하세요.'/>
+        </S.OneLine>
+        <S.EndBar></S.EndBar>  
+      </SU.Box>
 
-      <OneLine>
-        <AddBox>
-          <TitleBox>첨부파일</TitleBox>
-            <AddButton>파일첨부</AddButton>
+      <S.OneLine>
+        <SU.AddBox>
+          <S.TitleBox>첨부파일</S.TitleBox>
+            <SU.AddButton>파일첨부</SU.AddButton>
             현재 재학중인 대학교의 학생증 사진을 첨부해주세요.
-        </AddBox>
-      </OneLine>
+        </SU.AddBox>
+      </S.OneLine>
       
-      <ButtonDiv>
-        <CheckButton>인증</CheckButton>
-      </ButtonDiv>
+      <S.ButtonDiv>
+        <SU.CheckButton>인증</SU.CheckButton>
+      </S.ButtonDiv>
       
 
-    </MainWrapper>
+    </S.MainWrapper>
   );
 };
 

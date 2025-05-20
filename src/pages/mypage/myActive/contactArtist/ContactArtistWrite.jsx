@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import {
-  Box, ButtonDiv, ButtonSend, Important, InputContent, InputTitle, Line, OneLine, Title, Wrapper
-} from './contactArtistWriteStyle';
+import * as S from '../../style';
+import * as SM from './contactArtistWriteStyle';
+import * as SQ from '../../../serviceCenter/qna/qnaSendStyle';
 import { useSelector } from 'react-redux';
-import { MainWrapper, PopUp, PopUpButtonDiv, PopUpButtonR, PopUpButtonW, PopUpContent, PopUpIcon, PopUpOverlay, PopUpText } from '../../style';
-import { ErrorMessege } from '../../../serviceCenter/qna/qnaSendStyle';
 
 const ContactArtistWrite = () => {
   const { email } = useParams();
@@ -71,22 +69,22 @@ const ContactArtistWrite = () => {
   };
 
   return (
-    <MainWrapper>
-      <Wrapper>
+    <S.MainWrapper>
+      <SM.Wrapper>
         {/* 이메일 출력 */}
-        <Box>
-          <OneLine>
-            <Title>작가 이메일<Important>*</Important></Title>
+        <SM.Box>
+          <SM.OneLine>
+            <SM.Title>작가 이메일<SM.Important>*</SM.Important></SM.Title>
             <p>{email}</p>
-          </OneLine>
-          <Line />
-        </Box>
+          </SM.OneLine>
+          <SM.Line />
+        </SM.Box>
 
         {/* 제목 입력 */}
-        <Box>
-          <OneLine>
-            <Title>제목<Important>*</Important></Title>
-            <InputTitle
+        <SM.Box>
+          <SM.OneLine>
+            <SM.Title>제목<SM.Important>*</SM.Important></SM.Title>
+            <SM.InputTitle
               placeholder="제목을 입력하세요."
               value={title}
               onChange={e => {
@@ -94,58 +92,58 @@ const ContactArtistWrite = () => {
                 setErrors(prev => ({ ...prev, title: '' }));
               }}
             />
-          </OneLine>
-          <Line />
-          {errors.title && <ErrorMessege>{errors.title}</ErrorMessege>}
-        </Box>
+          </SM.OneLine>
+          <SM.Line />
+          {errors.title && <SQ.ErrorMessege>{errors.title}</SQ.ErrorMessege>}
+        </SM.Box>
 
         {/* 내용 입력 */}
-        <Box>
-          <Title>내용<Important>*</Important></Title>
-          <InputContent
+        <SM.Box>
+          <SM.Title>내용<SM.Important>*</SM.Important></SM.Title>
+          <SM.InputContent
             value={content}
             onChange={e => {
               setContent(e.target.value);
               setErrors(prev => ({ ...prev, content: '' }));
             }}
           />
-          {errors.content && <ErrorMessege>{errors.content}</ErrorMessege>}
-        </Box>
-      </Wrapper>
+          {errors.content && <SQ.ErrorMessege>{errors.content}</SQ.ErrorMessege>}
+        </SM.Box>
+      </SM.Wrapper>
 
-      <ButtonDiv>
-        <ButtonSend onClick={handleConfirm}>등록</ButtonSend>
-      </ButtonDiv>
+      <SM.ButtonDiv>
+        <SM.ButtonSend onClick={handleConfirm}>등록</SM.ButtonSend>
+      </SM.ButtonDiv>
 
       {/* 확인 팝업 */}
       {showConfirmation && (
-        <PopUpOverlay>
-          <PopUp>
-            <PopUpContent>
-              <PopUpIcon src="http://localhost:10000/files/api/get/question.png?filePath=images/mypage" alt="question" />
-              <PopUpText>쪽지를 보내시겠습니까?</PopUpText>
-              <PopUpButtonDiv>
-                <PopUpButtonW onClick={() => setShowConfirmation(false)}>취소</PopUpButtonW>
-                <PopUpButtonR onClick={handleSubmit}>확인</PopUpButtonR>
-              </PopUpButtonDiv>
-            </PopUpContent>
-          </PopUp>
-        </PopUpOverlay>
+        <S.PopUpOverlay>
+          <S.PopUp>
+            <S.PopUpContent>
+              <S.PopUpIcon src="http://localhost:10000/files/api/get/question.png?filePath=images/mypage" alt="question" />
+              <S.PopUpText>쪽지를 보내시겠습니까?</S.PopUpText>
+              <S.PopUpButtonDiv>
+                <S.PopUpButtonW onClick={() => setShowConfirmation(false)}>취소</S.PopUpButtonW>
+                <S.PopUpButtonR onClick={handleSubmit}>확인</S.PopUpButtonR>
+              </S.PopUpButtonDiv>
+            </S.PopUpContent>
+          </S.PopUp>
+        </S.PopUpOverlay>
       )}
 
       {/* 성공 팝업 */}
       {showSuccess && (
-        <PopUpOverlay>
-          <PopUp>
-            <PopUpContent>
-              <PopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="success" />
-              <PopUpText>쪽지가 전송되었습니다.</PopUpText>
-              <PopUpButtonR onClick={() => setShowSuccess(false)}>확인</PopUpButtonR>
-            </PopUpContent>
-          </PopUp>
-        </PopUpOverlay>
+        <S.PopUpOverlay>
+          <S.PopUp>
+            <S.PopUpContent>
+              <S.PopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="success" />
+              <S.PopUpText>쪽지가 전송되었습니다.</S.PopUpText>
+              <S.PopUpButtonR onClick={() => setShowSuccess(false)}>확인</S.PopUpButtonR>
+            </S.PopUpContent>
+          </S.PopUp>
+        </S.PopUpOverlay>
       )}
-    </MainWrapper>
+    </S.MainWrapper>
   );
 };
 

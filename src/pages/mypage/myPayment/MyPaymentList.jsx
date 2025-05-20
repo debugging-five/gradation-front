@@ -1,52 +1,52 @@
 import React from 'react';
-import { Button120x45R, Button120x45W, MainWrapper} from '../style';
-import { ButtonDiv, Content, Day, Emptybox, Menu, MenuBox, OneLine, Price, ProductImage, Status, StatusDiv, Wrapper } from './myPaymentListStyle';
+import * as S from '../style';
+import * as SP from './myPaymentListStyle';
 
 const MyPaymentList = () => {
   return (
-    <MainWrapper>
+    <S.MainWrapper>
       {/* 이거 통째로 반복문 */}
-      <Wrapper>
-          <ProductImage>
+      <SP.Wrapper>
+          <SP.ProductImage>
             사진
-          </ProductImage>
+          </SP.ProductImage>
 
           <div>
             <div>
-              <StatusDiv>
-                <Status>배송완료</Status>
-                <Day>2/14(금) 도착</Day>
-              </StatusDiv>
+              <SP.StatusDiv>
+                <SP.Status>배송완료</SP.Status>
+                <SP.Day>2/14(금) 도착</SP.Day>
+              </SP.StatusDiv>
             </div>
             
-            <MenuBox>
-              <OneLine>
-                <Menu>주문 작품</Menu>
-                <Content>당황한 동상</Content>
-              </OneLine>
-              <Emptybox/>
-              <OneLine>
-                <Menu>결제수단</Menu>
+            <SP.MenuBox>
+              <SP.OneLine>
+                <SP.Menu>주문 작품</SP.Menu>
+                <SP.Content>당황한 동상</SP.Content>
+              </SP.OneLine>
+              <SP.Emptybox/>
+              <SP.OneLine>
+                <SP.Menu>결제수단</SP.Menu>
                 <div>
-                  <Content>신용카드</Content>
-                  <Content>코리아 카드</Content>
+                  <SP.Content>신용카드</SP.Content>
+                  <SP.Content>코리아 카드</SP.Content>
                 </div>
-              </OneLine>
-              <Emptybox/>
-              <OneLine>
-                <Menu>결제 금액</Menu>
-                <Price>1,234,567 KRW</Price>
-              </OneLine>
-            </MenuBox>
+              </SP.OneLine>
+              <SP.Emptybox/>
+              <SP.OneLine>
+                <SP.Menu>결제 금액</SP.Menu>
+                <SP.Price>1,234,567 KRW</SP.Price>
+              </SP.OneLine>
+            </SP.MenuBox>
               
-            <ButtonDiv>
-              <Button120x45W>배송조회</Button120x45W>
-              <Button120x45R>주문상세</Button120x45R>
-            </ButtonDiv>
+            <SP.ButtonDiv>
+              <S.Button120x45W>배송조회</S.Button120x45W>
+              <S.Button120x45R>주문상세</S.Button120x45R>
+            </SP.ButtonDiv>
         </div>
         
-      </Wrapper>
-    </MainWrapper>
+      </SP.Wrapper>
+    </S.MainWrapper>
   );
 };
 

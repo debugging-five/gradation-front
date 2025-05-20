@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Category, Content, ContentBox, Emptybox, ListHeader, MainWrapper, Number, Title, TitleNavigate, Wrapper } from '../../style';
+import * as S from '../../style';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -22,34 +22,34 @@ const SendedList = () => {
       }
 
   return (
-    <MainWrapper>
-      <Wrapper>
+    <S.MainWrapper>
+      <S.Wrapper>
         {/* 리스트 헤더 */}
-        <ListHeader>
-          <Number>번호</Number>
-          <Category>이름</Category>
-          <Emptybox></Emptybox>
-          <Title>제목</Title>
-          <Emptybox>작성일</Emptybox>
-        </ListHeader>
+        <S.ListHeader>
+          <S.Number>번호</S.Number>
+          <S.Category>이름</S.Category>
+          <S.Emptybox></S.Emptybox>
+          <S.Title>제목</S.Title>
+          <S.Emptybox>작성일</S.Emptybox>
+        </S.ListHeader>
 
         {Array.isArray(mails) && mails.length > 0 ? (
           mails.map((mail, index) => (
-          <ContentBox key={mail.id}>
-            <Number>{index + 1}</Number>
-            <Category>{mail.receiveUserName}</Category>
-            <Emptybox></Emptybox>
-            <TitleNavigate  as={NavLink} to={`detail/${mail.id}`} end>
-              <Content>{mail.mailTitle}</Content>
-            </TitleNavigate>
-            <Emptybox>{new Date(mail.mailSendTime).toLocaleDateString('ko-KR')}</Emptybox>
-          </ContentBox>
+          <S.ContentBox key={mail.id}>
+            <S.Number>{index + 1}</S.Number>
+            <S.Category>{mail.receiveUserName}</S.Category>
+            <S.Emptybox></S.Emptybox>
+            <S.TitleNavigate  as={NavLink} to={`detail/${mail.id}`} end>
+              <S.Content>{mail.mailTitle}</S.Content>
+            </S.TitleNavigate>
+            <S.Emptybox>{new Date(mail.mailSendTime).toLocaleDateString('ko-KR')}</S.Emptybox>
+          </S.ContentBox>
           ))
         ) : (
           <div style={{ padding: "1rem", textAlign: "center" }}>쪽지가 없습니다.</div>
         )}
-      </Wrapper>
-    </MainWrapper>
+      </S.Wrapper>
+    </S.MainWrapper>
   );
 };
 

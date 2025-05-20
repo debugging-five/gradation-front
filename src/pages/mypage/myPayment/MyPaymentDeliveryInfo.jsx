@@ -1,11 +1,11 @@
 import React from 'react';
-import { MainWrapper } from '../style';
+import * as S from '../style';
 
 const MyPaymentDeliveryInfo = () => {
   return (
-    <MainWrapper>
+    <S.MainWrapper>
       MyPaymentDeliveryInfo
-    </MainWrapper>
+    </S.MainWrapper>
   );
 };
 

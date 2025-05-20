@@ -124,6 +124,9 @@ export const Number = styled.div`
 export const Category = styled.div`
   width: 120px;
   text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 // 내용 
 export const Content = styled.div`
