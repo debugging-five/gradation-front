@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { H10, H2, H4, H7, H8 } from '../../../styles/common';
+import { H10, H2, H4, H7, H8 } from '../../../../styles/common';
 
 const S = {};
 

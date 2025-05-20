@@ -9,7 +9,7 @@ import NotFoundModal from './findIdModal/notFoundModal/NotFoundModal';
 
 const FindId = () => {
 
-  const { register, handleSubmit, trigger, formState: {isSubmitting, errors, isValid} } = useForm({mode: "onBlur"});
+  const { register, handleSubmit, formState: {isSubmitting, errors, isValid} } = useForm({mode: "onBlur"});
 
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   
@@ -111,7 +111,7 @@ const getVerificationCodeEmail = async () => {
     
     return (
       <div>
-        <form onSubmit={handleSubmit(async (data) => {
+        <form autoComplete="off" onSubmit={handleSubmit(async (data) => {
         
           // 인증번호
           if(!confirmVerificationCode) {
@@ -176,7 +176,6 @@ const getVerificationCodeEmail = async () => {
                       <S.Input type='text' placeholder='이름을 입력하세요.'
                       {...register("userName", {
                         required : true,
-                        onChange: (e) => trigger("userName")
                       })}
                       />
                     </S.Label>
@@ -208,7 +207,6 @@ const getVerificationCodeEmail = async () => {
                           setEmailCheckMessage("");
                           setVerificationMessage("")
                           setCode("")
-                          trigger("userEmail")
                         }
                       })}
                     />

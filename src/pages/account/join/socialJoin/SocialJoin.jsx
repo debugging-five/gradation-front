@@ -2,13 +2,14 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import S from './style';
 
+
 const SocialJoin = ({email, provider}) => {
 
   const { register, handleSubmit, formState: {isSubmitting, errors, isValid}} = useForm({mode:"onChange"});
   const navigate = useNavigate();
 
   return (
-    <form onSubmit={handleSubmit(async (data) => {
+    <form autoComplete="off" onSubmit={handleSubmit(async (data) => {
 
       const {userName, userNickName} = data;
 
@@ -82,7 +83,7 @@ const SocialJoin = ({email, provider}) => {
 
           </S.InputContainer>
 
-        <S.JoinButton active={isValid}>
+        <S.JoinButton $active={isValid}>
           <S.H4 disabled={isSubmitting}>회원가입</S.H4>
         </S.JoinButton>
       </S.Wrapper>

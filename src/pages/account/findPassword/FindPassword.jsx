@@ -9,7 +9,7 @@ import SocialModal from './findPasswordModal/socialModal/SocialModal';
 
 const FindPassword = () => {
 
-  const { register, handleSubmit, trigger, formState: {isSubmitting, errors, isValid} } = useForm({mode: "onBlur"});
+  const { register, handleSubmit, formState: {isSubmitting, errors, isValid} } = useForm({mode: "onBlur"});
   const navigate = useNavigate();
 
   const identificationRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,20}$/;
@@ -104,7 +104,7 @@ const getVerificationCodeEmail = async () => {
     
     return (
       <div>
-        <form onSubmit={handleSubmit(async (data) => {
+        <form autoComplete="off" onSubmit={handleSubmit(async (data) => {
         
           // 인증번호
           if(!confirmVerificationCode) {
@@ -170,7 +170,6 @@ const getVerificationCodeEmail = async () => {
                         pattern : {
                           value : identificationRegex
                         },
-                        onChange: (e) => trigger("userIdentification")
                       })}
                       />
                     </S.Label>
@@ -193,7 +192,6 @@ const getVerificationCodeEmail = async () => {
                       <S.Input type='text' placeholder='이름을 입력하세요.'
                       {...register("userName", {
                         required : true,
-                        onChange: (e) => trigger("userName")
                       })}
                       />
                     </S.Label>
@@ -225,7 +223,6 @@ const getVerificationCodeEmail = async () => {
                           setEmailCheckMessage("");
                           setVerificationMessage("")
                           setCode("")
-                          trigger("userEmail")
                         }
                       })}
                     />
