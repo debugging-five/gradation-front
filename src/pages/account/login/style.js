@@ -32,6 +32,11 @@ S.BorderWrapper = styled.div`
   height: 45px;
 `
 
+S.PasswordBorderWrapper = styled.div` 
+  margin: 0 0 10px 0;
+  height: 45px;
+`
+
 S.Border = styled.div`
   width: 440px;
   border-bottom: 1px solid #6E7476;
@@ -79,10 +84,10 @@ S.ButtonWrapper = styled.div`
   margin: 0 0 4px 0;
 `
 
-S.CheckboxContainer = styled.div`
-  margin : 0 0 50px 0;
-  width: 760px;
-`
+// S.CheckboxContainer = styled.div`
+//   margin : 0 0 50px 0;
+//   width: 760px;
+// `
 
 S.LoginButton = styled.button`
   all: unset;
@@ -96,6 +101,7 @@ S.LoginButton = styled.button`
   justify-content: center;
   cursor: pointer;
   background-color: ${({ $active }) => ($active ? "#EE3333" : "#C0C5C7")};
+  margin: 32px 0 0 0;
 `
 
 S.H4 = styled.p`
@@ -105,19 +111,25 @@ S.H4 = styled.p`
 
 S.CheckboxWrapper = styled.div`
   display: flex;
-  align-items: center;
+  /* align-items: center; */
+  flex-direction: center;
   color: #C0C5C7;
-
-  &.detail {
-    margin-left: 20px;
-  }
-
+  gap: 10px;
+  width: 440px;
 `
 
-S.Checkbox = styled.div`
+S.Login = styled.div`
+  display: flex;
+`
+
+S.Id = styled.div`
+  display: flex;
+`
+
+S.Checkbox = styled.img`
   width : 20px;
   height : 20px;
-  background-image: url(${({ checked }) => checked ? '/assets/images/join/checked-on.png' : '/assets/images/join/checked-off.png'});
+  /* background-image: url(${({ checked }) => checked ? '/assets/images/join/checked-on.png' : '/assets/images/join/checked-off.png'}); */
   margin: 0 5px 0 0;
   background-size: cover;
   background-repeat: no-repeat;

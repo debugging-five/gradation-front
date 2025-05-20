@@ -1,6 +1,6 @@
-// 아이디 찾기 실패 modal
+// 아이디 찾기 modal
 import styled from 'styled-components'
-import {EN_H6, H2, H5, H6} from '../../../../../styles/common';
+import {EN_H6, H2, H5, H6} from '../../../../styles/common';
 
 const S = {};
 
@@ -49,8 +49,13 @@ S.H5 = styled.p`
 
 S.H2 = styled.p`
   ${H2}
-  width: 195px;
+  width: 246px;
   height: 36px;
+`
+
+S.H6 = styled.p`
+  ${H6}
+  color: #6E7476;
 `
 
 S.EnH7 = styled.p`
@@ -82,11 +87,7 @@ S.Info = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-`
-
-S.H6 = styled.p`
-  ${H6}
-  color: #6E7476;
+  height: 54px;
 `
 
 S.Id = styled.div`
