@@ -31,8 +31,8 @@ S.BorderWrapper = styled.div`
 `
 
 S.HiddenBorderWrapper = styled.div`
-  margin: ${({$visible}) => ($visible ? '0 0 30px 0' : '0')};
-  height: ${({$visible}) => ($visible ? '44px' : '0')};
+  margin: ${({ $visible }) => ( $visible ? '0 0 30px 0' : '0' )};
+  height: ${({ $visible }) => ( $visible ? '44px' : '0' )};
 `
 
 S.Border = styled.div`
@@ -79,7 +79,7 @@ S.ButtonWrapper = styled.div`
 `
 
 
-S.JoinButton = styled.button`
+S.Button = styled.button`
   all: unset;
   width: 440px;
   height: 50px;
@@ -90,7 +90,7 @@ S.JoinButton = styled.button`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background-color: ${({ $active }) => ($active ? "#EE3333" : "#C0C5C7")};
+  background-color: ${({ $active }) => ( $active ? "#EE3333" : "#C0C5C7" )};
 `
 
 S.H4 = styled.p`

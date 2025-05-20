@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import { EN_H1, EN_H2, H8 } from '../../styles/common';
+import { EN_H1, EN_H2, H10, H8 } from '../../styles/common';
+import { Link } from 'react-router-dom';
 const primary = "#EE3333";
 const gray100 = "#FBFCFC";
 const gray500 = "#C0C5C7";
@@ -8,9 +9,24 @@ const black = "#333333";
 const warning = "#E49804";
 
 const S = {};
+
+S.Container = styled.div`
+  background-color: #FBFCFC;
+  margin: 140px 0 200px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+`
+
+S.Link = styled(Link)`
+  color: inherit;
+  text-decoration: none;
+`
+
+
 S.EN_H2 = styled.p`
   ${EN_H2}
-  margin-top: 133px;
 `
 
 S.H8 = styled.p`
@@ -60,8 +76,26 @@ S.Bar = styled.p`
 
 S.CategoryWrapper = styled.div`
   display: flex;
+  margin: 64px 0 0 0;
 `
 
+S.InputWrapper = styled.div`
+  width: 1155px;
+`
+
+S.Input = styled.input`
+  width: 200px;
+  height: 32px;
+  border: solid 1px #6E7476;
+  border-radius: 3px;
+
+
+  &::placeholder {
+    ${H10}
+    color: #6E7476;
+    padding : 9px 11px;
+  }
+`
 
 
 

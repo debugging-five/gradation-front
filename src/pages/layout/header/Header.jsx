@@ -1,14 +1,45 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import S from './style';
 import { useSelector } from 'react-redux';
 
 const Header = ({ onLogout }) => {
-
   const { currentUser, isLogin } = useSelector((state) => state.user);
 
+  // 스크롤
+  const [showHeader, setShowHeader] = useState(true);
+  const lastScrollTop = useRef(0); // 스크롤 위치를 저장
+  const delta = 5; // 민감도
+
+  // const [openMenu, setOpenMenu] = useState('');
+  // const location = useLocation();
+
+  // useEffect(() => {
+  //   setOpenMenu()
+  // }, [location.pathname]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const st = window.scrollY; // 현재 스크롤한 픽셀 값 저장
+
+      if (Math.abs(lastScrollTop.current - st) <= delta) return;
+
+      if (st > lastScrollTop.current) {
+        setShowHeader(false); // 스크롤 아래로
+      } else {
+        setShowHeader(true); // 스크롤 위로
+      }
+
+      lastScrollTop.current = st;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+
   return (
-    <S.Header>
+    <S.Header className={showHeader ? "show" : "hide"}>
       <S.Nav>
         <S.HeaderLogoWrap>
           <Link to="/">
@@ -29,7 +60,7 @@ const Header = ({ onLogout }) => {
           <S.MenuItem><Link to="/artist">artist</Link></S.MenuItem>
 
           <S.MenuItem>
-            <Link to="/auction/bidding">auction</Link>
+            <Link to="/auction/bidding/korean">auction</Link>
             <S.Dropdown>
               <li><Link to="/auction/bidding/korean">경매중</Link></li>
               <li><Link to="/auction/expected/korean">경매 예정</Link></li>
