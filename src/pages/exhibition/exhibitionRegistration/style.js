@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { H5, EN_H4, H7, H8, H10 } from '../../../styles/common'
 import PrimaryButton from '../../../components/button/PrimaryButton';
+import Flatpickr from "react-flatpickr";
 
 const S = {};
 
@@ -85,6 +86,7 @@ S.InputWrap = styled.div`
 	width : 760px;
 	margin : 48px 0 0 0;
 	display : flex;
+	align-items : center;
 	border-bottom : solid 1px ${({ theme }) => theme.PALLETE.gray[900]};
 `
 
@@ -94,22 +96,27 @@ S.calendar = styled.img`
 `
 
 S.Datewrap = styled.div`
-	margin : 0 0 0 76px;
 	display: flex;
 	align-items: center;
+	margin-left : 76px;
 `
 
 S.Datewrap2 = styled.div`
-	margin-left : 32px;
 	display: flex;
 	align-items: center;
+	margin-left : 32px;
 `
 
-S.InputDate = styled.input`
-	border : none;
-	outline: none;
-	width : 100px;
-`
+S.StyledFlatpickr = styled(Flatpickr)`
+  border: none !important;
+  outline: none !important;
+  background-color: transparent;
+  width: 100px;
+  &::placeholder {
+    color: ${({ theme }) => theme.PALLETE.gray[500]};
+  }
+`;
+
 
 S.InputFileWrap = styled.div`
 	margin-top: 48px;
@@ -168,5 +175,30 @@ S.FileLabel = styled.label`
 S.PrimaryButton = styled(PrimaryButton)`
 	margin: 0 0 200px auto;
 `;
+
+
+S.UploadedFileList = styled.div`
+  margin-left: 76px;
+  margin-top: 8px;
+  list-style: none;
+`;
+
+S.UploadedFileItem = styled.li`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: ${({ theme }) => theme.PALLETE.gray[900]};
+`;
+
+S.DeleteButton = styled.button`
+  background: none;
+  border: none;
+  color: ${({ theme }) => theme.PALLETE.primary.main};
+  cursor: pointer;
+  font-size: 13px;
+`;
+
 
 export default S;
