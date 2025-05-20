@@ -4,10 +4,9 @@ import S from './style';
 import { useState } from 'react';
 import NewPasswordSuccessModal from './newPasswordModal/NewPasswordSuccessModal';
 
-const NewPassword = ({email, provider}) => {
+const NewPassword = () => {
 
   const { register, handleSubmit, getValues, trigger, formState: {isSubmitting, errors, isValid}} = useForm({mode:"onChange"});
-  const navigate = useNavigate();
   const location = useLocation();
   const userIdentification = location.state?.userIdentification
   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#])[a-zA-Z\d!@#]{8,12}$/;
@@ -15,8 +14,6 @@ const NewPassword = ({email, provider}) => {
   const[passwordConfirmType, setPasswordConfirmType] = useState({type : 'password', visible : false});
 
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
-  const [isSocialModalOpen, setIsSocialModalOpen] = useState(false);
-  const [isNotFoundModalOpen, setIsNotFoundModalOpen] = useState(false);
 
   const handlePasswordType = (e) => {
     setPasswordType(() => {
