@@ -19,13 +19,13 @@ const Layout = () => {
 
   useEffect(() => {
     if(jwtToken) {
-      console.log("jwtToken", jwtToken)
+      // console.log("jwtToken", jwtToken)
       localStorage.setItem("jwtToken", jwtToken);
       navigate("/", { replace: true });
     }
 
     if(localJwtToken){
-      console.log("localJwtToken", localJwtToken)
+      // console.log("localJwtToken", localJwtToken)
       const getUserDatas = async () => {
         const response = await fetch("http://localhost:10000/users/api/profile", {
           method: "POST",
@@ -50,8 +50,8 @@ const Layout = () => {
         }
         
         const datas = await response.json();
-        console.log("datas", datas)
-        console.log(datas.currentUser)
+        // console.log("datas", datas)
+        // console.log(datas.currentUser)
         dispatch(setUser(datas.currentUser));
         dispatch(setUserStatus(true));
       };
@@ -59,8 +59,8 @@ const Layout = () => {
     }
   }, [localJwtToken]); 
 
-  console.log("리덕스 유저", currentUser)
-  console.log("리덕스 유저 상태", isLogin)
+  // console.log("리덕스 유저", currentUser)
+  // console.log("리덕스 유저 상태", isLogin)
 
   const handleLogout = () => {
     localStorage.clear();
