@@ -31,7 +31,7 @@ const Login = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(async (data) => {
+    <form autoComplete="off" onSubmit={handleSubmit(async (data) => {
       const {userIdentification, userPassword} = data;
       const userVO = {
         userIdentification : userIdentification,
@@ -57,7 +57,9 @@ const Login = () => {
           console.log(res) 
           if(res && res.jwtToken){
             const { jwtToken } = res
-            navigate("/?jwtToken=" + res.jwtToken)
+            // navigate("/?jwtToken=" + res.jwtToken)
+            localStorage.setItem("jwtToken", jwtToken)
+            navigate("/")
           }
         })
         .catch(console.error)
@@ -91,7 +93,7 @@ const Login = () => {
               )}
             </S.BorderWrapper>
 
-            <S.BorderWrapper>
+            <S.PasswordBorderWrapper>
               <S.Border>
                 <S.InputWrapper>
                   <S.Label>
@@ -118,29 +120,29 @@ const Login = () => {
               {loginMessage && (
                 <S.Error>{loginMessage}</S.Error>
               )}
-            </S.BorderWrapper>
+            </S.PasswordBorderWrapper>
           </S.InputContainer>
 
-          {/* <S.CheckboxWrapper>
-              <S.Checkbox>로그인 상태 유지</S.Checkbox>
-              <S.Checkbox>아이디 저장</S.Checkbox>
-          </S.CheckboxWrapper> */}
+          <S.CheckboxWrapper>
+            <S.Login>
+              <S.Checkbox src={'/assets/images/join/checked-off.png' }/>
+                <S.H8>로그인 상태 유지</S.H8>
+            </S.Login>
+            <S.Id>
+              <S.Checkbox src={'/assets/images/join/checked-off.png' }/>
+              <S.H8>아이디 저장</S.H8>
+            </S.Id>
+          </S.CheckboxWrapper> 
 
           <S.LoginButton $active={isValid}>
             <S.H4 disabled={isSubmitting}>로그인</S.H4>
           </S.LoginButton>
 
           <S.Service>
-            {/* <S.Link to={"/find-id"}>
-              <S.H8 className="service">아이디 찾기<span className='span'>|</span></S.H8>
-            </S.Link> */}
             <S.Link to={"/find-id"}>
               <S.H8 className="service">아이디 찾기</S.H8>
             </S.Link>
             <S.Line>|</S.Line>
-            {/* <S.Link to={"/find-password"}>
-              <S.H8 className="service">비밀번호 찾기<span className='span'>|</span></S.H8>
-            </S.Link> */}
             <S.Link to={"/find-password"}>
               <S.H8 className="service">비밀번호 찾기</S.H8>
             </S.Link>

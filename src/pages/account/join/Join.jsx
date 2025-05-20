@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
-import SocialJoin from './SocialJoin';
-import NormalJoin from './NormalJoin';
+import SocialJoin from './socialJoin/SocialJoin';
+import NormalJoin from './normalJoin/NormalJoin';
 
 const Join = () => {
   
