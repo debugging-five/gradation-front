@@ -135,7 +135,7 @@ export const Chapter2 = styled.section`
 `;
 
 export const Chapter2Img = styled.img`
-    width: 100%;
+  width: 100%;
   max-width: 1160px;
   height: auto;
   display: block;
@@ -144,8 +144,8 @@ export const Chapter2Img = styled.img`
   transform: translateY(40px);
   transition: opacity 2s ease, transform 2s ease;
 
-  ${({ isVisible }) =>
-    isVisible &&
+  ${({ $isVisible }) =>
+    $isVisible &&
     css`
       opacity: 1;
       transform: translateY(0);
@@ -176,8 +176,8 @@ export const Chapter3TopImg = styled.div`
     transition: opacity 3s ease, transform 3s ease;
   }
 
-  ${({ isVisible }) =>
-    isVisible &&
+  ${({ $isVisible }) =>
+    $isVisible &&
     css`
       img {
         opacity: 1;
@@ -219,8 +219,8 @@ export const Chapter3MidImg = styled.div`
     transition: opacity 3s ease, transform 3s ease;
   }
 
-  ${({ isVisible }) =>
-    isVisible &&
+  ${({ $isVisible }) =>
+    $isVisible &&
     css`
       img {
         opacity: 1;
@@ -262,8 +262,8 @@ export const Chapter3BottomImg = styled.div`
     transition: opacity 3s ease, transform 3s ease;
   }
 
-  ${({ isVisible }) =>
-    isVisible &&
+  ${({ $isVisible }) =>
+    $isVisible &&
     css`
       img {
         opacity: 1;
@@ -303,8 +303,8 @@ export const Chapter3Labels = styled.div`
   transition: opacity 1s ease, transform 1s ease;
   transition-delay: 1.5s;
 
-  ${({ isVisible }) =>
-    isVisible &&
+  ${({ $isVisible }) =>
+    $isVisible &&
     css`
       opacity: 1;
       transform: translateY(0);

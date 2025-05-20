@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import * as S from "./style";
+import * as S from "./UpcyclingMainStyle";
 import { useNavigate } from "react-router-dom";
 
 const UpcyclingMain = () => {
@@ -16,7 +16,7 @@ const UpcyclingMain = () => {
 
   const StepItem = ({ number, numCircle, title, texts, isLast }) => {
     return (
-      <S.Step isLast={isLast}>
+      <S.Step $isLast={isLast}>
         <S.CircleContainer>
           <S.Number>{number}</S.Number>
           {numCircle}
@@ -117,16 +117,16 @@ const UpcyclingMain = () => {
       <S.Chapter2>
         <S.Chapter2Img
           ref={chapter2Ref}
-          src="http://localhost:10000/files/api/get/banner1.png?filePath=images/upcycling/upcycling-main"
+          src="http://localhost:10000/files/api/get/chepter-2.png?filePath=images/upcycling/upcycling-main"
           alt="upcycling-banner1"
-          isVisible={isImgVisible}
+          $isVisible={isImgVisible}
         />
       </S.Chapter2>
 
 
       <S.Chapter3 ref={chapter3Ref}>
         <S.Chapter3Title>"폐기물이 새 새명을 얻는 순환의 과정</S.Chapter3Title>
-        <S.Chapter3TopImg isVisible={isChapter3Visible}>
+        <S.Chapter3TopImg $isVisible={isChapter3Visible}>
           <S.StepImg
             src="http://localhost:10000/files/api/get/step1.png?filePath=images/upcycling/upcycling-main"
             alt="step1"
@@ -156,8 +156,8 @@ const UpcyclingMain = () => {
             alt="step4"
           />
         </S.Chapter3TopImg>
-          <S.Chapter3Labels isVisible={isChapter3Visible}>재생 캔버스, 친환경 에코백</S.Chapter3Labels>
-        <S.Chapter3MidImg isVisible={isChapter3Visible}>
+          <S.Chapter3Labels $isVisible={isChapter3Visible}>재생 캔버스, 친환경 에코백</S.Chapter3Labels>
+        <S.Chapter3MidImg $isVisible={isChapter3Visible}>
           <S.StepImg
             src="http://localhost:10000/files/api/get/step5.png?filePath=images/upcycling/upcycling-main"
             alt="step5"
@@ -187,8 +187,8 @@ const UpcyclingMain = () => {
             alt="step8"
           />
         </S.Chapter3MidImg>
-        <S.Chapter3Labels isVisible={isChapter3Visible}>재생 크레용</S.Chapter3Labels>
-        <S.Chapter3BottomImg isVisible={isChapter3Visible}>
+        <S.Chapter3Labels $isVisible={isChapter3Visible}>재생 크레용</S.Chapter3Labels>
+        <S.Chapter3BottomImg $isVisible={isChapter3Visible}>
           <S.StepImg
             src="http://localhost:10000/files/api/get/step9.png?filePath=images/upcycling/upcycling-main"
             alt="step9"
@@ -218,7 +218,7 @@ const UpcyclingMain = () => {
             alt="step12"
           />
         </S.Chapter3BottomImg>
-        <S.Chapter3Labels isVisible={isChapter3Visible}>목재 프레임</S.Chapter3Labels>
+        <S.Chapter3Labels $isVisible={isChapter3Visible}>목재 프레임</S.Chapter3Labels>
       </S.Chapter3>
 
       <S.Chapter4>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as S from "./style";
+import * as S from "./UpcyclingRegistrationStyle";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/light.css";
 import { useSelector } from "react-redux";
@@ -261,12 +261,15 @@ const UpcyclingRegistration = () => {
                 options={{ dateFormat: "Y-m-d", disableMobile: true, minDate: "today", }}
                 value={formData.pickupDate}
                 onChange={([date]) => setFormData({ ...formData, pickupDate: date })}
-                render={({ value, ...props }, ref) => (
-                  <S.CalendarInput {...props} ref={ref}>
+                render={({ value, ...props }, ref) => {
+                  const {options, render, ...filteredProps} = props;
+                  return(
+                  <S.CalendarInput {...filteredProps} ref={ref}>
                     <S.CalendarIcon src="http://localhost:10000/files/api/get/calendar.png?filePath=images/icons" alt="calendar-icon" />
                     <span>{formData.pickupDate ? formData.pickupDate.toLocaleDateString('ko-KR') : '날짜를 선택해주세요.'}</span>
                   </S.CalendarInput>
-                )}
+                  );
+                }}
               />
             </S.DateWrapper>
           </S.InputGroupRow>
