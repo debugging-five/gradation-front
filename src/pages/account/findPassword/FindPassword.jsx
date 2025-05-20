@@ -9,7 +9,7 @@ import SocialModal from './findPasswordModal/socialModal/SocialModal';
 
 const FindPassword = () => {
 
-  const { register, handleSubmit, trigger, formState: {isSubmitting, errors, isValid} } = useForm({mode: "onBlur"});
+  const { register, handleSubmit, formState: {isSubmitting, errors, isValid} } = useForm({mode: "onBlur"});
   const navigate = useNavigate();
 
   const identificationRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{6,20}$/;
@@ -104,12 +104,18 @@ const getVerificationCodeEmail = async () => {
     
     return (
       <div>
-        <form onSubmit={handleSubmit(async (data) => {
+        <form autoComplete="off" onSubmit={handleSubmit(async (data) => {
         
+          // 이메일 인증
+          if(!isSendVerificationCode) {
+            alert("이메일 인증을 진행해주세요.")
+            return;
+          }
+
           // 인증번호
           if(!confirmVerificationCode) {
             alert("인증번호 확인은 필수입니다.")
-            return
+            return;
           }
         
           const {
@@ -170,7 +176,6 @@ const getVerificationCodeEmail = async () => {
                         pattern : {
                           value : identificationRegex
                         },
-                        onChange: (e) => trigger("userIdentification")
                       })}
                       />
                     </S.Label>
@@ -193,7 +198,6 @@ const getVerificationCodeEmail = async () => {
                       <S.Input type='text' placeholder='이름을 입력하세요.'
                       {...register("userName", {
                         required : true,
-                        onChange: (e) => trigger("userName")
                       })}
                       />
                     </S.Label>
@@ -225,7 +229,6 @@ const getVerificationCodeEmail = async () => {
                           setEmailCheckMessage("");
                           setVerificationMessage("")
                           setCode("")
-                          trigger("userEmail")
                         }
                       })}
                     />
@@ -284,9 +287,9 @@ const getVerificationCodeEmail = async () => {
                   )}
               </S.HiddenBorderWrapper>
             </S.InputContainer>
-            <S.JoinButton $active={isFindPassword}>
+            <S.Button $active={isFindPassword}>
               <S.H4 disabled={isSubmitting}>비밀번호 찾기</S.H4>
-            </S.JoinButton>
+            </S.Button>
               </S.Wrapper>
             </S.Container>
           </form>

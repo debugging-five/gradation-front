@@ -5,7 +5,7 @@ const SET_USER = "user/SET_USER"
 const SET_USER_STATUS = "user/USER_STATUS"
 
 export const setPreviousUrl = createAction(SET_PREVIOUS_URL, (previousUrl) => previousUrl);
-export const setUser = createAction(SET_USER, (curruentUser) => curruentUser);
+export const setUser = createAction(SET_USER, (currentUser) => currentUser);
 export const setUserStatus = createAction(SET_USER_STATUS, (isLogin) => isLogin);
 
 const UserInitialValue = {

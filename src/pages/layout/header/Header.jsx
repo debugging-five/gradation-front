@@ -60,7 +60,7 @@ const Header = ({ onLogout }) => {
           <S.MenuItem><Link to="/artist">artist</Link></S.MenuItem>
 
           <S.MenuItem>
-            <Link to="/auction/bidding">auction</Link>
+            <Link to="/auction/bidding/korean">auction</Link>
             <S.Dropdown>
               <li><Link to="/auction/bidding/korean">경매중</Link></li>
               <li><Link to="/auction/expected/korean">경매 예정</Link></li>

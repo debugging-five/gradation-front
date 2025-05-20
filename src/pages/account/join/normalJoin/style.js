@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { H10, H2, H4, H7, H8 } from '../../../styles/common';
+import { H10, H2, H4, H7, H8 } from '../../../../styles/common';
 
 const S = {};
 
@@ -17,7 +17,7 @@ S.Wrapper = styled.div`
 
 S.H2 = styled.p`
   ${H2}
-  width: 104px;
+  width: 162px;
   height: 36px;
 `
 
@@ -31,8 +31,8 @@ S.BorderWrapper = styled.div`
 `
 
 S.HiddenBorderWrapper = styled.div`
-  margin: ${({$visible}) => ($visible ? '0 0 30px 0' : '0')};
-  height: ${({$visible}) => ($visible ? '44px' : '0')};
+  margin: ${({ $visible }) => ( $visible ? '0 0 30px 0' : '0' )};
+  height: ${({ $visible }) => ( $visible ? '44px' : '0' )};
 `
 
 S.Border = styled.div`
@@ -95,7 +95,7 @@ S.JoinButton = styled.button`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background-color: ${({ $active }) => ($active ? "#EE3333" : "#C0C5C7")};
+  background-color: ${({ $active }) => ( $active ? "#EE3333" : "#C0C5C7" )};
 `
 
 S.H4 = styled.p`
@@ -115,7 +115,18 @@ S.CheckboxWrapper = styled.div`
 
 `
 
-S.Checkbox = styled.div`
+// S.Checkbox = styled.div`
+//   width : 20px;
+//   height : 20px;
+//   background-image: url(${({ checked }) => checked ? '/assets/images/join/checked-on.png' : '/assets/images/join/checked-off.png'});
+//   margin: 0 5px 0 0;
+//   background-size: cover;
+//   background-repeat: no-repeat;
+//   background-position: center;
+//   cursor: pointer;
+// `
+
+S.Checkbox = styled.img`
   width : 20px;
   height : 20px;
   background-image: url(${({ checked }) => checked ? '/assets/images/join/checked-on.png' : '/assets/images/join/checked-off.png'});

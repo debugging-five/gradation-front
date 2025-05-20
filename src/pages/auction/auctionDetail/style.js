@@ -186,9 +186,6 @@ S.BiddingButton = styled.button`
   color: ${gray100};
 `
 
-S.AuctionList = styled.div`
-  height : 269px;
-`
 
 S.AuctionIng = styled.div`
   border-bottom : solid 1px ${gray500};
@@ -207,7 +204,7 @@ S.ArtWrapper = styled.div`
   align-items : center;
   justify-content : center;
 	gap : 120px;
-	margin : 38px 0;
+	padding : 38px 0 ;
 `
 
 S.ArtList = styled.div`

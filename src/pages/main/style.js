@@ -1,12 +1,24 @@
-import styled from "styled-components";
-import { H1 } from "../../styles/common";
+import styled from 'styled-components';
 
-const S = {}
+const S = {};
 
-// 변수명 = styled.태그
-  S.H1 = styled.p`
-  /* common */
-  ${H1}
-  `
+S.SwiperWrap = styled.div`
+  width: 100%;
+`;
 
-export default S
+S.SlideImg = styled.img`
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+`;
+
+S.SlideTitle = styled.h3`
+  font-size: 18px;
+`;
+
+S.SlideArtist = styled.p`
+  font-size: 14px;
+  color: gray;
+`;
+
+export default S;

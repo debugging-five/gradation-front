@@ -12,7 +12,7 @@ const AuctionExpectedModify = () => {
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
   const inputRef = useRef(null);
-  const { register, handleSubmit, getValues, formState: { isSubmitting, isSubmitted, errors } } = useForm({ mode: "onChange" });
+  const { register, handleSubmit, getValues, formState: { isSubmitting, isSubmitted, errors } } = useForm({ mode: "onChange", shouldFocusError: false });
   const [auctionVO, setAuctionVO] = useState({});
   const [back, setBack] = useState(false);
 
@@ -22,11 +22,11 @@ const AuctionExpectedModify = () => {
       const auction = await response.json();
       const auctionData = auction[0];
       setData(auctionData);
-      if (auctionData.artistId !== currentUser.id) {
-        alert("수정 권한이 없습니다!")
-        navigate(`/auction/bidding/${category}/detail/${id}`, { replace: true })
-        return
-      }
+      // if (auctionData.artistId !== currentUser.id) {
+      //   alert("수정 권한이 없습니다!")
+      //   navigate(`/auction/bidding/${category}/detail/${id}`, { replace: true })
+      //   return
+      // }
       setAuctionVO({
         id: id,
         artId: auctionData.artId,
@@ -61,15 +61,15 @@ const AuctionExpectedModify = () => {
 
         <S.InfoDiv>
           <S.ArtName>
-            <S.H2>멋진 고양이</S.H2>
+            <S.H2>{data.artTitle}</S.H2>
           </S.ArtName>
           <S.ArtArtist>
-            <S.H3>작가명 | 박세현</S.H3>
+            <S.H3>작가명 | {data.artistName}</S.H3>
           </S.ArtArtist>
           <S.ArtInfo>
-            <S.H10gray900>팔레트에 아크릴물감</S.H10gray900>
-            <S.H10gray900>50 X 50</S.H10gray900>
-            <S.H10gray900>2025</S.H10gray900>
+            <S.H10gray900>{data.artMaterial}</S.H10gray900>
+            <S.H10gray900>{data.artSize}</S.H10gray900>
+            <S.H10gray900>{data.artEndDate.split('-')[0]}년</S.H10gray900>
           </S.ArtInfo>
 
           <form onSubmit={handleSubmit(async (auctionData) => {
@@ -116,7 +116,7 @@ const AuctionExpectedModify = () => {
                       noCalendar: false,
                       dateFormat: "Y-m-d H:i:S",
                       disableMobile: true,
-                      minDate: "today",
+                      minDate: new Date().fp_incr(1),
                       time_24hr: true,
                       closeOnSelect: false,
                     }}
@@ -144,10 +144,50 @@ const AuctionExpectedModify = () => {
                 </S.InputBoxInfo>
               </S.InputBox>
             </S.InputBoxWrap>
-
+            <S.WarningArea>
+              {errors.auctionStartDate && (
+                <S.NeedWrite>{errors.auctionStartDate.message}</S.NeedWrite>
+              )}
+            </S.WarningArea>
+            {(errors.auctionEstimatedMaxPrice || errors.auctionEstimatedMinPrice) ? (
+            <S.NeedWriteDiv>
+              <S.InputBoxWrap>
+                <S.InputBox>
+                  <S.H5>추정가</S.H5>
+                  <S.InputBoxInfo>
+                    <S.InputMin
+                      type="text"
+                      value={auctionVO.auctionEstimatedMinPrice || ''}
+                      placeholder="최소추정가를 입력하세요"
+                      {...register("auctionEstimatedMinPrice", {
+                        required: true,
+                      })}
+                      onChange={(e) =>
+                        setAuctionVO(prev => ({ ...prev, auctionEstimatedMinPrice: e.target.value }))
+                      }
+                      autoComplete="off"
+                      />
+                    <span>~</span>
+                    <S.InputMax
+                      type="text"
+                      value={auctionVO.auctionEstimatedMaxPrice || ''}
+                      placeholder="최대추정가를 입력하세요"
+                      {...register("auctionEstimatedMaxPrice", {
+                        required: true,
+                      })}
+                      onChange={(e) =>
+                        setAuctionVO(prev => ({ ...prev, auctionEstimatedMaxPrice: e.target.value }))
+                      }
+                      autoComplete="off"
+                      />
+                  </S.InputBoxInfo>
+                </S.InputBox>
+              </S.InputBoxWrap>
+            </S.NeedWriteDiv>
+            ) : (
             <S.InputBoxWrap>
               <S.InputBox>
-                <S.H5>추정가</S.H5>
+                <S.InputBoxInfo><S.H5>추정가</S.H5><S.RedStar>*</S.RedStar></S.InputBoxInfo>
                 <S.InputBoxInfo>
                   <S.InputMin
                     type="text"
@@ -177,23 +217,58 @@ const AuctionExpectedModify = () => {
                 </S.InputBoxInfo>
               </S.InputBox>
             </S.InputBoxWrap>
-
-            <S.InputBoxWrap>
-              <S.InputBox>
-                <S.InputBoxInfo><S.H5>시작가</S.H5><S.RedStar>*</S.RedStar></S.InputBoxInfo>
-                <S.InputBoxInfo>
-                  <S.InputText
-                    placeholder="시작입찰가를 입력해주세요"
-                    autoComplete="off"
-                    value={auctionVO.auctionStartPrice || ''}
-                    onChange={(e) =>
-                      setAuctionVO(prev => ({ ...prev, auctionStartPrice: e.target.value }))
-                    }
-                  />
-                </S.InputBoxInfo>
-              </S.InputBox>
-            </S.InputBoxWrap>
-
+            )}
+            <S.WarningArea>
+              {(errors.auctionEstimatedMaxPrice || errors.auctionEstimatedMinPrice) && (
+              <S.NeedWrite>필수항목입니다</S.NeedWrite>
+              )}
+            </S.WarningArea>
+            {errors.auctionStartPrice ? (
+              <S.NeedWriteDiv>
+                <S.InputBoxWrap>
+                  <S.InputBox>
+                    <S.InputBoxInfo><S.H5>시작가</S.H5><S.RedStar>*</S.RedStar></S.InputBoxInfo>
+                    <S.InputBoxInfo>
+                      <S.InputText
+                        placeholder="시작입찰가를 입력해주세요"
+                        {...register("auctionStartPrice", {
+                          required: true,
+                        })}
+                        autoComplete="off"
+                        value={auctionVO.auctionStartPrice || ''}
+                        onChange={(e) =>
+                          setAuctionVO(prev => ({ ...prev, auctionStartPrice: e.target.value }))
+                        }
+                      />
+                    </S.InputBoxInfo>
+                  </S.InputBox>
+                </S.InputBoxWrap>
+              </S.NeedWriteDiv>
+            ) : (
+              <S.InputBoxWrap>
+                <S.InputBox>
+                  <S.InputBoxInfo><S.H5>시작가</S.H5><S.RedStar>*</S.RedStar></S.InputBoxInfo>
+                  <S.InputBoxInfo>
+                    <S.InputText
+                      placeholder="시작입찰가를 입력해주세요"
+                      {...register("auctionStartPrice", {
+                        required: true,
+                      })}
+                      autoComplete="off"
+                      value={auctionVO.auctionStartPrice || ''}
+                      onChange={(e) =>
+                        setAuctionVO(prev => ({ ...prev, auctionStartPrice: e.target.value }))
+                      }
+                    />
+                  </S.InputBoxInfo>
+                </S.InputBox>
+              </S.InputBoxWrap>
+            )}
+            <S.WarningArea>
+            {errors.auctionStartPrice && (
+              <S.NeedWrite>필수항목입니다</S.NeedWrite>
+            )}
+            </S.WarningArea>
             <S.ButtonWrap>
               <S.CancelButton onClick={goBack}>취소</S.CancelButton>
               <S.ModifyButton>수정</S.ModifyButton>

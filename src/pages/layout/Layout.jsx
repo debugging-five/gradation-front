@@ -4,6 +4,7 @@ import Header from './header/Header';
 import Footer from './footer/Footer';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, setUserStatus } from '../../modules/user';
+import S from './style';
 
 const Layout = () => {
 
@@ -46,7 +47,6 @@ const Layout = () => {
           }));
           dispatch(setUserStatus(false));
           localStorage.clear();
-          return;
         }
         
         const datas = await response.json();
@@ -57,9 +57,10 @@ const Layout = () => {
       };
       getUserDatas()
     }
-  }, [jwtToken]); 
+  }, [localJwtToken]); 
 
-  console.log("currentUser", currentUser)
+  console.log("리덕스 유저", currentUser)
+  console.log("리덕스 유저 상태", isLogin)
 
   const handleLogout = () => {
     localStorage.clear();
@@ -78,13 +79,13 @@ const Layout = () => {
   };
 
   return (
-    <div>
+    <S.Container>
       <Header onLogout={handleLogout} />
       <main>
         <Outlet />
       </main>
       <Footer />
-    </div>
+    </S.Container>
   );
 };
 

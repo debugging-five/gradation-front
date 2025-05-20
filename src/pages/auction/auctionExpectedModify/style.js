@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { EN_H4, EN_H5, EN_H6, H10, H2, H3, H4, H5, H7 } from "../../../styles/common";
+import { EN_H4, EN_H5, EN_H6, H10, H2, H3, H4, H5, H7, H8, H9 } from "../../../styles/common";
 
 const primary = "#EE3333";
 const gray100 = "#FBFCFC";
@@ -30,6 +30,10 @@ S.H7 = styled.p`
   ${H7}
 `
 
+S.EN_H6 = styled.p`
+  ${EN_H6}
+`
+
 S.ArtArtist = styled.div`
   display: flex;
   margin-bottom: 24px;
@@ -40,8 +44,6 @@ S.Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100dvw;
-  margin-bottom: 200px;
   background-color: ${gray100};
 `
 
@@ -99,10 +101,8 @@ S.EN_H4Primary = styled.div`
 
 S.ImageWrap = styled.div`
 	width: 560px;
-	height: 560px;
 	display: flex;
 	justify-content: center;
-	align-items: center;
 	margin-right: 120px;
 `
 
@@ -148,7 +148,6 @@ S.H10gray900 = styled.p`
 
 S.InputBoxWrap = styled.div`
   width: 480px;
-	margin-bottom: 48px;
 	border-bottom: solid 1px ${gray900};
 `
 
@@ -239,6 +238,31 @@ S.CalendarIcon = styled.img`
   height: min-content;
   width : 12px;
   margin: 5px;
+`
+
+S.WarningArea = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  width: 480px;
+  height: 48px;
+`
+
+S.NeedWrite = styled.p`
+  margin-top: 2px;;
+  color: ${warning};
+  ${H10}
+  `
+
+S.NeedWriteDiv = styled.p`
+  * {
+    color: ${warning};
+    border-color: ${warning}
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: ${warning}
+  }
 `
 
 
