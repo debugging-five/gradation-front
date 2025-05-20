@@ -50,38 +50,38 @@ const Header = ({ onLogout }) => {
         <S.Menu>
 
           <S.MenuItem>
-            <Link to="/display">display</Link>
+            <S.MenuLink to="/display">display</S.MenuLink>
             <S.Dropdown>
-              <li><Link to="/display">전시 중인 작품</Link></li>
-              <li><Link to="/display/registration">작품 업로드</Link></li>
+              <li><S.DropdownLink to="/display">전시 중인 작품</S.DropdownLink></li>
+              <li><S.DropdownLink to="/display/registration">작품 업로드</S.DropdownLink></li>
             </S.Dropdown>
           </S.MenuItem>
 
-          <S.MenuItem><Link to="/artist">artist</Link></S.MenuItem>
+          <S.MenuItem><S.MenuLink to="/artist">artist</S.MenuLink></S.MenuItem>
 
           <S.MenuItem>
-            <Link to="/auction/bidding/korean">auction</Link>
+            <S.MenuLink to="/auction/bidding/korean">auction</S.MenuLink>
             <S.Dropdown>
-              <li><Link to="/auction/bidding/korean">경매중</Link></li>
-              <li><Link to="/auction/expected/korean">경매 예정</Link></li>
-              <li><Link to="/auction/complete/korean">경매 완료</Link></li>
-            </S.Dropdown>
-          </S.MenuItem>
-
-          <S.MenuItem>
-            <Link to="/exhibition/gradation">exhibition</Link>
-            <S.Dropdown>
-              <li><Link to="/exhibition/gradation">그라데이션 전시회</Link></li>
-              <li><Link to="/exhibition/university">대학교 전시회</Link></li>
-              <li><Link to="/exhibition/university/registration">학교 신청</Link></li>
+              <li><S.DropdownLink to="/auction/bidding/korean">경매중</S.DropdownLink></li>
+              <li><S.DropdownLink to="/auction/expected/korean">경매 예정</S.DropdownLink></li>
+              <li><S.DropdownLink to="/auction/complete/korean">경매 완료</S.DropdownLink></li>
             </S.Dropdown>
           </S.MenuItem>
 
           <S.MenuItem>
-            <Link to="/upcycling">upcycling</Link>
+            <S.MenuLink to="/exhibition/gradation">exhibition</S.MenuLink>
             <S.Dropdown>
-              <li><Link to="/upcycling">업사이클</Link></li>
-              <li><Link to="/upcycling/registration">업사이클 신청</Link></li>
+              <li><S.DropdownLink to="/exhibition/gradation">그라데이션 전시회</S.DropdownLink></li>
+              <li><S.DropdownLink to="/exhibition/university">대학교 전시회</S.DropdownLink></li>
+              <li><S.DropdownLink to="/exhibition/university/registration">학교 신청</S.DropdownLink></li>
+            </S.Dropdown>
+          </S.MenuItem>
+
+          <S.MenuItem>
+            <S.MenuLink to="/upcycling">upcycling</S.MenuLink>
+            <S.Dropdown>
+              <li><S.DropdownLink to="/upcycling">업사이클</S.DropdownLink></li>
+              <li><S.DropdownLink to="/upcycling/registration">업사이클 신청</S.DropdownLink></li>
             </S.Dropdown>
           </S.MenuItem>
         </S.Menu>
@@ -92,14 +92,14 @@ const Header = ({ onLogout }) => {
             <S.SignInWrap>
               <span className="sign-in">{currentUser.userName}님</span>
               <S.Dropdown>
-                <li><Link to="/mypage">마이페이지</Link></li>
-                <li><Link to="/service-center/qna">고객센터</Link></li>
-                <li><span onClick={onLogout}>로그아웃</span></li>
+                <li><S.DropdownLink to="/mypage">마이페이지</S.DropdownLink></li>
+                <li><S.DropdownLink to="/service-center/qna">고객센터</S.DropdownLink></li>
+                <li><S.DropdownSpan  onClick={onLogout}>로그아웃</S.DropdownSpan></li>
               </S.Dropdown>
             </S.SignInWrap>
           ) : (
             <S.SignInWrap>
-              <Link to="/login" className="sign-in">sign in</Link>
+              <S.MenuLink to="/login" className="sign-in">sign in</S.MenuLink>
             </S.SignInWrap>
           )}
         </S.LoginSection>
