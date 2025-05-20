@@ -92,7 +92,7 @@ S.Input = styled.input`
   &::placeholder {
     ${H10}
     color: #6E7476;
-    padding : 9px 11px;
+    padding: 9px 11px;
   }
 `
 

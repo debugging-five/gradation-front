@@ -6,17 +6,18 @@ import { useCookies } from 'react-cookie';
 
 const Login = () => {
 
-  const { register, handleSubmit, formState: {isSubmitting, errors, isValid}} = useForm({mode : "onBlur"});
+  const { register, handleSubmit, setValue, trigger, formState: {isSubmitting, errors, isValid}} = useForm({mode : "onBlur"});
   
   const navigate = useNavigate();
-  const [userId, setUserId] = useState("");
-  const [cookies, setCookie, removeCookie] = useCookies(["rememberUserId"])
-  const [isRemember, setIsRemember] = useState(false);
-
-  const [loginMessage, setLoginMessage] = useState("")
-  const[passwordType, setPasswordType] = useState({type : 'password', visible : false});
   
-  const handlePasswordType = (e) => {
+  const [loginMessage, setLoginMessage] = useState("")
+  const [passwordType, setPasswordType] = useState({type : 'password', visible : false});
+  
+  const [saveId, setSaveId] = useState("");
+  const [cookies, setCookie, removeCookie] = useCookies(["saveId"])
+  const [isRemember, setIsRemember] = useState(false);
+  
+  const handlePasswordType = () => {
     setPasswordType(() => {
       if(!passwordType.visible) {
         return {type : 'text', visible : true};
@@ -36,9 +37,10 @@ const Login = () => {
   }
 
   useEffect(() => {
-    if(cookies.rememberUserId !== undefined) {
-      setUserId(cookies.rememberUserId);
+    if(cookies.saveId !== undefined) {
+      setSaveId(cookies.saveId);
       setIsRemember(true)
+      setValue("userIdentification", cookies.saveId)
     }
   }, [])
 
@@ -66,19 +68,19 @@ const Login = () => {
           return res.json()
         })
         .then((res) => {
-          console.log(res) 
+          // console.log(res) 
           if(res && res.jwtToken){
             if(isRemember) {
-            setCookie("rememberUserId", userId, {
+            setCookie("saveId", saveId, {
               path: "/",
               maxAge: 60 * 60 * 24 * 7
             })
           }else {
-            removeCookie("rememberUserId")
+            removeCookie("saveId")
           }
             navigate("/?jwtToken=" + res.jwtToken)
           }
-    })
+        })
         .catch(console.error)
 
     })}>
@@ -93,12 +95,13 @@ const Login = () => {
                     <S.IconWrapper>
                       <S.Icon src={'/assets/images/icon/user.png'} />
                     </S.IconWrapper>
-                    <S.Input type="text" placeholder='아이디' value={userId}
+                    <S.Input type="text" placeholder='아이디' value={saveId}
                       {...register("userIdentification", {
                         required : true,
                         onChange : (e) => {
                           setLoginMessage("")
-                          setUserId(e.target.value)
+                          setSaveId(e.target.value)
+                          trigger("userIdentification")
                         }
                       })}
                     />
@@ -122,6 +125,7 @@ const Login = () => {
                           required : true,
                           onChange : () => {
                             setLoginMessage("")
+                            trigger("userPassword")
                           }
                         })}
                       />
@@ -148,11 +152,11 @@ const Login = () => {
               const remove = !isRemember;
               setIsRemember(remove)
               if(!remove) {
-                removeCookie("rememberUserId")
+                removeCookie("saveId")
               }
             }}>
               <S.Checkbox   
-              src={ isRemember ? "/assets/images/join/checked-on.png" : "/assets/images/join/checked-off.png" }/>
+              src={isRemember ? "/assets/images/join/checked-on.png" : "/assets/images/join/checked-off.png"}/>
               <S.H8>아이디 저장</S.H8>
             </S.Id>
           </S.CheckboxWrapper> 

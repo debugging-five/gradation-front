@@ -14,7 +14,7 @@ const DisplayRegistration = () => {
     <form encType='multipart/form-data' onSubmit={handleSubmit(async (data) => {
       console.log(data);
 
-      const artId = 1;
+      const artId = 56;
 
       const formData = new FormData();
       Array.from(data.files).forEach((file) => {
