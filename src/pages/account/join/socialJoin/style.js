@@ -66,9 +66,9 @@ border: none;
 background-color: #FBFCFC;
 outline: none;
 width: 320px;
-/* ${H8} */
 
   &::placeholder {
+    ${H8}
     
   }
 `
