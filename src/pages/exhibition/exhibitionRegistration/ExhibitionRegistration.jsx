@@ -76,20 +76,64 @@ const ExhibitionRegistration = () => {
       </S.TitleWrap>
 
       <S.InputForm>
+
         <S.InputButtonWrap>
           <S.InputText>
             <S.Label>대학명<span>*</span></S.Label>
             <S.Input type="text" name="universityName" placeholder="대학교를 검색하세요." onChange={handleChange} />
-            <S.Button type="button">학교 검색</S.Button>
           </S.InputText>
+          <S.Button type="button">학교 검색</S.Button>
         </S.InputButtonWrap>
+
+        <S.InputWrap>
+          <S.Label>전시회 제목<span>*</span></S.Label>
+          <S.Input type="text" name="title" placeholder="제 n회 졸업 전시회" onChange={handleChange} />
+        </S.InputWrap>
+
+        <S.InputWrap>
+          <S.Label>학과명<span>*</span></S.Label>
+          <S.Input type="text" name="major" placeholder="학과를 입력하세요." onChange={handleChange} />
+        </S.InputWrap>
+
+        <S.InputWrap>
+          <S.Label>상세 주소<span>*</span></S.Label>
+          <S.Input type="text" name="address" placeholder="상세 주소를 입력하세요. ex) 00대학교 조형예술관 A동 2층 " onChange={handleChange} />
+        </S.InputWrap>
+
+        <S.InputWrap>
+          <S.Label>홈페이지<span>*</span></S.Label>
+          <S.Input type="text" name="homepage" placeholder="홈페이지 주소를 입력하세요." onChange={handleChange} />
+        </S.InputWrap>
+
+        <S.InputWrap>
+          <S.Label>전시회 일정<span>*</span></S.Label>
+          <S.Datewrap>
+            <S.calendar src={`/assets/images/icon/calendar.png`} alt="calendar" />
+            <S.InputDate type="text" name="startDate" placeholder="시작일 선택" onChange={handleChange} />
+          </S.Datewrap>
+          <p>~</p>
+          <S.Datewrap2>
+            <S.calendar src={`/assets/images/icon/calendar.png`} alt="calendar" />
+            <S.InputDate type="text" name="endDate" placeholder="종료일 선택" onChange={handleChange} />
+          </S.Datewrap2>
+        </S.InputWrap>
+
+        <S.InputFileWrap>
+          <S.File>첨부파일<span>*</span></S.File>
+          <S.question src={`/assets/images/icon/gray_question.png`} alt="question" />
+          <S.Tip>사이트에 올라간 전시회 이미지를 첨부해주세요.</S.Tip>
+          <S.FileLabel htmlFor="file">첨부파일</S.FileLabel>
+          <S.FileInput type="file" id="file" onChange={handleFileChange} />
+        </S.InputFileWrap>
+
+
 
         
 
       </S.InputForm>
 
 
-      <PrimaryButton type="sumit">신청</PrimaryButton>
+      <S.PrimaryButton type="sumit">신청</S.PrimaryButton>
     </S.FormWrapper>
   );
 };
