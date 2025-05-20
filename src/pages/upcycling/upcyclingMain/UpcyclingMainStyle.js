@@ -299,15 +299,15 @@ export const Chapter3Labels = styled.div`
   font-size: 18px;
   color: #333;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 1s ease, transform 1s ease;
+  transform: translateX(-50%);
+  transition: opacity 3s ease, transform 3s ease;
   transition-delay: 1.5s;
 
   ${({ $isVisible }) =>
     $isVisible &&
     css`
       opacity: 1;
-      transform: translateY(0);
+      transform: translateX(0);
 
       
     `}

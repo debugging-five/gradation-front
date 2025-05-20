@@ -1,65 +1,165 @@
-import styled from 'styled-components';
+import styled from "styled-components";
+import * as CS from "../../../styles/common";
 
-export const FaqDetailPageContainer = styled.div`
+export const FaqPageContainer = styled.div`
+  width: 800px;
+  margin: 0 auto;
+`;
+
+export const DropdownContainer = styled.div`
   display: flex;
-  width: 800px;
-  flex-direction: column;
-  margin-top: 48px;
-  margin-bottom: 60px;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+  position: relative;
 `;
 
-export const FaqDetailWrapper = styled.div`
-  width: 800px;
-  margin-bottom: 60px;
-`;
-
-export const FaqDivider = styled.div`
-  margin-top: 7px;
-  width: 800px;
-  border-bottom: solid 1px;
-`;
-
-export const FaqDetailButton = styled.button`
-  color: red;
-  border: solid 1px red;
+export const DropdownToggleButton = styled.button`
+  ${CS.H8};
+  border: 1px solid #ccc;
+  padding: 6px 14px;
+  border-radius: 4px;
   background-color: white;
-  width: 125px;
-  height: 50px;
-  font-size: 18px;
   cursor: pointer;
 `;
 
-export const FaqDetailButtonContainer = styled.div`
+export const DropdownList = styled.ul`
+  position: absolute;
+  top: 2.5rem;
+  right: 0;
+  z-index: 10;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100px;
+  padding: 4px 0;
+`;
+
+export const DropdownItem = styled.li`
+  ${CS.H8};
+  padding: 8px 12px;
+  cursor: pointer;
+  &:hover {
+    background-color: #305cde;
+    color: white;
+  }
+`;
+
+export const FaqTableWrapper = styled.div`
+  margin-top: 10px;
+  width: 100%;
+`;
+
+// export const PageTitle = styled.div`
+//   ${CS.H2}
+//   margin-bottom: 50px;
+// `;
+
+export const FaqTableHeader = styled.div`
+  ${CS.H5}
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 12px 0;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+`;
+
+export const FaqTableRow = styled.div`
+  ${CS.H8}
+  display: flex;
+  width: 100%;
+  align-items: center;
+  height: 48px;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+`;
+
+export const FaqNumberHeader = styled.div`
+  width: 60px;
+  text-align: center;
+  padding: 0 8px;
+`;
+
+export const FaqCategoryHeader = styled.div`
+  width: 100px;
+  text-align: center;
+  padding: 0 50px;
+`;
+
+export const FaqTitleHeader = styled.div`
+  flex: 1;
+  text-align: center;
+  overflow: hidden;
+  padding: 0 50px;
+`;
+
+export const FaqNumberCell = styled.div`
+  width: 60px;
+  text-align: center;
+  padding: 0 8px;
+`;
+
+export const FaqCategoryCell = styled.div`
+  width: 100px;
+  text-align: center;
+  padding: 0 50px;
+`;
+
+export const FaqTitleLinkCell = styled.div`
+  flex: 1;
+  padding-left: 12px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  text-decoration: none;
+  padding: 0 130px;
+`;
+
+export const FaqTitleText = styled.span`
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  text-decoration: none;
+  color: #000;
+`;
+
+export const RegisterButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
-  gap: 12px; // 버튼 간격 조금 추가
+  margin-top: 10px;
+  margin-bottom: 10px;
 `;
 
-export const FaqTitleWrapper = styled.div`
-  margin-top: 32px;
-  width: 800px;
+export const RegisterButton = styled.button`
+  ${CS.H8}
+  width: 120px;
+  height: 45px;
+  background-color: #ee3333;
+  border: none;
+  margin-top: 60px;
+  padding: 10px 20px;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+`;
+
+export const Pagination = styled.div`
   display: flex;
-  align-items: flex-end;
-  gap: 10px;
-`;
+  justify-content: center;
+  margin-top: 30px;
 
-export const FaqQ = styled.p`
-  font-size: 30px;
-  font-weight: bold;
-`;
+  span {
+    margin: 0 6px;
+    cursor: pointer;
+  }
 
-export const FaqTitleText = styled.p`
-  font-size: 21px;
-  font-weight: bold;
-`;
-
-export const FaqContentText = styled.p`
-  margin-top: 24px;
-  font-size: 18px;
-  width: 800px;
-`;
-
-export const FaqCategoryText = styled.p`
-  font-size: 18px;
-  font-weight: bold;
+  .active {
+    color: #ee3333;
+    font-weight: bold;
+    text-decoration: underline;
+  }
 `;

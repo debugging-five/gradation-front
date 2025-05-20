@@ -17,10 +17,19 @@ const AdminContainer = () => {
   } else {
     title = '회원 관리';
   }
+
+  let subTitle = '';
+  if (path.includes('modify')) {
+    subTitle = '수정';
+  } else if (path.includes('registration')) {
+    subTitle = '등록';
+  } else if (path.includes('detail')) {
+    subTitle = '상세';
+  }
   
   return (
     <>
-      <S.AdminPageTitle>관리자 / {title}</S.AdminPageTitle>
+      <S.AdminPageTitle>관리자 / {title} {subTitle}</S.AdminPageTitle>
       <Outlet />
     </>
   );

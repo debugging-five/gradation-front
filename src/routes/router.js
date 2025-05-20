@@ -198,7 +198,7 @@ const router = createBrowserRouter([
             children: [
               {
                 path: "",
-                element: <Navigate to="/auction/bidding/korean" replace />
+                element: <Navigate to="/auction/bidding/korean" replace />,
               },
               {
                 path: ":type",

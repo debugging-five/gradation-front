@@ -4,15 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 const UpcyclingMain = () => {
   const navigate = useNavigate();
-  const isLoggedIn = Boolean(localStorage.getItem("token"));
-
-  const handleNavigate = (path) => {
-    if (!isLoggedIn) {
-      navigate("/login");
-    } else {
-      navigate(path);
-    }
-  };
 
   const StepItem = ({ number, numCircle, title, texts, isLast }) => {
     return (
@@ -285,10 +276,10 @@ const UpcyclingMain = () => {
       </S.BottomText>
 
       <S.ButtonsWrapper>
-        <S.ApplicationButton onClick={() => handleNavigate("/service-center/qna")} >
+        <S.ApplicationButton onClick={() => navigate("/service-center/qna")} >
           문의하기
         </S.ApplicationButton>
-        <S.InquiryButton onClick={() => handleNavigate("/upcycling/registration")}>
+        <S.InquiryButton onClick={() => navigate("/upcycling/registration")}>
           업사이클 신청
         </S.InquiryButton>
       </S.ButtonsWrapper>
