@@ -1,7 +1,4 @@
-import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import S from './style';
-import AuctionCategory from '../../auction/AuctionCategory';
 
 const DisplayListContainer = () => {
   const { category } = useParams()

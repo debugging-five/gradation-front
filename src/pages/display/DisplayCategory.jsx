@@ -1,9 +1,8 @@
 import React from 'react';
-import { Link,  Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import S from './style';
 
 const DisplayCategory = () => {
-  const pathName = useLocation().pathname
   const { category  } = useParams();
   const navigate = useNavigate();
 

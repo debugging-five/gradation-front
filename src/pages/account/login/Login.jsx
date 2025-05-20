@@ -1,16 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import S from './style';
+import { useCookies } from 'react-cookie';
 
 const Login = () => {
 
+  const { register, handleSubmit, formState: {isSubmitting, errors, isValid}} = useForm({mode : "onBlur"});
+  
   const navigate = useNavigate();
-
-  const { register, handleSubmit, trigger, formState: {isSubmitting, errors, isValid}} = useForm({mode: "onChange", reValidateMode: "onBlur"});
+  const [userId, setUserId] = useState("");
+  const [cookies, setCookie, removeCookie] = useCookies(["rememberUserId"])
+  const [isRemember, setIsRemember] = useState(false);
 
   const [loginMessage, setLoginMessage] = useState("")
   const[passwordType, setPasswordType] = useState({type : 'password', visible : false});
+  
   const handlePasswordType = (e) => {
     setPasswordType(() => {
       if(!passwordType.visible) {
@@ -29,6 +34,13 @@ const Login = () => {
   const navigateNaverAuth = () => {
     window.location.href = "http://localhost:10000/oauth2/authorization/naver"
   }
+
+  useEffect(() => {
+    if(cookies.rememberUserId !== undefined) {
+      setUserId(cookies.rememberUserId);
+      setIsRemember(true)
+    }
+  }, [])
 
   return (
     <form autoComplete="off" onSubmit={handleSubmit(async (data) => {
@@ -56,12 +68,17 @@ const Login = () => {
         .then((res) => {
           console.log(res) 
           if(res && res.jwtToken){
-            const { jwtToken } = res
-            // navigate("/?jwtToken=" + res.jwtToken)
-            localStorage.setItem("jwtToken", jwtToken)
-            navigate("/")
+            if(isRemember) {
+            setCookie("rememberUserId", userId, {
+              path: "/",
+              maxAge: 60 * 60 * 24 * 7
+            })
+          }else {
+            removeCookie("rememberUserId")
           }
-        })
+            navigate("/?jwtToken=" + res.jwtToken)
+          }
+    })
         .catch(console.error)
 
     })}>
@@ -76,14 +93,14 @@ const Login = () => {
                     <S.IconWrapper>
                       <S.Icon src={'/assets/images/icon/user.png'} />
                     </S.IconWrapper>
-                    <S.Input type="text" placeholder='아이디' 
+                    <S.Input type="text" placeholder='아이디' value={userId}
                       {...register("userIdentification", {
                         required : true,
                         onChange : (e) => {
                           setLoginMessage("")
+                          setUserId(e.target.value)
                         }
                       })}
-                      onBlur={() => trigger("userIdentification")}
                     />
                   </S.Label>
                 </S.InputWrapper>
@@ -103,11 +120,10 @@ const Login = () => {
                       <S.Input type={passwordType.type} placeholder='비밀번호' 
                         {...register("userPassword", {
                           required : true,
-                          onChange : (e) => {
+                          onChange : () => {
                             setLoginMessage("")
                           }
                         })}
-                        onBlur={() => trigger("userPassword")}
                       />
                   </S.Label>
                    <S.PasswordIcon onClick={handlePasswordType}
@@ -128,8 +144,15 @@ const Login = () => {
               <S.Checkbox src={'/assets/images/join/checked-off.png' }/>
                 <S.H8>로그인 상태 유지</S.H8>
             </S.Login>
-            <S.Id>
-              <S.Checkbox src={'/assets/images/join/checked-off.png' }/>
+            <S.Id onClick = {() => {
+              const remove = !isRemember;
+              setIsRemember(remove)
+              if(!remove) {
+                removeCookie("rememberUserId")
+              }
+            }}>
+              <S.Checkbox   
+              src={ isRemember ? "/assets/images/join/checked-on.png" : "/assets/images/join/checked-off.png" }/>
               <S.H8>아이디 저장</S.H8>
             </S.Id>
           </S.CheckboxWrapper> 

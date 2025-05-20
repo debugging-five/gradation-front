@@ -2,6 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 
 const DisplayRegistration = () => {
+
   const { register, handleSubmit, formState : { isSubmitting }} = useForm({mode:"onChange"})
   
   return (
