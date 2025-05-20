@@ -16,14 +16,12 @@ S.Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
 `
 
 S.Link = styled(Link)`
   color: inherit;
   text-decoration: none;
 `
-
 
 S.EN_H2 = styled.p`
   ${EN_H2}
@@ -77,10 +75,12 @@ S.Bar = styled.p`
 S.CategoryWrapper = styled.div`
   display: flex;
   margin: 64px 0 0 0;
+  justify-content: center;
 `
 
 S.InputWrapper = styled.div`
-  width: 1155px;
+  display: flex;
+  margin: 84px 0 0 0;
 `
 
 S.Input = styled.input`
@@ -88,6 +88,8 @@ S.Input = styled.input`
   height: 32px;
   border: solid 1px #6E7476;
   border-radius: 3px;
+  margin-left: auto;
+  background-color: #FBFCFC;
 
 
   &::placeholder {
@@ -95,6 +97,32 @@ S.Input = styled.input`
     color: #6E7476;
     padding : 9px 11px;
   }
+`
+
+S.Upload = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+`
+
+S.Icon = styled.img`
+  width: 18px;
+  height: 18px;
+`
+
+S.H8 = styled.p`
+  ${H8}
+`
+
+S.Dropdown = styled.div`
+
+`
+
+S.Menu = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0 0 0;
+  width: 1160px;
 `
 
 

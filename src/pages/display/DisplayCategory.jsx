@@ -1,74 +1,71 @@
 import React from 'react';
-import { Link, NavLink, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link,  Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import S from './style';
 
 const DisplayCategory = () => {
-const pathName = useLocation().pathname
-  const type = pathName.split("/")[2]
-  const params = useParams()
+  const pathName = useLocation().pathname
+  const { category  } = useParams();
   const navigate = useNavigate();
 
   const goKorean = () => {
-    navigate(`/auction/${type}/korean`);
+    navigate(`/display/korean`);
   }
   const goSculpture = () => {
-    navigate(`/auction/${type}/sculpture`);
+    navigate(`/display/sculpture`);
   }
   const goCraft = () => {
-    navigate(`/auction/${type}/craft`);
+    navigate(`/display/craft`);
   }
   const goArchitecture = () => {
-    navigate(`/auction/${type}/architecture`);
+    navigate(`/display/architecture`);
   }
   const goCalligraphy = () => {
-    navigate(`/auction/${type}/calligraphy`);
+    navigate(`/display/calligraphy`);
   }
   const goPainting = () => {
-    navigate(`/auction/${type}/painting`);
+    navigate(`/display/painting`);
   }
   
-  
-
   return (
     <div>
       <S.CategoryWrapper>
         <S.TypeDiv>
-          {params.category === "korean"? 
+          {category === "korean"? 
             <S.SelectedRed>한국화</S.SelectedRed> : 
             <S.UnSelectedType onClick={goKorean}>한국화</S.UnSelectedType>
           }
         </S.TypeDiv>
         <S.Bar>|</S.Bar>
         <S.TypeDiv>
-          {params.category === "sculpture"? 
+          {category === "sculpture"? 
             <S.SelectedRed>조각</S.SelectedRed> : 
             <S.UnSelectedType onClick={goSculpture}>조각</S.UnSelectedType>
           }
         </S.TypeDiv>
         <S.Bar>|</S.Bar>
         <S.TypeDiv>
-          {params.category === "craft"? 
+          {category === "craft"? 
             <S.SelectedRed>공예</S.SelectedRed> : 
             <S.UnSelectedType onClick={goCraft}>공예</S.UnSelectedType>
           }
         </S.TypeDiv>
         <S.Bar>|</S.Bar>
         <S.TypeDiv>
-          {params.category === "architecture"? 
+          {category === "architecture"? 
             <S.SelectedRed>건축</S.SelectedRed> : 
             <S.UnSelectedType onClick={goArchitecture}>건축</S.UnSelectedType>
           }
         </S.TypeDiv>
         <S.Bar>|</S.Bar>
         <S.TypeDiv>
-          {params.category === "calligraphy"? 
+          {category === "calligraphy"? 
             <S.SelectedRed>서예</S.SelectedRed> : 
             <S.UnSelectedType onClick={goCalligraphy}>서예</S.UnSelectedType>
           }
         </S.TypeDiv>
         <S.Bar>|</S.Bar>
         <S.TypeDiv>
-          {params.category === "painting"? 
+          {category === "painting"? 
             <S.SelectedRed>회화</S.SelectedRed> : 
             <S.UnSelectedType onClick={goPainting}>회화</S.UnSelectedType>
           }
@@ -78,10 +75,23 @@ const pathName = useLocation().pathname
       <S.InputWrapper>
         <S.Input type="text" placeholder='작가명 또는 작품명을 검색하세요.'/>
       </S.InputWrapper>
-      <div>
-        <Link to={"/auction/agreement"}>이용약관</Link>
-        검색
-      </div>
+
+
+      <S.Menu>
+        <S.Link to={"/display/registration"}>
+        <S.Upload>
+          <S.Icon src={"/assets/images/icon/upload.png"} />
+          <S.H8>작품 업로드</S.H8>
+        </S.Upload>
+        </S.Link>
+        <S.Dropdown>
+          드롭다운
+        </S.Dropdown>
+      </S.Menu>
+
+
+
+
       <Outlet />
     </div>
   );
