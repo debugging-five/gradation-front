@@ -178,26 +178,24 @@ S.PrimaryButton = styled(PrimaryButton)`
 
 
 S.UploadedFileList = styled.div`
-  margin-left: 76px;
+  margin-left: 158px;
   margin-top: 8px;
-  list-style: none;
 `;
 
 S.UploadedFileItem = styled.li`
+	${H10};
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 4px;
-  font-size: 14px;
-  color: ${({ theme }) => theme.PALLETE.gray[900]};
+  gap: 12px;
+  margin-bottom: 8px;
 `;
 
 S.DeleteButton = styled.button`
+	${H10};
   background: none;
   border: none;
   color: ${({ theme }) => theme.PALLETE.primary.main};
   cursor: pointer;
-  font-size: 13px;
 `;
 
 
