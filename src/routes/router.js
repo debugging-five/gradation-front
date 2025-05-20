@@ -231,7 +231,7 @@ const router = createBrowserRouter([
             element: <LoginLayout />,
             children: [
               {
-                index: true,
+                path: ":id",
                 element: <AuctionPayment />,
               },
             ],
