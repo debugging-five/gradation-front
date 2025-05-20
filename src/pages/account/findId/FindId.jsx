@@ -112,11 +112,17 @@ const getVerificationCodeEmail = async () => {
     return (
       <div>
         <form autoComplete="off" onSubmit={handleSubmit(async (data) => {
-        
+
+          // 이메일 인증
+          if(!isSendVerificationCode) {
+            alert("이메일 인증을 진행해주세요.")
+            return;
+          }
+
           // 인증번호
           if(!confirmVerificationCode) {
             alert("인증번호 확인은 필수입니다.")
-            return
+            return;
           }
         
           const {
@@ -265,9 +271,9 @@ const getVerificationCodeEmail = async () => {
                   )}
               </S.HiddenBorderWrapper>
             </S.InputContainer>
-            <S.JoinButton $active={isFindId}>
+            <S.Button $active={isFindId}>
               <S.H4 disabled={isSubmitting}>아이디 찾기</S.H4>
-            </S.JoinButton>
+            </S.Button>
               </S.Wrapper>
             </S.Container>
           </form>

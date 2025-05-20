@@ -79,7 +79,7 @@ S.ButtonWrapper = styled.div`
 `
 
 
-S.JoinButton = styled.button`
+S.Button = styled.button`
   all: unset;
   width: 440px;
   height: 50px;

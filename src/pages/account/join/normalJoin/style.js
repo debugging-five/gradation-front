@@ -115,7 +115,18 @@ S.CheckboxWrapper = styled.div`
 
 `
 
-S.Checkbox = styled.div`
+// S.Checkbox = styled.div`
+//   width : 20px;
+//   height : 20px;
+//   background-image: url(${({ checked }) => checked ? '/assets/images/join/checked-on.png' : '/assets/images/join/checked-off.png'});
+//   margin: 0 5px 0 0;
+//   background-size: cover;
+//   background-repeat: no-repeat;
+//   background-position: center;
+//   cursor: pointer;
+// `
+
+S.Checkbox = styled.img`
   width : 20px;
   height : 20px;
   background-image: url(${({ checked }) => checked ? '/assets/images/join/checked-on.png' : '/assets/images/join/checked-off.png'});

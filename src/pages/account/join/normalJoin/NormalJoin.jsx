@@ -530,16 +530,16 @@ const NormalJoin = () => {
               <S.CheckboxContainer>
                 {/* 전체 동의 */}
                 <S.CheckboxWrapper onClick={agreementAll}>
-                  {/* <S.Checkbox src={isAllAgreed ? '/assets/images/join/checked-on.png' : '/assets/images/join/checked-off.png'} /> */}
-                  <S.Checkbox checked={isAllAgreed} />
+                  <S.Checkbox src={isAllAgreed ? '/assets/images/join/checked-on.png' : '/assets/images/join/checked-off.png'} />
+                  {/* <S.Checkbox checked={isAllAgreed} /> */}
                   <S.Terms checked={isAllAgreed}>필수 및 선택 항목을 모두 포함하여 동의합니다.</S.Terms>
                 </S.CheckboxWrapper>
                 
                 {/* 개별 동의 */}
                 {agreementList.map((terms, i) => (
                   <S.CheckboxWrapper key={i} className="detail" onClick={() => agreementOne(i)}>
-                  {/* <S.Checkbox src={agreement[i] ? '/assets/images/join/checked-on.png' : '/assets/images/join/checked-off.png'} /> */}
-                    <S.Checkbox checked={agreement[i]} />
+                  <S.Checkbox src={agreement[i] ? '/assets/images/join/checked-on.png' : '/assets/images/join/checked-off.png'} />
+                    {/* <S.Checkbox checked={agreement[i]} /> */}
                     <S.Terms checked={agreement[i]}>{terms}</S.Terms>
                   </S.CheckboxWrapper>
                 ))}
