@@ -61,7 +61,6 @@ const Login = () => {
         .then((res) => {
           if(!res.ok){
             return res.json().then((res) => {
-              // alert(res.message)
               setLoginMessage(res.message)
             })
           }

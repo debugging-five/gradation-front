@@ -38,38 +38,51 @@ const DisplayRegistration = () => {
     console.log("artPostDTO", artPostDTO);
 
     
-    const res = await fetch("http://localhost:10000/displays/api/registration", {
+    await fetch("http://localhost:10000/displays/api/registration", {
       method : "POST",
       headers : {
         "Content-Type" : "application/json"
       },
       body : JSON.stringify(artPostDTO)
     })
+      .then((res) => {
+        if(!res.ok) {
+            throw new Error("실패")
+        }
+        return res.json();
+      })
+      .then((res) => {
+        const artId = res.artId;
+        console.log(artId)
+
+        if(!data.files) {
+          alert("첨부 파일을 선택하세요.")
+          return;
+        }
+          const formData = new FormData();
+          Array.from(data.files).forEach((file) => {
+            console.log(file.name)
+            formData.append("files", file)
+            console.log(data.files)
+          })
     
-    const result = await res.json();
-    const artId = result.id; 
-    console.log("result", result);
-
-    if(!data.files) {
-      alert("첨부 파일을 선택하세요.")
-      return;
-    }
-
-      // const artId = 56;
-      const formData = new FormData();
-      Array.from(data.files).forEach((file) => {
-        console.log(file.name)
-        formData.append("files", file)
-        console.log(data.files)
+          fetch(`http://localhost:10000/files/api/upload/art/${artId}`, {
+            method : "POST",
+            body : formData
+          })
+            .then((res) => res.json())
+            .then(console.log)
+            .catch(console.error)
       })
 
-      await fetch(`http://localhost:10000/files/api/upload/art/${artId}`, {
-        method : "POST",
-        body : formData
-      })
-        .then((res) => res.json())
-        .then(console.log)
-        .catch(console.error)
+
+        
+     
+    
+    // const result = await res.json();
+    // const artId = result.id; 
+    // console.log("result", result);
+
     })}>
 
     <S.Container>
