@@ -16,7 +16,7 @@ const AdminFaqModify = () => {
   useEffect(() => {
     const fetchFaq = async () => {
       try {
-        const res = await fetch(`http://localhost:10000/faq/api/faq/${id}`);
+        const res = await fetch(`http://localhost:10000/admin/api/faq/modify/${id}`);
         const data = await res.json();
         setFaq(data);
         setCategory(data.faqCategory);
@@ -52,7 +52,7 @@ const AdminFaqModify = () => {
       if (res.ok) {
         setShowSuccessPopup(true);
         setTimeout(() => {
-          navigate(`/mypage/admin/faq/${id}`);
+          navigate(-1);
         }, 1500);
       } else {
         alert("수정 실패! 권한이나 데이터를 확인해주세요.");
@@ -72,20 +72,21 @@ const AdminFaqModify = () => {
         <S.RadioSection>
           <S.RadioLabel>구분<S.Required>*</S.Required></S.RadioLabel>
           <S.RadioGroup>
-            {categories.map((c) => (
+            {categories.map((c) => ( // 카테고리 돌면서 버튼 랜더링
               <S.Radio key={c}>
-                <S.HiddenRadioInput
+                <S.HiddenRadioInput // 실제 동작하는 버튼
                   type="radio"
-                  name="category"
+                  name="category" // 그룹화 해서 여러개 중 하나만 선택하게!
                   value={c}
-                  checked={category === c}
-                  onChange={(e) => setCategory(e.target.value)}
+                  checked={category === c} 
+                  onChange={(e) => setCategory(e.target.value)} // 변경 시 상태값 카테고리 업데이트
                   id={c}
                 />
                 <S.StyledRadio checked={category === c}>
                   <S.CheckIcon className="check-icon">✔</S.CheckIcon>
                 </S.StyledRadio>
-                <S.RadioLabel htmlFor={c} checked={category === c}>{c}</S.RadioLabel>
+                {/* 눈에 보이는 부분 / htmlFor로 input과 연결(id), checked는 스타일, c는 보이는 텍스트 */}
+                <S.RadioCheck htmlFor={c} checked={category === c}>{c}</S.RadioCheck>
               </S.Radio>
             ))}
 
@@ -132,7 +133,7 @@ const AdminFaqModify = () => {
       {showSuccessPopup && (
         <S.PopupOverlay>
           <S.PopupBox>
-            <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/check.png?filePath=images/icons" alt="check-icon" />
+            <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/ok.png?filePath=images/icons" alt="check-icon" />
             <S.PopupMessage>수정이 완료되었습니다.</S.PopupMessage>
           </S.PopupBox>
         </S.PopupOverlay>

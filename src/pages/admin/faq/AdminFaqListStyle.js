@@ -49,11 +49,6 @@ export const FaqTableWrapper = styled.div`
   width: 100%;
 `;
 
-// export const PageTitle = styled.div`
-//   ${CS.H2}
-//   margin-bottom: 50px;
-// `;
-
 export const FaqTableHeader = styled.div`
   ${CS.H5}
   display: flex;
@@ -136,13 +131,13 @@ export const RegisterButtonContainer = styled.div`
 
 export const RegisterButton = styled.button`
   ${CS.H8}
-  width: 120px;
-  height: 45px;
+  width: 125px;
+  height: 50px;
   background-color: #ee3333;
   border: none;
   margin-top: 60px;
   padding: 10px 20px;
-  border-radius: 4px;
+  border-radius: 2px;
   color: white;
   cursor: pointer;
 `;

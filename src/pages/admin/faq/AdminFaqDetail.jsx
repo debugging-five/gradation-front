@@ -11,22 +11,18 @@ const AdminFaqDetail = () => {
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      // alert("접근 권한이 없습니다.");
-      // navigate("/"); // 또는 로그인 페이지로 이동
-      return;
-    }
+    const token = localStorage.getItem("token"); // 로컬스토리지에서 토큰 겟
+    if (!token) return; // 없으면 중단
 
     fetch("http://localhost:10000/users/api/profile", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`, //인증된 사용자
       },
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.currentUser?.userAdminOk == true) {
+        if (data.currentUser?.userAdminOk == true) { //관리자 userAdminOk 맞으면 트루로 변경
           setIsAdmin(true);
         } else {
           alert("관리자만 접근 가능합니다.");
@@ -34,16 +30,16 @@ const AdminFaqDetail = () => {
         }
       })
       .catch((error) => {
-        console.error("관리자 확인 실패:", error);
+        console.error("아.....관리자....:", error);
         alert("오류가 발생했습니다.");
         navigate("/");
       });
-  }, []);
+  }, []);// 배열 비워놨으니 한번만 실행
 
   useEffect(() => {
     const fetchFaqDetail = async () => {
       try {
-        const response = await fetch(`http://localhost:10000/faq/api/faq/${id}`);
+        const response = await fetch(`http://localhost:10000/admin/api/faq/${id}`);
         const data = await response.json();
         setFaq(data);
       } catch (error) {
@@ -64,22 +60,22 @@ const AdminFaqDetail = () => {
         },
       });
     if (response.ok) {
-          setShowSuccessPopup(true);
+          setShowSuccessPopup(true); //성공 알림용 팝업을 보여주기
           setTimeout(() => {
             navigate("/mypage/admin/faq");
-          }, 1500);
+          }, 1000); // 팝업 보여주고나서 1초 딜레이 시간 넣어주기 (바로 이동 될수 있어서)
         } else {
           alert("삭제 실패! 권한이나 서버 상태를 확인해주세요.");
         }
     } catch (error) {
-        console.error("FAQ 삭제 실패:", error);
+        console.error("FAQ 삭제 실패다:", error);
         alert("삭제 중 오류가 발생했습니다.");
     }
   };
 
-  if (!faq) {
-  return <div>로딩 중...</div>;
-  }
+  // 페이지 진입 시 유즈이펙트로 데이터 받아오기 전에 로딩 중 보여줌
+  // 데이터 null > api 응답 전
+  if (!faq) {return <div>로딩 중...</div>;}
 
   return (
     <S.FaqDetailPageContainer>

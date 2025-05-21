@@ -23,38 +23,46 @@ const AdminFaqList = () => {
 
   useEffect(() => {
     // 관리자 여부 확인
+    // 로컬스토리지에서 토큰 겟
     const token = localStorage.getItem("token");
+    // 없으면 중단
     if (!token) return;
-
+    // 백엔드에서 사용자 정보 요청
     fetch("http://localhost:10000/users/api/profile", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`, //인증된 사용자
       },
     })
       .then((res) => res.json())
       .then((data) => {
         console.log("user profile:", data);
-        if (data.currentUser?.userAdminOk == true) {
+        if (data.currentUser?.userAdminOk == true) { //관리자 userAdminOk 맞으면 트루로 변경
           setIsAdmin(true);
         }
       })
-      .catch((err) => console.error("관리자 확인 실패:", err));
-  }, []);
+      .catch((error) => console.error("관리자 확인 실패다:", error));
+  }, []);// 배열 비워놨으니 한번만 실행
 
   useEffect(() => {
+    if (!isAdmin) return; // 관리자일 때만 FAQ 요청
+  
     const fetchFaqData = async () => {
       try {
-        const response = await fetch("http://localhost:10000/faq/api/faq-list");
+        const response = await fetch("http://localhost:10000/admin/api/faq/list", {// AdminController
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
         const data = await response.json();
         setFaqList(data);
       } catch (error) {
-        console.error("Error fetching FAQ data:", error);
+        console.error("FAQ 데이터 에러다  :", error);
       }
     };
-
+  
     fetchFaqData();
-  }, []);
+  }, [isAdmin]);// isAdmin 일 때 실행
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -117,7 +125,9 @@ const AdminFaqList = () => {
         </S.FaqTableHeader>
 
         {currentFaqs.map((faq, index) => (
-          <S.FaqTableRow key={faq.id}>
+          // FAQ 행 그리기 (리스트 랜더링할 때 구분하기 쉽게)
+          <S.FaqTableRow key={faq.id}> 
+          {/* 인덱스 0번 부터 시작이니까 +1 */}
             <S.FaqNumberCell>{index + 1}</S.FaqNumberCell>
             <S.FaqCategoryCell>{faq.faqCategory}</S.FaqCategoryCell>
             <S.FaqTitleLinkCell

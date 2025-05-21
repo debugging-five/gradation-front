@@ -122,7 +122,7 @@ const UpcyclingRegistration = () => {
   const handleRegisterSubmit = async () => {
   setShowConfirmPopup(false);
 
-  const { image, imagePreview, ...rest } = formData;
+  const { image, imagePreview, ...rest } = formData; // 이미지는 따로 분류
 
   const upcyclingData = {
     upcyclingAddress: formData.schoolName,
@@ -130,10 +130,10 @@ const UpcyclingRegistration = () => {
     upcyclingEmail: formData.email,
     upcyclingPhone: formData.phone,
     upcyclingDate: formData.pickupDate,
-    upcyclingSizeSmall: parseInt(formData.smallCount || 0),
+    upcyclingSizeSmall: parseInt(formData.smallCount || 0), // 없으면 기본값 0
     upcyclingSizeMedium: parseInt(formData.mediumCount || 0),
     upcyclingSizeLarge: parseInt(formData.largeCount || 0),
-    upcyclingMaterials: formData.materials.join(","),
+    upcyclingMaterials: formData.materials.join(","), // 배열 문자열로 // "플라스틱,천"
     upcyclingSignificant: formData.notes,
     userId: currentUser?.id || null,
   };
