@@ -8,9 +8,15 @@ const black = "#333333";
 const warning = "#E49804";
 
 const S = {};
-S.Container = styled.div`
-  width: 100dvw;
-  min-height: 100%;
-  background-color: ${gray100};
-`
+
+  S.Container = styled.div`
+    width: 100dvw;
+    min-height: 100%;
+    background-color: ${gray100};
+  `
+
+  S.Main = styled.main`
+    margin-top : 56px;
+  `
+
 export default S;

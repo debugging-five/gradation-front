@@ -10,9 +10,8 @@ const ExhibitionContainer = () => {
     <div>
     <S.Wrapper>
         <S.EN_H2>exhibition</S.EN_H2>
-      <Outlet />
+        <Outlet />
     </S.Wrapper>
-
       {/* <p>일반 사용자</p> */}
       {/* {id === 1 && (
         <p>어드민 일 때</p>
