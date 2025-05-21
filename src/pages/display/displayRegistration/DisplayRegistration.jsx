@@ -1,50 +1,226 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import S from './style';
+import SubButton from '../../../components/button/SubButton';
+import PrimaryButton from '../../../components/button/PrimaryButton';
+import { useSelector } from 'react-redux';
 
 const DisplayRegistration = () => {
+  const { register, handleSubmit, getValues, trigger, formState: {isSubmitting, errors, isValid} } = useForm({mode: "onBlur"});
+  const { currentUser } = useSelector((state) => state.user);
+  const userId = currentUser.id;
 
-  const { register, handleSubmit, formState : { isSubmitting }} = useForm({mode:"onChange"})
-  
   return (
-    // <div>
-    //   <p>신청양식</p>
-    //   DisplayRegistration
-    // </div>
+    <form encType='multipart/form-data' autoComplete="off" onSubmit={handleSubmit(async (data) => {
+      //   console.log(data);
+    
+      const {
+        userName,
+        artTitle,
+        artCategory,
+        artMaterial,
+        artSize,
+        artEndDate,
+        artDescription,
+    } = data;
 
-    <form encType='multipart/form-data' onSubmit={handleSubmit(async (data) => {
-      console.log(data);
+    const artPostDTO = {
+      userName : userName,
+      artTitle : artTitle,
+      artCategory : artCategory,
+      artMaterial : artMaterial,
+      artSize : artSize,
+      artEndDate : artEndDate,
+      artDescription : artDescription,
+      userId: Number(userId)
+      
+    }
+    console.log("artPostDTO", artPostDTO);
 
-      const artId = 56;
+    
+    await fetch("http://localhost:10000/displays/api/registration", {
+      method : "POST",
+      headers : {
+        "Content-Type" : "application/json"
+      },
+      body : JSON.stringify(artPostDTO)
+    })
+      .then((res) => {
+        if(!res.ok) {
+            throw new Error("실패")
+        }
+        return res.json();
+      })
+      .then((res) => {
+        const artId = res.artId;
+        console.log(artId)
 
-      const formData = new FormData();
-      Array.from(data.files).forEach((file) => {
-        formData.append("files", file)
+        if(!data.files) {
+          alert("첨부 파일을 선택하세요.")
+          return;
+        }
+          const formData = new FormData();
+          Array.from(data.files).forEach((file) => {
+            console.log(file.name)
+            formData.append("files", file)
+            console.log(data.files)
+          })
+    
+          fetch(`http://localhost:10000/files/api/upload/art/${artId}`, {
+            method : "POST",
+            body : formData
+          })
+            .then((res) => res.json())
+            .then(console.log)
+            .catch(console.error)
       })
 
-      formData.append("id", artId);
 
-      await fetch(`http://localhost:10000/files/api/upload/art/${artId}`, {
-        method : "POST",
-        body : formData
-      })
-        .then((res) => res.json())
-        .then(console.log)
-        .catch(console.error)
+        
+     
+    
+    // const result = await res.json();
+    // const artId = result.id; 
+    // console.log("result", result);
 
     })}>
 
-      <label>
-        <p>다중 이미지</p>
-        <input 
-          type="file" 
-          accept='image/*'
-          multiple
-          {...register("files")}
-        />
-      </label>
+    <S.Container>
+      <S.Line>
+        <S.ENH3>registration</S.ENH3>
+      </S.Line>
 
-      <button disabled={isSubmitting}>전송</button>
-      
+      <S.FormWrapper>
+        <S.Form>
+          <S.FileWrapper>
+            <S.File type="file" accept="image/*" multiple {...register("files")} />
+            <S.H5>첨부파일 업로드</S.H5>
+          </S.FileWrapper>
+          <S.InputContainer>
+            <S.BorderWrapper>
+              <S.Border>
+                <S.InputWrapper>
+                  <S.Label>
+                    <S.H7>작가명<span>*</span></S.H7>
+                    <S.Input type='text' placeholder='작가명을 입력하세요.'
+                    {...register("userName", {
+                      required : true,
+                    })}
+                  />
+                  </S.Label>
+                </S.InputWrapper>
+              </S.Border>
+            {errors && errors?.userName?.type === "required" && (
+              <S.Warning>필수 항목입니다.</S.Warning>
+            )}
+            </S.BorderWrapper>
+            <S.BorderWrapper>
+              <S.Border>
+                <S.InputWrapper>
+                  <S.Label>
+                    <S.H7>작품명<span>*</span></S.H7>
+                    <S.Input type='text' placeholder='작품명을 입력하세요.'
+                    {...register("artTitle", {
+                      required : true,
+                    })}
+                  />
+                  </S.Label>
+                </S.InputWrapper>
+              </S.Border>
+            {errors && errors?.artTitle?.type === "required" && (
+              <S.Warning>필수 항목입니다.</S.Warning>
+            )}
+            </S.BorderWrapper>
+            <S.BorderWrapper>
+              <S.Border>
+                <S.InputWrapper>
+                  <S.Label>
+                    <S.H7>작품 분류<span>*</span></S.H7>
+                    <S.Input type='text' placeholder='작품 분류를 선택하세요.'
+                    {...register("artCategory", {
+                      required : true,
+                    })}
+                  />
+                  </S.Label>
+                </S.InputWrapper>
+              </S.Border>
+            {errors && errors?.artCategory?.type === "required" && (
+              <S.Warning>필수 항목입니다.</S.Warning>
+            )}
+            </S.BorderWrapper>
+            <S.BorderWrapper>
+              <S.Border>
+                <S.InputWrapper>
+                  <S.Label>
+                    <S.H7>작품 재료<span>*</span></S.H7>
+                    <S.Input type='text' placeholder='작품 재료를 입력하세요.'
+                    {...register("artMaterial", {
+                      required : true,
+                    })}
+                  />
+                  </S.Label>
+                </S.InputWrapper>
+              </S.Border>
+            {errors && errors?.artMaterial?.type === "required" && (
+              <S.Warning>필수 항목입니다.</S.Warning>
+            )}
+            </S.BorderWrapper>
+            <S.BorderWrapper>
+              <S.Border>
+                <S.InputWrapper>
+                  <S.Label>
+                    <S.H7>작품 규격<span>*</span></S.H7>
+                    <S.Input type='text' placeholder='가로 X 세로 X 높이'
+                    {...register("artSize", {
+                      required : true,
+                    })}
+                  />
+                  </S.Label>
+                </S.InputWrapper>
+              </S.Border>
+            {errors && errors?.artSize?.type === "required" && (
+              <S.Warning>필수 항목입니다.</S.Warning>
+            )}
+            </S.BorderWrapper>
+            <S.BorderWrapper>
+              <S.Border>
+                <S.InputWrapper>
+                  <S.Label>
+                    <S.H7>제작 완료일<span>*</span></S.H7>
+                    <S.Input type='date' placeholder='제작 완료일'
+                    {...register("artEndDate", {
+                      required : true,
+                    })}
+                  />
+                  </S.Label>
+                </S.InputWrapper>
+              </S.Border>
+            {errors && errors?.artEndDate?.type === "required" && (
+              <S.Warning>필수 항목입니다.</S.Warning>
+            )}
+            </S.BorderWrapper>
+          </S.InputContainer>
+        </S.Form>
+          <S.Description>
+            <S.Label>
+              <S.H7>작품 설명<span>*</span></S.H7>
+            </S.Label>
+              <S.InputBox type='text' placeholder='작품 설명을 입력하세요.'
+              {...register("artDescription", {
+                required : true,
+              })}
+              />
+              {errors && errors?.artDescription?.type === "required" && (
+                <S.Warning>필수 항목입니다.</S.Warning>
+              )}
+          </S.Description>
+      </S.FormWrapper>
+
+      <S.ButtonWrapper>
+        <SubButton>취소</SubButton>
+        <PrimaryButton disabled={isSubmitting}>등록</PrimaryButton>
+      </S.ButtonWrapper>
+    </S.Container>
     </form>
   );
 };
