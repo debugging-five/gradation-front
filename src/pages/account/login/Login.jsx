@@ -61,7 +61,6 @@ const Login = () => {
         .then((res) => {
           if(!res.ok){
             return res.json().then((res) => {
-              // alert(res.message)
               setLoginMessage(res.message)
             })
           }
@@ -95,7 +94,7 @@ const Login = () => {
                     <S.IconWrapper>
                       <S.Icon src={'/assets/images/icon/user.png'} />
                     </S.IconWrapper>
-                    <S.Input type="text" placeholder='아이디' value={saveId}
+                    <S.Input type="text" placeholder='아이디' value={saveId} 
                       {...register("userIdentification", {
                         required : true,
                         onChange : (e) => {
@@ -120,7 +119,7 @@ const Login = () => {
                     <S.IconWrapper>
                       <S.Icon src={'/assets/images/icon/lock.png'} />
                     </S.IconWrapper>
-                      <S.Input type={passwordType.type} placeholder='비밀번호' 
+                      <S.Input type={passwordType.type} placeholder='비밀번호' autoComplete="off"
                         {...register("userPassword", {
                           required : true,
                           onChange : () => {
