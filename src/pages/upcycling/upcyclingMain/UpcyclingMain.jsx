@@ -1,29 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
-import * as S from "./style";
+import * as S from "./UpcyclingMainStyle";
 import { useNavigate } from "react-router-dom";
 
 const UpcyclingMain = () => {
   const navigate = useNavigate();
-  const isLoggedIn = Boolean(localStorage.getItem("token"));
 
-  const handleNavigate = (path) => {
-    if (!isLoggedIn) {
-      navigate("/login");
-    } else {
-      navigate(path);
-    }
-  };
-
+  // 타임라인 줄그리기
   const StepItem = ({ number, numCircle, title, texts, isLast }) => {
     return (
-      <S.Step isLast={isLast}>
+      <S.Step $isLast={isLast}>
         <S.CircleContainer>
           <S.Number>{number}</S.Number>
           {numCircle}
         </S.CircleContainer>
         <S.TimelineContent>
           <S.TimelineTitle>{title}</S.TimelineTitle>
-          {texts.map((line, i) => (
+          {texts.map((line, i) => ( // 설명부분이 여러줄이라 배열을 맵으로 각각 랜더링
             <S.TimelineText key={i}>{line}</S.TimelineText>
           ))}
         </S.TimelineContent>
@@ -34,21 +26,22 @@ const UpcyclingMain = () => {
   const chapter2Ref = useRef(null);
   const [isImgVisible, setIsImgVisible] = useState(false);
 
+  // 이미지들 애니메이션 효과
   useEffect(() => {
     const observer = new IntersectionObserver(
+  // 요소가 일정 비율이상 보여지면 화면에 보인다고 세팅
       ([entry]) => {
         if (entry.isIntersecting) setIsImgVisible(true);
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 } // 30% 이상!
     );
-    if (chapter2Ref.current) {
+  // 화면 스크롤로 해당 요소가 나타나면 entry.isIntersecting 조건이 발동
+    if (chapter2Ref.current) { 
       observer.observe(chapter2Ref.current);
     }
-
+  // 컴포넌트 언마운트 면 중단, 메모리 누수 방지용 정리 코드
     return () => {
-      if (chapter2Ref.current) {
-        observer.unobserve(chapter2Ref.current);
-      }
+      if (chapter2Ref.current) observer.unobserve(chapter2Ref.current);
     };
   }, []);
 
@@ -117,16 +110,16 @@ const UpcyclingMain = () => {
       <S.Chapter2>
         <S.Chapter2Img
           ref={chapter2Ref}
-          src="http://localhost:10000/files/api/get/banner1.png?filePath=images/upcycling/upcycling-main"
+          src="http://localhost:10000/files/api/get/chepter-2.png?filePath=images/upcycling/upcycling-main"
           alt="upcycling-banner1"
-          isVisible={isImgVisible}
+          $isVisible={isImgVisible}
         />
       </S.Chapter2>
 
 
       <S.Chapter3 ref={chapter3Ref}>
         <S.Chapter3Title>"폐기물이 새 새명을 얻는 순환의 과정</S.Chapter3Title>
-        <S.Chapter3TopImg isVisible={isChapter3Visible}>
+        <S.Chapter3TopImg $isVisible={isChapter3Visible}>
           <S.StepImg
             src="http://localhost:10000/files/api/get/step1.png?filePath=images/upcycling/upcycling-main"
             alt="step1"
@@ -156,8 +149,8 @@ const UpcyclingMain = () => {
             alt="step4"
           />
         </S.Chapter3TopImg>
-          <S.Chapter3Labels isVisible={isChapter3Visible}>재생 캔버스, 친환경 에코백</S.Chapter3Labels>
-        <S.Chapter3MidImg isVisible={isChapter3Visible}>
+          <S.Chapter3Labels $isVisible={isChapter3Visible}>재생 캔버스, 친환경 에코백</S.Chapter3Labels>
+        <S.Chapter3MidImg $isVisible={isChapter3Visible}>
           <S.StepImg
             src="http://localhost:10000/files/api/get/step5.png?filePath=images/upcycling/upcycling-main"
             alt="step5"
@@ -187,8 +180,8 @@ const UpcyclingMain = () => {
             alt="step8"
           />
         </S.Chapter3MidImg>
-        <S.Chapter3Labels isVisible={isChapter3Visible}>재생 크레용</S.Chapter3Labels>
-        <S.Chapter3BottomImg isVisible={isChapter3Visible}>
+        <S.Chapter3Labels $isVisible={isChapter3Visible}>재생 크레용</S.Chapter3Labels>
+        <S.Chapter3BottomImg $isVisible={isChapter3Visible}>
           <S.StepImg
             src="http://localhost:10000/files/api/get/step9.png?filePath=images/upcycling/upcycling-main"
             alt="step9"
@@ -218,7 +211,7 @@ const UpcyclingMain = () => {
             alt="step12"
           />
         </S.Chapter3BottomImg>
-        <S.Chapter3Labels isVisible={isChapter3Visible}>목재 프레임</S.Chapter3Labels>
+        <S.Chapter3Labels $isVisible={isChapter3Visible}>목재 프레임</S.Chapter3Labels>
       </S.Chapter3>
 
       <S.Chapter4>
@@ -285,10 +278,10 @@ const UpcyclingMain = () => {
       </S.BottomText>
 
       <S.ButtonsWrapper>
-        <S.ApplicationButton onClick={() => handleNavigate("/service-center/qna")} >
+        <S.ApplicationButton onClick={() => navigate("/service-center/qna")} >
           문의하기
         </S.ApplicationButton>
-        <S.InquiryButton onClick={() => handleNavigate("/upcycling/registration")}>
+        <S.InquiryButton onClick={() => navigate("/upcycling/registration")}>
           업사이클 신청
         </S.InquiryButton>
       </S.ButtonsWrapper>
