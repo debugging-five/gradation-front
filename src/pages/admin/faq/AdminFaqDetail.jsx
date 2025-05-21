@@ -11,7 +11,7 @@ const AdminFaqDetail = () => {
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token"); // 로컬스토리지에서 토큰 겟
+    const token = localStorage.getItem("jwtToken"); // 로컬스토리지에서 토큰 겟
     if (!token) return; // 없으면 중단
 
     fetch("http://localhost:10000/users/api/profile", {
@@ -39,21 +39,34 @@ const AdminFaqDetail = () => {
   useEffect(() => {
     const fetchFaqDetail = async () => {
       try {
-        const response = await fetch(`http://localhost:10000/admin/api/faq/${id}`);
+        const token = localStorage.getItem("jwtToken");
+        const response = await fetch(`http://localhost:10000/admin/api/faq/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      
         const data = await response.json();
+      
+        if (!response.ok) {
+          console.error("FAQ 상세 요청 실패 응답:", data);
+          return;
+        }
+      
         setFaq(data);
       } catch (error) {
         console.error('FAQ 상세 호출 실패:', error);
       }
     };
-
+  
     fetchFaqDetail();
   }, [id]);
 
+
   const handleDelete = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const response = await fetch(`http://localhost:10000/faq/api/faq/${faq.id}`, {
+      const token = localStorage.getItem("jwtToken");
+      const response = await fetch(`http://localhost:10000/admin/api/faq/${faq.id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

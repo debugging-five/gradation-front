@@ -24,9 +24,13 @@ const AdminFaqList = () => {
   useEffect(() => {
     // 관리자 여부 확인
     // 로컬스토리지에서 토큰 겟
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("jwtToken");
+    console.log("FAQ 요청 시 토큰:", token);
     // 없으면 중단
-    if (!token) return;
+    if (!token) {
+      console.warn("토큰이 없습니다. 요청 중단");
+      return;
+    }
     // 백엔드에서 사용자 정보 요청
     fetch("http://localhost:10000/users/api/profile", {
       method: "POST",
@@ -42,27 +46,34 @@ const AdminFaqList = () => {
         }
       })
       .catch((error) => console.error("관리자 확인 실패다:", error));
-  }, []);// 배열 비워놨으니 한번만 실행
+  }, []); // 배열 비워놨으니 한번만 실행
 
   useEffect(() => {
     if (!isAdmin) return; // 관리자일 때만 FAQ 요청
   
     const fetchFaqData = async () => {
-      try {
-        const response = await fetch("http://localhost:10000/admin/api/faq/list", {// AdminController
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        const data = await response.json();
-        setFaqList(data);
-      } catch (error) {
-        console.error("FAQ 데이터 에러다  :", error);
+    try {
+      const response = await fetch("http://localhost:10000/admin/api/faq/list", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        },
+      });
+
+      const data = await response.json();
+      if (!Array.isArray(data)) {
+        console.error("FAQ API 응답이 배열이 아님:", data);
+        return;
       }
-    };
+      console.log("불러온 FAQ data:", data);
+      setFaqList(data); // 배열일 때만
+    } catch (error) {
+      console.error("FAQ 데이터 에러다  :", error);
+    }
+  };
+
   
     fetchFaqData();
-  }, [isAdmin]);// isAdmin 일 때 실행
+  }, [isAdmin]); // isAdmin 일 때 실행
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -80,7 +91,7 @@ const AdminFaqList = () => {
       : faqList.filter((faq) => faq.faqCategory === selectedCategory);
 
   const handleRegister = () => {
-    navigate("/mypage/admin/faq/register");
+    navigate("/mypage/admin/faq/registration");
   };
 
   const [currentPage, setCurrentPage] = useState(1);
