@@ -1,16 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
-import {
-  BigPopUp, BigPopUpButtonDiv, BigPopUpButtonR, BigPopUpButtonW,
-  BigPopUpCloseBox, BigPopUpContent, BigPopUpIcon, BigPopUpText,
-  BigPopUpTextDiv, BigPopUpTitle, BigPopUpX, EndBar, MainTitle, MainWrapper,
-  PopUpOverlay
-} from '../style';
-import {
-  Button1, Button2, ButtonDiv, CheckBoxDiv, CheckImage,
-  Content, GoToQna, MainContent1, MainContent2,
-  SubTitle, TextBox
-} from './mypageDeleteStyle';
+import * as S from '../style';
+import * as SD from './mypageDeleteStyle';
 
 const MypageDelete = () => {
   const [isChecked, setChecked] = useState(false);
@@ -56,19 +47,19 @@ const MypageDelete = () => {
   };
 
   return (
-    <MainWrapper>
-      <MainTitle>회원탈퇴</MainTitle>
+    <S.MainWrapper>
+      <S.MainTitle>회원탈퇴</S.MainTitle>
 
-      <MainContent1>
+      <SD.MainContent1>
         회원탈퇴를 하신다니 너무 아쉬워요. 문의 및 건의 사항이 있으시면 
-        <GoToQna as={NavLink} to="/service-center/registration"> 고객센터</GoToQna>
+        <SD.GoToQna as={NavLink} to="/service-center/registration"> 고객센터</SD.GoToQna>
         로 문의해 주세요.
-      </MainContent1>
+      </SD.MainContent1>
 
-      <MainContent2>
+      <SD.MainContent2>
         회원탈퇴를 위한 사항을 숙지해주세요.
-        <EndBar />
-      </MainContent2>
+        <S.EndBar />
+      </SD.MainContent2>
 
       {/* 설명 섹션들 */}
       {[
@@ -93,101 +84,101 @@ const MypageDelete = () => {
           content: '탈퇴한 이메일 주소는 탈퇴 후 24시간 후에 다시 가입할 수 있습니다.'
         }
       ].map(({ title, content }, index) => (
-        <TextBox key={index}>
-          <SubTitle>{title}</SubTitle>
-          <Content>{content}</Content>
-        </TextBox>
+        <SD.TextBox key={index}>
+          <SD.SubTitle>{title}</SD.SubTitle>
+          <SD.Content>{content}</SD.Content>
+        </SD.TextBox>
       ))}
 
-      <CheckBoxDiv>
-        <CheckImage onClick={toggleCheck} style={{ cursor: 'pointer', display: 'inline-block' }}>
+      <SD.CheckBoxDiv>
+        <SD.CheckImage onClick={toggleCheck} style={{ cursor: 'pointer', display: 'inline-block' }}>
           <img
             src={isChecked ? checkedUrl : uncheckedUrl}
             alt={isChecked ? 'Checked' : 'Unchecked'}
             width={16}
             height={16}
           />
-        </CheckImage>
-        <Content>
+        </SD.CheckImage>
+        <SD.Content>
           해당 내용을 확인하였으며, Gradation 계정 탈퇴에 동의합니다. 이 작업은 취소할 수 없습니다.
-        </Content>
-      </CheckBoxDiv>
+        </SD.Content>
+      </SD.CheckBoxDiv>
 
-      <ButtonDiv>
-        <Button1 onClick={handleMainClick}>메인으로 돌아가기</Button1>
-        <Button2 onClick={handleDeleteClick} disabled={!isChecked} style={{ opacity: isChecked ? 1 : 0.5 }}>
+      <SD.ButtonDiv>
+        <SD.Button1 onClick={handleMainClick}>메인으로 돌아가기</SD.Button1>
+        <SD.Button2 onClick={handleDeleteClick} disabled={!isChecked} style={{ opacity: isChecked ? 1 : 0.5 }}>
           탈퇴하기
-        </Button2>
-      </ButtonDiv>
+        </SD.Button2>
+      </SD.ButtonDiv>
 
       {/* 팝업 1 */}
       {popupStep === 1 && (
-        <PopUpOverlay>
-          <BigPopUp>
-            <BigPopUpCloseBox>
-              <BigPopUpX onClick={closePopup}>⨉</BigPopUpX>
-            </BigPopUpCloseBox>
-            <BigPopUpContent>
-              <BigPopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="attention" />
-              <BigPopUpTextDiv>
-                <BigPopUpTitle>회원탈퇴 하시겠습니까?</BigPopUpTitle>
-                <BigPopUpText>회원탈퇴시 24시간동안</BigPopUpText>
-                <BigPopUpText>회원가입이 불가합니다.</BigPopUpText>
-              </BigPopUpTextDiv>
-              <BigPopUpButtonDiv>
-                <BigPopUpButtonW onClick={closePopup}>돌아가기</BigPopUpButtonW>
-                <BigPopUpButtonR onClick={goToNextPopup}>계속</BigPopUpButtonR>
-              </BigPopUpButtonDiv>
-            </BigPopUpContent>
-          </BigPopUp>
-        </PopUpOverlay>
+        <S.PopUpOverlay>
+          <S.BigPopUp>
+            <S.BigPopUpCloseBox>
+              <S.BigPopUpX onClick={closePopup}>⨉</S.BigPopUpX>
+            </S.BigPopUpCloseBox>
+            <S.BigPopUpContent>
+              <S.BigPopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="attention" />
+              <S.BigPopUpTextDiv>
+                <S.BigPopUpTitle>회원탈퇴 하시겠습니까?</S.BigPopUpTitle>
+                <S.BigPopUpText>회원탈퇴시 24시간동안</S.BigPopUpText>
+                <S.BigPopUpText>회원가입이 불가합니다.</S.BigPopUpText>
+              </S.BigPopUpTextDiv>
+              <S.BigPopUpButtonDiv>
+                <S.BigPopUpButtonW onClick={closePopup}>돌아가기</S.BigPopUpButtonW>
+                <S.BigPopUpButtonR onClick={goToNextPopup}>계속</S.BigPopUpButtonR>
+              </S.BigPopUpButtonDiv>
+            </S.BigPopUpContent>
+          </S.BigPopUp>
+        </S.PopUpOverlay>
       )}
 
       {/* 팝업 2 */}
       {popupStep === 2 && (
-        <PopUpOverlay>
-          <BigPopUp>
-            <BigPopUpCloseBox>
-              <BigPopUpX onClick={closePopup}>⨉</BigPopUpX>
-            </BigPopUpCloseBox>
-            <BigPopUpContent>
-              <BigPopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="attention" />
-              <BigPopUpTextDiv>
-                <BigPopUpTitle>정말로 탈퇴 하시겠습니까?</BigPopUpTitle>
-                <BigPopUpText>회원탈퇴시 24시간동안</BigPopUpText>
-                <BigPopUpText>회원가입이 불가합니다.</BigPopUpText>
-              </BigPopUpTextDiv>
-              <BigPopUpButtonDiv>
-                <BigPopUpButtonW onClick={closePopup}>돌아가기</BigPopUpButtonW>
-                <BigPopUpButtonR onClick={handleWithdraw}>계속</BigPopUpButtonR>
-              </BigPopUpButtonDiv>
-            </BigPopUpContent>
-          </BigPopUp>
-        </PopUpOverlay>
+        <S.PopUpOverlay>
+          <S.BigPopUp>
+            <S.BigPopUpCloseBox>
+              <S.BigPopUpX onClick={closePopup}>⨉</S.BigPopUpX>
+            </S.BigPopUpCloseBox>
+            <S.BigPopUpContent>
+              <S.BigPopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="attention" />
+              <S.BigPopUpTextDiv>
+                <S.BigPopUpTitle>정말로 탈퇴 하시겠습니까?</S.BigPopUpTitle>
+                <S.BigPopUpText>회원탈퇴시 24시간동안</S.BigPopUpText>
+                <S.BigPopUpText>회원가입이 불가합니다.</S.BigPopUpText>
+              </S.BigPopUpTextDiv>
+              <S.BigPopUpButtonDiv>
+                <S.BigPopUpButtonW onClick={closePopup}>돌아가기</S.BigPopUpButtonW>
+                <S.BigPopUpButtonR onClick={handleWithdraw}>계속</S.BigPopUpButtonR>
+              </S.BigPopUpButtonDiv>
+            </S.BigPopUpContent>
+          </S.BigPopUp>
+        </S.PopUpOverlay>
       )}
 
       {/* 팝업 3 */}
       {popupStep === 3 && (
-        <PopUpOverlay>
-          <BigPopUp>
-            <BigPopUpCloseBox>
-              <BigPopUpX onClick={closePopup}>⨉</BigPopUpX>
-            </BigPopUpCloseBox>
-            <BigPopUpContent>
-              <BigPopUpIcon src="http://localhost:10000/files/api/get/check-circle.png?filePath=images/mypage" alt="check-circle" />
-              <BigPopUpTextDiv>
-                <BigPopUpTitle>회원탈퇴 완료</BigPopUpTitle>
-                <BigPopUpText>탈퇴가 완료되었습니다.</BigPopUpText>
-                <BigPopUpText>이용해주셔서 감사합니다.</BigPopUpText>
-              </BigPopUpTextDiv>
-              <BigPopUpButtonDiv>
-                <BigPopUpButtonR onClick={handleMainClick}>확인</BigPopUpButtonR>
-              </BigPopUpButtonDiv>
-            </BigPopUpContent>
-          </BigPopUp>
-        </PopUpOverlay>
+        <S.PopUpOverlay>
+          <S.BigPopUp>
+            <S.BigPopUpCloseBox>
+              <S.BigPopUpX onClick={closePopup}>⨉</S.BigPopUpX>
+            </S.BigPopUpCloseBox>
+            <S.BigPopUpContent>
+              <S.BigPopUpIcon src="http://localhost:10000/files/api/get/check-circle.png?filePath=images/mypage" alt="check-circle" />
+              <S.BigPopUpTextDiv>
+                <S.BigPopUpTitle>회원탈퇴 완료</S.BigPopUpTitle>
+                <S.BigPopUpText>탈퇴가 완료되었습니다.</S.BigPopUpText>
+                <S.BigPopUpText>이용해주셔서 감사합니다.</S.BigPopUpText>
+              </S.BigPopUpTextDiv>
+              <S.BigPopUpButtonDiv>
+                <S.BigPopUpButtonR onClick={handleMainClick}>확인</S.BigPopUpButtonR>
+              </S.BigPopUpButtonDiv>
+            </S.BigPopUpContent>
+          </S.BigPopUp>
+        </S.PopUpOverlay>
       )}
-    </MainWrapper>
+    </S.MainWrapper>
   );
 };
 

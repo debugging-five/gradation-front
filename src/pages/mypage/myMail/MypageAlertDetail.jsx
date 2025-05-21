@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-  Button120x45R, Button120x45W, ButtonDiv,
-  MailContentBox, MailTitle, MailTitleBox, MainWrapper,
-  PopUp, PopUpButtonDiv, PopUpButtonR, PopUpButtonW,
-  PopUpContent, PopUpIcon, PopUpOverlay, PopUpText, Wrapper
-} from '../style';
+import * as S from '../style';
 
 const MypageAlertDetail = () => {
   const { id } = useParams();
@@ -47,52 +42,52 @@ const MypageAlertDetail = () => {
   if (!mail) return <div>로딩 중...</div>;
 
   return (
-    <MainWrapper>
-      <Wrapper>
-        <MailTitleBox>
-          <MailTitle>{mail.mailTitle}</MailTitle>
+    <S.MainWrapper>
+      <S.Wrapper>
+        <S.MailTitleBox>
+          <S.MailTitle>{mail.mailTitle}</S.MailTitle>
           <p>{new Date(mail.mailSendTime).toLocaleDateString('ko-KR')}</p>
-        </MailTitleBox>
+        </S.MailTitleBox>
 
-        <MailContentBox>
+        <S.MailContentBox>
           {mail.mailContent}
-        </MailContentBox>
+        </S.MailContentBox>
 
-        <ButtonDiv>
-          <Button120x45W onClick={() => navigate(-1)}>목록</Button120x45W>
-          <Button120x45R onClick={() => setShowConfirm(true)}>삭제</Button120x45R>
-        </ButtonDiv>
-      </Wrapper>
+        <S.ButtonDiv>
+          <S.Button120x45W onClick={() => navigate(-1)}>목록</S.Button120x45W>
+          <S.Button120x45R onClick={() => setShowConfirm(true)}>삭제</S.Button120x45R>
+        </S.ButtonDiv>
+      </S.Wrapper>
 
       {/* 첫 번째 팝업: 삭제 확인 */}
       {showConfirm && (
-        <PopUpOverlay>
-          <PopUp>
-            <PopUpContent>
-              <PopUpIcon src="http://localhost:10000/files/api/get/question.png?filePath=images/mypage" alt="question" />
-              <PopUpText>알림을 삭제하시겠습니까?</PopUpText>
-              <PopUpButtonDiv>
-                <PopUpButtonW onClick={() => setShowConfirm(false)}>취소</PopUpButtonW>
-                <PopUpButtonR onClick={handleDelete}>확인</PopUpButtonR>
-              </PopUpButtonDiv>
-            </PopUpContent>
-          </PopUp>
-        </PopUpOverlay>
+        <S.PopUpOverlay>
+          <S.PopUp>
+            <S.PopUpContent>
+              <S.PopUpIcon src="http://localhost:10000/files/api/get/question.png?filePath=images/mypage" alt="question" />
+              <S.PopUpText>알림을 삭제하시겠습니까?</S.PopUpText>
+              <S.PopUpButtonDiv>
+                <S.PopUpButtonW onClick={() => setShowConfirm(false)}>취소</S.PopUpButtonW>
+                <S.PopUpButtonR onClick={handleDelete}>확인</S.PopUpButtonR>
+              </S.PopUpButtonDiv>
+            </S.PopUpContent>
+          </S.PopUp>
+        </S.PopUpOverlay>
       )}
 
       {/* 두 번째 팝업: 삭제 성공 */}
       {showSuccess && (
-        <PopUpOverlay>
-          <PopUp>
-            <PopUpContent>
-              <PopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="attention" />
-              <PopUpText>알림이 삭제되었습니다.</PopUpText>
-              <PopUpButtonR onClick={() => { setShowSuccess(false); navigate(-1); }}>확인</PopUpButtonR>
-            </PopUpContent>
-          </PopUp>
-        </PopUpOverlay>
+        <S.PopUpOverlay>
+          <S.PopUp>
+            <S.PopUpContent>
+              <S.PopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="attention" />
+              <S.PopUpText>알림이 삭제되었습니다.</S.PopUpText>
+              <S.PopUpButtonR onClick={() => { setShowSuccess(false); navigate(-1); }}>확인</S.PopUpButtonR>
+            </S.PopUpContent>
+          </S.PopUp>
+        </S.PopUpOverlay>
       )}
-    </MainWrapper>
+    </S.MainWrapper>
   );
 };
 

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { MainTitle, MainWrapper } from '../style';
+import * as S from '../style';
 
 const MyApprovedContainer = () => {
   return (
-    <MainWrapper>
-      <MainTitle>내 활동 / 내 승인내역</MainTitle>
+    <S.MainWrapper>
+      <S.MainTitle>내 활동 / 내 승인내역</S.MainTitle>
       
       <Outlet />
-    </MainWrapper>
+    </S.MainWrapper>
   );
 };
 

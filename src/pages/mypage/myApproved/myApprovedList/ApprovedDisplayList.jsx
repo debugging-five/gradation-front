@@ -1,28 +1,28 @@
 import React from 'react';
-import { Content, ContentBox, ApprovedStatus, ListHeader, MainWrapper, Number, Title, TitleNavigate, Wrapper, ApprovedBox, NumberTitle } from './approvedListStyle';
+import * as SA from './approvedListStyle';
 import { NavLink } from 'react-router-dom';
 
 const ApprovedDisplayList = () => {
   return (
-    <MainWrapper>
-        <Wrapper>
+    <SA.MainWrapper>
+        <SA.Wrapper>
             {/* 리스트 헤더 */}
-            <ListHeader>
-                <NumberTitle>번호</NumberTitle>
-                <Title>작품명</Title>
-                <ApprovedBox>승인상태</ApprovedBox>
-            </ListHeader>
+            <SA.ListHeader>
+                <SA.NumberTitle>번호</SA.NumberTitle>
+                <SA.Title>작품명</SA.Title>
+                <SA.ApprovedBox>승인상태</SA.ApprovedBox>
+            </SA.ListHeader>
     
             {/* 리스트 배열 */}
-            <ContentBox>
-                <Number>1</Number>
-                <TitleNavigate  as={NavLink} to="/service-center/qna/detail/1" end>
-                    <Content>절망에 빠진 동상</Content>
-                </TitleNavigate>
-                <ApprovedStatus>승인대기</ApprovedStatus>
-            </ContentBox>
-        </Wrapper>
-    </MainWrapper>
+            <SA.ContentBox>
+                <SA.Number>1</SA.Number>
+                <SA.TitleNavigate  as={NavLink} to="/service-center/qna/detail/1" end>
+                    <SA.Content>절망에 빠진 동상</SA.Content>
+                </SA.TitleNavigate>
+                <SA.ApprovedStatus>승인대기</SA.ApprovedStatus>
+            </SA.ContentBox>
+        </SA.Wrapper>
+    </SA.MainWrapper>
   );
 };
 
