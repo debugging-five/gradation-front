@@ -1,10 +1,23 @@
-import React from 'react';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Outlet, useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import S from './style';
 
-const DisplayCategory = () => {
-  const { category  } = useParams();
+const DisplayCategory = ({props}) => {
   const navigate = useNavigate();
+  
+  const { category } = useParams();
+  const { order, setOrder, cursor, setCursor, keyword, setKeyword, isLoading, isError } = useOutletContext();
+
+  const [value, setValue] = useState("")
+  const onChangeValue = (e) => {
+    setValue(e.target.value)
+  }
+  const handleOrder = (order) => setOrder(order);
+  const handleSearch = (e) => {
+    if(e.key === 'Enter'){
+      setKeyword(value)
+    }
+  }
 
   const goKorean = () => {
     navigate(`/display/korean`);
@@ -24,7 +37,7 @@ const DisplayCategory = () => {
   const goPainting = () => {
     navigate(`/display/painting`);
   }
-  
+
   return (
     <div>
       <S.CategoryWrapper>
@@ -72,9 +85,12 @@ const DisplayCategory = () => {
       </S.CategoryWrapper>
 
       <S.InputWrapper>
-        <S.Input type="text" placeholder='작가명 또는 작품명을 검색하세요.'/>
+        <S.Input type="text" 
+          placeholder='작가명 또는 작품명을 검색하세요.'
+          onChange={onChangeValue}
+          onKeyDown={handleSearch}
+        />
       </S.InputWrapper>
-
 
       <S.Menu>
         <S.Link to={"/display/registration"}>
@@ -84,13 +100,11 @@ const DisplayCategory = () => {
         </S.Upload>
         </S.Link>
         <S.Dropdown>
-          드롭다운
+          <p onClick={() => handleOrder("date")}>등록순</p>
+          <p onClick={() => handleOrder("popular")}>좋아요순</p>
+          <p onClick={() => handleOrder("comment")}>댓글순</p>
         </S.Dropdown>
       </S.Menu>
-
-
-
-
       <Outlet />
     </div>
   );
