@@ -70,6 +70,7 @@ S.Input = styled.input`
 	outline: none;
 	width : 440px;
 	margin-left : 76px;
+	background: none;
 `
 
 S.SubmitButton = styled.button`

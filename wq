@@ -1,0 +1,250 @@
+[33m628c339[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31mproject/master[m[33m)[m Merge pull request #48 from Dgeon1008/kdg
+[33m75c9509[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m706cf76[m exhibition gradation
+[33m8b3bd0a[m Merge pull request #47 from dev-tpghks23/master
+[33mbc41aca[m Merge branch 'master' into master
+[33m05c2038[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m 0521 민아
+[33m0dc224d[m lock
+[33m93c78ca[m Merge pull request #45 from croissen/ksm
+[33m974299c[m feat: 마이페이지 서버 연결중
+[33mda42ac4[m feat: 마이페이지 서버 연결중
+[33m1f339c4[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m2b2b3e6[m Merge pull request #46 from duck-goo/duckgoo
+[33m1df3eab[m Merge branch 'master' into duckgoo
+[33m722fb04[m 05/21 11:10
+[33m5ea2a24[m 05/21 10:22 AdminFaq 작업 중
+[33mf2d7aa6[m feat: 마이페이지 서버 연결중
+[33ma3439fc[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m4ebae7a[m Merge pull request #44 from alsdk1676/sma
+[33m3050fee[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m10b698d[m feat: 작품 업로드 작업 중
+[33mdd54dc5[m feat: 보고용 commit
+[33m5f24279[m feat: 마이페이지 서버 연결중
+[33mda7c30d[m feat: universityExhibition 등록 가능
+[33mf4c72b6[m feat: 작품 업로드 작업 중
+[33m360cdf0[m Merge branch 'master' into duckgoo
+[33m0f5be35[m 05/20 17:44
+[33m6c4bfc0[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m5532c01[m Merge pull request #43 from alsdk1676/sma
+[33mf3986c5[m feat: exhibition 수정중
+[33m678ac57[m feat: 로그인 아이디 저장
+[33m7b22d86[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33mdc20bd0[m feat: 아이디 저장 작업 중
+[33m99da53c[m Merge pull request #42 from Dgeon1008/kdg
+[33mb3bd3e9[m feat: exhibition registration 작업중
+[33m580b4e9[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m4969927[m feat: 마이페이지 서버 연결중
+[33m3c01530[m Merge branch 'master' into duckgoo
+[33m551a7ae[m 05/20 12:23
+[33m7135fb3[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m1acbd49[m feat: 작품 이미지 업로드 작업 중
+[33mdab957b[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m72714bc[m Merge pull request #41 from sehyunf/psh
+[33me79a3a8[m feat: exhibition registration 작업중
+[33m994f9b0[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33md96da9f[m feat: auctionPayment 페이지 디자인 완료
+[33mfeb8a57[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m51b22df[m Merge pull request #40 from alsdk1676/sma
+[33m0fed7d5[m feat: exhibition 등록폼
+[33m9aacf1f[m feat: 유효성 검사 수정
+[33m6e14e2a[m feat: 로그인, 일반 회원가입 수정
+[33mb218fee[m 05/19 17:49
+[33mbc48ce2[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m985f051[m feat: yarn install swipe
+[33m1fd9223[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m3890ead[m Merge pull request #39 from Dgeon1008/kdg
+[33m4bbe912[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m94b2c94[m feat: display 메인 작업 중
+[33m119d7f2[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33mc285504[m Merge pull request #38 from sehyunf/psh
+[33m089ccfd[m feat: mainContainer 추가
+[33mccf7d0d[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33mc89b432[m feat: main 페이지 작업중
+[33m7d0b475[m fix: globalStyle에 배경색 추가
+[33m17f57d7[m feat: main 수정
+[33m9034124[m Merge pull request #37 from Dgeon1008/kdg
+[33m8d211c1[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m7ec94b7[m feat: header link 수정
+[33m72e11ec[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33ma8b3291[m feat: auctionModify,registration 유효성검사 추가
+[33m896f0f1[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33mdb45c7a[m feat: 마이페이지 서버 연결중
+[33m005220e[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33mc2646a5[m feat: 새 비밀번호 modal 작업 중
+[33mcf21859[m Merge pull request #36 from Dgeon1008/kdg
+[33m6cbe20f[m router 오류 수정중
+[33m715130a[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m0035f69[m Merge pull request #35 from duck-goo/duckgoo
+[33m596fb23[m feat: main페이지 작업중
+[33mfc33744[m 05/19 14:11 Fix UpcycleRegistration
+[33m0e7080b[m Merge branch 'master' into duckgoo
+[33m80516eb[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33mc634376[m 5/19 14:06 Fix UpcyclingRegistration
+[33m9289b21[m feat: footer 완성
+[33m8d1b1be[m Merge pull request #34 from alsdk1676/sma
+[33m0abecd7[m feat: router 수정
+[33mc2a9c7b[m 05/19 12:27 UpcyclingRegistration
+[33m04de2a0[m feat: auctionRegistration 조건 추가, 좋아요 50 이상, 작가아이디 유저 아이디 일치, 기존 등록된 경매 아닐 때
+[33me62c0d8[m feat: auctionRegistration 추가, 조건 만족시 경로 /auction/registration/{artPostId}
+[33m08f0641[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33mff4565f[m feat: 마이페이지 서버 연결중
+[33m64441a1[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m705f95c[m Merge pull request #33 from Dgeon1008/kdg
+[33ma45bb25[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33maa17e3f[m feat: 비밀번호 찾기 작업 중
+[33m82f36b2[m feat: footer 수정중
+[33m440516c[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33me3cabf9[m Merge pull request #32 from croissen/ksm
+[33m0ef9f29[m feat: footer 수정중
+[33m75ef730[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m46fef34[m feat: 마이페이지 서버 연결
+[33m7c75e78[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m987a34e[m Merge pull request #31 from sehyunf/psh
+[33m8c0a125[m feat: header 수정중
+[33mcd2a773[m fix: auctionAgreement 디자인 수정
+[33md0b3419[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33mb8e6d5f[m feat: auctionList category스타일 제작
+[33m7269008[m feat: auctionList type스타일 제작
+[33m36054c5[m fix: auctionBiddingDetail auctiondata를 받기 전 응찰자를 먼저 조회하는 버그 수정
+[33mdfbb59e[m feat: auction agreement 페이지 제작 완료
+[33m5a46239[m feat: 아이디 찾기 modal 추가
+[33m4c8f098[m feat: FindIdModal 작업 중
+[33ma6e1c5b[m feat: 회원가입 이메일 인증, 이메일 인증 수정
+[33mb36e5e4[m feat: auction explanationPage v1
+[33m9c19dbb[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m6fae9a2[m Merge pull request #30 from sehyunf/psh
+[33m44bdce0[m build: router수정
+[33m5416015[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33mddc22c7[m feat: auction modify 제작 완료
+[33mbf7404d[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m3c1c4c1[m feat: 마이페이지 서버 연결중
+[33m5920051[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m4b3e177[m Merge pull request #28 from alsdk1676/sma
+[33m1c9be3c[m feat: header 수정중
+[33m1e6e703[m feat: currentUser 랜더링 수정
+[33m38ba2aa[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33md38c0db[m feat: 회원가입 modal 작업 중
+[33ma0621f0[m Merge pull request #27 from sehyunf/psh
+[33m83e8b67[m fix: yarnlock 충돌 수정
+[33m71a68a7[m feat: auction:modify v1
+[33m64414f3[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33mc38437a[m feat: 마이페이지 서버 연결중
+[33mc2f47a6[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m61911b6[m Merge pull request #26 from alsdk1676/sma
+[33md3218aa[m header 작업중
+[33mc7fe2ce[m feat: currentUser 수정
+[33m6a89ebe[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m3707534[m feat: 마이페이지 서버 연결중
+[33m98145ac[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33mdf5ab58[m feat: yarn.lock 파일 추가
+[33m686b2ba[m Merge pull request #25 from duck-goo/duckgoo
+[33m4a954d4[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m2619730[m feat: auctionComplete V2
+[33m5cc1bd5[m 5/16 09:38 UpcycleRegistration
+[33m0c9e165[m 05/15 17:50 Upcycling registration 작업 중
+[33m9f0260b[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m2279bb2[m feat: 마이페이지 서버 연결중
+[33mddfe465[m Merge pull request #24 from alsdk1676/sma
+[33m9f9983b[m feat: 아이디 찾기 작업 중
+[33m4ff9295[m feat: 로그인 페이지 완료
+[33m4b69c2e[m feat: auctionComplete V1
+[33m8988ce8[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m9e15450[m feat: 로그인 디자인 작업 중
+[33m3af540b[m feat: 회원가입 완료
+[33mcd39962[m feat: auctiond timeend 테스트 완료
+[33m976aee8[m 05/14 16:43 UpcyclingRegistration 작업 중
+[33mdc09b1b[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m0364b94[m feat: auto bidding v1
+[33m767bdcd[m Merge pull request #23 from croissen/ksm
+[33m44d38fe[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m43f0b82[m feat: 라우터 수정
+[33m5df1b96[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33mc6bc839[m feat: 로그인 디자인 작엄 중
+[33m8416caf[m Merge pull request #22 from croissen/ksm
+[33m8190c60[m feat: 회원가입 유효성 검사 중
+[33m1d9d019[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33mc6196aa[m feat: 마이페이지 화면구성
+[33m0a86684[m Merge pull request #21 from duck-goo/duckgoo
+[33m5716115[m 05/14 12:52 UpcyclingMain
+[33m6f4e7e4[m 05/14 12:39 UpcyclingMain
+[33mbbe2bb9[m Merge pull request #20 from sehyunf/psh
+[33m51ed671[m feat: auctionBidding제작 완료
+[33m0a14f6b[m 05/13 17:49 UpcycleMain
+[33mb99cc8d[m Fix: merge conflict in Router.js
+[33mc62f989[m 05/13 14:03 UpcyclingMain 작업 중
+[33mb1e0efe[m Merge branch 'psh'
+[33mf18d35f[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33ma08264a[m temp: 임시커밋
+[33m1d12521[m Merge pull request #19 from croissen/ksm
+[33m213f857[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m54fe82f[m feat: 마이페이지 오류 수정
+[33ma5182bf[m 5/13 09:55 no edit
+[33mfd7fdb3[m Merge pull request #18 from alsdk1676/sma
+[33m82e3a5b[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m8e6896e[m feat: common H7 추가
+[33m9832716[m Merge pull request #17 from croissen/ksm
+[33m3260345[m 5/13 09:15 no edit
+[33me3d832b[m feat: 마이페이지 라우터 수정
+[33m1773b47[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m5066ce5[m Merge pull request #16 from alsdk1676/sma
+[33m5ab4c96[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m7535eb5[m feat: 회원가입 수정
+[33mf2aa4ce[m Merge pull request #15 from sehyunf/psh
+[33m49ecd33[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33mb27a2d2[m feat: auction biddingDetail페이지 read 구현
+[33m0618747[m Merge pull request #14 from alsdk1676/sma
+[33m0662eb9[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m2747c2e[m feat: 회원가입 완료
+[33m705449b[m feat: 인증번호 확인 필수 조건 추가
+[33m8dd2082[m feat: 회원가입 완료
+[33m6563a90[m feat: 이메일 전송, 인증코드 추가
+[33mcfdf317[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33mc2128a3[m feat: 마이페이지 수정
+[33m4e32064[m feat: 회원가입 작업 중
+[33m4fa8b75[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m28b4b5e[m feat: auctionDetail 하단 bidding list구현 완료
+[33mf004c23[m Merge pull request #13 from alsdk1676/sma
+[33m2f16759[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33md192d5d[m feat: 로그인, 회원가입 작업 중
+[33m3b6264b[m feat: 로그인, 회원가입 작업 중
+[33m6b984ca[m 05/08 16:44 UpcyclingMain 작업 중
+[33m23d48f2[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33mc795ac8[m feat: auctionContainer v1
+[33m04f9d0d[m Merge pull request #12 from alsdk1676/sma
+[33mb6e2022[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m72b73bd[m feat: 라우터 수정, assets image 폴더 추가
+[33mff769ef[m Merge pull request #11 from croissen/ksm
+[33m4a38ec9[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m4b898cc[m (feat. qna 화면 구성)
+[33m42f0d36[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m95603f8[m Merge pull request #10 from Dgeon1008/kdg
+[33m8952e0c[m feat: router 로그인, 회원가입 페이지 추가 및 내 알림 페이지 추가
+[33m83c6fc3[m feat: router 충돌해결
+[33m8d4894c[m feat: 회원가입 v2
+[33m9b03983[m feat: router 로그인추가
+[33mbe8e802[m feat: 회원가입 약관 동의 작업 중
+[33mfa7e90a[m feat: 회원가입 작업 중
+[33mbbe4fd6[m feat: 회원가입 작업 중
+[33mf174e4b[m Merge pull request #9 from dev-tpghks23/master
+[33m6240b7c[m v1
+[33m94b54e9[m Merge pull request #8 from Dgeon1008/kdg
+[33m12bdd33[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33mfe099e4[m Merge pull request #7 from alsdk1676/sma
+[33m49c54a2[m feat: router 작업중 v2
+[33m1173597[m feat: router 작업중
+[33mfadaa9b[m feat: 버튼 컴포넌트 추가
+[33m8b23dd6[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m3dfffbe[m feat: button 컴포넌트 제작 중
+[33me57fd4f[m Merge pull request #6 from dev-tpghks23/master
+[33m8377ca3[m v1
+[33m44f2d94[m Merge pull request #5 from Dgeon1008/kdg
+[33m480e66f[m Merge branch 'master' of https://github.com/debugging-five/gradation-front
+[33m3ded43f[m v4
+[33mdcb66e5[m Merge pull request #4 from sehyunf/psh
+[33m24b7c1e[m chore: favicon
+[33m82d48f1[m refector: AuctionAgreement
+[33mbc4e763[m Merge pull request #2 from Dgeon1008/master
+[33md6e6d56[m v3
+[33m3c241c2[m Merge pull request #1 from Dgeon1008/master
+[33mf0381c7[m v2
+[33m4a59631[m v1
