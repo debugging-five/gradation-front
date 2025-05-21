@@ -140,15 +140,16 @@ export const Chapter2Img = styled.img`
   height: auto;
   display: block;
   margin: 0 auto;
-  opacity: 0;
-  transform: translateY(40px);
+  opacity: 0; // 처음에 안보이게
+  transform: translateY(40px); // 아래로 살짝 내려가서 숨어있음
   transition: opacity 2s ease, transform 2s ease;
-
-  ${({ $isVisible }) =>
-    $isVisible &&
+  // 조건부 스타일
+  // $ 는 돔에 전달되지 않게 하는 것. 내부 스타일 계산에만 사용한다 > 경고 방지용
+  ${({ $isVisible }) => //컴포넌트에 전달된 props 중 $isVisible을 구조분해
+    $isVisible && // $isVisible이 맞으면 css적용
     css`
-      opacity: 1;
-      transform: translateY(0);
+      opacity: 1; // 완전히 보이게
+      transform: translateY(0); // 원래 자리로
     `}
 `;
 

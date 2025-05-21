@@ -138,8 +138,11 @@ const UpcyclingRegistration = () => {
     userId: currentUser?.id || null,
   };
 
-  const payload = new FormData();
+  const payload = new FormData(); // 첨부파일 + 제이슨 데이터 함께 보내기위해 폼데이터 객체 생성
+  // 폼데이터에 데이터 추가 (json문자열 파일처럼 블룹으로 감싸기)
+  // Blob 브라우저에서 파일 데이터처럼 다룰때 / 블룹 생성자는 여러 조각을 하나의 덩어리로 만들수 있음
   payload.append("info", new Blob([JSON.stringify(upcyclingData)], { type: "application/json" }));
+  // 이미지 파일 있을때 추가!
   if (image) {
     payload.append("file", image);
   }
@@ -160,7 +163,6 @@ const UpcyclingRegistration = () => {
     alert("신청 중 오류가 발생했습니다.");
   }
 };
-
 
   return (
     <S.Container>
@@ -314,7 +316,7 @@ const UpcyclingRegistration = () => {
                 { label: "금속", value: "metal" },
                 { label: "플라스틱 & 아크릴", value: "plastic-acrylic" },
                 { label: "기타", value: "other" },
-              ].map((material) => (
+              ].map((material) => ( // 맵으로 반복해서 여러개 체크 할 수 있게!
                 <label key={material.value}>
                   <input
                     type="checkbox"

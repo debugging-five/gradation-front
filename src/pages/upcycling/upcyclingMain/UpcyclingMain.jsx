@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 const UpcyclingMain = () => {
   const navigate = useNavigate();
 
+  // 타임라인 줄그리기
   const StepItem = ({ number, numCircle, title, texts, isLast }) => {
     return (
       <S.Step $isLast={isLast}>
@@ -14,7 +15,7 @@ const UpcyclingMain = () => {
         </S.CircleContainer>
         <S.TimelineContent>
           <S.TimelineTitle>{title}</S.TimelineTitle>
-          {texts.map((line, i) => (
+          {texts.map((line, i) => ( // 설명부분이 여러줄이라 배열을 맵으로 각각 랜더링
             <S.TimelineText key={i}>{line}</S.TimelineText>
           ))}
         </S.TimelineContent>
@@ -25,21 +26,22 @@ const UpcyclingMain = () => {
   const chapter2Ref = useRef(null);
   const [isImgVisible, setIsImgVisible] = useState(false);
 
+  // 이미지들 애니메이션 효과
   useEffect(() => {
     const observer = new IntersectionObserver(
+  // 요소가 일정 비율이상 보여지면 화면에 보인다고 세팅
       ([entry]) => {
         if (entry.isIntersecting) setIsImgVisible(true);
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 } // 30% 이상!
     );
-    if (chapter2Ref.current) {
+  // 화면 스크롤로 해당 요소가 나타나면 entry.isIntersecting 조건이 발동
+    if (chapter2Ref.current) { 
       observer.observe(chapter2Ref.current);
     }
-
+  // 컴포넌트 언마운트 면 중단, 메모리 누수 방지용 정리 코드
     return () => {
-      if (chapter2Ref.current) {
-        observer.unobserve(chapter2Ref.current);
-      }
+      if (chapter2Ref.current) observer.unobserve(chapter2Ref.current);
     };
   }, []);
 
