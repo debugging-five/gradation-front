@@ -4,6 +4,8 @@ const ExhibitionUniversity = () => {
   return (
     <div>
       ExhibitionUniversity
+      뜨자..
+      
     </div>
   );
 };
