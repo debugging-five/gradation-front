@@ -1,28 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import * as S from '../../style';
 import * as SA from './artistDetailModifyStyle';
 import DateTimePicker from 'react-flatpickr';
-import { useSelector } from 'react-redux';
 
-const ArtistDetailModify = ({ userId }) => {
-  const [userInfo, setUserInfo] = useState({
-    userIntroduce: '',
-    userArtCategory: '',
-    userInstagram: '',
-    userYoutube: '',
-    userBlog: ''
-  });
-  // Redux에서 currentUser 가져오기
-  const currentUser = useSelector(state => state.user.currentUser);
-
+const ArtistDetailModify = () => {
+  
   const [selectedFields, setSelectedFields] = useState([]);
   const [selectedArtId, setSelectedArtId] = useState(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  
   // 등록 버튼 클릭 시 유효성 검사 후 확인 팝업 열기
   const handleConfirm = () => {
       setShowConfirmation(true);
+  };
+  // 확인 팝업에서 확인 클릭 시 처리
+  const handleSubmit = () => {
+    setShowConfirmation(false);   // 기존 확인 팝업 닫기
+    setShowSuccess(true);         // 새 성공 팝업 열기
   };
 
   // 확인 팝업에서 취소 클릭 시 처리
@@ -32,6 +26,7 @@ const ArtistDetailModify = ({ userId }) => {
 
   const artworks = [
     { id: 1, src: 'http://localhost:10000/files/api/get/eximage.png?filePath=images/mypage' },
+    { id: 2, src: 'http://localhost:10000/files/api/get/eximage2.png?filePath=images/mypage' },
   ];
   const [histories, setHistories] = useState([
     { id: 1, date: null, content: '', isSaved: false }
@@ -41,45 +36,8 @@ const ArtistDetailModify = ({ userId }) => {
 
   const fields = ['한국화', '회화', '조각', '공예', '건축', '서예'];
 
-  // ✅ 기존 정보 GET
-  useEffect(() => {
-    if (!currentUser || !currentUser.id) return; // currentUser 없으면 fetch 중단
-
-    fetch(`http://localhost:10000/artist/api/detail/${currentUser.id}`)
-      .then(res => res.json())
-      .then(data => {
-        setUserInfo({
-          userIntroduce: data.userIntroduce || '',
-          userArtCategory: data.userArtCategory || '',
-          userInstagram: data.userInstagram || '',
-          userYoutube: data.userYoutube || '',
-          userBlog: data.userBlog || ''
-        });
-        setSelectedFields(data.userArtCategory ? [data.userArtCategory] : []);
-      });
-  }, [currentUser]);
-
-  // ✅ PATCH 수정
-  const handleSubmit = () => {
-    fetch(`http://localhost:10000/artist/api/detail/${currentUser.id}/modify`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...userInfo, id: currentUser.id })
-    })
-      .then(res => {
-        if (res.ok) {
-          setShowConfirmation(false);
-          setShowSuccess(true);
-        } else {
-          alert('수정에 실패했습니다.');
-        }
-      });
-  };
-
-
   const handleFieldClick = (field) => {
-    setSelectedFields(prev => (prev[0] === field ? [] : [field]));
-    setUserInfo(prev => ({ ...prev, userArtCategory: field }));
+    setSelectedFields((prev) => (prev[0] === field ? [] : [field]));
   };
 
   const handleAddHistory = (id) => {
@@ -91,22 +49,17 @@ const ArtistDetailModify = ({ userId }) => {
       })
     );
   };
+
+  const handleDeleteHistory = (id) => {
+    setHistories(prev => prev.filter(h => h.id !== id));
+  };
+
   const handleChange = (id, field, value) => {
     setHistories(prev =>
       prev.map(h =>
         h.id === id ? { ...h, [field]: value } : h
       )
     );
-  };
-
-
-  const handleDeleteHistory = (id) => {
-    setHistories(prev => prev.filter(h => h.id !== id));
-  };
-
-  const handleChangeInput = (e) => {
-    const { name, value } = e.target;
-    setUserInfo(prev => ({ ...prev, [name]: value }));
   };
 
   const formatDate = (date) => {
@@ -124,14 +77,10 @@ const ArtistDetailModify = ({ userId }) => {
 
       <SA.Chepter>
         <SA.Title>작가 소개</SA.Title>
-        <SA.InputContent
-          as="textarea"
-          name="userIntroduce"
-          value={userInfo.userIntroduce}
-          onChange={handleChangeInput}
-        />
+        <SA.InputContent/>
       </SA.Chepter>
 
+      {/* 작품분야 */}
       <SA.Chepter>
         <SA.CategoryBox>
           <SA.Title>작품분야</SA.Title>
@@ -195,7 +144,7 @@ const ArtistDetailModify = ({ userId }) => {
         <S.EndBar />
       </SA.Chepter>
 
-       <SA.Chepter>
+      <SA.Chepter>
         <S.OneLine>
           <SA.Title>외부 링크 및 아이디</SA.Title>
           <SA.SmallTitle>기재한 외부링크 및 아이디는 작가 소개창에 공유됩니다.</SA.SmallTitle>
@@ -203,36 +152,27 @@ const ArtistDetailModify = ({ userId }) => {
 
         <SA.SocialBox>
           <SA.Social>Instagram</SA.Social>
-          <SA.Icon src="http://localhost:10000/files/api/get/insta.png?filePath=images/mypage" alt="insta" />
-          <SA.InputBox
-            name="userInstagram"
-            value={userInfo.userInstagram}
-            onChange={handleChangeInput}
-          />
+          <SA.Icon src="http://localhost:10000/files/api/get/insta.png?filePath=images/mypage" alt="default profile" />
+          <S.Emptybox/>
+          <p>gradation</p>
         </SA.SocialBox>
-        <S.EndBar />
+        <S.EndBar/>
 
         <SA.SocialBox>
           <SA.Social>Youtube</SA.Social>
-          <SA.Icon src="http://localhost:10000/files/api/get/youtube.png?filePath=images/mypage" alt="youtube" />
-          <SA.InputBox
-            name="userYoutube"
-            value={userInfo.userYoutube}
-            onChange={handleChangeInput}
-          />
+          <SA.Icon src="http://localhost:10000/files/api/get/youtube.png?filePath=images/mypage" alt="default profile" />
+          <S.Emptybox/>
+          <p>www.test.com/sdkajhfgshvbjsk</p>
         </SA.SocialBox>
-        <S.EndBar />
+        <S.EndBar/>
 
         <SA.SocialBox>
           <SA.Social>Blog</SA.Social>
-          <SA.Icon src="http://localhost:10000/files/api/get/blog.png?filePath=images/mypage" alt="blog" />
-          <SA.InputBox
-            name="userBlog"
-            value={userInfo.userBlog}
-            onChange={handleChangeInput}
-          />
+          <SA.Icon src="http://localhost:10000/files/api/get/blog.png?filePath=images/mypage" alt="default profile" />
+          <S.Emptybox/>
+          <p>www.test.com/sdkajhfgshvbjsk</p>
         </SA.SocialBox>
-        <S.EndBar />
+        <S.EndBar/>
       </SA.Chepter>
 
       <SA.Chepter>
