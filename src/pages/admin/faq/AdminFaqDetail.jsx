@@ -111,7 +111,7 @@ const AdminFaqDetail = () => {
       {showConfirmPopup && (
         <S.PopupOverlay>
           <S.PopupBox>
-            <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/question.png?filePath=images/icons" alt="question-icon" />
+            <S.PopupIcon src="http://localhost:10000/files/api/get/question.png?filePath=images/icons" alt="question-icon" />
             <S.PopupMessage>정말 삭제하시겠습니까?</S.PopupMessage>
             <S.PopupButtonGroup>
               <S.PopupButton className="cancel" onClick={() => setShowConfirmPopup(false)}>취소</S.PopupButton>
@@ -126,7 +126,7 @@ const AdminFaqDetail = () => {
       {showSuccessPopup && (
         <S.PopupOverlay>
           <S.PopupBox>
-            <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/check.png?filePath=images/icons" alt="check-icon" />
+            <S.PopupIcon src="http://localhost:10000/files/api/get/ok.png?filePath=images/icons" alt="ok-icon" />
             <S.PopupMessage>삭제가 완료되었습니다.</S.PopupMessage>
           </S.PopupBox>
         </S.PopupOverlay>

@@ -90,7 +90,6 @@ const AdminFaqRegistration = () => {
 
   if (checkingAdmin) return <div>로딩 중...</div>;
 
-
   return (
     <S.Container>
       <S.FormSection>
@@ -145,7 +144,7 @@ const AdminFaqRegistration = () => {
       {showConfirmPopup && (
         <S.PopupOverlay>
           <S.PopupBox>
-            <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/question.png?filePath=images/icons" alt="question-icon" />
+            <S.PopupIcon src="http://localhost:10000/files/api/get/question.png?filePath=images/icons" alt="question-icon" />
             <S.PopupMessage>등록하시겠습니까?</S.PopupMessage>
             <S.PopupButtonGroup>
               <S.PopupButton className="cancel" onClick={() => setShowConfirmPopup(false)}>취소</S.PopupButton>
@@ -161,7 +160,7 @@ const AdminFaqRegistration = () => {
       {showSuccessPopup && (
         <S.PopupOverlay>
           <S.PopupBox>
-            <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/ok.png?filePath=images/icons" alt="check-icon" />
+            <S.PopupIcon src="http://localhost:10000/files/api/get/ok.png?filePath=images/icons" alt="ok-icon" />
             <S.PopupMessage>등록이 완료되었습니다.</S.PopupMessage>
           </S.PopupBox>
         </S.PopupOverlay>

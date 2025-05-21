@@ -107,7 +107,6 @@ const AdminFaqModify = () => {
     }
   };
 
-
   if (!faq) return <div>로딩 중...</div>;
 
   return (
@@ -133,7 +132,6 @@ const AdminFaqModify = () => {
                 <S.RadioCheck htmlFor={c} checked={category === c}>{c}</S.RadioCheck>
               </S.Radio>
             ))}
-
           </S.RadioGroup>
         </S.RadioSection>
         <S.TitleSection>
@@ -162,7 +160,7 @@ const AdminFaqModify = () => {
       {showConfirmPopup && (
         <S.PopupOverlay>
           <S.PopupBox>
-            <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/question.png?filePath=images/icons" alt="question-icon" />
+            <S.PopupIcon src="http://localhost:10000/files/api/get/question.png?filePath=images/icons" alt="question-icon" />
             <S.PopupMessage>수정하시겠습니까?</S.PopupMessage>
             <S.PopupButtonGroup>
               <S.PopupButton className="cancel" onClick={() => setShowConfirmPopup(false)}>취소</S.PopupButton>
@@ -177,7 +175,7 @@ const AdminFaqModify = () => {
       {showSuccessPopup && (
         <S.PopupOverlay>
           <S.PopupBox>
-            <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/ok.png?filePath=images/icons" alt="check-icon" />
+            <S.PopupIcon src="http://localhost:10000/files/api/get/ok.png?filePath=images/icons" alt="ok-icon" />
             <S.PopupMessage>수정이 완료되었습니다.</S.PopupMessage>
           </S.PopupBox>
         </S.PopupOverlay>
