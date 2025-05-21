@@ -14,9 +14,6 @@ const ContactArtistReceivedDetail = () => {
       try {
         const response = await fetch(`http://localhost:10000/mail/api/alert/${id}`);
         const data = await response.json();
-        console.log('--------------'); 
-        console.log('📩 Mail data:', data); 
-        console.log('--------------'); 
         setMail(data);
       } catch (error) {
         console.error('메일 상세 조회 실패:', error);

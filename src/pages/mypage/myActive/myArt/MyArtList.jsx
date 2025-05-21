@@ -13,7 +13,7 @@ const MyArtList = () => {
 
     const fetchMyArtList = async () => {
       try {
-        const response = await fetch(`http://localhost:10000/displays/api/display/my/list?userId=${currentUser.id}`);
+        const response = await fetch(`http://localhost:10000/displays/api/list/my?userId=${currentUser.id}`);
         if (!response.ok) {
           throw new Error('서버 응답 실패');
         }

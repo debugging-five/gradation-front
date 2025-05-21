@@ -50,3 +50,84 @@ export const SmallTitle = styled.span`
     font-size: 12px;
     color: gray;
 `;
+
+export const Category = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
+export const HistoryBox = styled.div`
+    display: flex;
+    padding: 16px 0 0 0;
+    align-items: end;
+`;
+export const CalenderBox = styled.div`
+    display: flex;
+    align-items: end;
+    color: gray;
+    width: 120px;
+`;
+export const Calender = styled.div`
+    border: none;
+`;
+
+
+// 아트 컨테이너: 이미지 + 버튼 포함
+export const ArtContainer = styled.div`
+  position: relative;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+`;
+export const DeleteDiv = styled.div`
+  margin-left: 4px;
+`;
+export const ArtLabel = styled.label`
+    display: flex;
+    align-items: center;
+    gap: 8px; 
+    cursor: pointer;
+    flex-direction: column;
+`;
+export const ArtInput = styled.input`
+    width: 16px; 
+    height: 16px;
+    accent-color: black;
+`;
+
+
+
+
+
+// 오버레이 버튼
+export const OverlayButton = styled.button`
+  position: absolute;
+  bottom: 0; 
+  left: 0; 
+  width: 100%;
+  height: 100%;
+  padding: 8px 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 14px;
+  border: none;
+
+  opacity: 0;
+  pointer-events: none;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+
+  ${ArtContainer}:hover & {
+    opacity: 1;
+    pointer-events: auto;
+  }
+`;
+
+export const InputBox = styled.input`
+  border: none;
+  font-size: 16px;
+  outline: none;
+  background-color: transparent;
+  width: 600px;
+`;
+

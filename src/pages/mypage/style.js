@@ -44,6 +44,7 @@ export const InputBox = styled.input`
   border: none;
   font-size: 16px;
   outline: none;
+  background-color: transparent;
 `;
 
 
@@ -199,7 +200,19 @@ export const MailTitle = styled.p`
 `;
 
 
-
+export const Button75x35R = styled.button`
+  width: 75px;
+  height: 35px;
+  border-radius: 3px;
+  color: white;
+  background-color: red;
+  border: solid 1px red;
+  font-size: 18px;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 // 120사이즈 빨강버튼
 export const Button120x45R = styled.button`
   width: 120px;

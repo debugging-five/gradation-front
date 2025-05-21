@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import * as S from '../../style';
 import * as SM from './contactArtistWriteStyle';
 import * as SQ from '../../../serviceCenter/qna/qnaSendStyle';
@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 const ContactArtistWrite = () => {
   const { email } = useParams();
   const currentUser = useSelector(state => state.user.currentUser);
-
+  const navigate = useNavigate(); 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [errors, setErrors] = useState({ title: '', content: '' });
@@ -138,7 +138,10 @@ const ContactArtistWrite = () => {
             <S.PopUpContent>
               <S.PopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="success" />
               <S.PopUpText>쪽지가 전송되었습니다.</S.PopUpText>
-              <S.PopUpButtonR onClick={() => setShowSuccess(false)}>확인</S.PopUpButtonR>
+              <S.PopUpButtonR onClick={() => {
+                setShowSuccess(false);
+                navigate('/mypage/contact-artist/sended');
+              }}>확인</S.PopUpButtonR>
             </S.PopUpContent>
           </S.PopUp>
         </S.PopUpOverlay>

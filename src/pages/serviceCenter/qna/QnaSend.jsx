@@ -10,8 +10,8 @@ const QnaSend = () => {
   const [content, setContent] = useState('');
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-    // Redux에서 currentUser 가져오기
-  const currentUser = useSelector(state => state.user.currentUser);
+      // Redux에서 currentUser 가져오기
+    const currentUser = useSelector(state => state.user.currentUser);
 
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);

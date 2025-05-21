@@ -12,7 +12,7 @@ const ArtLikeList = () => {
 
     const fetchLikedArts = async () => {
       try {
-        const response = await fetch(`http://localhost:10000/displays/api/display/my/liked?userId=${currentUser.id}`);
+        const response = await fetch(`http://localhost:10000/displays/api/list/my/liked?userId=${currentUser.id}`);
         if (!response.ok) throw new Error('서버 응답 실패');
         const data = await response.json();
         setLikedArts(data.likedArtList);
@@ -35,7 +35,7 @@ const ArtLikeList = () => {
                 alt={art.artTitle || '좋아요 작품 이미지'}
               />
               <SL.Overlay className="overlay">
-                <SL.HoverText>{art.artTitle}DFSFfsfsddfsdssssssssssssdfsdfsfdd</SL.HoverText>
+                <SL.HoverText>{art.artTitle}</SL.HoverText>
                 <SL.HoverText>{art.userName}</SL.HoverText>
                 <SL.HoverText></SL.HoverText>
 

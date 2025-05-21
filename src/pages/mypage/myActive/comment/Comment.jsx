@@ -12,7 +12,8 @@ const Comment = () => {
 
     const fetchComments = async () => {
       try {
-        const response = await fetch(`http://localhost:10000/comments/api/comment/my/${currentUser.id}`);
+        const response = await fetch(`http://localhost:10000/comments/api/list/${currentUser.id}`);
+        // http://localhost:10000/comments/api/list/7
         if (!response.ok) throw new Error('서버 응답 실패');
         const data = await response.json();
         setComments(data.commentList);
