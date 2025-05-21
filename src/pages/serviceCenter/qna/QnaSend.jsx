@@ -1,15 +1,6 @@
 import React, { useRef, useState } from 'react';
-import {
-  Box, Title, Line, OneLine, Wrapper, Category, InputTitle,
-  ButtonDiv, CategoryWrapper, InputContent, ButtonSend, ButtonPhoto,
-  DeleteButton,
-  DeleteDiv,
-  ErrorMessege
-} from '../qna/qnaSendStyle';
-import {
-  Important, MainWrapper, PopUp, PopUpButtonDiv, PopUpButtonR, PopUpButtonW,
-  PopUpContent, PopUpIcon, PopUpOverlay, PopUpText
-} from '../../mypage/style';
+import * as S from '../../mypage/style';
+import * as SQ from '../qna/qnaSendStyle';
 import { useSelector } from 'react-redux';
 
 const QnaSend = () => {
@@ -19,8 +10,8 @@ const QnaSend = () => {
   const [content, setContent] = useState('');
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-    // Redux에서 currentUser 가져오기
-  const currentUser = useSelector(state => state.user.currentUser);
+      // Redux에서 currentUser 가져오기
+    const currentUser = useSelector(state => state.user.currentUser);
 
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
@@ -143,15 +134,15 @@ const QnaSend = () => {
   };
 
   return (
-    <MainWrapper>
-      <Wrapper>
+    <S.MainWrapper>
+      <SQ.Wrapper>
         {/* 카테고리 선택 */}
-        <Box>
-          <OneLine>
-            <Title>구분<Important>*</Important></Title>
-            <CategoryWrapper>
+        <SQ.Box>
+          <SQ.OneLine>
+            <SQ.Title>구분<S.Important>*</S.Important></SQ.Title>
+            <SQ.CategoryWrapper>
               {categories.map(category => (
-                <Category
+                <SQ.Category
                   key={category}
                   onClick={() => handleSelect(category)}
                   style={{ cursor: 'pointer' }}
@@ -164,19 +155,19 @@ const QnaSend = () => {
                     style={{ marginRight: '0.5rem' }}
                   />
                   {category}
-                </Category>
+                </SQ.Category>
               ))}
-            </CategoryWrapper>
-          </OneLine>
-          <Line />
-          {errors.category && <ErrorMessege>{errors.category}</ErrorMessege>}
-        </Box>
+            </SQ.CategoryWrapper>
+          </SQ.OneLine>
+          <SQ.Line />
+          {errors.category && <SQ.ErrorMessege>{errors.category}</SQ.ErrorMessege>}
+        </SQ.Box>
 
         {/* 제목 입력 */}
-        <Box>
-          <OneLine>
-            <Title>제목<Important>*</Important></Title>
-            <InputTitle
+        <SQ.Box>
+          <SQ.OneLine>
+            <SQ.Title>제목<S.Important>*</S.Important></SQ.Title>
+            <SQ.InputTitle
               placeholder="제목을 입력하세요."
               value={title}
               onChange={e => {
@@ -184,29 +175,29 @@ const QnaSend = () => {
                 setErrors(prev => ({ ...prev, title: '' }));
               }}
             />
-          </OneLine>
-          <Line />
-          {errors.title && <ErrorMessege>{errors.title}</ErrorMessege>}
-        </Box>
+          </SQ.OneLine>
+          <SQ.Line />
+          {errors.title && <SQ.ErrorMessege>{errors.title}</SQ.ErrorMessege>}
+        </SQ.Box>
 
         {/* 내용 입력 */}
-        <Box>
-          <Title>내용<Important>*</Important></Title>
-          <InputContent
+        <SQ.Box>
+          <SQ.Title>내용<S.Important>*</S.Important></SQ.Title>
+          <SQ.InputContent
             value={content}
             onChange={e => {
               setContent(e.target.value);
               setErrors(prev => ({ ...prev, content: '' }));
             }}
           />
-          {errors.content && <ErrorMessege>{errors.content}</ErrorMessege>}
-        </Box>
+          {errors.content && <SQ.ErrorMessege>{errors.content}</SQ.ErrorMessege>}
+        </SQ.Box>
 
         {/* 첨부파일 선택 */}
-        <Box>
-          <OneLine>
-            <Title>첨부파일</Title>
-            <ButtonPhoto onClick={() => fileInputRef.current.click()}>첨부파일</ButtonPhoto>
+        <SQ.Box>
+          <SQ.OneLine>
+            <SQ.Title>첨부파일</SQ.Title>
+            <SQ.ButtonPhoto onClick={() => fileInputRef.current.click()}>첨부파일</SQ.ButtonPhoto>
             <input
               type="file"
               accept="image/*"
@@ -215,49 +206,49 @@ const QnaSend = () => {
               onChange={handleFileChange}
             />
             {selectedFile && (
-              <DeleteDiv>
+              <SQ.DeleteDiv>
                 <span>{selectedFile.name}</span>
-                <DeleteButton onClick={handleDeleteFile}>삭제</DeleteButton>
-              </DeleteDiv>
+                <SQ.DeleteButton onClick={handleDeleteFile}>삭제</SQ.DeleteButton>
+              </SQ.DeleteDiv>
             )}
-          </OneLine>
-        </Box>
+          </SQ.OneLine>
+        </SQ.Box>
 
         {/* 등록 버튼 */}
-        <ButtonDiv>
-          <ButtonSend onClick={handleConfirm}>등록</ButtonSend>
-        </ButtonDiv>
-      </Wrapper>
+        <SQ.ButtonDiv>
+          <SQ.ButtonSend onClick={handleConfirm}>등록</SQ.ButtonSend>
+        </SQ.ButtonDiv>
+      </SQ.Wrapper>
 
       {/* 등록 확인 팝업 */}
       {showConfirmation && (
-        <PopUpOverlay>
-          <PopUp>
-            <PopUpContent>
-              <PopUpIcon src="http://localhost:10000/files/api/get/question.png?filePath=images/mypage" alt="question" />
-              <PopUpText>문의를 등록하시겠습니까?</PopUpText>
-              <PopUpButtonDiv>
-                <PopUpButtonW onClick={handleCancel}>취소</PopUpButtonW>
-                <PopUpButtonR onClick={handleSubmit}>확인</PopUpButtonR>
-              </PopUpButtonDiv>
-            </PopUpContent>
-          </PopUp>
-        </PopUpOverlay>
+        <S.PopUpOverlay>
+          <S.PopUp>
+            <S.PopUpContent>
+              <S.PopUpIcon src="http://localhost:10000/files/api/get/question.png?filePath=images/mypage" alt="question" />
+              <S.PopUpText>문의를 등록하시겠습니까?</S.PopUpText>
+              <S.PopUpButtonDiv>
+                <S.PopUpButtonW onClick={handleCancel}>취소</S.PopUpButtonW>
+                <S.PopUpButtonR onClick={handleSubmit}>확인</S.PopUpButtonR>
+              </S.PopUpButtonDiv>
+            </S.PopUpContent>
+          </S.PopUp>
+        </S.PopUpOverlay>
       )}
 
       {/* 등록 성공 팝업 */}
       {showSuccess && (
-        <PopUpOverlay>
-          <PopUp>
-            <PopUpContent>
-              <PopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="attention" />
-              <PopUpText>문의가 등록되었습니다.</PopUpText>
-              <PopUpButtonR onClick={() => setShowSuccess(false)}>확인</PopUpButtonR>
-            </PopUpContent>
-          </PopUp>
-        </PopUpOverlay>
+        <S.PopUpOverlay>
+          <S.PopUp>
+            <S.PopUpContent>
+              <S.PopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="attention" />
+              <S.PopUpText>문의가 등록되었습니다.</S.PopUpText>
+              <S.PopUpButtonR onClick={() => setShowSuccess(false)}>확인</S.PopUpButtonR>
+            </S.PopUpContent>
+          </S.PopUp>
+        </S.PopUpOverlay>
       )}
-    </MainWrapper>
+    </S.MainWrapper>
   );
 };
 

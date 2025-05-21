@@ -1,27 +1,27 @@
 import React from 'react';
-import {  MainWrapper} from '../../style';
-import { Button, Content, EmptyBox, Title, UniversityBox, UniversityGrid, UniversityPicture, UniversityPictureDiv } from './universityLikeListStyle';
+import * as SU from './universityLikeListStyle';
+import * as S from '../../style';
 
 const UniversityLikeList = () => {
   return (
-    <MainWrapper>
-      <UniversityGrid>
-        <UniversityBox>
-          <UniversityPictureDiv>
-            <UniversityPicture src="http://localhost:10000/files/api/get/korea.png?filePath=images/mypage" alt="default profile" />
-          </UniversityPictureDiv>
+    <S.MainWrapper>
+      <SU.UniversityGrid>
+        <SU.UniversityBox>
+          <SU.UniversityPictureDiv>
+            <SU.UniversityPicture src="http://localhost:10000/files/api/get/korea.png?filePath=images/mypage" alt="default profile" />
+          </SU.UniversityPictureDiv>
           <div>
-            <Title>고려대학교</Title>
-            <Content>제 8회 졸업전시회</Content>
-            <Content>패션디자인전공</Content>
-            <EmptyBox></EmptyBox>
-            <Content>25/02/10 ~ 25/02/15</Content>
-            <Content>고려대학교 패션디자인 A클래스 입시학원</Content>
-            <Button>전시중</Button>
+            <SU.Title>고려대학교</SU.Title>
+            <SU.Content>제 8회 졸업전시회</SU.Content>
+            <SU.Content>패션디자인전공</SU.Content>
+            <SU.EmptyBox></SU.EmptyBox>
+            <SU.Content>25/02/10 ~ 25/02/15</SU.Content>
+            <SU.Content>고려대학교 패션디자인 A클래스 입시학원</SU.Content>
+            <SU.Button>전시중</SU.Button>
           </div>
-        </UniversityBox>
-      </UniversityGrid>
-    </MainWrapper>
+        </SU.UniversityBox>
+      </SU.UniversityGrid>
+    </S.MainWrapper>
   );
 };
 

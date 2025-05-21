@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { ImageDiv, Line, MainWrapper, QContent, QnaImage, QSize, QTitle, Title, Wrapper } from './qnaDetailStyle';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Category } from '../faq/faqDetailStyle';
-import { Button120x45R, Button120x45W, ButtonDiv, PopUp, PopUpButtonDiv, PopUpButtonR, PopUpButtonW, PopUpContent, PopUpIcon, PopUpOverlay, PopUpText } from '../../mypage/style';
-
+import * as S from '../../mypage/style';
+import * as SF from '../faq/faqDetailStyle';
+import * as SQ from './qnaDetailStyle';
 const QnaDetail = () => {
   const { id } = useParams(); // URL에서 id 꺼냄
   const navigate = useNavigate();
@@ -60,57 +59,57 @@ const QnaDetail = () => {
   }
 
   return (
-    <MainWrapper>
-      <Wrapper>
-        <Category>{qna.qnaCategory} 관련 문의</Category>
-        <Title>
-          <QSize>Q</QSize>
-          <QTitle>{qna.qnaTitle}</QTitle>
-        </Title>
-        <Line/>
-        <QContent>{qna.qnaContent}</QContent>
-      </Wrapper>
+    <SQ.MainWrapper>
+      <SQ.Wrapper>
+        <SF.Category>{qna.qnaCategory} 관련 문의</SF.Category>
+        <SQ.Title>
+          <SQ.QSize>Q</SQ.QSize>
+          <SQ.QTitle>{qna.qnaTitle}</SQ.QTitle>
+        </SQ.Title>
+        <SQ.Line/>
+        <SQ.QContent>{qna.qnaContent}</SQ.QContent>
+      </SQ.Wrapper>
       
-      <ImageDiv>
-        {qna.qnaImgName && (<QnaImage src={`http://localhost:10000/files/api/get/${qna.qnaImgName}?filePath=images/qna`} alt="qnaImage"/>)}
-      </ImageDiv>
+      <SQ.ImageDiv>
+        {qna.qnaImgName && (<SQ.QnaImage src={`http://localhost:10000/files/api/get/${qna.qnaImgName}?filePath=images/qna`} alt="qnaImage"/>)}
+      </SQ.ImageDiv>
 
-      <ButtonDiv>
-        <Button120x45W onClick={() => navigate(-1)}>목록</Button120x45W>
-        <Button120x45R onClick={handleConfirm}>삭제</Button120x45R>
-      </ButtonDiv>
+      <S.ButtonDiv>
+        <S.Button120x45W onClick={() => navigate(-1)}>목록</S.Button120x45W>
+        <S.Button120x45R onClick={handleConfirm}>삭제</S.Button120x45R>
+      </S.ButtonDiv>
 
       {/* 첫 번째 팝업: 문의 삭제 확인 */}
         {showConfirmation && (
-          <PopUpOverlay>
-            <PopUp>
-              <PopUpContent>
-                <PopUpIcon src="http://localhost:10000/files/api/get/question.png?filePath=images/mypage" alt="question" />
-                <PopUpText>문의를 삭제하시겠습니까?</PopUpText>
-                <PopUpButtonDiv>
-                  <PopUpButtonW onClick={handleCancel}>취소</PopUpButtonW>
-                  <PopUpButtonR onClick={handleSubmit}>확인</PopUpButtonR>
-                </PopUpButtonDiv>
-              </PopUpContent>
-            </PopUp>
-          </PopUpOverlay>
+          <S.PopUpOverlay>
+            <S.PopUp>
+              <S.PopUpContent>
+                <S.PopUpIcon src="http://localhost:10000/files/api/get/question.png?filePath=images/mypage" alt="question" />
+                <S.PopUpText>문의를 삭제하시겠습니까?</S.PopUpText>
+                <S.PopUpButtonDiv>
+                  <S.PopUpButtonW onClick={handleCancel}>취소</S.PopUpButtonW>
+                  <S.PopUpButtonR onClick={handleSubmit}>확인</S.PopUpButtonR>
+                </S.PopUpButtonDiv>
+              </S.PopUpContent>
+            </S.PopUp>
+          </S.PopUpOverlay>
         )}
   
       {/* 두 번째 팝업: 문의 삭제 성공 */}
       {showSuccess && (
-        <PopUpOverlay>
-          <PopUp>
-            <PopUpContent>
-              <PopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="attention" />
-              <PopUpText>문의가 삭제되었습니다.</PopUpText>
-              <PopUpButtonR onClick={() => {setShowSuccess(false); navigate(-1);}}>확인</PopUpButtonR>
-            </PopUpContent>
-          </PopUp>
-        </PopUpOverlay>
+        <S.PopUpOverlay>
+          <S.PopUp>
+            <S.PopUpContent>
+              <S.PopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="attention" />
+              <S.PopUpText>문의가 삭제되었습니다.</S.PopUpText>
+              <S.PopUpButtonR onClick={() => {setShowSuccess(false); navigate(-1);}}>확인</S.PopUpButtonR>
+            </S.PopUpContent>
+          </S.PopUp>
+        </S.PopUpOverlay>
       )}
 
 
-    </MainWrapper>
+    </SQ.MainWrapper>
   );
 };
 

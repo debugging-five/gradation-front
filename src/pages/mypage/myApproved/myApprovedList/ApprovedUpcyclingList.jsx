@@ -1,28 +1,28 @@
 import React from 'react';
-import { ApprovedBox, ApprovedStatus, Content, ContentBox, ListHeader, MainWrapper, Number, NumberTitle, Title, TitleNavigate, Wrapper } from './approvedListStyle';
 import { NavLink } from 'react-router-dom';
+import * as SA from './approvedListStyle';
 
 const ApprovedUpcyclingList = () => {
     return (
-    <MainWrapper>
-        <Wrapper>
+    <SA.MainWrapper>
+        <SA.Wrapper>
             {/* 리스트 헤더 */}
-            <ListHeader>
-                <NumberTitle>번호</NumberTitle>
-                <Title>학교명</Title>
-                <ApprovedBox>승인상태</ApprovedBox>
-            </ListHeader>
+            <SA.ListHeader>
+                <SA.NumberTitle>번호</SA.NumberTitle>
+                <SA.Title>학교명</SA.Title>
+                <SA.ApprovedBox>승인상태</SA.ApprovedBox>
+            </SA.ListHeader>
     
             {/* 리스트 배열 */}
-            <ContentBox>
-                <Number>1</Number>
-                <TitleNavigate  as={NavLink} to="/service-center/qna/detail/1" end>
-                    <Content>서울대학교</Content>
-                </TitleNavigate>
-                <ApprovedStatus>승인대기</ApprovedStatus>
-            </ContentBox>
-        </Wrapper>
-    </MainWrapper>
+            <SA.ContentBox>
+                <SA.Number>1</SA.Number>
+                <SA.TitleNavigate  as={NavLink} to="/service-center/qna/detail/1" end>
+                    <SA.Content>서울대학교</SA.Content>
+                </SA.TitleNavigate>
+                <SA.ApprovedStatus>승인대기</SA.ApprovedStatus>
+            </SA.ContentBox>
+        </SA.Wrapper>
+    </SA.MainWrapper>
     );
 };
 

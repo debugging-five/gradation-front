@@ -1,28 +1,28 @@
 import React from 'react';
-import { Important} from '../../style';
-import { Button, ChangePasswordBox, EmptyBox, EndBar, InputContent, MainWrapper, PasswordTitle, Title } from './changePasswordStyle';
+import * as S from '../../style';
+import * as SC from './changePasswordStyle';
 
 const ChangePassword = ({handleConfirm}) => {
   return (
-    <MainWrapper>
+    <SC.MainWrapper>
 
-      <EmptyBox/><EmptyBox/><EmptyBox/>
-      <Title>비밀번호 변경</Title>
-      <EmptyBox/>
+      <SC.EmptyBox/><SC.EmptyBox/><SC.EmptyBox/>
+      <SC.Title>비밀번호 변경</SC.Title>
+      <SC.EmptyBox/>
 
       <div>
-        <ChangePasswordBox>
-            <PasswordTitle>현재 비밀번호<Important>*</Important></PasswordTitle>
-            <InputContent placeholder='비밀번호를 입력하세요.'/>
-        </ChangePasswordBox>
-        <EndBar/>
+        <SC.ChangePasswordBox>
+            <SC.PasswordTitle>현재 비밀번호<S.Important>*</S.Important></SC.PasswordTitle>
+            <SC.InputContent placeholder='비밀번호를 입력하세요.'/>
+        </SC.ChangePasswordBox>
+        <SC.EndBar/>
       </div>
 
-      <EmptyBox/>
-      <Button onClick={handleConfirm}>비밀번호 확인</Button>
-      <EmptyBox/><EmptyBox/><EmptyBox/><EmptyBox/>
+      <SC.EmptyBox/>
+      <SC.Button onClick={handleConfirm}>비밀번호 확인</SC.Button>
+      <SC.EmptyBox/><SC.EmptyBox/><SC.EmptyBox/><SC.EmptyBox/>
 
-    </MainWrapper>
+    </SC.MainWrapper>
   );
 };
 
