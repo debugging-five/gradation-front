@@ -94,7 +94,10 @@ const DisplayRegistration = () => {
         <S.Form>
           <S.FileWrapper>
             <S.File type="file" accept="image/*" multiple {...register("files")} />
-            <S.H5>첨부파일 업로드</S.H5>
+            <S.IconWrapper>
+              <S.Icon src={"/assets/images/icon/add.png"} alt="업로드"/>
+              <S.H5>첨부파일 업로드</S.H5>
+            </S.IconWrapper>
           </S.FileWrapper>
           <S.InputContainer>
             <S.BorderWrapper>

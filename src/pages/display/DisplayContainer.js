@@ -19,11 +19,12 @@ const DisplayContainer = () => {
   const params = {
     order : order,
     cursor : cursor,
-    category : category,
+    category : category || "korean",
     keyword : keyword,
   }
 
   useEffect(() => {
+
     const getDisplayList = async () => {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/displays/api/list`, {
         method : "POST",
