@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux'; 
 
-import {
-  Button120x45R, ButtonDiv, Category, Content, ContentBox, Emptybox,
-  ListHeader, MainWrapper, Number, RedText, Title, TitleNavigate, Wrapper
-} from '../../mypage/style';
+import * as S from '../../mypage/style';
 
 const QnaList = () => {
   const [qnas, setQnas] = useState([]);
@@ -31,35 +28,35 @@ const QnaList = () => {
   }
 
   return (
-    <MainWrapper>
-      <Wrapper>
-        <ListHeader>
-          <Number>번호</Number>
-          <Category>구분</Category>
-          <Emptybox>처리현황</Emptybox>
-          <Title>제목</Title>
-          <Emptybox>작성일</Emptybox>
-        </ListHeader>
+    <S.MainWrapper>
+      <S.Wrapper>
+        <S.ListHeader>
+          <S.Number>번호</S.Number>
+          <S.Category>구분</S.Category>
+          <S.Emptybox>처리현황</S.Emptybox>
+          <S.Title>제목</S.Title>
+          <S.Emptybox>작성일</S.Emptybox>
+        </S.ListHeader>
 
         {qnas.map((qna, index) => (
-          <ContentBox key={qna.qnaId}>
-            <Number>{index + 1}</Number>
-            <Category>{qna.qnaCategory}</Category>
-            <RedText>{qna.qnaAnswerTitle ? '답변완료' : '답변대기'}</RedText>
-            <TitleNavigate as={NavLink} to={`/service-center/qna/detail/${qna.qnaId}`} end>
-              <Content>{qna.qnaTitle}</Content>
-            </TitleNavigate>
-            <Emptybox>{new Date(qna.qnaTime).toLocaleDateString('ko-KR')}</Emptybox>
-          </ContentBox>
+          <S.ContentBox key={qna.qnaId}>
+            <S.Number>{index + 1}</S.Number>
+            <S.Category>{qna.qnaCategory}</S.Category>
+            <S.RedText>{qna.qnaAnswerTitle ? '답변완료' : '답변대기'}</S.RedText>
+            <S.TitleNavigate as={NavLink} to={`/service-center/qna/detail/${qna.qnaId}`} end>
+              <S.Content>{qna.qnaTitle}</S.Content>
+            </S.TitleNavigate>
+            <S.Emptybox>{new Date(qna.qnaTime).toLocaleDateString('ko-KR')}</S.Emptybox>
+          </S.ContentBox>
         ))}
-      </Wrapper>
+      </S.Wrapper>
 
-      <ButtonDiv>
-        <Button120x45R as={NavLink} to="/service-center/registration">
+      <S.ButtonDiv>
+        <S.Button120x45R as={NavLink} to="/service-center/registration">
           문의하기
-        </Button120x45R>
-      </ButtonDiv>
-    </MainWrapper>
+        </S.Button120x45R>
+      </S.ButtonDiv>
+    </S.MainWrapper>
   );
 };
 

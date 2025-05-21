@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import { ChooseBar, ChooseBarWapper, MainTitle, MainWrapper } from '../style';
+import * as S from '../style';
 
 const MyPaymentContainer = () => {
   const location = useLocation()
@@ -14,18 +14,18 @@ const MyPaymentContainer = () => {
   }
 
   return (
-    <MainWrapper>
-      <MainTitle>내 결제내역 / {title}</MainTitle>
-      <ChooseBarWapper>
-        <ChooseBar as={NavLink} to="auction-list" end>경매 내역</ChooseBar>
-        <ChooseBar as={NavLink} to="payment-list" end>구매 내역</ChooseBar>
-      </ChooseBarWapper>
+    <S.MainWrapper>
+      <S.MainTitle>내 결제내역 / {title}</S.MainTitle>
+      <S.ChooseBarWapper>
+        <S.ChooseBar as={NavLink} to="auction-list" end>경매 내역</S.ChooseBar>
+        <S.ChooseBar as={NavLink} to="payment-list" end>구매 내역</S.ChooseBar>
+      </S.ChooseBarWapper>
 
       <div>
         <Outlet />
       </div>
       
-    </MainWrapper>
+    </S.MainWrapper>
   );
 };
 
