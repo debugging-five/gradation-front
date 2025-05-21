@@ -105,7 +105,7 @@ const DisplayCategory = ({props}) => {
           <p onClick={() => handleOrder("comment")}>댓글순</p>
         </S.Dropdown>
       </S.Menu>
-      <Outlet />
+      <Outlet context={useOutletContext()}/>
     </div>
   );
 };

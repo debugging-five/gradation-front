@@ -8,6 +8,7 @@ const DisplayContainer = () => {
   const [order, setOrder] = useState("");
   const [cursor, setCursor] = useState(1)
   const [keyword, setKeyword] = useState("")
+  const [display, setDisplay] = useState([])
   // 네비게이트로 korea를 default로 보내버림.
   // if(!category) return <Navigate to={"korea"} />
 
@@ -44,8 +45,15 @@ const DisplayContainer = () => {
     getDisplayList()
       .then((res) => {
         console.log(res)
+        setDisplay(res.posts)
+        setIsLoading(false)
+        setIsError(false)
       })
-      .catch()
+      .catch((error) => {
+        console.error(error)
+        setIsLoading(false)
+        setIsError(true)
+      })
   }, [order, category, cursor, keyword, isUpdate])
 
   return (
@@ -57,7 +65,8 @@ const DisplayContainer = () => {
           order, setOrder, 
           cursor, setCursor, 
           keyword, setKeyword, 
-          isLoading, isError
+          isLoading, isError,
+          display
         }}/>
     </S.Container>
   );
