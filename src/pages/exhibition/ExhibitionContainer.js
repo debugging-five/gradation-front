@@ -1,5 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
+import S from './style';
 
 const ExhibitionContainer = () => {
 
@@ -7,9 +8,10 @@ const ExhibitionContainer = () => {
 
   return (
     <div>
-      <p>exhibition</p>
-
+    <S.Wrapper>
+        <S.EN_H2>exhibition</S.EN_H2>
       <Outlet />
+    </S.Wrapper>
 
       {/* <p>일반 사용자</p> */}
       {/* {id === 1 && (

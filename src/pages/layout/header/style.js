@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const S = {};
@@ -49,7 +50,14 @@ S.Menu = styled.ul`
 S.MenuItem = styled.li`
   position: relative;
 
-  a {
+  &:hover > ul,
+  &:focus-within > ul {
+    visibility: visible;
+    opacity: 1;
+  }
+`;
+
+S.MenuLink = styled(Link)`
     text-decoration: none;
     color: ${({ theme }) => theme.PALLETE.gray[900]};
     font-size: 19px;
@@ -59,13 +67,6 @@ S.MenuItem = styled.li`
       text-decoration: underline;
       color: ${({ theme }) => theme.PALLETE.primary.main};
     }
-  }
-
-  &:hover > ul,
-  &:focus-within > ul {
-    visibility: visible;
-    opacity: 1;
-  }
 `;
 
 S.Dropdown = styled.ul`
@@ -85,19 +86,31 @@ S.Dropdown = styled.ul`
 
   li {
     padding: 10px;
+  }
+`;
 
-    a, span {
-      color: ${({ theme }) => theme.PALLETE.gray[900]};
-      font-size: 16px;
-      text-decoration: none !important;
-      white-space: nowrap;
-      cursor: pointer;
+S.DropdownLink = styled(Link)`
+  color: ${({ theme }) => theme.PALLETE.gray[900]};
+  font-size: 16px;
+  text-decoration: none !important;
+  white-space: nowrap;
+  cursor: pointer;
 
-      &:hover {
-        background-color: ${({ theme }) => theme.PALLETE.gray[100]};
-        color: ${({ theme }) => theme.PALLETE.primary.main};
-      }
-    }
+  &:hover {
+    background-color: ${({ theme }) => theme.PALLETE.gray[100]};
+    color: ${({ theme }) => theme.PALLETE.primary.main};
+  }
+`;
+
+S.DropdownSpan = styled.span`
+  color: ${({ theme }) => theme.PALLETE.gray[900]};
+  font-size: 16px;
+  white-space: nowrap;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.PALLETE.gray[100]};
+    color: ${({ theme }) => theme.PALLETE.primary.main};
   }
 `;
 
@@ -135,12 +148,6 @@ S.SignInWrap = styled.div`
     opacity: 1;
   }
 
-  ul {
-    top: 48px;
-    left: 50%;
-    transform: translateX(-50%);
-    position: absolute;
-  }
 `;
 
 export default S;

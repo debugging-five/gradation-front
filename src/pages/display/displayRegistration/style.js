@@ -1,0 +1,190 @@
+import styled from 'styled-components'
+import { EN_H3, H10, H2, H3, H4, H5, H7, H8 } from '../../../styles/common';
+
+const S = {};
+
+S.Container = styled.div`
+  background-color: #FBFCFC;
+  margin: 70px 0 0 0;
+`
+
+S.Line = styled.div`
+  border-bottom: 2px solid #EE3333;
+  width: 1160px;
+  padding: 0 0 10px 0;
+`
+
+S.ENH3 = styled.p`
+  ${EN_H3}
+  color: #EE3333;
+`
+
+S.FormWrapper = styled.div`
+  margin: 80px 0 60px 0;
+`
+
+S.Form = styled.div`
+  display: flex;
+  gap: 120px;
+`
+
+S.FileWrapper = styled.div`
+  width: 560px;
+  height: 560px;
+  background-color: #D9D9D9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+`
+
+S.File = styled.input`
+  position: absolute;
+  cursor: pointer;
+  opacity: 0;
+`
+
+S.H5 = styled.p`
+  ${H5}
+`
+
+S.InputContainer = styled.div`
+`
+
+S.Info = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 28px 0 0 0;
+`
+
+S.H3 = styled.p`
+  ${H3}
+  height: 25px;
+`
+
+S.H2 = styled.p`
+  ${H2}
+  width: 104px;
+  height: 36px;
+`
+
+S.InputContainer = styled.div`
+  margin: 76px 0 0 0;
+`
+
+S.BorderWrapper = styled.div`
+  margin : 0 0 30px 0;  
+  height: 44px;
+`
+
+S.HiddenBorderWrapper = styled.div`
+  margin: ${({$visible}) => ($visible ? '0 0 30px 0' : '0')};
+  height: ${({$visible}) => ($visible ? '44px' : '0')};
+`
+
+S.Border = styled.div`
+  width: 480px;
+  border-bottom: 1px solid #6E7476;
+  /* margin : 0 0 48px 0; */
+`
+
+S.InputWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 26px;
+`
+
+S.Label = styled.label`
+  display: flex;
+  margin: 0 0 7px 0;
+`
+
+S.H7 = styled.p`
+  ${H7}
+  width : 127px;
+
+  span {
+    color: #EE3333;
+  }
+`
+
+S.Input = styled.input`
+border: none;
+background-color: #FBFCFC;
+outline: none;
+width: 225px;
+
+  &::placeholder {
+    ${H8}
+  }
+`
+
+S.ButtonWrapper = styled.div`
+  display: flex;
+  gap: 20px;
+  justify-content: flex-end;
+
+`
+
+S.CheckboxContainer = styled.div`
+  margin : 0 0 50px 0;
+  width: 760px;
+`
+
+S.JoinButton = styled.button`
+  all: unset;
+  width: 440px;
+  height: 50px;
+  background-color: #C0C5C7;
+  border-radius: 3px;
+  border-color: #C0C5C7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: ${({ $active }) => ( $active ? "#EE3333" : "#C0C5C7" )};
+`
+
+S.H4 = styled.p`
+  ${H4}
+  color : #FBFCFC;
+`
+
+
+S.Icon = styled.img`
+  width : 16px;
+  height : 10px;
+  margin: 0 8px 12px 0;
+  cursor: pointer;
+`
+
+S.Warning = styled.p`
+  ${H10}
+  color: #E49804;
+  margin: 4px 0 0 140px;
+`
+
+S.Error = styled.p`
+  ${H10};
+  color: #EE3333; 
+  margin: 4px 0 0 140px;
+`
+
+S.Description = styled.div`
+  margin: 48px 0 0 0;
+`
+
+S.InputBox = styled.input`
+  width: 1160px;
+  height: 335px;
+  border: 1px solid #6E7476;
+  border-radius: 2px;
+  margin: 8px 0 0 0;
+  background-color: #FBFCFC;
+`
+
+
+export default S;

@@ -4,7 +4,6 @@ import * as SA from './artistDetailModifyStyle';
 import DateTimePicker from 'react-flatpickr';
 
 const ArtistDetailModify = () => {
-  
   const [selectedFields, setSelectedFields] = useState([]);
   const [selectedArtId, setSelectedArtId] = useState(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -15,8 +14,7 @@ const ArtistDetailModify = () => {
   };
   // 확인 팝업에서 확인 클릭 시 처리
   const handleSubmit = () => {
-    setShowConfirmation(false);   // 기존 확인 팝업 닫기
-    setShowSuccess(true);         // 새 성공 팝업 열기
+    setShowConfirmation(false);
   };
 
   // 확인 팝업에서 취소 클릭 시 처리
@@ -26,7 +24,6 @@ const ArtistDetailModify = () => {
 
   const artworks = [
     { id: 1, src: 'http://localhost:10000/files/api/get/eximage.png?filePath=images/mypage' },
-    { id: 2, src: 'http://localhost:10000/files/api/get/eximage2.png?filePath=images/mypage' },
   ];
   const [histories, setHistories] = useState([
     { id: 1, date: null, content: '', isSaved: false }
@@ -154,7 +151,7 @@ const ArtistDetailModify = () => {
           <SA.Social>Instagram</SA.Social>
           <SA.Icon src="http://localhost:10000/files/api/get/insta.png?filePath=images/mypage" alt="default profile" />
           <S.Emptybox/>
-          <p>gradation</p>
+          <SA.InputBox placeholder='아이디를 입력하세요'/>
         </SA.SocialBox>
         <S.EndBar/>
 
@@ -162,7 +159,7 @@ const ArtistDetailModify = () => {
           <SA.Social>Youtube</SA.Social>
           <SA.Icon src="http://localhost:10000/files/api/get/youtube.png?filePath=images/mypage" alt="default profile" />
           <S.Emptybox/>
-          <p>www.test.com/sdkajhfgshvbjsk</p>
+          <SA.InputBox placeholder='링크를 입력하세요'/>
         </SA.SocialBox>
         <S.EndBar/>
 
@@ -170,7 +167,7 @@ const ArtistDetailModify = () => {
           <SA.Social>Blog</SA.Social>
           <SA.Icon src="http://localhost:10000/files/api/get/blog.png?filePath=images/mypage" alt="default profile" />
           <S.Emptybox/>
-          <p>www.test.com/sdkajhfgshvbjsk</p>
+          <SA.InputBox placeholder='링크를 입력하세요'/>
         </SA.SocialBox>
         <S.EndBar/>
       </SA.Chepter>

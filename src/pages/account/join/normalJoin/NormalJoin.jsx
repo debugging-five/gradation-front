@@ -154,16 +154,10 @@ const NormalJoin = () => {
   // 인증번호 검증
   const getIsVerificationCode = async () => {
     if(!code) {
-      // alert("인증번호를 입력하세요.")
       setVerificationMessage("필수 항목입니다.")
       return;
     }
-    
-    // if(!isSendVerificationCode) {
-    //     alert("이메일을 인증해주세요.")
-    //     return;
-    //   }
-      
+
       await fetch("http://localhost:10000/auth/verifyCode", {
         method : "POST",
         headers : {
@@ -178,7 +172,6 @@ const NormalJoin = () => {
           const updateErrorCount = errorCount + 1;
           if(updateErrorCount >= 3) {
             setVerificationMessage(`인증코드 ${updateErrorCount}회 실패! \n다시 인증해주세요.`)
-            // setIsSendVerificationCode(false)
             setErrorCount(0)
             setConfirmVerificationCode(false)
             setIsEmailButtonClicked(false)
@@ -462,7 +455,6 @@ const NormalJoin = () => {
                               setUserEmail(e.target.value)
                               setConfirmVerificationCode(false)
                               setIsEmailButtonClicked(false)
-                              // setIsSendVerificationCode(false)
                               setErrorCount(0)
                               setEmailCheckMessage("");
                               setVerificationMessage("")

@@ -1,17 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import S from './style';
+import { useCookies } from 'react-cookie';
 
 const Login = () => {
 
+  const { register, handleSubmit, setValue, trigger, formState: {isSubmitting, errors, isValid}} = useForm({mode : "onBlur"});
+  
   const navigate = useNavigate();
-
-  const { register, handleSubmit, trigger, formState: {isSubmitting, errors, isValid}} = useForm({mode: "onChange", reValidateMode: "onBlur"});
-
+  
   const [loginMessage, setLoginMessage] = useState("")
-  const[passwordType, setPasswordType] = useState({type : 'password', visible : false});
-  const handlePasswordType = (e) => {
+  const [passwordType, setPasswordType] = useState({type : 'password', visible : false});
+  
+  const [saveId, setSaveId] = useState("");
+  const [cookies, setCookie, removeCookie] = useCookies(["saveId"])
+  const [isRemember, setIsRemember] = useState(false);
+  
+  const handlePasswordType = () => {
     setPasswordType(() => {
       if(!passwordType.visible) {
         return {type : 'text', visible : true};
@@ -30,6 +36,14 @@ const Login = () => {
     window.location.href = "http://localhost:10000/oauth2/authorization/naver"
   }
 
+  useEffect(() => {
+    if(cookies.saveId !== undefined) {
+      setSaveId(cookies.saveId);
+      setIsRemember(true)
+      setValue("userIdentification", cookies.saveId)
+    }
+  }, [])
+
   return (
     <form autoComplete="off" onSubmit={handleSubmit(async (data) => {
       const {userIdentification, userPassword} = data;
@@ -47,19 +61,23 @@ const Login = () => {
         .then((res) => {
           if(!res.ok){
             return res.json().then((res) => {
-              // alert(res.message)
               setLoginMessage(res.message)
             })
           }
           return res.json()
         })
         .then((res) => {
-          console.log(res) 
+          // console.log(res) 
           if(res && res.jwtToken){
-            const { jwtToken } = res
-            // navigate("/?jwtToken=" + res.jwtToken)
-            localStorage.setItem("jwtToken", jwtToken)
-            navigate("/")
+            if(isRemember) {
+            setCookie("saveId", saveId, {
+              path: "/",
+              maxAge: 60 * 60 * 24 * 7
+            })
+          }else {
+            removeCookie("saveId")
+          }
+            navigate("/?jwtToken=" + res.jwtToken)
           }
         })
         .catch(console.error)
@@ -76,14 +94,15 @@ const Login = () => {
                     <S.IconWrapper>
                       <S.Icon src={'/assets/images/icon/user.png'} />
                     </S.IconWrapper>
-                    <S.Input type="text" placeholder='아이디' 
+                    <S.Input type="text" placeholder='아이디' value={saveId} 
                       {...register("userIdentification", {
                         required : true,
                         onChange : (e) => {
                           setLoginMessage("")
+                          setSaveId(e.target.value)
+                          trigger("userIdentification")
                         }
                       })}
-                      onBlur={() => trigger("userIdentification")}
                     />
                   </S.Label>
                 </S.InputWrapper>
@@ -100,14 +119,14 @@ const Login = () => {
                     <S.IconWrapper>
                       <S.Icon src={'/assets/images/icon/lock.png'} />
                     </S.IconWrapper>
-                      <S.Input type={passwordType.type} placeholder='비밀번호' 
+                      <S.Input type={passwordType.type} placeholder='비밀번호' autoComplete="off"
                         {...register("userPassword", {
                           required : true,
-                          onChange : (e) => {
+                          onChange : () => {
                             setLoginMessage("")
+                            trigger("userPassword")
                           }
                         })}
-                        onBlur={() => trigger("userPassword")}
                       />
                   </S.Label>
                    <S.PasswordIcon onClick={handlePasswordType}
@@ -128,8 +147,15 @@ const Login = () => {
               <S.Checkbox src={'/assets/images/join/checked-off.png' }/>
                 <S.H8>로그인 상태 유지</S.H8>
             </S.Login>
-            <S.Id>
-              <S.Checkbox src={'/assets/images/join/checked-off.png' }/>
+            <S.Id onClick = {() => {
+              const remove = !isRemember;
+              setIsRemember(remove)
+              if(!remove) {
+                removeCookie("saveId")
+              }
+            }}>
+              <S.Checkbox   
+              src={isRemember ? "/assets/images/join/checked-on.png" : "/assets/images/join/checked-off.png"}/>
               <S.H8>아이디 저장</S.H8>
             </S.Id>
           </S.CheckboxWrapper> 
