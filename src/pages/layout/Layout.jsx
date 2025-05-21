@@ -81,9 +81,9 @@ const Layout = () => {
   return (
     <S.Container>
       <Header onLogout={handleLogout} />
-      <main>
+      <S.Main>
         <Outlet />
-      </main>
+      </S.Main>
       <Footer />
     </S.Container>
   );

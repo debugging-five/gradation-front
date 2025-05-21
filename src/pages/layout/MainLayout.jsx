@@ -8,9 +8,9 @@ const MainLayout = () => {
   return (
     <S.Container>
       <Header />
-      <main>
+      <S.Main>
         <Outlet />
-      </main>
+      </S.Main>
       <Footer />
     </S.Container>
   );
