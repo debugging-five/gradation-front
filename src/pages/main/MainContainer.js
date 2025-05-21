@@ -20,7 +20,6 @@ const MainContainer = () => {
         setArtList(data.artListForMain); 
       })
       .catch((error) => {
-        console.error('최신 작품 불러오기 실패', error);
       });
   }, []);
 
