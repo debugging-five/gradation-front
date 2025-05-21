@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import { ChooseBar, ChooseBarWapper, MainTitle, MainWrapper } from '../../style';
-
+import * as S from '../../style';
 const ArtLikeContainer = () => {
   const location = useLocation()
   const path = location.pathname;
@@ -14,18 +13,18 @@ const ArtLikeContainer = () => {
   }
 
   return (
-    <MainWrapper>
-      <MainTitle>내 활동 / {title}</MainTitle>
-      <ChooseBarWapper>
-        <ChooseBar as={NavLink} to="art" end>작품 좋아요</ChooseBar>
-        <ChooseBar as={NavLink} to="university" end>전시회 좋아요</ChooseBar>
-      </ChooseBarWapper>
+    <S.MainWrapper>
+      <S.MainTitle>내 활동 / {title}</S.MainTitle>
+      <S.ChooseBarWapper>
+        <S.ChooseBar as={NavLink} to="art" end>작품 좋아요</S.ChooseBar>
+        <S.ChooseBar as={NavLink} to="university" end>전시회 좋아요</S.ChooseBar>
+      </S.ChooseBarWapper>
 
       <div>
         <Outlet />
       </div>
 
-    </MainWrapper>
+    </S.MainWrapper>
   );
 };
 

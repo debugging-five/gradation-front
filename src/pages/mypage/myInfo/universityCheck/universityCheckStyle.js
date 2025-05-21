@@ -29,3 +29,27 @@ export const CheckButton = styled.button`
     height: 50px;
     font-size: 16px;
 `;
+export const InfoText = styled.p`
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #555;
+`;
+
+export const DeleteDiv = styled.div`
+    margin-top: 8px;
+    display: flex; 
+    align-items: center; 
+    font-size: 16px;
+    padding-left: 20px;
+`;
+export const DeleteButton = styled.button`
+    color: red;
+    cursor: pointer;
+    border: none;
+    background-color: white;
+`;
+export const ErrorMessege = styled.p`
+    color: #E49804;
+    margin-top: 0.2rem;
+    text-align: end;
+`;
