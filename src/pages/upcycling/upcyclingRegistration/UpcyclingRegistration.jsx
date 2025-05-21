@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import * as S from "./style";
+import * as S from "./UpcyclingRegistrationStyle";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/light.css";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const UpcyclingRegistration = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     schoolName: "",
     detailAddress: "",
@@ -120,7 +122,7 @@ const UpcyclingRegistration = () => {
   const handleRegisterSubmit = async () => {
   setShowConfirmPopup(false);
 
-  const { image, imagePreview, ...rest } = formData;
+  const { image, imagePreview, ...rest } = formData; // 이미지는 따로 분류
 
   const upcyclingData = {
     upcyclingAddress: formData.schoolName,
@@ -128,16 +130,19 @@ const UpcyclingRegistration = () => {
     upcyclingEmail: formData.email,
     upcyclingPhone: formData.phone,
     upcyclingDate: formData.pickupDate,
-    upcyclingSizeSmall: parseInt(formData.smallCount || 0),
+    upcyclingSizeSmall: parseInt(formData.smallCount || 0), // 없으면 기본값 0
     upcyclingSizeMedium: parseInt(formData.mediumCount || 0),
     upcyclingSizeLarge: parseInt(formData.largeCount || 0),
-    upcyclingMaterials: formData.materials.join(","),
+    upcyclingMaterials: formData.materials.join(","), // 배열 문자열로 // "플라스틱,천"
     upcyclingSignificant: formData.notes,
     userId: currentUser?.id || null,
   };
 
-  const payload = new FormData();
+  const payload = new FormData(); // 첨부파일 + 제이슨 데이터 함께 보내기위해 폼데이터 객체 생성
+  // 폼데이터에 데이터 추가 (json문자열 파일처럼 블룹으로 감싸기)
+  // Blob 브라우저에서 파일 데이터처럼 다룰때 / 블룹 생성자는 여러 조각을 하나의 덩어리로 만들수 있음
   payload.append("info", new Blob([JSON.stringify(upcyclingData)], { type: "application/json" }));
+  // 이미지 파일 있을때 추가!
   if (image) {
     payload.append("file", image);
   }
@@ -158,7 +163,6 @@ const UpcyclingRegistration = () => {
     alert("신청 중 오류가 발생했습니다.");
   }
 };
-
 
   return (
     <S.Container>
@@ -259,12 +263,15 @@ const UpcyclingRegistration = () => {
                 options={{ dateFormat: "Y-m-d", disableMobile: true, minDate: "today", }}
                 value={formData.pickupDate}
                 onChange={([date]) => setFormData({ ...formData, pickupDate: date })}
-                render={({ value, ...props }, ref) => (
-                  <S.CalendarInput {...props} ref={ref}>
+                render={({ value, ...props }, ref) => {
+                  const {options, render, ...filteredProps} = props;
+                  return(
+                  <S.CalendarInput {...filteredProps} ref={ref}>
                     <S.CalendarIcon src="http://localhost:10000/files/api/get/calendar.png?filePath=images/icons" alt="calendar-icon" />
                     <span>{formData.pickupDate ? formData.pickupDate.toLocaleDateString('ko-KR') : '날짜를 선택해주세요.'}</span>
                   </S.CalendarInput>
-                )}
+                  );
+                }}
               />
             </S.DateWrapper>
           </S.InputGroupRow>
@@ -309,7 +316,7 @@ const UpcyclingRegistration = () => {
                 { label: "금속", value: "metal" },
                 { label: "플라스틱 & 아크릴", value: "plastic-acrylic" },
                 { label: "기타", value: "other" },
-              ].map((material) => (
+              ].map((material) => ( // 맵으로 반복해서 여러개 체크 할 수 있게!
                 <label key={material.value}>
                   <input
                     type="checkbox"
@@ -368,11 +375,15 @@ const UpcyclingRegistration = () => {
           <S.PopupMessage>신청이 완료되었습니다!</S.PopupMessage>
           <S.PopupButtonGroup>
             <S.PopupButton
-            className="confirm"
-            onClick={handleRegisterSubmit}
+              className="confirm"
+              onClick={async () => {
+                await handleRegisterSubmit();
+                navigate("/upcycling");
+              }}
             >
               확인
             </S.PopupButton>
+
 
           </S.PopupButtonGroup>
         </S.PopupBox>

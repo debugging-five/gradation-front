@@ -17,6 +17,7 @@ const MyPageContainer = () => {
         </S.ImageBox>
 
         <S.BarTitle>내 정보</S.BarTitle>
+        
         <S.BarContentWapper>
           <S.BarContent  as={NavLink} to="" end onClick={() => window.scrollTo(0, 0)}>회원 정보</S.BarContent>
           <S.BarContent  as={NavLink} to="artist-datail-modify" onClick={() => window.scrollTo(0, 0)}>내 작가페이지 수정</S.BarContent>
