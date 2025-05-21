@@ -241,7 +241,7 @@ const UserInfoContainer = () => {
       {/* 대학교 */}
       <SU.Box>
         <SU.Title><span>대학교</span></SU.Title>
-        <SU.PStyle>{formData.userProvider || '-'}</SU.PStyle>
+        <SU.PStyle></SU.PStyle>
       </SU.Box>
       <SU.EndBar />
 
