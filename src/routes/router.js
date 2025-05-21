@@ -167,14 +167,8 @@ const router = createBrowserRouter([
             element: <ArtistCategory />,
             children: [
               {
-                path: "",
-                element: <ArtistMyProfile />,
-                children: [
-                  {
-                    path: ":category",
-                    element: <ArtistListContainer />,
-                  },
-                ],
+                path: ":category",
+                element: <ArtistListContainer />,
               },
             ],
           },
