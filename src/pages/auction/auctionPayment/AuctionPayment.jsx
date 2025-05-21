@@ -2,13 +2,17 @@ import React, { useEffect, useState } from 'react';
 import S from './style';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 
 const AuctionPayment = () => {
 
   let { id } = useParams();
   const [data, setData] = useState({});
   const navigate = useNavigate();
+  const { currentUser } = useSelector((state) => state.user);
   const { register, handleSubmit, getValues, formState: { isSubmitting, isSubmitted, errors } } = useForm({ mode: "onChange" });
+
+  const [userData, setUserData] = useState(currentUser)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,6 +26,7 @@ const AuctionPayment = () => {
   
   if(data) {
     console.log(data);
+    console.log(userData);
     
     return (
       <S.Wrapper>
@@ -48,7 +53,7 @@ const AuctionPayment = () => {
             <S.H3>낙찰을 축하드립니다!</S.H3>
             {/* <!-- 낙찰 금액 --> */}
             <S.Price>
-              <S.H5>낙찰 금액 | {data?.auctionBidPrice}</S.H5>
+              <S.H5>낙찰 금액 | {(String)(data?.auctionBidPrice).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}   KRW</S.H5>
             </S.Price>
         
             {/* <!-- 이름 --> */}
@@ -56,9 +61,13 @@ const AuctionPayment = () => {
               <S.InputText>
                 <S.H5>이름<S.RedStar>*</S.RedStar></S.H5>
                 <S.PaymentInput type="text" placeholder="이름을 입력하세요." 
+                  value={currentUser.userName}
                   {...register("pay", {
                     required: true,
                   })}
+                  onChange={(e) =>
+                    setUserData(prev => ({ ...prev, userName: e.target.value }))
+                  }
                   autoComplete="off"
                 />
               </S.InputText>
