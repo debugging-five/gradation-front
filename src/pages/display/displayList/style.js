@@ -9,6 +9,7 @@ S.Wrapper = styled.div`
   grid-template-columns: repeat(3, 300px);
   gap: 130px;
   justify-content: center;
+  margin: 40px 0 0 0;
 `
 
 S.Display = styled(Link)`

@@ -5,7 +5,7 @@ import S from './style';
 const DisplayContainer = () => {
 
   const {category} = useParams();
-  const [order, setOrder] = useState("");
+  const [order, setOrder] = useState("date");
   const [cursor, setCursor] = useState(1)
   const [keyword, setKeyword] = useState("")
   const [display, setDisplay] = useState([])

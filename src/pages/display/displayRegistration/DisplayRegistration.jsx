@@ -1,14 +1,38 @@
-import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import S from './style';
 import SubButton from '../../../components/button/SubButton';
 import PrimaryButton from '../../../components/button/PrimaryButton';
 import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 const DisplayRegistration = () => {
-  const { register, handleSubmit, getValues, trigger, formState: {isSubmitting, errors, isValid} } = useForm({mode: "onBlur"});
+  const { register, handleSubmit, formState: {isSubmitting, errors} } = useForm({mode: "onBlur"});
   const { currentUser } = useSelector((state) => state.user);
   const userId = currentUser.id;
+  const [thumbnailUrls, setThumbnailUrls] = useState([]);
+  const { category } = useParams();
+  
+
+  const handleThumbnailImage = async (e) => {
+    const files = Array.from(e.target.files);
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append("files",file)
+    })
+
+    const response = await fetch(`http://localhost:10000/files/api/upload/art/1`, {
+      method: "POST",
+      body: formData
+    })
+
+    const {uuids} = await response.json();
+
+    const urls = files.map((file, i) => 
+      `http://localhost:10000/file/display?fileName=display/art/${category}/t_${uuids[i]}_${file.name}`
+    )
+    setThumbnailUrls(urls)
+  } 
 
   return (
     <form encType='multipart/form-data' autoComplete="off" onSubmit={handleSubmit(async (data) => {
@@ -66,6 +90,7 @@ const DisplayRegistration = () => {
             console.log(data.files)
           })
     
+    
           fetch(`http://localhost:10000/files/api/upload/art/${artId}`, {
             method : "POST",
             body : formData
@@ -77,7 +102,6 @@ const DisplayRegistration = () => {
 
 
         
-     
     
     // const result = await res.json();
     // const artId = result.id; 
@@ -93,11 +117,19 @@ const DisplayRegistration = () => {
       <S.FormWrapper>
         <S.Form>
           <S.FileWrapper>
-            <S.File type="file" accept="image/*" multiple {...register("files")} />
+            <S.File type="file" accept="image/*" multiple {...register("files")}
+            onChange={handleThumbnailImage} />
             <S.IconWrapper>
               <S.Icon src={"/assets/images/icon/add.png"} alt="업로드"/>
               <S.H5>첨부파일 업로드</S.H5>
             </S.IconWrapper>
+                          {thumbnailUrls.length > 0 && (
+                <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                  {thumbnailUrls.map((url, i) => (
+                    <img key={i} src={url} alt={`preview-${i}`} width="100" height="100" />
+                  ))}
+                </div>
+              )}
           </S.FileWrapper>
           <S.InputContainer>
             <S.BorderWrapper>

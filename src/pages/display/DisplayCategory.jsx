@@ -9,15 +9,31 @@ const DisplayCategory = ({props}) => {
   const { order, setOrder, cursor, setCursor, keyword, setKeyword, isLoading, isError } = useOutletContext();
 
   const [value, setValue] = useState("")
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+
+
+
   const onChangeValue = (e) => {
     setValue(e.target.value)
   }
-  const handleOrder = (order) => setOrder(order);
+  // const handleOrder = (order) => setOrder(order);
+  const handleOrder = (order) => {
+    setOrder(order);
+    setIsDropdownOpen(false)
+  }
+
   const handleSearch = (e) => {
     if(e.key === 'Enter'){
       setKeyword(value)
     }
   }
+
+  const dropDownOption = {
+    date: "등록순",
+    popular: "좋아요순",
+    comment: "댓글순"
+};
+
 
   const goKorean = () => {
     navigate(`/display/korean`);
@@ -99,11 +115,19 @@ const DisplayCategory = ({props}) => {
           <S.H8>작품 업로드</S.H8>
         </S.Upload>
         </S.Link>
-        <S.Dropdown>
-          <p onClick={() => handleOrder("date")}>등록순</p>
-          <p onClick={() => handleOrder("popular")}>좋아요순</p>
-          <p onClick={() => handleOrder("comment")}>댓글순</p>
-        </S.Dropdown>
+        <S.DropdownWrapper onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+          <S.DropdownButton>
+            {dropDownOption[order]}
+          </S.DropdownButton>
+          <S.DropdownIcon src={'/assets/images/icon/down.png'} alt='드롭다운' />
+        </S.DropdownWrapper>
+        {isDropdownOpen && (
+          <S.Dropdown>
+            <S.Option onClick={() => handleOrder("date")}>등록순</S.Option>
+            <S.Option onClick={() => handleOrder("popular")}>좋아요순</S.Option>
+            <S.Option onClick={() => handleOrder("comment")}>댓글순</S.Option>
+          </S.Dropdown>
+        )}
       </S.Menu>
       <Outlet context={useOutletContext()}/>
     </div>
