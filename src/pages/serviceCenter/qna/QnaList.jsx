@@ -52,7 +52,7 @@ const QnaList = () => {
       </S.Wrapper>
 
       <S.ButtonDiv>
-        <S.Button120x45R as={NavLink} to="/service-center/registration">
+        <S.Button120x45R as={NavLink} to="/service-center/registration" onClick={() => window.scrollTo(0, 0)}>
           문의하기
         </S.Button120x45R>
       </S.ButtonDiv>

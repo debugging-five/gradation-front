@@ -75,7 +75,7 @@ const FaqList = () => {
             <S.Number>{index + 1}</S.Number>
             <S.Category>{faq.faqCategory}</S.Category>
             <S.Emptybox></S.Emptybox>
-            <S.TitleNavigate as={NavLink} to={`/service-center/faq/detail/${faq.id}`} end>
+            <S.TitleNavigate as={NavLink} to={`/service-center/faq/detail/${faq.id}`} end onClick={() => window.scrollTo(0, 0)}>
               <S.Content>{faq.faqTitle}</S.Content>
             </S.TitleNavigate>
             <S.Emptybox></S.Emptybox>

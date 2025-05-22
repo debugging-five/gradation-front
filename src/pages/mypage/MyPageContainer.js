@@ -4,7 +4,10 @@ import * as S from './mypageContainerStyle';
 import { useSelector } from 'react-redux';
 
 const MyPageContainer = () => {
+  
+  // 현재 유저
   const currentUser = useSelector(state => state.user.currentUser);
+  // 아이디가 1이면 관리자 항목 표시
   const isAdmin = currentUser?.id === 1;
 
   const [userName, setUserName] = useState(currentUser?.userName);
