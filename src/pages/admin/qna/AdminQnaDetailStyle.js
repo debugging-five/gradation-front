@@ -9,7 +9,7 @@ S.Container = styled.div`
   padding: 20px 0;
 `;
 
-S.Header = styled.div`
+S.HeaderSection = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -35,16 +35,16 @@ S.TitleRow = styled.div`
   margin-bottom: 30px;
 `;
 
-S.Title = styled.h1`
+S.QuestionTitle = styled.h1`
   ${CS.H3};
 `;
 
-S.Date = styled.span`
+S.QuestionDate = styled.span`
   ${CS.H9};
   color: #333333;
 `;
 
-S.InfoTable = styled.table`
+S.UserInfoTable = styled.table`
   width: 100%;
 `;
 
@@ -73,7 +73,7 @@ S.TableData = styled.td`
   }
 `;
 
-S.Content = styled.div`
+S.QuestionContent = styled.div`
   min-height: 150px;
   padding: 20px 10px;
   background-color: #FBFCFC;
@@ -81,7 +81,7 @@ S.Content = styled.div`
 
 `;
 
-S.AnswerGroup = styled.div`
+S.AnswerSection = styled.div`
   width: 100%;
   background-color: #FBFCFC;
   margin-bottom: 50px;

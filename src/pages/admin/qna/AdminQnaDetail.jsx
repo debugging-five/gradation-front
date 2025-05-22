@@ -33,13 +33,13 @@ const AdminQnaDetail = () => {
   };
 
   const formatDate = (dateStr) => {
-  const date = new Date(dateStr);
-  const year = String(date.getFullYear()).slice(2); // 뒤 2자리
-  const month = String(date.getMonth() + 1).padStart(2, "0"); // 길이를 두자리로 맞추는 함수 0-based → +1
-  const day = String(date.getDate()).padStart(2, "0");
-
-  return `${year}.${month}.${day}`;
-};
+    const date = new Date(dateStr);
+    const year = String(date.getFullYear()).slice(2); // 뒤 2자리
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // 길이를 두자리로 맞추는 함수 0-based → +1
+    const day = String(date.getDate()).padStart(2, "0");
+    
+    return `${year}.${month}.${day}`;
+  };
 
 
   if (!qna) return <div>로딩 중...</div>;
@@ -51,29 +51,29 @@ const AdminQnaDetail = () => {
 
   return (
     <S.Container>
-      <S.Header>
+      <S.HeaderSection>
         <S.Category>{qna.qnaCategory} 관련 문의</S.Category>
         {isAnswered && <S.Note>답변이 완료된 문의는 수정이 불가합니다.</S.Note>}
-      </S.Header>
+      </S.HeaderSection>
       <S.TitleRow>
-        <S.Title>{qna.qnaTitle}</S.Title>
-        <S.Date>{formatDate(qna.qnaTime)}</S.Date>
+        <S.QuestionTitle>{qna.qnaTitle}</S.QuestionTitle>
+        <S.QuestionDate>{formatDate(qna.qnaTime)}</S.QuestionDate>
       </S.TitleRow>
-        <S.InfoTable>
-          <S.TableHead>
-            <S.TableRow>
-              <S.TableHeader>이름</S.TableHeader>
-              <S.TableData>{qna.userName}</S.TableData>
-              <S.TableHeader>연락처</S.TableHeader>
-              <S.TableData>{formatPhoneNumber(qna.userPhone)}</S.TableData>
-              <S.TableHeader>메일주소</S.TableHeader>
-              <S.TableData>{qna.userEmail}</S.TableData>
-            </S.TableRow>
-          </S.TableHead>
-        </S.InfoTable>
-      <S.Content>{qna.qnaContent}</S.Content>
+      <S.UserInfoTable>
+        <S.TableHead>
+          <S.TableRow>
+            <S.TableHeader>이름</S.TableHeader>
+            <S.TableData>{qna.userName}</S.TableData>
+            <S.TableHeader>연락처</S.TableHeader>
+            <S.TableData>{formatPhoneNumber(qna.userPhone)}</S.TableData>
+            <S.TableHeader>메일주소</S.TableHeader>
+            <S.TableData>{qna.userEmail}</S.TableData>
+          </S.TableRow>
+        </S.TableHead>
+      </S.UserInfoTable>
+      <S.QuestionContent>{qna.qnaContent}</S.QuestionContent>
         {isAnswered && (
-          <S.AnswerGroup>
+          <S.AnswerSection>
             <S.AnswerHeader>
               <S.AnswerTitle>답변완료</S.AnswerTitle>
               <S.AnswerDate>
@@ -81,7 +81,7 @@ const AdminQnaDetail = () => {
               </S.AnswerDate>
             </S.AnswerHeader>
             <S.AnswerContent>{qna.qnaAnswerContent}</S.AnswerContent>
-          </S.AnswerGroup>
+          </S.AnswerSection>
         )}
       <S.ButtonGroup>
         <S.CancelButton onClick={() => navigate(-1)}>목록</S.CancelButton>

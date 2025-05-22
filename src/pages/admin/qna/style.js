@@ -9,7 +9,7 @@ S.Container = styled.div`
   margin: 0 auto;
 `;
 
-S.QnaTableWrapper = styled.div`
+S.QnaTableSection = styled.div`
   margin-top: 10px;
   width: 100%;
 `;
@@ -38,7 +38,7 @@ S.TabButton = styled(NavLink)`
   }
 `;
 
-S.QnaTableHeader = styled.div`
+S.QnaTableHeaderRow = styled.div`
   ${CS.H5};
   display: flex;
   width: 100%;
@@ -58,38 +58,38 @@ S.QnaTableRow = styled.div`
   border-bottom: 1px solid #eee;
 `;
 
-S.QnaNumberHeader = styled.div`
+S.NumberHeader = styled.div`
   width: 60px;
   text-align: center;
   padding: 0 8px;
 `;
 
-S.QnaCategoryHeader = styled.div`
+S.CategoryHeader = styled.div`
   width: 100px;
   text-align: center;
   padding: 0 50px;
 `;
 
-S.QnaTitleHeader = styled.div`
+S.TitleHeader = styled.div`
   flex: 1;
   text-align: center;
   overflow: hidden;
   padding: 0 50px;
 `;
 
-S.QnaNumberCell = styled.div`
+S.NumberCell = styled.div`
   width: 60px;
   text-align: center;
   padding: 0 8px;
 `;
 
-S.QnaCategoryCell = styled.div`
+S.CategoryCell = styled.div`
   width: 100px;
   text-align: center;
   padding: 0 50px;
 `;
 
-S.QnaTitleLinkCell = styled.div`
+S.TitleCell = styled.div`
   flex: 1;
   padding-left: 12px;
   overflow: hidden;
@@ -101,7 +101,7 @@ S.QnaTitleLinkCell = styled.div`
   padding: 0 130px;
 `;
 
-S.QnaTitleText = styled.span`
+S.TitleText = styled.span`
   display: block;
   white-space: nowrap;
   overflow: hidden;

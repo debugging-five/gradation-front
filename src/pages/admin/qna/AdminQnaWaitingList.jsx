@@ -31,36 +31,33 @@ const AdminQnaWaitingList = () => {
 
   return (
     <S.Container>
-      <S.QnaTableWrapper>
-        <S.QnaTableHeader>
-          <S.QnaNumberHeader>번호</S.QnaNumberHeader>
-          <S.QnaCategoryHeader>구분</S.QnaCategoryHeader>
-          <S.QnaTitleHeader>제목</S.QnaTitleHeader>
-        </S.QnaTableHeader>
-    
+      <S.QnaTableSection>
+        <S.QnaTableHeaderRow>
+          <S.NumberHeader>번호</S.NumberHeader>
+          <S.CategoryHeader>구분</S.CategoryHeader>
+          <S.TitleHeader>제목</S.TitleHeader>
+        </S.QnaTableHeaderRow>
+
         {currentQnas.map((qna, index) => (
           <S.QnaTableRow key={qna.qnaId}>
-            <S.QnaNumberCell>{indexOfFirstItem + index + 1}</S.QnaNumberCell>
-            <S.QnaCategoryCell>{qna.qnaCategory}</S.QnaCategoryCell>
-            <S.QnaTitleLinkCell
-              as={NavLink}
-              to={`/mypage/admin/qna/detail/${qna.qnaId}`}
-            >
-              <S.QnaTitleText>{qna.qnaTitle}</S.QnaTitleText>
-            </S.QnaTitleLinkCell>
+            <S.NumberCell>{indexOfFirstItem + index + 1}</S.NumberCell>
+            <S.CategoryCell>{qna.qnaCategory}</S.CategoryCell>
+            <S.TitleCell as={NavLink} to={`/mypage/admin/qna/detail/${qna.qnaId}`}>
+              <S.TitleText>{qna.qnaTitle}</S.TitleText>
+            </S.TitleCell>
           </S.QnaTableRow>
         ))}
-      </S.QnaTableWrapper>
+      </S.QnaTableSection>
       <S.Pagination>
-      {Array.from({ length: totalPages }, (_, i) => (
-        <span
-          key={i + 1}
-          onClick={() => setCurrentPage(i + 1)}
-          className={currentPage === i + 1 ? "active" : ""}
-        >
-          {i + 1}
-        </span>
-      ))}
+        {Array.from({ length: totalPages }, (_, i) => (
+          <span
+            key={i + 1}
+            onClick={() => setCurrentPage(i + 1)}
+            className={currentPage === i + 1 ? "active" : ""}
+          >
+            {i + 1}
+          </span>
+        ))}
       </S.Pagination>
     </S.Container>
   );
