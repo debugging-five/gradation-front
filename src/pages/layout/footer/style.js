@@ -7,15 +7,11 @@ const S = {};
 S.FooterWrap = styled.footer`
   border-top: 1px solid #C0C5C7;
   color: ${({ theme }) => theme.PALLETE.gray[100]};
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   width: 100%;
 `;
 
 S.FooterInner = styled.div`
-  width: 100%;
+  width: 1400px;
 `;
 
 S.FooterMenu = styled.div`
@@ -31,6 +27,7 @@ S.Menu = styled.div`
   }
 
   .menu-wrap {
+    color : ${({ theme }) => theme.PALLETE.black};
     font-weight: bold;
   }
 `;

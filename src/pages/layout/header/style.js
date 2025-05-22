@@ -5,6 +5,8 @@ const S = {};
 
 S.Header = styled.header`
   position: fixed;
+  align-items: center;
+  justify-content: center;
   top: 0;
   left: 0;
   width: 100%;
@@ -25,6 +27,7 @@ S.Header = styled.header`
 
 S.Nav = styled.nav`
   display: flex;
+  width: 1440px;
   align-items: center;
   height: 100%;
 `;
