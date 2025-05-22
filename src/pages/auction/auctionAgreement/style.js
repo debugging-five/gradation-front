@@ -8,7 +8,6 @@ const gray900 = "#6E7476";
 const warning = "#E49804";
 const black = "#333333";
 
-
 const S = {};
 
 S.MainLink = styled.a`
@@ -23,22 +22,37 @@ S.H3 = styled.p`
 S.H5 = styled.p`
   ${H5}
 `
+
 S.H5Red = styled.p`
   ${H5}
   color: ${primary};
- 
 `
+
 S.H5Title = styled.p`
   ${H5}
   margin-top: 22px;
+  font-weight: 500;
 `
 
 S.H6 = styled.p`
   ${H6}
+  font-weight: 700;
 `
 
 S.H8 = styled.p`
   ${H8}
+`
+
+S.H8Bold = styled.p`
+  ${H8}
+  font-weight: 600;
+  margin: 0 0 8px 0;
+`
+
+S.H8Red = styled.p`
+  ${H8};
+  color: ${primary};
+  font-weight: 700;
 `
 
 S.biddingCatImg = styled.img`
@@ -73,9 +87,14 @@ S.H2 = styled.p`
 `
 
 S.StyledLink = styled(Link)`
-  ${H4}
+  ${H8}
   color: ${black};
   text-decoration: none;
+
+  & label {
+    display: flex;
+    align-items: center;
+  }
 
   &:hover {
     text-decoration: underline;
@@ -92,6 +111,7 @@ S.Order = styled.div`
   flex-direction: column;
   align-items: center;
   border-bottom: solid 1px ${gray900};
+  padding: 0 0 30px 0;
 `
 
 S.OrderImg = styled.img`
@@ -106,7 +126,7 @@ S.Step = styled.div`
 
 S.StepWrapper = styled.div`
   display: flex;
-  margin: 40px 0;
+  margin: 80px 0;
 `
 
 S.TitleDiv = styled.div`
@@ -120,7 +140,6 @@ S.ContentDiv = styled.div`
 
 S.StepImg = styled.img`
   width: 148px;
-  margin-top: 10px;
 `
 
 S.ChartDiv = styled.div`
@@ -128,7 +147,7 @@ S.ChartDiv = styled.div`
   height: 200px;
   border: solid 1px ${gray900};
   border-radius: 3px;
-  margin-top: 13px;
+  margin-top: 30px;
 `
 
 S.ChartIndex = styled.div`
@@ -168,7 +187,7 @@ S.ChartContentTitles = styled.div`
 
 S.ChartContentTitle1 = styled.div`
   width: 279px;
-  height: 40px;
+  height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -192,7 +211,7 @@ S.ChartContents = styled.div`
 
 S.ChartContent1_1 = styled.div`
   width: 559px;
-  height: 40px;
+  height: 80px;
   border-bottom: solid 1px ${gray900};
   display: flex;
   justify-content: center;
@@ -234,11 +253,19 @@ S.Step3Content = styled.div`
 
 S.Step4_1 = styled.div`
   margin-bottom: 40px;
+
+  & .sub {
+    margin: 0 0 0 20px;
+  }
 `
 
 S.Step4_2 = styled.div`
 margin: 40px 0;
 gap: 10px;
+
+  & .sub {
+    margin: 0 0 0 20px;
+  }
 `
 S.ManualOptions = styled.div`
   margin-top: 56px;
