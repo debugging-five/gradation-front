@@ -1,13 +1,17 @@
 import { useForm } from 'react-hook-form';
 import S from './style';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const AuctionModal = ({id, category, bidderCount, bidding, setBidding, timeleft, data, setOpenBidding }) => {
   const { currentUser, isLogin } = useSelector((state) => state.user);
   const { register, handleSubmit, getValues, formState: {isSubmitting, isSubmitted, errors}} = useForm({mode:"onChange"});
   const navigate = useNavigate();
   const pricePattern = /^[0-9]+$/;
+  
+  if(!isLogin) {
+    return <Navigate to={"/login"} />
+  }
 
   return (
     <S.PopupBody>
@@ -54,10 +58,12 @@ const AuctionModal = ({id, category, bidderCount, bidding, setBidding, timeleft,
               const getCurrentBidding = await fetch(`http://localhost:10000/auction/api/read-bidder/${id}`)
               const currentBidding = await getCurrentBidding.json();
               
-              if(bidding.id !== currentBidding.id) {
-                alert("응찰가 변동으로 인한 응찰 실패\n다시 응찰 하시겠습니까?");
-                navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`)
-                return
+              if(currentBidding.id) {
+                if(bidding.id !== currentBidding.id) {
+                  alert("응찰가 변동으로 인한 응찰 실패\n다시 응찰 하시겠습니까?");
+                  navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`)
+                  return
+                }
               }
 
 
@@ -104,7 +110,7 @@ const AuctionModal = ({id, category, bidderCount, bidding, setBidding, timeleft,
             })}>
               <S.PopupInfo2>
                 <S.PopupLeft2>
-                  <S.Input type="text" placeholder="응찰가를 입력해주세요." autocomplete="off"
+                  <S.Input type="text" placeholder="응찰가를 입력해주세요." autoComplete="off"
                     {...register("price", {
                       required : true,
                       pattern : {
