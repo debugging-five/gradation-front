@@ -5,6 +5,8 @@ const S = {};
 
 S.Header = styled.header`
   position: fixed;
+  align-items: center;
+  justify-content: center;
   top: 0;
   left: 0;
   width: 100%;
@@ -25,6 +27,7 @@ S.Header = styled.header`
 
 S.Nav = styled.nav`
   display: flex;
+  width: 1440px;
   align-items: center;
   height: 100%;
 `;
@@ -120,13 +123,19 @@ S.LoginSection = styled.div`
   margin-left: auto;
   margin-right: 24px;
   position: relative;
-
-  .header-bell {
-    height: 24px;
-    cursor: pointer;
-    margin-right: 24px;
-  }
 `;
+
+S.BellWrap = styled.div`
+  position: relative;
+  cursor: pointer;
+`
+
+S.BellIcon = styled.img`
+  height: 24px;
+  margin-right: 24px;
+`;
+
+
 
 S.SignInWrap = styled.div`
   position: relative;

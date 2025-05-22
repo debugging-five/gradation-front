@@ -55,6 +55,7 @@ export const Category = styled.div`
 export const InputTitle = styled.input`
     border: none;
     width: 720px;
+    background-color: transparent;
     &:focus {
     outline: none;
   }

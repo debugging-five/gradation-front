@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Category, CategoryBold, Content, ContentBox, Emptybox, ListHeader, MainWrapper, Number, NumberBold, Title, TitleNavigate } from '../../mypage/style';
-import { CategoryBox, CategoryButton, CategoryLi, CategoryUl, Wrapper } from './faqListStyle';
+import * as S from '../../mypage/style';
+import * as SF from './faqListStyle';
 
 const FaqList = () => {
   const [faqList, setFaqList] = useState([]);
@@ -38,51 +38,51 @@ const FaqList = () => {
   const filteredFaqs = selectedCategory === '' ? faqList : faqList.filter(faq => faq.faqCategory === selectedCategory);
 
   return (
-    <MainWrapper>
+    <S.MainWrapper>
 
       {/* 구분 드롭다운 */}
-      <CategoryBox ref={dropdownRef}>
-        <CategoryButton onClick={() => setIsDropdownOpen(prev => !prev)}>
+      <SF.CategoryBox ref={dropdownRef}>
+        <SF.CategoryButton onClick={() => setIsDropdownOpen(prev => !prev)}>
           {selectedCategory === '' ? '구분 ▾' : `${selectedCategory} ▾`}
-        </CategoryButton>
+        </SF.CategoryButton>
 
         {isDropdownOpen && (
-          <CategoryUl>
+          <SF.CategoryUl>
             {categories.map(status => (
-              <CategoryLi key={status} onClick={() => {
+              <SF.CategoryLi key={status} onClick={() => {
                 setSelectedCategory(status === '전체' ? '' : status);
                 setIsDropdownOpen(false);
               }}>
                 {status}
-              </CategoryLi>
+              </SF.CategoryLi>
             ))}
-          </CategoryUl>
+          </SF.CategoryUl>
         )}
-      </CategoryBox>
+      </SF.CategoryBox>
 
       {/* 리스트 */}
-      <Wrapper>
-        <ListHeader>
-          <NumberBold>번호</NumberBold>
-          <CategoryBold>구분</CategoryBold>
-          <Emptybox></Emptybox>
-          <Title>제목</Title>
-          <Emptybox></Emptybox>
-        </ListHeader>
+      <SF.Wrapper>
+        <S.ListHeader>
+          <S.NumberBold>번호</S.NumberBold>
+          <S.CategoryBold>구분</S.CategoryBold>
+          <S.Emptybox></S.Emptybox>
+          <S.Title>제목</S.Title>
+          <S.Emptybox></S.Emptybox>
+        </S.ListHeader>
 
         {filteredFaqs.map((faq, index) => (
-          <ContentBox key={faq.id}>
-            <Number>{index + 1}</Number>
-            <Category>{faq.faqCategory}</Category>
-            <Emptybox></Emptybox>
-            <TitleNavigate as={NavLink} to={`/service-center/faq/detail/${faq.id}`} end>
-              <Content>{faq.faqTitle}</Content>
-            </TitleNavigate>
-            <Emptybox></Emptybox>
-          </ContentBox>
+          <S.ContentBox key={faq.id}>
+            <S.Number>{index + 1}</S.Number>
+            <S.Category>{faq.faqCategory}</S.Category>
+            <S.Emptybox></S.Emptybox>
+            <S.TitleNavigate as={NavLink} to={`/service-center/faq/detail/${faq.id}`} end>
+              <S.Content>{faq.faqTitle}</S.Content>
+            </S.TitleNavigate>
+            <S.Emptybox></S.Emptybox>
+          </S.ContentBox>
         ))}
-      </Wrapper>
-    </MainWrapper>
+      </SF.Wrapper>
+    </S.MainWrapper>
   );
 };
 

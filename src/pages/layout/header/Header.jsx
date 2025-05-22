@@ -87,7 +87,10 @@ const Header = ({ onLogout }) => {
         </S.Menu>
 
         <S.LoginSection>
-          <img className="header-bell" src={`/assets/images/icon/bell.png`} alt="bell" />
+          <S.BellWrap>
+            <S.BellIcon className="header-bell" src={`/assets/images/icon/bell.png`} alt="bell" />
+            
+          </S.BellWrap>
           {isLogin ? (
             <S.SignInWrap>
               <span className="sign-in">{currentUser.userName}님</span>

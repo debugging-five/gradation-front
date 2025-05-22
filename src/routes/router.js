@@ -96,6 +96,7 @@ import ContactArtistSendedDetail from "../pages/mypage/myActive/contactArtist/Co
 import UpcyclingMain from "../pages/upcycling/upcyclingMain/UpcyclingMain";
 import NewPassword from "../pages/account/newPassword/NewPassword";
 import MainContainer from "../pages/main/MainContainer";
+import MainLayout from "../pages/layout/MainLayout";
 
 const router = createBrowserRouter([
   {
@@ -106,6 +107,26 @@ const router = createBrowserRouter([
         path: "",
         element: <MainContainer />,
       },
+        // {
+        //   path: "/join",
+        //   element: <Join />,
+        // },
+        // {
+        //   path: "/login",
+        //   element: <Login />,
+        // },
+        // {
+        //   path: "/find-id",
+        //   element: <FindId />,
+        // },
+        // {
+        //   path: "/find-password",
+        //   element: <FindPassword />,
+        // },
+        // {
+        //   path: "/new-password",
+        //   element: <NewPassword />,
+        // },
     
       {
         path: "/display",
@@ -146,14 +167,8 @@ const router = createBrowserRouter([
             element: <ArtistCategory />,
             children: [
               {
-                path: "",
-                element: <ArtistMyProfile />,
-                children: [
-                  {
-                    path: ":category",
-                    element: <ArtistListContainer />,
-                  },
-                ],
+                path: ":category",
+                element: <ArtistListContainer />,
               },
             ],
           },
@@ -602,37 +617,32 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/join",
-    element: <Join />,
+    path: "/",
+    element : <MainLayout />,
+    children : [
+      {
+        path: "/join",
+        element: <Join />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/find-id",
+        element: <FindId />,
+      },
+      {
+        path: "/find-password",
+        element: <FindPassword />,
+      },
+      {
+        path: "/new-password",
+        element: <NewPassword />,
+      },
+    ]
   },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/find-id",
-    element: <FindId />,
-  },
-  {
-    path: "/find-password",
-    element: <FindPassword />,
-  },
-  {
-    path: "/new-password",
-    element: <NewPassword />,
-  },
-  // {
-  //   path: "/join",
-  //   element: <Join />,
-  // },
-  // {
-  //   path: "/login",
-  //   element: <Login />,
-  // },
-  // {
-  //   path: "/find-id",
-  //   element: <FindId />,
-  // },
+  
 ]);
 
 export default router;
