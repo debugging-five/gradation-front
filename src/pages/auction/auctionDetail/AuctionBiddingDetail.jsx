@@ -4,6 +4,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import AuctionPopup from './AuctionBiddingPopup/AuctionModal';
 import AuctionAutoPopup from './AuctionAutoBiddingPopup/AuctionAutoModal';
 import dayjs from 'dayjs';
+import { useSelector } from 'react-redux';
 const AuctionBiddingDetail = ({type, category, id}) => {
 
 	
@@ -15,6 +16,7 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 	const navigate = useNavigate();
 	const [openBidding, setOpenBidding] = useState(false);
 	const [openAutoBidding, setOpenAutoBidding] = useState(false);
+	const { isLogin } = useSelector((state) => state.user);
 	const categoryMap = new Map([
 		["한국화", "korean"],
 		["회화", "painting"],
@@ -49,16 +51,17 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 		const fetchAuction = async () => {
 			const response = await fetch(`http://localhost:10000/auction/api/detail/${id}`);
 			const auction = await response.json();
+			console.log(auction);
+			
 			if(auction.length === 0) {
         navigate("/auction")
         return
       }
 			setAuction(auction);
 			setData(auction[0]);
-		};
-		fetchAuction().then(() => {
-			const biddingDate = new Date(data.auctionStartDate);
-			const dataCategory = categoryMap.get(data.artCategory);
+
+			const biddingDate = new Date(auction[0].auctionStartDate);
+			const dataCategory = categoryMap.get(auction[0].artCategory);
 			if(category !== dataCategory) {
 				return <Navigate to={`/auction/bidding/${dataCategory}/detail/${id}`} state={{message: "잘못된 접근"}} replace={true} />
 			}
@@ -70,6 +73,9 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 			if(data.auctionBidDate){
 				return <Navigate to={`/auction/complete/${dataCategory}/detail/${id}`} state={{message: "잘못된 접근"}} replace={true} />
 			}
+		};
+
+		fetchAuction().then(() => {
 			
 			const fetchBidding = async () => {
 				const response = await fetch(`http://localhost:10000/auction/api/read-bidder/${id}`);
@@ -77,12 +83,11 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 				setBidding(bidder);
 			}
 			fetchBidding();
-		});;
+		});
 
 		
 	}, [id]);
 
-	let updateFetch;
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -101,15 +106,14 @@ const AuctionBiddingDetail = ({type, category, id}) => {
     }, 1000); // 1초마다 갱신
 
     return () => clearInterval(interval);
-	}, [category, deadline, id, navigate, updateFetch])
+	}, [category, deadline, id, navigate])
 
-	updateFetch = async () => {
+	const updateFetch = async () => {
 		const getBidder = await fetch(`http://localhost:10000/auction/api/read-bidder/${id}`);
 		const bidder = await getBidder.json();
 		// console.log(bidder);
 		let auctionVO = {};
 		if(bidder.id === null){
-			console.log("유찰!");
 			auctionVO = {
 				id: id,
 				auctionStartDate: data.auctionStartDate,
@@ -125,7 +129,6 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 			console.log(auctionVO);
 			
 		}else {
-			console.log("낙찰!");
 			auctionVO = {
 				id: id,
 				auctionStartDate: data.auctionStartDate,
@@ -138,7 +141,6 @@ const AuctionBiddingDetail = ({type, category, id}) => {
 				artId: data.artId,
 				userId: bidder.userId,
 			}
-			console.log(auctionVO);
 			
 		}
 		const update = await fetch(`http://localhost:10000/auction/api/modify`, {
