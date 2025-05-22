@@ -1,29 +1,9 @@
 import * as CS from "../../../styles/common";
-import styled, { css, keyframes } from "styled-components";
+import styled, { css } from "styled-components";
 
-const fadeUp = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
+const S = {};
 
-const slideIn = keyframes`
-  0% {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-`;
-
-export const Container = styled.div`
+S.Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,7 +11,7 @@ export const Container = styled.div`
   padding: 40px 0;
 `;
 
-export const UpcyclingWrapper = styled.div`
+S.UpcyclingWrapper = styled.div`
   width: 100%;
   padding: 100px 0;
   display: flex;
@@ -39,28 +19,28 @@ export const UpcyclingWrapper = styled.div`
   align-items: center;
 `;
 
-export const UpcycleTitle = styled.h1`
+S.UpcycleTitle = styled.h1`
   ${CS.EN_H2};
   text-align: center;
   margin-bottom: 95px;
 `;
 
-export const BannerContainer = styled.section`
+S.BannerContainer = styled.section`
   width: 100%;
   ${CS.flexCenter};
   margin-bottom: 275px;
 `;
 
-export const BannerImgContainer = styled.div`
+S.BannerImgContainer = styled.div`
   position: relative;
 `;
 
-export const BannerImg = styled.img`
+S.BannerImg = styled.img`
   width: 1920px;
   height: auto;
 `;
 
-export const BannerText = styled.div`
+S.BannerText = styled.div`
   ${CS.H1};
   text-align: center;
   color: #FBFCFC;
@@ -74,7 +54,7 @@ export const BannerText = styled.div`
   gap: 50px;
 `;
 
-export const Chapter1 = styled.section`
+S.Chapter1 = styled.section`
   width: 1160px;               
   margin: 100px auto 300px;
   display: flex;
@@ -82,7 +62,7 @@ export const Chapter1 = styled.section`
   align-items: center;
 `;
 
-export const Chapter1Title = styled.h1`
+S.Chapter1Title = styled.h1`
   ${CS.H1};
   text-align: center;
   margin-bottom: 100px;
@@ -90,14 +70,14 @@ export const Chapter1Title = styled.h1`
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
 `;
 
-export const ChapterStats = styled.div`
+S.ChapterStats = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: stretch;
 
 `;
 
-export const ChapterBox = styled.div`
+S.ChapterBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -110,7 +90,7 @@ export const ChapterBox = styled.div`
   }
 `;
 
-export const StatsTitle = styled.h2`
+S.StatsTitle = styled.h2`
   ${CS.H1};
   text-align: center;
   line-height: 1.2;
@@ -121,7 +101,7 @@ export const StatsTitle = styled.h2`
   justify-content: center;
 `;
 
-export const StatsDesc = styled.div`
+S.StatsDesc = styled.div`
   ${CS.H3};
   margin-top: 20px;
   line-height: 1.5;
@@ -129,12 +109,12 @@ export const StatsDesc = styled.div`
   word-break: keep-all;
 `;
 
-export const Chapter2 = styled.section`
+S.Chapter2 = styled.section`
   ${CS.flexCenter};
   margin: 80px;
 `;
 
-export const Chapter2Img = styled.img`
+S.Chapter2Img = styled.img`
   width: 100%;
   max-width: 1160px;
   height: auto;
@@ -153,19 +133,19 @@ export const Chapter2Img = styled.img`
     `}
 `;
 
-export const Chapter3 = styled.section`
+S.Chapter3 = styled.section`
   ${CS.flexCenterColumn};
   margin-top: 230px;
   margin-bottom: 400px;
 `;
 
-export const Chapter3Title = styled.h1`
+S.Chapter3Title = styled.h1`
   ${CS.H1};
   text-align: center;
   margin-bottom: 70px;
 `;
 
-export const Chapter3TopImg = styled.div`
+S.Chapter3TopImg = styled.div`
   display: flex;
   gap: 30px;
   justify-content: center;
@@ -208,7 +188,7 @@ export const Chapter3TopImg = styled.div`
     `}
 `;
 
-export const Chapter3MidImg = styled.div`
+S.Chapter3MidImg = styled.div`
   display: flex;
   gap: 30px;
   justify-content: center;
@@ -251,7 +231,7 @@ export const Chapter3MidImg = styled.div`
     `}
 `;
 
-export const Chapter3BottomImg = styled.div`
+S.Chapter3BottomImg = styled.div`
   display: flex;
   gap: 30px;
   justify-content: center;
@@ -294,7 +274,7 @@ export const Chapter3BottomImg = styled.div`
     `}
 `;
 
-export const Chapter3Labels = styled.div`
+S.Chapter3Labels = styled.div`
   ${CS.H5};
   text-align: center;
   font-size: 18px;
@@ -314,22 +294,22 @@ export const Chapter3Labels = styled.div`
     `}
 `;
 
-export const StepImg = styled.img`
+S.StepImg = styled.img`
   width: 200px;
   height: 200px;
 `;
 
-export const ArrowImg = styled.img`
+S.ArrowImg = styled.img`
   width: 104px;
   height: 134px;
   margin-top: 30px;
 `;
 
-export const Chapter4 = styled.section`
+S.Chapter4 = styled.section`
   margin: 100px 0;
 `;
 
-export const CircleContainer = styled.div`
+S.CircleContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
@@ -337,7 +317,7 @@ export const CircleContainer = styled.div`
 `;
 
 
-export const Number = styled.div`
+S.Number = styled.div`
   ${CS.H1};
   margin-right: 30px;
   color: #6E7476;
@@ -350,44 +330,44 @@ const BaseCircle = styled.div`
   z-index: 1;
 `;
 
-export const BlueCircle = styled(BaseCircle)`
+S.BlueCircle = styled(BaseCircle)`
   background-color: #295AA0;
   margin-left: 7px;
 `;
 
-export const GrayCircle = styled(BaseCircle)`
+S.GrayCircle = styled(BaseCircle)`
   background-color: #C0C5C7;
   margin-left: 2px;
 `;
 
-export const RedCircle = styled(BaseCircle)`
+S.RedCircle = styled(BaseCircle)`
   background-color: #EE3333;
 `;
 
-export const WhiteCircle = styled(BaseCircle)`
+S.WhiteCircle = styled(BaseCircle)`
   background-color: #FFFFFF;
   border: 1px solid #C0C5C7;
 `;
 
-export const YellowCircle = styled(BaseCircle)`
+S.YellowCircle = styled(BaseCircle)`
   background-color: #FFCF52;
   margin-left: 2px;
 `;
 
 
 
-export const TimelineContent = styled.div`
+S.TimelineContent = styled.div`
   flex: 1;
   position: relative;
   margin-bottom: 65px;
 `;
 
-export const TimelineTitle = styled.h2`
+S.TimelineTitle = styled.h2`
   ${CS.H2};
   margin-top: 6px;
 `;
 
-export const TimelineText = styled.h3`
+S.TimelineText = styled.h3`
   ${CS.H3};
   overflow: hidden;
   opacity: 0;
@@ -399,7 +379,7 @@ export const TimelineText = styled.h3`
   margin-bottom: 0;
 `;
 
-export const Step = styled.div`
+S.Step = styled.div`
   display: flex;
   align-items: flex-start;
   margin-bottom: 60px;
@@ -427,7 +407,7 @@ export const Step = styled.div`
       }
     `}
 
-  &:hover ${TimelineText} {
+  &:hover ${S.TimelineText} {
     max-height: 500px;
     opacity: 1;
     margin-bottom: 8px;
@@ -435,45 +415,47 @@ export const Step = styled.div`
   }
 `;
 
-export const BottomText = styled.div`
+S.BottomText = styled.div`
   ${CS.flexCenterColumn};
   text-align: center;
   margin-top: 160px;
   margin-bottom: 50px;
 `;
 
-export const BottomTextTop = styled.div`
+S.BottomTextTop = styled.div`
   ${CS.H1};
 `;
 
-export const BottomTextBottom = styled.div`
+S.BottomTextBottom = styled.div`
   ${CS.H2};
   margin-top: 30px;
   margin-bottom: 100px;
 `;
 
-export const ButtonsWrapper = styled.div`
+S.ButtonsWrapper = styled.div`
   ${CS.flexCenter};
   gap: 30px;
 
 `;
 
-export const ApplicationButton = styled.button`
+S.ApplicationButton = styled.button`
   ${CS.H4};
   width: 300px;
   height: 60px;
   border-radius: 10px;
-  border: 1px solid ${({ theme }) => theme.PALLETE.primary.main};
+  border: 1px solid #EE3333;
   background-color: white;
-  color: ${({ theme }) => theme.PALLETE.primary.main};
+  color: #EE3333;
 `;
 
-export const InquiryButton = styled.button`
+S.InquiryButton = styled.button`
   ${CS.H4};
   width: 300px;
   height: 60px;
   border-radius: 10px;
-  border: 1px solid ${({ theme }) => theme.PALLETE.primary.main};
-  background-color: ${({ theme }) => theme.PALLETE.primary.main};
-  color: ${({ theme }) => theme.PALLETE.gray[100]};
+  border: 1px solid #EE3333;
+  background-color: #EE3333;
+  color: #FBFCFC;
 `;
+
+export default S;

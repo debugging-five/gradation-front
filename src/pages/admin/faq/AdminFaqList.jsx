@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import * as S from "./AdminFaqListStyle";
+import S from "./AdminFaqListStyle";
 
 const AdminFaqList = () => {
   const [faqList, setFaqList] = useState([]);

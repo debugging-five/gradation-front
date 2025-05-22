@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import * as S from "./AdminFaqModifyStyle";
+import S from "./AdminFaqModifyStyle";
 
 const AdminFaqModify = () => {
   const { id } = useParams();

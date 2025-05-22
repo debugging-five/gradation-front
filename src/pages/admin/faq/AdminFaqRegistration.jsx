@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import * as S from "./AdminFaqRegistrationStyle";
+import S from "./AdminFaqRegistrationStyle";
 
 const AdminFaqRegistration = () => {
   const navigate = useNavigate();

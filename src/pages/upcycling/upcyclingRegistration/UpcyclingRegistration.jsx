@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as S from "./UpcyclingRegistrationStyle";
+import S from "./UpcyclingRegistrationStyle";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/light.css";
 import { useSelector } from "react-redux";

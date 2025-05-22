@@ -2,24 +2,26 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import * as CS from "../../../styles/common";
 
-export const Container = styled.div`
+const S = {};
+
+S.Container = styled.div`
   width: 800px;
   margin: 0 auto;
 `;
 
-export const QnaTableWrapper = styled.div`
+S.QnaTableWrapper = styled.div`
   margin-top: 10px;
   width: 100%;
 `;
 
-export const TabWrapper = styled.div`
+S.TabWrapper = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
   gap: 12px;
 `;
 
-export const TabButton = styled(NavLink)`
+S.TabButton = styled(NavLink)`
   ${CS.H7};
   padding: 8px 20px;
   border: 1px solid #ccc;
@@ -36,7 +38,7 @@ export const TabButton = styled(NavLink)`
   }
 `;
 
-export const QnaTableHeader = styled.div`
+S.QnaTableHeader = styled.div`
   ${CS.H5};
   display: flex;
   width: 100%;
@@ -46,7 +48,7 @@ export const QnaTableHeader = styled.div`
   border-bottom: 1px solid #ccc;
 `;
 
-export const QnaTableRow = styled.div`
+S.QnaTableRow = styled.div`
   ${CS.H8};
   display: flex;
   width: 100%;
@@ -56,38 +58,38 @@ export const QnaTableRow = styled.div`
   border-bottom: 1px solid #eee;
 `;
 
-export const QnaNumberHeader = styled.div`
+S.QnaNumberHeader = styled.div`
   width: 60px;
   text-align: center;
   padding: 0 8px;
 `;
 
-export const QnaCategoryHeader = styled.div`
+S.QnaCategoryHeader = styled.div`
   width: 100px;
   text-align: center;
   padding: 0 50px;
 `;
 
-export const QnaTitleHeader = styled.div`
+S.QnaTitleHeader = styled.div`
   flex: 1;
   text-align: center;
   overflow: hidden;
   padding: 0 50px;
 `;
 
-export const QnaNumberCell = styled.div`
+S.QnaNumberCell = styled.div`
   width: 60px;
   text-align: center;
   padding: 0 8px;
 `;
 
-export const QnaCategoryCell = styled.div`
+S.QnaCategoryCell = styled.div`
   width: 100px;
   text-align: center;
   padding: 0 50px;
 `;
 
-export const QnaTitleLinkCell = styled.div`
+S.QnaTitleLinkCell = styled.div`
   flex: 1;
   padding-left: 12px;
   overflow: hidden;
@@ -99,7 +101,7 @@ export const QnaTitleLinkCell = styled.div`
   padding: 0 130px;
 `;
 
-export const QnaTitleText = styled.span`
+S.QnaTitleText = styled.span`
   display: block;
   white-space: nowrap;
   overflow: hidden;
@@ -108,3 +110,23 @@ export const QnaTitleText = styled.span`
   text-decoration: none;
   color: #000;
 `;
+
+S.Pagination = styled.div`
+  ${CS.H7};
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+
+  span {
+    margin: 0 6px;
+    cursor: pointer;
+  }
+
+  .active {
+    color: #ee3333;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+`;
+
+export default S;

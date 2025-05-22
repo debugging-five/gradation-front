@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import * as S from "./AdminFaqDetailStyle";
+import S from "./AdminFaqDetailStyle";
 
 const AdminFaqDetail = () => {
   const { id } = useParams(); // URL에서 id 꺼냄

@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import * as S from "./style";
+import S from "./style";
 
 const AdminQnaCompletedList = () => {
   const [qnaList, setQnaList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentQnas = qnaList.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(qnaList.length / itemsPerPage);
 
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
@@ -25,19 +31,15 @@ const AdminQnaCompletedList = () => {
   return (
     <S.Container>
       <S.QnaTableWrapper>
-        <S.TabWrapper>
-          <S.TabButton to="/mypage/admin/qna">답변대기</S.TabButton>
-          <S.TabButton to="/mypage/admin/qna/complete">답변완료</S.TabButton>
-        </S.TabWrapper>
         <S.QnaTableHeader>
           <S.QnaNumberHeader>번호</S.QnaNumberHeader>
           <S.QnaCategoryHeader>구분</S.QnaCategoryHeader>
           <S.QnaTitleHeader>제목</S.QnaTitleHeader>
         </S.QnaTableHeader>
 
-        {qnaList.map((qna, index) => (
+        {currentQnas.map((qna, index) => (
           <S.QnaTableRow key={qna.qnaId}>
-            <S.QnaNumberCell>{index + 1}</S.QnaNumberCell>
+            <S.QnaNumberCell>{indexOfFirstItem + index + 1}</S.QnaNumberCell>
             <S.QnaCategoryCell>{qna.qnaCategory}</S.QnaCategoryCell>
             <S.QnaTitleLinkCell
               as={NavLink}
@@ -46,8 +48,19 @@ const AdminQnaCompletedList = () => {
               <S.QnaTitleText>{qna.qnaTitle}</S.QnaTitleText>
             </S.QnaTitleLinkCell>
           </S.QnaTableRow>
-        ))}
+        ))} 
       </S.QnaTableWrapper>
+      <S.Pagination>
+      {Array.from({ length: totalPages }, (_, i) => (
+        <span
+          key={i + 1}
+          onClick={() => setCurrentPage(i + 1)}
+          className={currentPage === i + 1 ? "active" : ""}
+        >
+          {i + 1}
+        </span>
+      ))}     
+      </S.Pagination> 
     </S.Container>
   );
 };
