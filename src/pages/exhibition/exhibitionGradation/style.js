@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { H1, EN_H2, H5, H8, H7, EN_H3 } from "../../../styles/common";
+import { H1, H5, H8, H7, EN_H3, H3, EN_H4 } from "../../../styles/common";
 import { SwiperSlide } from "swiper/react";
 
 const S = {};
@@ -107,6 +107,7 @@ S.MapWrap = styled.div`
 S.InfoDetail = styled.div`
   display: flex;
   flex-direction: row;
+  margin-bottom: 40px;
 `
 
 S.InfoName = styled.p`
@@ -114,10 +115,41 @@ S.InfoName = styled.p`
   width: 80px;
   margin-right: 12px;
 `
+S.bar = styled.p`
+  color: ${({ theme }) => theme.PALLETE.gray[900]};
 
+`
 S.InfoContent = styled.p`
   ${H8}
   margin-left: 28px;
 `
+
+S.gradationInfo = styled.div`
+  margin-top: 60px;
+  display: flex;
+  align-items: center;
+  gap: 64px;
+`
+
+S.Address = styled.p`
+  ${H3}
+`
+S.Line = styled.img`
+  width: 450px;
+  height: 2px;
+`
+S.Date = styled.p`
+  ${EN_H4}
+`
+
+S.LastExhibition = styled.div`
+  /* display: flex;
+  flex-direction: column;
+  align-items: flex-start; */
+`
+
+
+
+
 
 export default S;
