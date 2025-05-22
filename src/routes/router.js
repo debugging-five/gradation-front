@@ -271,18 +271,12 @@ const router = createBrowserRouter([
         element: <ExhibitionContainer />,
         children: [
           {
-            path: "",
-            element: <ExhibitionCategory />,
-            children: [
-              {
-                path: "gradation",
-                element: <ExhibitionGradation />,
-              },
-              {
-                path: "university",
-                element: <ExhibitionUniversity />,
-              },
-            ],
+            path: "gradation",
+            element: <ExhibitionGradation />,
+          },
+          {
+            path: "university",
+            element: <ExhibitionUniversity />,
           },
           {
             path: "gradation/past",
