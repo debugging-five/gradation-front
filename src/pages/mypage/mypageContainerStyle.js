@@ -45,7 +45,7 @@ export const BarContent = styled(NavLink)`
 export const ImageBox = styled.div`
   display : flex;
   align-items: center;
-  margin-bottom: 44px;
+  margin-bottom: 36px;
   gap: 40px;
   font-size: 21px;
   font-weight: bold;
@@ -55,8 +55,18 @@ export const ProfileImage = styled.img`
   height: 80px;
   border-radius: 50px;
   border-bottom: solid 1px;
+  object-fit: cover;  /* 핵심: 이미지 비율 유지하며 자르기 */
+  object-position: center; 
 `;
 
 export const DeleteIdFont = styled.p`
   color: gray;
+`;
+export const CameraImage = styled.img`
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  position: relative;
+  top: 28px;
+  left: -156px;
 `;

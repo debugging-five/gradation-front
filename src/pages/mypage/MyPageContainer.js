@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import * as S from './mypageContainerStyle';
 import { useSelector } from 'react-redux';
@@ -7,13 +7,63 @@ const MyPageContainer = () => {
   const currentUser = useSelector(state => state.user.currentUser);
   const isAdmin = currentUser?.id === 1;
 
+  const [userName, setUserName] = useState(currentUser?.userName);
+  const [profileImg, setProfileImg] = useState("http://localhost:10000/files/api/get/defaultProfile.jpg?filePath=images/mypage");
+  
+  // 숨겨진 파일 input 접근을 위한 ref
+  const fileInputRef = useRef(null);
+
+  // 카메라 아이콘 클릭 시 파일 선택창 열기
+  const handleCameraClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  // 파일 선택 시 미리보기 이미지 변경
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // 임시 URL 생성
+      const imageUrl = URL.createObjectURL(file);
+      setProfileImg(imageUrl);
+
+    }
+  };
+
+  useEffect(() => {
+      if (!currentUser) return;  // 이메일 없으면 호출 안 함
+
+      fetch(`http://localhost:10000/api/user/${encodeURIComponent(currentUser.userEmail)}`)
+        .then(res => {
+          if (!res.ok) throw new Error("회원 정보 불러오기 실패");
+          return res.json();
+        })
+        .then(data => {
+          if (data.currentUser) {
+            const user = data.currentUser;
+            // 프로필 이미지가 없으면 기본 이미지 유지
+            if (user.userProfileImagePath) {
+              setProfileImg(user.userProfileImagePath);
+            }
+            if (user.userName) {
+              setUserName(user.userName);
+            }
+          }
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    }, [currentUser]);
+
+
 
   return (
     <S.MainWrapper>
       <S.Leftbar>
-        <S.ImageBox>
-          <S.ProfileImage src="http://localhost:10000/files/api/get/defaultProfile.jpg?filePath=images/mypage" alt="default profile" />
-          <span>홍길동</span>
+         <S.ImageBox>
+          <S.ProfileImage src={profileImg} alt="profile" />
+          <span>{userName}</span>
+          <input type="file" accept="image/*" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileChange}/>
+          <S.CameraImage src="http://localhost:10000/files/api/get/camera.png?filePath=images/mypage" alt="edit img" onClick={handleCameraClick}/>
         </S.ImageBox>
 
         <S.BarTitle>내 정보</S.BarTitle>
