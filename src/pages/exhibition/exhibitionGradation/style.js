@@ -6,8 +6,8 @@ const S = {};
 S.TitleWrap = styled.div`
   width: 100%;
   height: 280px;
+  margin-top: 28px;
   display: flex;
-  justify-content: center;
   align-items: center;
 `
 
