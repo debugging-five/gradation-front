@@ -8,33 +8,38 @@ const GlobalStyle = createGlobalStyle`
   /* Pretendard - 한글 */
   @font-face {
     font-family: 'Pretendard';
-    src: url(${process.env.PUBLIC_URL}/assets/fonts/Pretendard-Bold.otf) format('opentype');
+    src: url(${process.env.PUBLIC_URL}/assets/fonts/Pretendard-Bold.woff2) format('woff2');
     font-weight: 700;
     font-style: normal;
+    font-display : swap;
   }
   @font-face {
     font-family: 'Pretendard';
-    src: url(${process.env.PUBLIC_URL}/assets/fonts/Pretendard-Light.otf) format('opentype');
+    src: url(${process.env.PUBLIC_URL}/assets/fonts/Pretendard-Light.woff2) format('woff2');
     font-weight: 300;
     font-style: normal;
+    font-display : swap;
   }
   @font-face {
     font-family: 'Pretendard';
-    src: url(${process.env.PUBLIC_URL}/assets/fonts/Pretendard-Medium.otf) format('opentype');
+    src: url(${process.env.PUBLIC_URL}/assets/fonts/Pretendard-Medium.woff2) format('woff2');
     font-weight: 500;
     font-style: normal;
+    font-display : swap;
   }
   @font-face {
     font-family: 'Pretendard';
-    src: url(${process.env.PUBLIC_URL}/assets/fonts/Pretendard-Regular.otf) format('opentype');
+    src: url(${process.env.PUBLIC_URL}/assets/fonts/Pretendard-Regular.woff2) format('woff2');
     font-weight: 400;
     font-style: normal;
+    font-display : swap;
   }
   @font-face {
     font-family: 'Pretendard';
-    src: url(${process.env.PUBLIC_URL}/assets/fonts/Pretendard-SemiBold.otf) format('opentype');
+    src: url(${process.env.PUBLIC_URL}/assets/fonts/Pretendard-SemiBold.woff2) format('woff2');
     font-weight: 600;
     font-style: normal;
+    font-display : swap;
   }
   
   
@@ -42,33 +47,38 @@ const GlobalStyle = createGlobalStyle`
   /* SUIT - 영어, 숫자 */
   @font-face {
     font-family: 'SUIT';
-    src: url(${process.env.PUBLIC_URL}/assets/fonts/SUIT-Bold.otf) format('opentype');
+    src: url(${process.env.PUBLIC_URL}/assets/fonts/SUIT-Bold.woff2) format('woff2');
     font-weight: 700;
     font-style: normal;
+    font-display : swap;
   }
   @font-face {
     font-family: 'SUIT';
-    src: url(${process.env.PUBLIC_URL}/assets/fonts/SUIT-Light.otf) format('opentype');
+    src: url(${process.env.PUBLIC_URL}/assets/fonts/SUIT-Light.woff2) format('woff2');
     font-weight: 300;
     font-style: normal;
+    font-display : swap;
   }
   @font-face {
     font-family: 'SUIT';
-    src: url(${process.env.PUBLIC_URL}/assets/fonts/SUIT-Medium.otf) format('opentype');
+    src: url(${process.env.PUBLIC_URL}/assets/fonts/SUIT-Medium.woff2) format('woff2');
     font-weight: 500;
     font-style: normal;
+    font-display : swap;
   }
   @font-face {
     font-family: 'SUIT';
-    src: url(${process.env.PUBLIC_URL}/assets/fonts/SUIT-Regular.otf) format('opentype');
+    src: url(${process.env.PUBLIC_URL}/assets/fonts/SUIT-Regular.woff2) format('woff2');
     font-weight: 400;
     font-style: normal;
+    font-display : swap;
   }
   @font-face {
     font-family: 'SUIT';
-    src: url(${process.env.PUBLIC_URL}/assets/fonts/SUIT-SemiBold.otf) format('opentype');
+    src: url(${process.env.PUBLIC_URL}/assets/fonts/SUIT-SemiBold.woff2) format('woff2');
     font-weight: 600;
     font-style: normal;
+    font-display : swap;
   }
 
 
