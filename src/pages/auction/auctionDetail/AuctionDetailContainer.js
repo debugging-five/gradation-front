@@ -4,12 +4,11 @@ import AuctionBiddingDetail from './AuctionBiddingDetail';
 import AuctionExpectedDetail from './AuctionExpectedDetail';
 import AuctionCompleteDetail from './AuctionCompleteDetail';
 import S from './style';
+import getTimeLeft from './_function/getTimeLeft';
 
 const AuctionDetailContainer = () => {
-  const { type, category, id } = useParams()
-  // console.log("type", type)
-  // console.log("category", category)
-  // console.log("id", id)
+
+  const { id } = useParams()
   const [cursor, setCursor] = useState(1);
   const [list, setList] = useState([]);
   const navigate = useNavigate();
@@ -57,21 +56,45 @@ const AuctionDetailContainer = () => {
   };
 
   const categoryMap = new Map([
-  ["한국화", "korean"],
-  ["회화", "painting"],
-  ["건축", "architecture"],
-  ["조각", "sculpture"],
-  ["서예", "calligraphy"],
+    ["한국화", "korean"],
+    ["회화", "painting"],
+    ["건축", "architecture"],
+    ["조각", "sculpture"],
+    ["서예", "calligraphy"],
   ["공예", "craft"]
   ]);
 
-  // console.log(list);
+  // id가 바뀔 때마다 최초 한 번 해당 데이터를 가져온다.
+  const [auction, setAction] = useState({})
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const getAuction = async () => {
+      const response = await fetch(`http://localhost:10000/auction/api/detail/${id}`)
+      if(!response.ok) return console.error(`getAuction err ${response}`)
+      const datas = await response.json()
+      return datas;
+    }
+
+    getAuction()
+      .then((res) => {
+        // 받은 데이터 최초로 추가
+        setAction(res.auction)
+        setIsLoading(false)
+      })
+      .catch(console.err)
+  }, [id])
+
+  // 경매 완료 여부
+  const timeLeft = getTimeLeft(auction.auctionStartDate, auction.auctionEndDate, new Date())
+  const isComplete = !!auction.auctionBidDate;
+  if(isLoading) return <div>데이터를 불러오는 중...😁 </div>
 
   return (
     <div>
-      { type === "bidding" && <AuctionBiddingDetail type={type} category={category} id={id} />}
-      { type === "expected" && <AuctionExpectedDetail type={type} category={category} id={id} />}
-      { type === "complete" && <AuctionCompleteDetail type={type} category={category} id={id} />}
+      <AuctionBiddingDetail auction={auction} />
+      {/* { timeLeft.isAuction === "경매중" ? <AuctionBiddingDetail auction={auction} /> : ""} */}
+      {/* { isComplete && <AuctionCompleteDetail auction={auction} />} */}
       <S.AuctionIng>
         <S.AuctionIngTitle>경매중인 작품</S.AuctionIngTitle>
       </S.AuctionIng>
