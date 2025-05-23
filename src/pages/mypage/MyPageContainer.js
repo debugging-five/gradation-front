@@ -14,6 +14,7 @@ const MyPageContainer = () => {
 
   const fileInputRef = useRef(null);
 
+  
   const handleCameraClick = () => {
     fileInputRef.current?.click();
   };
