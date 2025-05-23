@@ -5,9 +5,10 @@ import S from './style';
 const DisplayContainer = () => {
 
   const {category} = useParams();
-  const [order, setOrder] = useState("");
+  const [order, setOrder] = useState("date");
   const [cursor, setCursor] = useState(1)
   const [keyword, setKeyword] = useState("")
+  const [display, setDisplay] = useState([])
   // 네비게이트로 korea를 default로 보내버림.
   // if(!category) return <Navigate to={"korea"} />
 
@@ -19,11 +20,12 @@ const DisplayContainer = () => {
   const params = {
     order : order,
     cursor : cursor,
-    category : category,
+    category : category || "korean",
     keyword : keyword,
   }
 
   useEffect(() => {
+
     const getDisplayList = async () => {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/displays/api/list`, {
         method : "POST",
@@ -43,8 +45,15 @@ const DisplayContainer = () => {
     getDisplayList()
       .then((res) => {
         console.log(res)
+        setDisplay(res.posts)
+        setIsLoading(false)
+        setIsError(false)
       })
-      .catch()
+      .catch((error) => {
+        console.error(error)
+        setIsLoading(false)
+        setIsError(true)
+      })
   }, [order, category, cursor, keyword, isUpdate])
 
   return (
@@ -56,7 +65,8 @@ const DisplayContainer = () => {
           order, setOrder, 
           cursor, setCursor, 
           keyword, setKeyword, 
-          isLoading, isError
+          isLoading, isError,
+          display
         }}/>
     </S.Container>
   );

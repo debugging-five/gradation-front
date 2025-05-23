@@ -1,19 +1,28 @@
-import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import S from './style';
 import SubButton from '../../../components/button/SubButton';
 import PrimaryButton from '../../../components/button/PrimaryButton';
 import { useSelector } from 'react-redux';
+import { useState } from 'react';
 
 const DisplayRegistration = () => {
-  const { register, handleSubmit, getValues, trigger, formState: {isSubmitting, errors, isValid} } = useForm({mode: "onBlur"});
+  const { register, handleSubmit, formState: {isSubmitting, errors} } = useForm({mode: "onBlur"});
   const { currentUser } = useSelector((state) => state.user);
   const userId = currentUser.id;
+  const [thumbnailUrls, setThumbnailUrls] = useState([]);
+  const [selectFiles, setSelectFiles] = useState([]);
+
+  const handleThumbnailImage = async (e) => {
+    const files = Array.from(e.target.files);
+    setSelectFiles(files)
+
+    const urls = files.map(file => URL.createObjectURL(file));
+    setThumbnailUrls(urls);
+    };
+
 
   return (
     <form encType='multipart/form-data' autoComplete="off" onSubmit={handleSubmit(async (data) => {
-      //   console.log(data);
-    
       const {
         userName,
         artTitle,
@@ -22,20 +31,19 @@ const DisplayRegistration = () => {
         artSize,
         artEndDate,
         artDescription,
-    } = data;
+      } = data;
 
-    const artPostDTO = {
-      userName : userName,
-      artTitle : artTitle,
-      artCategory : artCategory,
-      artMaterial : artMaterial,
-      artSize : artSize,
-      artEndDate : artEndDate,
-      artDescription : artDescription,
-      userId: Number(userId)
-      
-    }
-    console.log("artPostDTO", artPostDTO);
+      const artPostDTO = {
+        userName : userName,
+        artTitle : artTitle,
+        artCategory : artCategory,
+        artMaterial : artMaterial,
+        artSize : artSize,
+        artEndDate : artEndDate,
+        artDescription : artDescription,
+        userId: Number(userId)
+      }
+      console.log("artPostDTO", artPostDTO);
 
     
     await fetch("http://localhost:10000/displays/api/registration", {
@@ -66,6 +74,7 @@ const DisplayRegistration = () => {
             console.log(data.files)
           })
     
+    
           fetch(`http://localhost:10000/files/api/upload/art/${artId}`, {
             method : "POST",
             body : formData
@@ -74,27 +83,21 @@ const DisplayRegistration = () => {
             .then(console.log)
             .catch(console.error)
       })
-
-
-        
-     
-    
-    // const result = await res.json();
-    // const artId = result.id; 
-    // console.log("result", result);
-
     })}>
 
     <S.Container>
       <S.Line>
         <S.ENH3>registration</S.ENH3>
       </S.Line>
-
       <S.FormWrapper>
         <S.Form>
           <S.FileWrapper>
-            <S.File type="file" accept="image/*" multiple {...register("files")} />
-            <S.H5>첨부파일 업로드</S.H5>
+            <S.File type="file" accept="image/*" multiple {...register("files")}
+            onChange={handleThumbnailImage} />
+              <S.IconWrapper>
+                <S.Icon src={"/assets/images/icon/add.png"} alt="업로드" />
+                <S.H5>첨부파일 업로드</S.H5>
+              </S.IconWrapper>
           </S.FileWrapper>
           <S.InputContainer>
             <S.BorderWrapper>
