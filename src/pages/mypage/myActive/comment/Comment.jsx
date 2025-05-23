@@ -44,7 +44,7 @@ const Comment = () => {
               <S.Number>{idx + 1}</S.Number>
               <S.Category>{comment.artTitle || '작품명 없음'}</S.Category>
               <S.Emptybox></S.Emptybox>
-              <S.TitleNavigate as={NavLink} to={`/art/detail/${comment.artId}`} end>
+              <S.TitleNavigate as={NavLink} to={`/display/detail/${comment.artId}`} end>
                 <S.Content>{comment.commentContent || '댓글 내용 없음'}</S.Content>
               </S.TitleNavigate>
               <S.Emptybox>{comment.commentDat || '-'}</S.Emptybox>

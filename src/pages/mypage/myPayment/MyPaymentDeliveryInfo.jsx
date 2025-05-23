@@ -5,6 +5,7 @@ const MyPaymentDeliveryInfo = () => {
   return (
     <S.MainWrapper>
       MyPaymentDeliveryInfo
+      
     </S.MainWrapper>
   );
 };
