@@ -64,6 +64,7 @@
         width: 100%;
         max-width: 680px;
         font-size: 16px;
+        background-color: transparent;
         &:focus {
         outline: none;
         

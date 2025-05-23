@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import * as S from '../../mypage/style';
 import * as SQ from '../qna/qnaSendStyle';
 import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 const QnaSend = () => {
   // 상태 정의
@@ -243,7 +244,7 @@ const QnaSend = () => {
             <S.PopUpContent>
               <S.PopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="attention" />
               <S.PopUpText>문의가 등록되었습니다.</S.PopUpText>
-              <S.PopUpButtonR onClick={() => setShowSuccess(false)}>확인</S.PopUpButtonR>
+              <NavLink to="/service-center/qna" onClick = {() => window.scrollTo(0, 0)} ><S.PopUpButtonR onClick={() => setShowSuccess(false)}>확인</S.PopUpButtonR></NavLink>
             </S.PopUpContent>
           </S.PopUp>
         </S.PopUpOverlay>
