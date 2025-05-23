@@ -53,7 +53,7 @@ const MyAvailableAuctionArt = () => {
             </SA.ContentBox>
           ))
         ) : (
-          <p>경매 가능 작품이 없습니다.</p>
+          <SA.NoneText>경매 가능 작품이 없습니다.</SA.NoneText>
         )}
       </S.Wrapper>
     </S.MainWrapper>

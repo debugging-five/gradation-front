@@ -26,14 +26,26 @@ export const Title = styled.div`
     width: 800px;
     display: flex;
     align-items: end;
-    gap: 10px;
+    justify-content: space-between;
 `;
 
 export const QSize = styled.p`
     font-size: 30px;
+    font-weight: bold;
+`;
+export const ASize = styled.p`
+    font-size: 30px;
+    font-weight: bold;
+    color: red;
+`;
+export const ATitle = styled.p`
+    font-size: 21px;
+    font-weight: bold;
+    color: red;
 `;
 export const QTitle = styled.p`
     font-size: 21px;
+    font-weight: bold;
 `;
 
 export const QContent = styled.p`
@@ -54,3 +66,9 @@ export const QnaImage = styled.img`
     width: 500px;
     height: 500p;
 `;
+export const TitleDiv = styled.div`
+    display: flex;
+    align-items: end;
+    gap: 10px;
+`;
+

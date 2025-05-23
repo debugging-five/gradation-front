@@ -171,6 +171,7 @@ export const ArtImage = styled.img`
 width: 200px;
 height: 200px;
 background-color: #C0C5C7;
+display: block;
 `;
 // 좋아요이미지
 export const LikeImage = styled.img`
