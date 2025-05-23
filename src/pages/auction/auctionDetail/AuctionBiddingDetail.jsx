@@ -1,289 +1,137 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import S from './style';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import AuctionPopup from './AuctionBiddingPopup/AuctionModal';
 import AuctionAutoPopup from './AuctionAutoBiddingPopup/AuctionAutoModal';
 import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
-const AuctionBiddingDetail = ({type, category, id}) => {
-
+import AuctionTime from './AuctionTime';
+import AuctionPrice from './AuctionPrice';
+import getLatestPrice from './_function/getLatePrice';
+const AuctionBiddingDetail = ({auction}) => {
 	
-	
-	// console.log(id);
-	const [auction, setAuction] = useState([]);
-	const [data, setData] = useState([]);
-	const [bidding, setBidding] = useState([]);
+	const {id} = useParams();
 	const navigate = useNavigate();
+
+	// 모달 띄우는거
 	const [openBidding, setOpenBidding] = useState(false);
 	const [openAutoBidding, setOpenAutoBidding] = useState(false);
-	const { isLogin } = useSelector((state) => state.user);
-	const categoryMap = new Map([
-		["한국화", "korean"],
-		["회화", "painting"],
-		["건축", "architecture"],
-		["조각", "sculpture"],
-		["서예", "calligraphy"],
-		["공예", "craft"]
-  ]);
-	
-	const baseDate = useMemo(() => {
-		return new Date(data.auctionStartDate)
-	}, [data.auctionStartDate]);
-  const deadline = useMemo(() => {
-  	return new Date(baseDate.getTime() + 3 * 24 * 60 * 60 * 1000);
-	}, [baseDate]);
 
-	const [timeLeft, setTimeLeft] = useState(deadline - new Date());
-
-	const [bidderCount, setBidderCount] = useState(0);
-	useEffect(() => {
-		const bidderFetch = async () => {
-			const getBidderCount = await fetch(`http://localhost:10000/auction/api/read-bidder-count/${id}`)
-			const count = await getBidderCount.json();
-			
-			setBidderCount(count.count);
-
-		}
-		bidderFetch()
-	}, [id]);
-	
-	useEffect(() => {
-		const fetchAuction = async () => {
-			const response = await fetch(`http://localhost:10000/auction/api/detail/${id}`);
-			const auction = await response.json();
-			console.log(auction);
-			
-			if(auction.length === 0) {
-        navigate("/auction")
-        return
-      }
-			setAuction(auction);
-			setData(auction[0]);
-
-			const biddingDate = new Date(auction[0].auctionStartDate);
-			const dataCategory = categoryMap.get(auction[0].artCategory);
-			if(category !== dataCategory) {
-				return <Navigate to={`/auction/bidding/${dataCategory}/detail/${id}`} state={{message: "잘못된 접근"}} replace={true} />
-			}
-			
-			if(biddingDate > new Date()) {
-				return <Navigate to={`/auction/expected/${dataCategory}/detail/${id}`} state={{message: "잘못된 접근"}} replace={true} />
-			}
-			
-			if(data.auctionBidDate){
-				return <Navigate to={`/auction/complete/${dataCategory}/detail/${id}`} state={{message: "잘못된 접근"}} replace={true} />
-			}
-		};
-
-		fetchAuction().then(() => {
-			
-			const fetchBidding = async () => {
-				const response = await fetch(`http://localhost:10000/auction/api/read-bidder/${id}`);
-				const bidder = await response.json();
-				setBidding(bidder);
-			}
-			fetchBidding();
-		});
-
-		
-	}, [id]);
-
-
-	useEffect(() => {
-		const interval = setInterval(() => {
-      const diff = deadline - new Date();
-      if (diff <= 0) {
-        clearInterval(interval);
-        setTimeLeft(0);
-				updateFetch().then(data => {
-					console.log(data);
-					alert("경매가 종료되었습니다.");
-					navigate(window.location.href = `/auction/complete/${category}/detail/${id}`, { replace: true });
-				});
-      } else {
-        setTimeLeft(diff);
-      }
-    }, 1000); // 1초마다 갱신
-
-    return () => clearInterval(interval);
-	}, [category, deadline, id, navigate])
-
-	const updateFetch = async () => {
-		const getBidder = await fetch(`http://localhost:10000/auction/api/read-bidder/${id}`);
-		const bidder = await getBidder.json();
-		// console.log(bidder);
-		let auctionVO = {};
-		if(bidder.id === null){
-			auctionVO = {
-				id: id,
-				auctionStartDate: data.auctionStartDate,
-				auctionStartPrice: data.auctionStartPrice,
-				auctionEstimatedMinPrice: data.auctionEstimatedMinPrice,
-				auctionEstimatedMaxPrice: data.auctionEstimatedMaxPrice,
-				auctionAttracted: false,
-				auctionBidPrice: null,
-				auctionBidDate: dayjs().format('YYYY-MM-DD HH:mm:ss'),
-				artId: data.artId,
-				userId: null,
-			}
-			console.log(auctionVO);
-			
-		}else {
-			auctionVO = {
-				id: id,
-				auctionStartDate: data.auctionStartDate,
-				auctionStartPrice: data.auctionStartPrice,
-				auctionEstimatedMinPrice: data.auctionEstimatedMinPrice,
-				auctionEstimatedMaxPrice: data.auctionEstimatedMaxPrice,
-				auctionAttracted: true,
-				auctionBidPrice: bidder.auctionBiddingPrice,
-				auctionBidDate: dayjs().format('YYYY-MM-DD HH:mm:ss'),
-				artId: data.artId,
-				userId: bidder.userId,
-			}
-			
-		}
-		const update = await fetch(`http://localhost:10000/auction/api/modify`, {
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify(auctionVO)
-		});
-		const updateData = await update.json();
-		return updateData;
-	}
-
-	const formatTime = (ms) => {
-		const totalSeconds = Math.floor(ms / 1000);
-		const days = Math.floor(totalSeconds / (60 * 60 * 24));
-		const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
-		const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
-		const seconds = totalSeconds % 60;
-		return `${days}일 ${hours}시 ${minutes}분 ${seconds.toString().padStart(2, "0")}초`;
-	};
-	
 	const popup = () => {
 		setOpenBidding(true);
 		setOpenAutoBidding(false);
 	}
 	const popupAuto = () => {
-		setOpenBidding(false);
-		setOpenAutoBidding(true);
+			setOpenBidding(false);
+			setOpenAutoBidding(true);
 	}
 
-	const backToList = () => {
-		navigate("../");
-	}
+	// 최신 가격을 조회하는 쿼리
+	const [price, setPrice] = useState({})
+	const [isPriceUpdate, setIsPriceUpdate] = useState(false)
 
-	if(auction.length !== 0) {
-		const biddingDate = new Date(data.auctionStartDate);
-		const dataCategory = categoryMap.get(data.artCategory);
-		if(category !== dataCategory) {
-			return <Navigate to={`/auction/bidding/${dataCategory}/detail/${id}`} state={{message: "잘못된 접근"}} replace={true} />
-		}
-		
-		if(biddingDate > new Date()) {
-			return <Navigate to={`/auction/expected/${dataCategory}/detail/${id}`} state={{message: "잘못된 접근"}} replace={true} />
-		}
-		
-		if(data.auctionBidDate){
-			return <Navigate to={`/auction/complete/${dataCategory}/detail/${id}`} state={{message: "잘못된 접근"}} replace={true} />
-		}
-		
-		return (
-			<S.Wrapper>
-				<S.AuctionDetail>
-				{/* <!-- 경매 작품 사진--> */}
-					<S.ImgWrapper>
-						<S.AuctionImg src={`http://localhost:10000/files/api/get/${auction[0].artImgName}?filePath=${auction[0].artImgPath}`} alt="경매 작품" />
-					</S.ImgWrapper>
-				
-				{/* <!-- 경매 정보 --> */}
-					<S.AuctionInfo>
-						{/* <!-- 경매 정보1 --> */}
-						<S.AuctionInfo1>
-							<S.Title>{data.artTitle}</S.Title>
-							<S.Artist>
-								<S.H3>작가명</S.H3>
-								<S.H3>|</S.H3>
-								<S.H3>{data.artistName}</S.H3>
-							</S.Artist>
-						
-						<S.Etc>
-							<S.EtcP>{data.artMaterial}</S.EtcP>
-							<S.EtcP>{data.artSize}</S.EtcP>
-							<S.EtcP>{data.artEndDate.split('-')[0]}년</S.EtcP>
-						</S.Etc>						
-						</S.AuctionInfo1>
-	
-						
-						{/* <!-- 경매 정보2 --> */}
-						<S.AuctionInfo2>
-							<S.AuctionInfo2Detail>
-								<S.H5>마감일</S.H5>
-								<S.H7>{dayjs(data.auctionStartDate).add(3, 'day').format('YYYY-MM-DD HH:mm:ss')}</S.H7>
-							</S.AuctionInfo2Detail>
-							<S.AuctionInfo2Detail>
-								<S.H5>추정가</S.H5>
-								<S.H7>KRW {data?.auctionEstimatedMinPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ~ {data?.auctionEstimatedMaxPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</S.H7>
-							</S.AuctionInfo2Detail>
-							<S.AuctionInfo2Detail>
-								<S.H5>시작가</S.H5>
-								<S.H7>KRW {data?.auctionStartPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</S.H7>
-							</S.AuctionInfo2Detail>
-						</S.AuctionInfo2>
-						
-						{/* <!-- 경매 정보3 --> */}
-						<S.AuctionInfo3>
-							<S.Deadline>
-									<S.H2>마감시간</S.H2>
-									<S.H2>{isNaN(timeLeft) ? "로딩중" : formatTime(timeLeft)}</S.H2>
-							</S.Deadline>
-							
-							<S.PriceWrapper>
-								<S.CurrentPrice>
-										<S.H3>현재 입찰가</S.H3>
-										<S.H3>KRW {(bidding?.auctionBiddingPrice || '-').toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</S.H3>
-								</S.CurrentPrice>
-								<S.MinPrice>
-										<S.H3>최소 응찰가</S.H3>
-										<S.H3>KRW {((Math.ceil(bidding?.auctionBiddingPrice * 1.1 / 1000) * 1000) || data.auctionStartPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</S.H3>
-								</S.MinPrice>
-							</S.PriceWrapper>
-						</S.AuctionInfo3>
-						
-						<S.ButtonWrapper>
-							<S.ListButton onClick={backToList}>목록으로</S.ListButton>
-							<S.BiddingButton onClick={popupAuto}>자동응찰</S.BiddingButton>
-							<S.BiddingButton onClick={popup}>응찰</S.BiddingButton>
-						</S.ButtonWrapper>
-					</S.AuctionInfo>
-				</S.AuctionDetail>
-					{openBidding ? 
-						<S.PopupBody>
-								<S.PopupPosition>
-									<AuctionPopup id={id} category={category} bidderCount={bidderCount} timeleft={formatTime(timeLeft)} data={data} bidding={bidding} setBidding={setBidding} openBidding={openBidding} setOpenBidding={setOpenBidding} /> 
-								</S.PopupPosition>
-						</S.PopupBody>
-							: null
-					}
-					{openAutoBidding ? 
-						<S.PopupBody>
-								<S.PopupPosition>
-									<AuctionAutoPopup id={id} category={category} bidderCount={bidderCount} timeleft={formatTime(timeLeft)} data={data} bidding={bidding} setBidding={setBidding} openAutoBidding={openAutoBidding} setOpenAutoBidding={setOpenAutoBidding} /> 
-								</S.PopupPosition>
-						</S.PopupBody>
-							: null
-					}
-			</S.Wrapper>
-		);
-	} else {
-		return null
-	}
 
-  
+	useEffect(() => {
+			getLatestPrice(id)
+			.then(({price}) => {
+				setPrice(price)
+			})
+			.catch(console.err)
+			
+		const getPrice = setInterval(() => {
+			getLatestPrice(id)
+			.then(({price}) => {
+				setPrice(price)
+			})
+			.catch(console.err)
+		}, 5000);
 
+		return () => clearInterval(getPrice)
+	}, [isPriceUpdate])
+
+	return (
+		<S.Wrapper>
+			<S.AuctionDetail>
+			{/* <!-- 경매 작품 사진--> */}
+				<S.ImgWrapper>
+					{ auction.argImgList.map((img, i) => (
+						<S.AuctionImg key={i} src={`http://localhost:10000/files/api/get/${img.artImgName}?filePath=${img.artImgPath}`} alt="경매 작품" />
+					))}
+				</S.ImgWrapper>
+			
+			{/* <!-- 경매 정보 --> */}
+				<S.AuctionInfo>
+					{/* <!-- 경매 정보1 --> */}
+					<S.AuctionInfo1>
+						<S.Title>{auction.artTitle}</S.Title>
+						<S.Artist>
+							<S.H3>작가명</S.H3>
+							<S.H3>|</S.H3>
+							<S.H3>{auction.artistName}</S.H3>
+						</S.Artist>
+					
+					<S.Etc>
+						<S.EtcP>{auction.artMaterial}</S.EtcP>
+						<S.EtcP>{auction.artSize}</S.EtcP>
+						<S.EtcP>{auction.artEndDate.split('-')[0]}년</S.EtcP>
+					</S.Etc>						
+					</S.AuctionInfo1>
+					
+					{/* <!-- 경매 정보2 --> */}
+					<S.AuctionInfo2>
+						<S.AuctionInfo2Detail>
+							<S.H5>마감일</S.H5>
+							<S.H7>{dayjs(auction.auctionStartDate).add(3, 'day').format('YYYY-MM-DD HH:mm:ss')}</S.H7>
+						</S.AuctionInfo2Detail>
+						<S.AuctionInfo2Detail>
+							<S.H5>추정가</S.H5>
+							<S.H7>KRW {auction?.auctionEstimatedMinPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ~ {auction?.auctionEstimatedMaxPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</S.H7>
+						</S.AuctionInfo2Detail>
+						<S.AuctionInfo2Detail>
+							<S.H5>시작가</S.H5>
+							<S.H7>KRW {auction?.auctionStartPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</S.H7>
+						</S.AuctionInfo2Detail>
+					</S.AuctionInfo2>
+					
+					{/* <!-- 경매 정보3 --> */}
+					<S.AuctionInfo3>
+						{/* 시간 */}
+						<AuctionTime id={id} auctionBidDate={auction.auctionBidDate} auctionStartDate={auction.auctionStartDate} auctionEndDate={auction.auctionEndDate}/>
+						<S.PriceWrapper>
+							<AuctionPrice id={id} price={price} auction={auction} />
+						</S.PriceWrapper>
+					</S.AuctionInfo3>
+					
+					<S.ButtonWrapper>
+						<S.ListButton>목록으로</S.ListButton>
+						<S.BiddingButton onClick={popupAuto}>자동응찰</S.BiddingButton>
+						<S.BiddingButton onClick={popup}>응찰</S.BiddingButton>
+					</S.ButtonWrapper>
+				</S.AuctionInfo>
+			</S.AuctionDetail>
+				{openBidding ? 
+					<S.PopupBody>
+							<S.PopupPosition>
+								<AuctionPopup 
+									id={id} auction={auction} setOpenBidding={setOpenBidding} 
+									auctionBidDate={auction.auctionBidDate} 
+									auctionStartDate={auction.auctionStartDate} auctionEndDate={auction.auctionEndDate}
+									price={price} isPriceUpdate={isPriceUpdate} setIsPriceUpdate={setIsPriceUpdate}
+								/> 
+							</S.PopupPosition>
+					</S.PopupBody>
+						: null
+				}
+				{openAutoBidding ? 
+					<S.PopupBody>
+							<S.PopupPosition>
+								<AuctionAutoPopup id={id} auction={auction} openAutoBidding={openAutoBidding} setOpenAutoBidding={setOpenAutoBidding} /> 
+							</S.PopupPosition>
+					</S.PopupBody>
+						: null
+				}
+		</S.Wrapper>
+	);
 };
 
 export default AuctionBiddingDetail;

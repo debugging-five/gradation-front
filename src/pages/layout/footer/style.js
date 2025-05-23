@@ -8,6 +8,9 @@ S.FooterWrap = styled.footer`
   border-top: 1px solid #C0C5C7;
   color: ${({ theme }) => theme.PALLETE.gray[100]};
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 S.FooterInner = styled.div`
@@ -17,6 +20,7 @@ S.FooterInner = styled.div`
 S.FooterMenu = styled.div`
   ${H8}
   display: flex;
+  width: 1400px;
   gap: 60px;
   margin: 80px 12px 80px 52px;
 `;

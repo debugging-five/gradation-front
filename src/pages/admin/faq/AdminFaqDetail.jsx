@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import * as S from "./AdminFaqDetailStyle";
+import S from "./AdminFaqDetailStyle";
 
 const AdminFaqDetail = () => {
   const { id } = useParams(); // URL에서 id 꺼냄
@@ -11,7 +11,7 @@ const AdminFaqDetail = () => {
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token"); // 로컬스토리지에서 토큰 겟
+    const token = localStorage.getItem("jwtToken"); // 로컬스토리지에서 토큰 겟
     if (!token) return; // 없으면 중단
 
     fetch("http://localhost:10000/users/api/profile", {
@@ -39,21 +39,34 @@ const AdminFaqDetail = () => {
   useEffect(() => {
     const fetchFaqDetail = async () => {
       try {
-        const response = await fetch(`http://localhost:10000/admin/api/faq/${id}`);
+        const token = localStorage.getItem("jwtToken");
+        const response = await fetch(`http://localhost:10000/admin/api/faq/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      
         const data = await response.json();
+      
+        if (!response.ok) {
+          console.error("FAQ 상세 요청 실패 응답:", data);
+          return;
+        }
+      
         setFaq(data);
       } catch (error) {
         console.error('FAQ 상세 호출 실패:', error);
       }
     };
-
+  
     fetchFaqDetail();
   }, [id]);
 
+
   const handleDelete = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const response = await fetch(`http://localhost:10000/faq/api/faq/${faq.id}`, {
+      const token = localStorage.getItem("jwtToken");
+      const response = await fetch(`http://localhost:10000/admin/api/faq/${faq.id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -98,7 +111,7 @@ const AdminFaqDetail = () => {
       {showConfirmPopup && (
         <S.PopupOverlay>
           <S.PopupBox>
-            <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/question.png?filePath=images/icons" alt="question-icon" />
+            <S.PopupIcon src="http://localhost:10000/files/api/get/question.png?filePath=images/icons" alt="question-icon" />
             <S.PopupMessage>정말 삭제하시겠습니까?</S.PopupMessage>
             <S.PopupButtonGroup>
               <S.PopupButton className="cancel" onClick={() => setShowConfirmPopup(false)}>취소</S.PopupButton>
@@ -113,7 +126,7 @@ const AdminFaqDetail = () => {
       {showSuccessPopup && (
         <S.PopupOverlay>
           <S.PopupBox>
-            <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/check.png?filePath=images/icons" alt="check-icon" />
+            <S.PopupIcon src="http://localhost:10000/files/api/get/ok.png?filePath=images/icons" alt="ok-icon" />
             <S.PopupMessage>삭제가 완료되었습니다.</S.PopupMessage>
           </S.PopupBox>
         </S.PopupOverlay>
