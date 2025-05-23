@@ -17,6 +17,9 @@ const AuctionPayment = () => {
   const [postCode, setPostCode] = useState();
   const [searchParams] = useSearchParams();
   const [successModal, setSuccessModal] = useState(false);
+
+  console.log(currentUser);
+  
   
   useEffect(() => {
     const verifyPayment = async () => {
@@ -109,17 +112,16 @@ const AuctionPayment = () => {
     }
   }, [])
   
-  if(data) {
-    console.log(data);
+  if(data && currentUser) {
     
     if(userData !== null && userData.id !== 0){
       
-      if(data.userId === null){
-        navigate("/auction")
-      }
-      if(data.userId !== currentUser.id){
-        navigate("/auction")
-      }
+      // if(data.userId === null){
+      //   navigate("/auction")
+      // }
+      // if(data.userId !== currentUser.id){
+      //   navigate("/auction")
+      // }
       return (
         <S.Wrapper>
           <S.Payment>

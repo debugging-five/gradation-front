@@ -18,11 +18,18 @@ const AuctionTime = ({id, auctionStartDate, auctionEndDate, auctionBidDate}) => 
     return () => clearInterval(timer)
   }, [])
 
-  const { isAuction, isBidding } = timeLeft;
+  const { isAuction, isBidding, isExpected } = timeLeft;
+  
   const { days, hours, minutes, seconds } = isBidding; 
 
   if(isAuction === "경매예정"){
-    return <Navigate to={`/auction/bidding/korean/detail/${id}`} />
+    const { days, hours, minutes, seconds } = isExpected;
+    return (
+       <S.Deadline>
+          <S.H2>경매시작</S.H2>
+          <S.H2>{`${days}일 ${hours}시 ${minutes}분 ${seconds}초`}</S.H2>
+      </S.Deadline>
+    );
   }
   
   if(isComplete){

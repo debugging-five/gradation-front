@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import AuctionBiddingDetail from './AuctionBiddingDetail';
-import AuctionExpectedDetail from './AuctionExpectedDetail';
-import AuctionCompleteDetail from './AuctionCompleteDetail';
 import S from './style';
 import getTimeLeft from './_function/getTimeLeft';
 
@@ -61,7 +59,7 @@ const AuctionDetailContainer = () => {
     ["건축", "architecture"],
     ["조각", "sculpture"],
     ["서예", "calligraphy"],
-  ["공예", "craft"]
+    ["공예", "craft"]
   ]);
 
   // id가 바뀔 때마다 최초 한 번 해당 데이터를 가져온다.
@@ -106,6 +104,8 @@ const AuctionDetailContainer = () => {
           <Link to={`/auction/bidding/${categoryMap.get(list[0].artCategory)}/detail/${list[0].id}`}>
               <S.ArtListImg
                 src={`http://localhost:10000/files/api/get/${list[0].artImgName}?filePath=${list[0].artImgPath}`}
+                // 유저가 올린 데이터로 교체될 경우 섬네일이 있으므로 해당 코드로 교체한다.
+                // src={`http://localhost:10000/files/api/get/t_${list[0].artImgName}?filePath=${list[0].artImgPath}`}
                 alt="작품1"
               />
           </Link>
