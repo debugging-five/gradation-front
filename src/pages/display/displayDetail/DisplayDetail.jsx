@@ -3,9 +3,19 @@ import { Link } from 'react-router-dom';
 import S from './style';
 
 const DisplayDetail = async () => {
-    // const email = "donggeon@test.app"
+    const postId = 578;
 
-    // const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/displays/api/read/${postId}`)
+
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/displays/api/read/${postId}`, {
+      method : "GET"
+    })
+      .then((res) => {
+        if(!res.ok) {
+          return res.json().then((res) => {
+            console.log(res)
+          })
+        }
+      })
 
 
   return (
