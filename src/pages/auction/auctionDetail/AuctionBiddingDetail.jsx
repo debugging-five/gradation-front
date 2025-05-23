@@ -8,10 +8,28 @@ import { useSelector } from 'react-redux';
 import AuctionTime from './AuctionTime';
 import AuctionPrice from './AuctionPrice';
 import getLatestPrice from './_function/getLatePrice';
-const AuctionBiddingDetail = ({auction}) => {
-	
-	const {id} = useParams();
+const AuctionBiddingDetail = ({auction, timeLeft}) => {
+
+	const {id, category} = useParams();
+	const { currentUser } = useSelector((state) => state.user);
 	const navigate = useNavigate();
+
+	// 먼저 페이지 경매예정, 경매중, 경매완료 검사 후 라우팅
+
+	const isBiddingConfirm = timeLeft.isAuction === "경매중";
+	const isExpectedConfirm = timeLeft.isAuction === "경매예정";
+	const isCompleteConfirm = timeLeft.isAuction === "경매종료";
+
+	useEffect(() => {
+		if(isBiddingConfirm){
+			navigate(`/auction/bidding/${category}/detail/${id}`)
+		}else if(isExpectedConfirm){
+			navigate(`/auction/expected/${category}/detail/${id}`)
+		}else {
+			// 경매 완료
+			navigate(`/auction/complete/${category}/detail/${id}`)
+		}
+	}, [])
 
 	// 모달 띄우는거
 	const [openBidding, setOpenBidding] = useState(false);
@@ -27,8 +45,12 @@ const AuctionBiddingDetail = ({auction}) => {
 	}
 
 	// 최신 가격을 조회하는 쿼리
-	const [price, setPrice] = useState({})
+	const [price, setPrice] = useState(null)
 	const [isPriceUpdate, setIsPriceUpdate] = useState(false)
+
+	// 시간 조회
+	const { isExpected } = timeLeft;
+  const { days, hours, minutes, seconds } = isExpected; 
 
 
 	useEffect(() => {
@@ -44,10 +66,26 @@ const AuctionBiddingDetail = ({auction}) => {
 				setPrice(price)
 			})
 			.catch(console.err)
-		}, 5000);
+		}, 10000);
 
 		return () => clearInterval(getPrice)
 	}, [isPriceUpdate])
+
+	// 본인일 때 수정
+	  const remove = async () => {
+    // eslint-disable-next-line no-restricted-globals
+    if(confirm("예정된 경매를 삭제하시겠습니까?")){
+      await fetch(`http://localhost:10000/auction/api/delete/${auction.id}`, {
+        method: 'DELETE',
+      });
+      alert("경매가 삭제되었습니다");
+      navigate(`../expected/${category}`, { replace: true });
+    };
+  }
+
+  const modify = () => {
+    navigate(`../expected/${category}/modify/${id}`)
+  }
 
 	return (
 		<S.Wrapper>
@@ -63,7 +101,15 @@ const AuctionBiddingDetail = ({auction}) => {
 				<S.AuctionInfo>
 					{/* <!-- 경매 정보1 --> */}
 					<S.AuctionInfo1>
-						<S.Title>{auction.artTitle}</S.Title>
+						<S.Title>{auction.artTitle}
+							{isCompleteConfirm ? auction.auctionAttracted ?<S.H2Red>{" <낙찰>"}</S.H2Red> : <S.H2Gray500>{" <유찰>"}</S.H2Gray500> : <></>}
+							{currentUser && auction.artistId === currentUser.id?
+								<S.TitleButtonWrapper>
+									<S.TitleButton1 onClick={modify}>수정하기</S.TitleButton1>
+									<S.TitleButton2 onClick={remove}>삭제하기</S.TitleButton2>
+								</S.TitleButtonWrapper>
+							: <></>}
+						</S.Title>
 						<S.Artist>
 							<S.H3>작가명</S.H3>
 							<S.H3>|</S.H3>
@@ -96,19 +142,81 @@ const AuctionBiddingDetail = ({auction}) => {
 					{/* <!-- 경매 정보3 --> */}
 					<S.AuctionInfo3>
 						{/* 시간 */}
-						<AuctionTime id={id} auctionBidDate={auction.auctionBidDate} auctionStartDate={auction.auctionStartDate} auctionEndDate={auction.auctionEndDate}/>
-						<S.PriceWrapper>
-							<AuctionPrice id={id} price={price} auction={auction} />
-						</S.PriceWrapper>
+							{isCompleteConfirm ? (
+								<>
+									{ auction.auctionAttracted ? (
+										<>
+											<S.AuctionInfo3Detail>
+												<S.H3Gray900>판매완료된 작품입니다.</S.H3Gray900>
+											</S.AuctionInfo3Detail>
+											
+											<S.AuctionInfo3Detail>
+												<S.H3Gray900>낙찰가</S.H3Gray900>
+											</S.AuctionInfo3Detail>
+											
+											<S.Notice>
+												<S.EnH2Red>{auction?.auctionBidPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} KRW</S.EnH2Red>
+											</S.Notice>
+										</>
+									) : (
+										<S.AuctionInfo3>
+			
+											<S.AuctionInfo3Detail>
+												<S.H3Gray500>유찰된 작품입니다.</S.H3Gray500>
+											</S.AuctionInfo3Detail>
+											
+											<S.AuctionInfo3Detail>
+												<S.H3Gray500>낙찰가</S.H3Gray500>
+											</S.AuctionInfo3Detail>
+											
+											<S.Notice>
+												<S.H2Gray500>-</S.H2Gray500>
+											</S.Notice>
+										</S.AuctionInfo3>
+										)
+									}
+								</>
+							) : (
+								<>
+									{isBiddingConfirm ? (
+										<>
+											<AuctionTime id={id} auctionBidDate={auction.auctionBidDate} auctionStartDate={auction.auctionStartDate} auctionEndDate={auction.auctionEndDate}/>
+											<S.PriceWrapper>
+												<AuctionPrice id={id} price={price} auction={auction} />	
+											</S.PriceWrapper>
+										</>
+									) : (
+										<>
+											<S.AuctionInfo3Detail>
+												<S.H2>경매 시작</S.H2>
+												<S.H2>{`${days}일 ${hours}시 ${minutes}분 ${seconds}초`}</S.H2>
+											</S.AuctionInfo3Detail>
+										</>
+									)}
+								</>
+							)}
 					</S.AuctionInfo3>
 					
 					<S.ButtonWrapper>
+						{isCompleteConfirm ? <></> : (
+							<>
+								{isBiddingConfirm ? (
+									<>
+										<S.BiddingButton onClick={popupAuto}>자동응찰</S.BiddingButton>
+										<S.BiddingButton onClick={popup}>응찰</S.BiddingButton>
+									</>
+								) : (
+									<>
+										<S.H2Gray500>준비중인 작품입니다</S.H2Gray500>
+									</>
+								)}
+							</>
+						)}
 						<S.ListButton>목록으로</S.ListButton>
-						<S.BiddingButton onClick={popupAuto}>자동응찰</S.BiddingButton>
-						<S.BiddingButton onClick={popup}>응찰</S.BiddingButton>
 					</S.ButtonWrapper>
 				</S.AuctionInfo>
 			</S.AuctionDetail>
+			
 				{openBidding ? 
 					<S.PopupBody>
 							<S.PopupPosition>
@@ -125,7 +233,12 @@ const AuctionBiddingDetail = ({auction}) => {
 				{openAutoBidding ? 
 					<S.PopupBody>
 							<S.PopupPosition>
-								<AuctionAutoPopup id={id} auction={auction} openAutoBidding={openAutoBidding} setOpenAutoBidding={setOpenAutoBidding} /> 
+								<AuctionAutoPopup 
+									id={id} auction={auction} setOpenAutoBidding={setOpenAutoBidding} 
+									auctionBidDate={auction.auctionBidDate} 
+									auctionStartDate={auction.auctionStartDate} auctionEndDate={auction.auctionEndDate}
+									price={price} isPriceUpdate={isPriceUpdate} setIsPriceUpdate={setIsPriceUpdate}
+								/> 
 							</S.PopupPosition>
 					</S.PopupBody>
 						: null

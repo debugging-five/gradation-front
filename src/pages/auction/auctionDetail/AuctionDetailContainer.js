@@ -87,14 +87,13 @@ const AuctionDetailContainer = () => {
 
   // 경매 완료 여부
   const timeLeft = getTimeLeft(auction.auctionStartDate, auction.auctionEndDate, new Date())
-  const isComplete = !!auction.auctionBidDate;
   if(isLoading) return <div>데이터를 불러오는 중...😁 </div>
 
   return (
     <div>
-      <AuctionBiddingDetail auction={auction} />
-      {/* { timeLeft.isAuction === "경매중" ? <AuctionBiddingDetail auction={auction} /> : ""} */}
-      {/* { isComplete && <AuctionCompleteDetail auction={auction} />} */}
+      
+      <AuctionBiddingDetail auction={auction} timeLeft={timeLeft} />
+
       <S.AuctionIng>
         <S.AuctionIngTitle>경매중인 작품</S.AuctionIngTitle>
       </S.AuctionIng>
