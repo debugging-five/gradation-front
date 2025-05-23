@@ -6,7 +6,6 @@ import LoginLayout from "../pages/layout/LoginLayout";
 import DisplayCategory from "../pages/display/DisplayCategory";
 import DisplayRegistration from "../pages/display/displayRegistration/DisplayRegistration";
 import DisplayContainer from "../pages/display/DisplayContainer";
-import DisplayDetailContainer from "../pages/display/displayDetail/DisplayDetailContainer";
 import ArtistContainer from "../pages/artist/ArtistContainer";
 import AuctionContainer from "../pages/auction/AuctionContainer";
 import AuctionBiddingContainer from "../pages/auction/auctionBidding/AuctionBiddingContainer";
@@ -22,7 +21,6 @@ import AuctionAgreementExplanation from "../pages/auction/auctionAgreement/Aucti
 import AuctionAgreementPrivacyPolicy from "../pages/auction/auctionAgreement/AuctionAgreementPrivacyPolicy";
 import AuctionAgreementAuctionPolicy from "../pages/auction/auctionAgreement/AuctionAgreementAuctionPolicy";
 import AuctionPayment from "../pages/auction/auctionPayment/AuctionPayment";
-import ExhibitionCategory from "../pages/exhibition/ExhibitionCategory";
 import ExhibitionGradationPastContainer from "../pages/exhibition/exhibitionGradationPast/ExhibitionGradationPastContainer";
 import ExhibitionGradationPast from "../pages/exhibition/exhibitionGradationPast/ExhibitionGradationPast";
 import ExhibitionRegistration from "../pages/exhibition/exhibitionRegistration/ExhibitionRegistration";
@@ -98,6 +96,7 @@ import UpcyclingMain from "../pages/upcycling/upcyclingMain/UpcyclingMain";
 import NewPassword from "../pages/account/newPassword/NewPassword";
 import MainContainer from "../pages/main/MainContainer";
 import MainLayout from "../pages/layout/MainLayout";
+import DisplayDetail from "../pages/display/displayDetail/DisplayDetail";
 
 const router = createBrowserRouter([
   {
@@ -145,7 +144,7 @@ const router = createBrowserRouter([
           },
           {
             path: ":category/detail/:id",
-            element: <DisplayDetailContainer />,
+            element: <DisplayDetail />,
           },
           {
             path: "registration",

@@ -4,6 +4,8 @@ import SubButton from '../../../components/button/SubButton';
 import PrimaryButton from '../../../components/button/PrimaryButton';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
 
 const DisplayRegistration = () => {
   const { register, handleSubmit, formState: {isSubmitting, errors} } = useForm({mode: "onBlur"});
@@ -16,9 +18,9 @@ const DisplayRegistration = () => {
     const files = Array.from(e.target.files);
     setSelectFiles(files)
 
-    const urls = files.map(file => URL.createObjectURL(file));
-    setThumbnailUrls(urls);
-    };
+    const previewUrls = files.map(file => URL.createObjectURL(file));
+    setThumbnailUrls(previewUrls); 
+  };
 
 
   return (
@@ -83,6 +85,7 @@ const DisplayRegistration = () => {
             .then(console.log)
             .catch(console.error)
       })
+
     })}>
 
     <S.Container>
@@ -94,10 +97,38 @@ const DisplayRegistration = () => {
           <S.FileWrapper>
             <S.File type="file" accept="image/*" multiple {...register("files")}
             onChange={handleThumbnailImage} />
+            {!thumbnailUrls && (
               <S.IconWrapper>
                 <S.Icon src={"/assets/images/icon/add.png"} alt="업로드" />
                 <S.H5>첨부파일 업로드</S.H5>
               </S.IconWrapper>
+            )}
+
+            {thumbnailUrls.length > 0 && (
+              <Swiper
+                modules={[Navigation, Pagination]}
+                navigation
+                pagination={{ clickable: true }}
+                spaceBetween={10}
+                slidesPerView={1}
+                style={{ width: '100%', height: '100%' }}>
+                {thumbnailUrls.map((url, i) => (
+                  <SwiperSlide key={i}>
+                    <img
+                      src={url}
+                      alt={`preview-${i}`}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "contain",
+                        // objectFit: "cover",
+                        borderRadius: "10px"
+                      }}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            )}
           </S.FileWrapper>
           <S.InputContainer>
             <S.BorderWrapper>
