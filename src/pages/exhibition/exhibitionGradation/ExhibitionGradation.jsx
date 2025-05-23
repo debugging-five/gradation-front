@@ -43,7 +43,7 @@ const ExhibitionGradation = () => {
 
     fetchGradationInfo()
       .then((res) => {
-        console.log(res)
+        // console.log(res)
       })
       .catch((error) => {
         // console.error(error)
@@ -198,12 +198,12 @@ useEffect(() => {
               <div key={idx}>
                 {Array.isArray(exhibition)
                   ? exhibition.map((item, i) => (
-                    <S.NavLink key={i} to={`/exhibition/past/${item}`}>
+                    <S.NavLink key={i} to={`/exhibition/gradation/past/${item}`}>
                       <p>{item}</p>
                     </S.NavLink>
                   ))
                   : (
-                    <S.NavLink to={`/exhibition/past/${exhibition}`}>
+                    <S.NavLink to={`/exhibition/gradation/past/${exhibition}`}>
                     <p>{exhibition}</p>
                     </S.NavLink>
                   )
