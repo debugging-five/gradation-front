@@ -4,40 +4,27 @@ import SubButton from '../../../components/button/SubButton';
 import PrimaryButton from '../../../components/button/PrimaryButton';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
 
 const DisplayRegistration = () => {
   const { register, handleSubmit, formState: {isSubmitting, errors} } = useForm({mode: "onBlur"});
   const { currentUser } = useSelector((state) => state.user);
   const userId = currentUser.id;
   const [thumbnailUrls, setThumbnailUrls] = useState([]);
-  const { category } = useParams();
+  const [selectFiles, setSelectFiles] = useState([]);
   
 
   const handleThumbnailImage = async (e) => {
     const files = Array.from(e.target.files);
-    const formData = new FormData();
-    files.forEach((file) => {
-      formData.append("files",file)
-    })
+    setSelectFiles(files)
 
-    const response = await fetch(`http://localhost:10000/files/api/upload/art/1`, {
-      method: "POST",
-      body: formData
-    })
-
-    const {uuids} = await response.json();
-
-    const urls = files.map((file, i) => 
-      `http://localhost:10000/file/display?fileName=display/art/${category}/t_${uuids[i]}_${file.name}`
-    )
-    setThumbnailUrls(urls)
-  } 
+  const urls = files.map((file) => URL.createObjectURL(file));
+  setThumbnailUrls(urls);
+}
 
   return (
     <form encType='multipart/form-data' autoComplete="off" onSubmit={handleSubmit(async (data) => {
-      //   console.log(data);
-    
       const {
         userName,
         artTitle,
@@ -46,20 +33,19 @@ const DisplayRegistration = () => {
         artSize,
         artEndDate,
         artDescription,
-    } = data;
+      } = data;
 
-    const artPostDTO = {
-      userName : userName,
-      artTitle : artTitle,
-      artCategory : artCategory,
-      artMaterial : artMaterial,
-      artSize : artSize,
-      artEndDate : artEndDate,
-      artDescription : artDescription,
-      userId: Number(userId)
-      
-    }
-    console.log("artPostDTO", artPostDTO);
+      const artPostDTO = {
+        userName : userName,
+        artTitle : artTitle,
+        artCategory : artCategory,
+        artMaterial : artMaterial,
+        artSize : artSize,
+        artEndDate : artEndDate,
+        artDescription : artDescription,
+        userId: Number(userId)
+      }
+      console.log("artPostDTO", artPostDTO);
 
     
     await fetch("http://localhost:10000/displays/api/registration", {
@@ -100,36 +86,49 @@ const DisplayRegistration = () => {
             .catch(console.error)
       })
 
-
-        
-    
-    // const result = await res.json();
-    // const artId = result.id; 
-    // console.log("result", result);
-
     })}>
 
     <S.Container>
       <S.Line>
         <S.ENH3>registration</S.ENH3>
       </S.Line>
-
       <S.FormWrapper>
         <S.Form>
           <S.FileWrapper>
             <S.File type="file" accept="image/*" multiple {...register("files")}
             onChange={handleThumbnailImage} />
-            <S.IconWrapper>
-              <S.Icon src={"/assets/images/icon/add.png"} alt="업로드"/>
-              <S.H5>첨부파일 업로드</S.H5>
-            </S.IconWrapper>
-                          {thumbnailUrls.length > 0 && (
-                <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-                  {thumbnailUrls.map((url, i) => (
-                    <img key={i} src={url} alt={`preview-${i}`} width="100" height="100" />
-                  ))}
-                </div>
-              )}
+            {!thumbnailUrls && (
+              <S.IconWrapper>
+                <S.Icon src={"/assets/images/icon/add.png"} alt="업로드" />
+                <S.H5>첨부파일 업로드</S.H5>
+              </S.IconWrapper>
+            )}
+
+            {thumbnailUrls.length > 0 && (
+              <Swiper
+                modules={[Navigation, Pagination]}
+                navigation
+                pagination={{ clickable: true }}
+                spaceBetween={10}
+                slidesPerView={1}
+                style={{ width: '100%', height: '100%' }}>
+                {thumbnailUrls.map((url, i) => (
+                  <SwiperSlide key={i}>
+                    <img
+                      src={url}
+                      alt={`preview-${i}`}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "contain",
+                        // objectFit: "cover",
+                        borderRadius: "10px"
+                      }}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            )}
           </S.FileWrapper>
           <S.InputContainer>
             <S.BorderWrapper>
