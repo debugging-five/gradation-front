@@ -59,9 +59,6 @@ const Layout = () => {
     }
   }, [localJwtToken]); 
 
-  // console.log("리덕스 유저", currentUser)
-  // console.log("리덕스 유저 상태", isLogin)
-
   const handleLogout = () => {
     localStorage.clear();
     dispatch(setUser({
