@@ -25,6 +25,8 @@ const AdminContainer = () => {
     subTitle = '등록';
   } else if (path.includes('detail')) {
     subTitle = '상세';
+  } else if (path.includes('answer')) {
+    subTitle = '답변';
   }
   
   return (

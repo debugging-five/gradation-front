@@ -1,19 +1,21 @@
 import styled from "styled-components";
 import * as CS from "../../../styles/common";
 
-export const FaqPageContainer = styled.div`
+const S = {};
+
+S.FaqPageContainer = styled.div`
   width: 800px;
   margin: 0 auto;
 `;
 
-export const DropdownContainer = styled.div`
+S.DropdownContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-bottom: 10px;
   position: relative;
 `;
 
-export const DropdownToggleButton = styled.button`
+S.DropdownToggleButton = styled.button`
   ${CS.H8};
   border: 1px solid #ccc;
   padding: 6px 14px;
@@ -22,7 +24,7 @@ export const DropdownToggleButton = styled.button`
   cursor: pointer;
 `;
 
-export const DropdownList = styled.ul`
+S.DropdownList = styled.ul`
   position: absolute;
   top: 2.5rem;
   right: 0;
@@ -34,7 +36,7 @@ export const DropdownList = styled.ul`
   padding: 4px 0;
 `;
 
-export const DropdownItem = styled.li`
+S.DropdownItem = styled.li`
   ${CS.H8};
   padding: 8px 12px;
   cursor: pointer;
@@ -44,12 +46,12 @@ export const DropdownItem = styled.li`
   }
 `;
 
-export const FaqTableWrapper = styled.div`
+S.FaqTableWrapper = styled.div`
   margin-top: 10px;
   width: 100%;
 `;
 
-export const FaqTableHeader = styled.div`
+S.FaqTableHeader = styled.div`
   ${CS.H5}
   display: flex;
   width: 100%;
@@ -59,7 +61,7 @@ export const FaqTableHeader = styled.div`
   border-bottom: 1px solid #ccc;
 `;
 
-export const FaqTableRow = styled.div`
+S.FaqTableRow = styled.div`
   ${CS.H8}
   display: flex;
   width: 100%;
@@ -69,38 +71,38 @@ export const FaqTableRow = styled.div`
   border-bottom: 1px solid #eee;
 `;
 
-export const FaqNumberHeader = styled.div`
+S.FaqNumberHeader = styled.div`
   width: 60px;
   text-align: center;
   padding: 0 8px;
 `;
 
-export const FaqCategoryHeader = styled.div`
+S.FaqCategoryHeader = styled.div`
   width: 100px;
   text-align: center;
   padding: 0 50px;
 `;
 
-export const FaqTitleHeader = styled.div`
+S.FaqTitleHeader = styled.div`
   flex: 1;
   text-align: center;
   overflow: hidden;
   padding: 0 50px;
 `;
 
-export const FaqNumberCell = styled.div`
+S.FaqNumberCell = styled.div`
   width: 60px;
   text-align: center;
   padding: 0 8px;
 `;
 
-export const FaqCategoryCell = styled.div`
+S.FaqCategoryCell = styled.div`
   width: 100px;
   text-align: center;
   padding: 0 50px;
 `;
 
-export const FaqTitleLinkCell = styled.div`
+S.FaqTitleLinkCell = styled.div`
   flex: 1;
   padding-left: 12px;
   overflow: hidden;
@@ -112,7 +114,7 @@ export const FaqTitleLinkCell = styled.div`
   padding: 0 130px;
 `;
 
-export const FaqTitleText = styled.span`
+S.FaqTitleText = styled.span`
   display: block;
   white-space: nowrap;
   overflow: hidden;
@@ -122,14 +124,14 @@ export const FaqTitleText = styled.span`
   color: #000;
 `;
 
-export const RegisterButtonContainer = styled.div`
+S.RegisterButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: 10px;
   margin-bottom: 10px;
 `;
 
-export const RegisterButton = styled.button`
+S.RegisterButton = styled.button`
   ${CS.H8}
   width: 125px;
   height: 50px;
@@ -142,7 +144,7 @@ export const RegisterButton = styled.button`
   cursor: pointer;
 `;
 
-export const Pagination = styled.div`
+S.Pagination = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 30px;
@@ -158,3 +160,5 @@ export const Pagination = styled.div`
     text-decoration: underline;
   }
 `;
+
+export default S;

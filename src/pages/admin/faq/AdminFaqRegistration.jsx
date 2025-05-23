@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import * as S from "./AdminFaqRegistrationStyle";
+import S from "./AdminFaqRegistrationStyle";
 
 const AdminFaqRegistration = () => {
   const navigate = useNavigate();
@@ -10,9 +10,51 @@ const AdminFaqRegistration = () => {
   const categories = ["회원", "전시", "작품", "배송", "결제", "경매", "기타"];
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [checkingAdmin, setCheckingAdmin] = useState(true);
+
+  useEffect(() => {
+  const token = localStorage.getItem("jwtToken");
+  if (!token) {
+    alert("접근 권한이 없습니다.");
+    setCheckingAdmin(false); // 꼭 먼저 처리
+    navigate("/");
+    return;
+  }
+
+  fetch("http://localhost:10000/users/api/profile", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.currentUser?.userAdminOk !== true) {
+        alert("관리자만 접근 가능합니다.");
+        setCheckingAdmin(false);
+        navigate("/");
+        return;
+      }
+      setIsAdmin(true);
+    })
+    .catch(() => {
+      alert("오류가 발생했습니다.");
+      setCheckingAdmin(false);
+      navigate("/");
+    })
+    .finally(() => {
+      setCheckingAdmin(false);
+    });
+}, []);
+
 
   const requestRegister = async () => {
-    const token = localStorage.getItem("token");
+    if (!category || !title.trim() || !content.trim()) {
+      alert("모든 항목을 입력해 주세요.");
+      return;
+    }
+    const token = localStorage.getItem("jwtToken");
     console.log("token 확인:", token);
     const newFaq = {
       faqCategory: category,
@@ -33,7 +75,7 @@ const AdminFaqRegistration = () => {
       if (res.ok) {
         setShowSuccessPopup(true);
         setTimeout(() => {
-          navigate(-1);
+          navigate("/mypage/admin/faq");
         }, 1500);
       } else {
         const errMsg = await res.text();
@@ -45,6 +87,8 @@ const AdminFaqRegistration = () => {
       alert("등록 중 오류 발생!");
     }
   };
+
+  if (checkingAdmin) return <div>로딩 중...</div>;
 
   return (
     <S.Container>
@@ -100,7 +144,7 @@ const AdminFaqRegistration = () => {
       {showConfirmPopup && (
         <S.PopupOverlay>
           <S.PopupBox>
-            <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/question.png?filePath=images/icons" alt="question-icon" />
+            <S.PopupIcon src="http://localhost:10000/files/api/get/question.png?filePath=images/icons" alt="question-icon" />
             <S.PopupMessage>등록하시겠습니까?</S.PopupMessage>
             <S.PopupButtonGroup>
               <S.PopupButton className="cancel" onClick={() => setShowConfirmPopup(false)}>취소</S.PopupButton>
@@ -116,7 +160,7 @@ const AdminFaqRegistration = () => {
       {showSuccessPopup && (
         <S.PopupOverlay>
           <S.PopupBox>
-            <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/ok.png?filePath=images/icons" alt="check-icon" />
+            <S.PopupIcon src="http://localhost:10000/files/api/get/ok.png?filePath=images/icons" alt="ok-icon" />
             <S.PopupMessage>등록이 완료되었습니다.</S.PopupMessage>
           </S.PopupBox>
         </S.PopupOverlay>

@@ -60,6 +60,7 @@ import AdminQnaLayout from "../pages/admin/qna/AdminQnaLayout";
 import AdminQnaWaitingList from "../pages/admin/qna/AdminQnaWaitingList";
 import AdminQnaDetail from "../pages/admin/qna/AdminQnaDetail";
 import AdminQnaCompletedList from "../pages/admin/qna/AdminQnaCompletedList";
+import AdminQnaAnswer from "../pages/admin/qna/AdminQnaAnswer";
 import FormManagementLayout from "../pages/admin/formManagement/FormManagementLayout";
 import FormManagementApprovedList from "../pages/admin/formManagement/list/FormManagementApprovedList";
 import FormManagementDetailContainer from "../pages/admin/formManagement/detail/FormManagementDetailContainer";
@@ -517,6 +518,10 @@ const router = createBrowserRouter([
                           {
                             path: "complete",
                             element: <AdminQnaCompletedList />,
+                          },
+                          {
+                            path: "answer/:id",
+                            element: <AdminQnaAnswer />,
                           },
                         ],
                       },

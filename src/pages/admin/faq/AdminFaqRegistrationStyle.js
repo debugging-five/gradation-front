@@ -1,18 +1,20 @@
 import styled from "styled-components";
 import * as CS from "../../../styles/common";
 
-export const Container = styled.div`
+const S = {};
+
+S.Container = styled.div`
   width: 800px;
   margin-top: 50px;
 `;
 
-export const FormSection = styled.div`
+S.FormSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
 `;
 
-export const RadioSection = styled.div`
+S.RadioSection = styled.div`
   width: 100%;
   border-bottom: 1px solid #C0C5C7;
   padding: 5px;
@@ -22,7 +24,7 @@ export const RadioSection = styled.div`
   flex-wrap: wrap;
 `;
 
-export const RadioLabel = styled.label`
+S.RadioLabel = styled.label`
   ${CS.H5};
   display: flex;
   align-items: center;
@@ -31,14 +33,14 @@ export const RadioLabel = styled.label`
   white-space: nowrap;  
 `;
 
-export const RadioGroup = styled.div`
+S.RadioGroup = styled.div`
   display: flex;
   gap: 20px;
   flex-wrap: nowrap;
   overflow-x: auto;
 `;
 
-export const Radio = styled.label`
+S.Radio = styled.label`
   ${CS.H8};
   color: #6E7476;
   display: flex;
@@ -49,11 +51,11 @@ export const Radio = styled.label`
   cursor: pointer;
 `;
 
-export const HiddenRadioInput = styled.input`
+S.HiddenRadioInput = styled.input`
   display: none;
 `;
 
-export const StyledRadio = styled.div`
+S.StyledRadio = styled.div`
   width: 14px;
   height: 14px;
   border-radius: 50%;
@@ -64,13 +66,13 @@ export const StyledRadio = styled.div`
   transition: background-color 0.2s ease;
 `;
 
-export const CheckIcon = styled.span`
+S.CheckIcon = styled.span`
   font-size: 14px;
   color: white;
   pointer-events: none;
 `;
 
-export const RadioCheck = styled.label`
+S.RadioCheck = styled.label`
   ${CS.H6};
   color: ${({ checked }) => (checked ? "#222" : "#999")};
   display: flex;
@@ -81,33 +83,33 @@ export const RadioCheck = styled.label`
 `;
 
 
-export const Required = styled.span`
+S.Required = styled.span`
   color: #ee3333;
   margin-left: 2px;
 `;
 
-export const RadioInput = styled.input``;
+S.RadioInput = styled.input``;
 
-export const TitleSection = styled.div`
+S.TitleSection = styled.div`
   width: 100%;
   border-bottom: 1px solid #C0C5C7;
   padding: 5px;
 `;
 
-export const TitleRow = styled.div`
+S.TitleRow = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   margin-top: 50px;
 `
 
-export const TitleLabel = styled.label`
+S.TitleLabel = styled.label`
   ${CS.H5};
   white-space: nowrap;
   min-width: 70px;
 `;
 
-export const Input = styled.input`
+S.Input = styled.input`
   ${CS.H8};
   color: #6E7476;
   flex: 1;
@@ -118,12 +120,12 @@ export const Input = styled.input`
   outline: none;
 `;
 
-export const ContentSection = styled.div`
+S.ContentSection = styled.div`
   width: 100%;
   margin-top: 50px;
 `;
 
-export const ContentLabel = styled.label`
+S.ContentLabel = styled.label`
   ${CS.H5};
   display: flex;
   align-items: center;
@@ -133,7 +135,7 @@ export const ContentLabel = styled.label`
   margin-left: 5px;
 `;
 
-export const Textarea = styled.textarea`
+S.Textarea = styled.textarea`
   ${CS.H8};
   color: #6E7476;
   width: 100%;
@@ -145,14 +147,14 @@ export const Textarea = styled.textarea`
   background-color: #FBFCFC;
 `;
 
-export const ButtonSection = styled.div`
+S.ButtonSection = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: 40px;
   margin-right: -20px;
 `;
 
-export const SubmitButton = styled.button`
+S.SubmitButton = styled.button`
   background-color: #ee3333;
   color: #FBFCFC;
   font-size: 16px;
@@ -163,7 +165,7 @@ export const SubmitButton = styled.button`
   cursor: pointer;
 `;
 
-export const PopupOverlay = styled.div`
+S.PopupOverlay = styled.div`
   position: fixed;
   top: 0; 
   left: 0; 
@@ -176,7 +178,7 @@ export const PopupOverlay = styled.div`
   z-index: 9999;
 `;
 
-export const PopupBox = styled.div`
+S.PopupBox = styled.div`
   width: 390px;
   height: 190px;
   background-color: #fff;
@@ -192,26 +194,26 @@ export const PopupBox = styled.div`
   text-align: center;
 `;
 
-export const PopupIcon = styled.div`
+S.PopupIcon = styled.div`
   width: 48px;
   height: 48px;
   font-size: 32px;
   margin-bottom: 15px;
 `;
 
-export const PopupMessage = styled.div`
+S.PopupMessage = styled.div`
   font-size: 16px;
   color: #333;
   margin-bottom: 35px;
 `;
 
-export const PopupButtonGroup = styled.div`
+S.PopupButtonGroup = styled.div`
   display: flex;
   justify-content: center;
   gap: 12px;
 `;
 
-export const PopupButton = styled.button`
+S.PopupButton = styled.button`
   width: 80px;
   height: 32px;
   padding: 10px 20px;
@@ -234,3 +236,6 @@ export const PopupButton = styled.button`
     border: none;
   }
 `;
+
+
+export default S;

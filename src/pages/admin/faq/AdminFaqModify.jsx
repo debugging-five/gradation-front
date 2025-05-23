@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import * as S from "./AdminFaqModifyStyle";
+import S from "./AdminFaqModifyStyle";
 
 const AdminFaqModify = () => {
   const { id } = useParams();
@@ -12,26 +12,70 @@ const AdminFaqModify = () => {
   const categories = ["회원", "전시", "작품", "배송", "결제", "경매", "기타"];
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    const fetchFaq = async () => {
-      try {
-        const res = await fetch(`http://localhost:10000/admin/api/faq/modify/${id}`);
-        const data = await res.json();
-        setFaq(data);
-        setCategory(data.faqCategory);
-        setTitle(data.faqTitle);
-        setContent(data.faqContent);
-      } catch (err) {
-        console.error("FAQ 불러오기 실패:", err);
-      }
-    };
+    const token = localStorage.getItem("jwtToken");
+    if (!token) {
+      alert("접근 권한이 없습니다.");
+      navigate("/");
+      return;
+    }
+  
+    fetch("http://localhost:10000/users/api/profile", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.currentUser?.userAdminOk !== true) {
+          alert("관리자만 접근 가능합니다.");
+          navigate("/");
+        } else {
+          setIsAdmin(true);
+        }
+      })
+      .catch(() => {
+        alert("오류가 발생했습니다.");
+        navigate("/");
+      });
+  }, []);
 
-    fetchFaq();
-  }, [id]);
+  const fetchFaq = async () => {
+    try {
+      const token = localStorage.getItem("jwtToken");
+      const res = await fetch(`http://localhost:10000/admin/api/faq/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        console.error("FAQ 단건 조회 실패:", data);
+        return;
+      }
+
+      setFaq(data);
+      setCategory(data.faqCategory);
+      setTitle(data.faqTitle);
+      setContent(data.faqContent);
+    } catch (err) {
+      console.error("FAQ 불러오기 실패:", err);
+    }
+  };
+
+  useEffect(() => {
+    if (isAdmin) {
+      fetchFaq();
+    }
+  }, [isAdmin]);
 
   const requestUpdate = async () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("jwtToken");
 
     const updatedFaq = {
       faqCategory: category,
@@ -40,7 +84,7 @@ const AdminFaqModify = () => {
     };
 
     try {
-      const res = await fetch(`http://localhost:10000/faq/api/faq/${id}`, {
+      const res = await fetch(`http://localhost:10000/admin/api/faq/modify/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -62,7 +106,6 @@ const AdminFaqModify = () => {
       alert("수정 중 오류 발생!");
     }
   };
-
 
   if (!faq) return <div>로딩 중...</div>;
 
@@ -89,7 +132,6 @@ const AdminFaqModify = () => {
                 <S.RadioCheck htmlFor={c} checked={category === c}>{c}</S.RadioCheck>
               </S.Radio>
             ))}
-
           </S.RadioGroup>
         </S.RadioSection>
         <S.TitleSection>
@@ -118,7 +160,7 @@ const AdminFaqModify = () => {
       {showConfirmPopup && (
         <S.PopupOverlay>
           <S.PopupBox>
-            <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/question.png?filePath=images/icons" alt="question-icon" />
+            <S.PopupIcon src="http://localhost:10000/files/api/get/question.png?filePath=images/icons" alt="question-icon" />
             <S.PopupMessage>수정하시겠습니까?</S.PopupMessage>
             <S.PopupButtonGroup>
               <S.PopupButton className="cancel" onClick={() => setShowConfirmPopup(false)}>취소</S.PopupButton>
@@ -133,7 +175,7 @@ const AdminFaqModify = () => {
       {showSuccessPopup && (
         <S.PopupOverlay>
           <S.PopupBox>
-            <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/ok.png?filePath=images/icons" alt="check-icon" />
+            <S.PopupIcon src="http://localhost:10000/files/api/get/ok.png?filePath=images/icons" alt="ok-icon" />
             <S.PopupMessage>수정이 완료되었습니다.</S.PopupMessage>
           </S.PopupBox>
         </S.PopupOverlay>
