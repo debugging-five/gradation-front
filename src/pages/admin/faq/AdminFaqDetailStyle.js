@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import * as CS from "../../../styles/common";
 
-export const FaqDetailPageContainer = styled.div`
+const S = {};
+
+S.FaqDetailPageContainer = styled.div`
   display: flex;
   width: 800px;
   flex-direction: column;
@@ -9,19 +11,19 @@ export const FaqDetailPageContainer = styled.div`
   margin-bottom: 60px;
 `;
 
-export const FaqDetailWrapper = styled.div`
+S.FaqDetailWrapper = styled.div`
   width: 800px;
   margin-bottom: 60px;
 `;
 
-export const FaqDivider = styled.div`
+S.FaqDivider = styled.div`
   margin-top: 7px;
   width: 800px;
   border-bottom: solid 1px;
 `;
 
 
-export const FaqTitleWrapper = styled.div`
+S.FaqTitleWrapper = styled.div`
   margin-top: 32px;
   width: 800px;
   display: flex;
@@ -29,32 +31,32 @@ export const FaqTitleWrapper = styled.div`
   gap: 10px;
   `;
 
-export const FaqQ = styled.p`
+S.FaqQ = styled.p`
   ${CS.H2}
   font-weight: bold;
   `;
 
-export const FaqTitleText = styled.p`
+S.FaqTitleText = styled.p`
   ${CS.H6}
   margin-bottom: 6px;
   `;
 
-export const FaqContentText = styled.p`
+S.FaqContentText = styled.p`
   margin-top: 24px;
   ${CS.H6}
   `;
 
-export const FaqCategoryText = styled.p`
+S.FaqCategoryText = styled.p`
   ${CS.H6}
   `;
 
-export const FaqDetailButtonContainer = styled.div`
+S.FaqDetailButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 12px;
   `;
 
-export const FaqRedButton = styled.button`
+S.FaqRedButton = styled.button`
   color: #FBFCFC;
   border: solid 1px #EE3333;;
   background-color: #EE3333;
@@ -64,7 +66,7 @@ export const FaqRedButton = styled.button`
   cursor: pointer;
 `;
 
-export const FaqWhiteButton = styled.button`
+S.FaqWhiteButton = styled.button`
   color: #EE3333;
   border: solid 1px #EE3333;;
   background-color: #FBFCFC;
@@ -74,7 +76,7 @@ export const FaqWhiteButton = styled.button`
   cursor: pointer;
 `;
 
-export const PopupOverlay = styled.div`
+S.PopupOverlay = styled.div`
   position: fixed;
   top: 0; 
   left: 0; 
@@ -87,10 +89,10 @@ export const PopupOverlay = styled.div`
   z-index: 9999;
 `;
 
-export const PopupBox = styled.div`
+S.PopupBox = styled.div`
   width: 390px;
   height: 190px;
-  background-color: #fff;
+  background-color: #FBFCFC;
   border: 2px solid #ee3333;
   border-radius: 8px;
   padding: 30px 40px;
@@ -103,26 +105,26 @@ export const PopupBox = styled.div`
   text-align: center;
 `;
 
-export const PopupIcon = styled.div`
+S.PopupIcon = styled.div`
   width: 48px;
   height: 48px;
   font-size: 32px;
   margin-bottom: 15px;
 `;
 
-export const PopupMessage = styled.div`
+S.PopupMessage = styled.div`
   font-size: 16px;
-  color: #333;
+  color: #333333;
   margin-bottom: 35px;
 `;
 
-export const PopupButtonGroup = styled.div`
+S.PopupButtonGroup = styled.div`
   display: flex;
   justify-content: center;
   gap: 12px;
 `;
 
-export const PopupButton = styled.button`
+S.PopupButton = styled.button`
   width: 80px;
   height: 32px;
   padding: 10px 20px;
@@ -134,14 +136,17 @@ export const PopupButton = styled.button`
   cursor: pointer;
 
   &.cancel {
-    background: #fff;
+    background: #FBFCFC;
     color: #ee3333;
     border: 1.5px solid #ee3333;
   }
 
   &.confirm {
     background: #ee3333;
-    color: #fff;
+    color: #FBFCFC;
     border: none;
   }
 `;
+
+
+export default S;

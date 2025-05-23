@@ -1,15 +1,24 @@
 import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useLocation  } from 'react-router-dom';
+import S from "./AdminQnaLayoutStyle";
 
 const AdminQnaLayout = () => {
+  // url로 현재 탭 활성화
+  const location = useLocation();
+  const isWaiting = location.pathname === "/mypage/admin/qna";
+  const isCompleted = location.pathname === "/mypage/admin/qna/complete";
+  const hideTabs = location.pathname.includes("/answer/");
+
   return (
-    <div>
-      <div>
-        <Link to={"/mypage/admin/qna"}>답변 대기</Link>
-        <Link to={"/mypage/admin/qna/complete"}>답변 완료</Link>
-      </div>
+    <S.Container>
+      {!hideTabs && (
+        <S.TabWrapper>
+          <S.TabButton to="/mypage/admin/qna" isActive={isWaiting}>답변대기</S.TabButton>
+          <S.TabButton to="/mypage/admin/qna/complete" isActive={isCompleted}>답변완료</S.TabButton>
+        </S.TabWrapper>
+      )}
       <Outlet />
-    </div>
+    </S.Container>
   );
 };
 

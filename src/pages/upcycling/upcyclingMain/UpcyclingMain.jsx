@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import * as S from "./UpcyclingMainStyle";
+import S from "./UpcyclingMainStyle";
 import { useNavigate } from "react-router-dom";
 
 const UpcyclingMain = () => {

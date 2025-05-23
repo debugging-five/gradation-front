@@ -1,14 +1,16 @@
 import { useForm } from 'react-hook-form';
 import S from './style';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
-const AuctionAutoModal = ({id, category, bidderCount, bidding, setBidding, timeleft, data, setOpenAutoBidding }) => {
-  const { currentUser } = useSelector((state) => state.user);
+const AuctionAutoModal = ({id, category, bidderCount, bidding, setBidding, timeleft, auction, setOpenAutoBidding }) => {
+  const { currentUser, isLogin } = useSelector((state) => state.user);
   const { register, handleSubmit } = useForm({mode:"onChange"});
   const navigate = useNavigate();
   const pricePattern = /^[0-9]+$/;
-
+  if(!isLogin) {
+    return <Navigate to={"/login"} />
+  }
   return (
     <S.PopupBody>
       <S.PopupContainer>
@@ -22,7 +24,7 @@ const AuctionAutoModal = ({id, category, bidderCount, bidding, setBidding, timel
             <S.PopupWrapper>
               <S.PopupLeft>
                 <S.Info>
-                  <S.H4>{data.artTitle}</S.H4>
+                  <S.H4>{auction.artTitle}</S.H4>
                   <S.H4>자동응찰 경매중</S.H4>
                 </S.Info>
                 <S.Info>
@@ -31,22 +33,22 @@ const AuctionAutoModal = ({id, category, bidderCount, bidding, setBidding, timel
                 </S.Info>
                 <S.Info>
                   <S.H4>경쟁응찰자</S.H4>
-                  <S.H4>{bidderCount}명</S.H4>
+                  {/* <S.H4>{bidderCount}명</S.H4> */}
                 </S.Info>
                 
                 {/* <!-- 추정가, 시작가 --> */}
                 <S.Info>
                   <S.H6>추정가 KRW</S.H6>
-                  <S.H6>{data.auctionEstimatedMinPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ~ {data.auctionEstimatedMaxPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</S.H6>
+                  <S.H6>{auction.auctionEstimatedMinPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ~ {auction.auctionEstimatedMaxPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</S.H6>
                 </S.Info>
                 <S.Info>
                   <S.H6>시작가 KRW</S.H6>
-                  <S.H6>{data.auctionStartPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</S.H6>
+                  <S.H6>{auction.auctionStartPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</S.H6>
                 </S.Info>
               </S.PopupLeft>
         
               <S.PopupRight>
-                  <S.PopupArtImg src={`http://localhost:10000/files/api/get/${data.artImgName}?filePath=${data.artImgPath}`} alt="경매 작품" />
+                  <S.PopupArtImg src={`http://localhost:10000/files/api/get/${auction.artImgName}?filePath=${auction.artImgPath}`} alt="경매 작품" />
               </S.PopupRight>
             </S.PopupWrapper>
             
@@ -62,14 +64,16 @@ const AuctionAutoModal = ({id, category, bidderCount, bidding, setBidding, timel
                 return
               }
 
-              if(bidding.id !== currentBidding.id) {
-                alert("응찰가 변동으로 인한 응찰 실패\n다시 응찰 하시겠습니까?");
-                navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`)
-                return
+              if(currentBidding.id){
+                if(bidding.id !== currentBidding.id) {
+                  alert("응찰가 변동으로 인한 응찰 실패\n다시 응찰 하시겠습니까?");
+                  navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`)
+                  return
+                }
               }
 
 
-              if(price.price < (Math.ceil(bidding?.auctionBiddingPrice * 1.1 / 1000) * 1000) || price.price < data?.auctionStartPrice){
+              if(price.price < (Math.ceil(bidding?.auctionBiddingPrice * 1.1 / 1000) * 1000) || price.price < auction?.auctionStartPrice){
                 alert("응찰가는 반드시\n최소 응찰가 이상이어야 합니다.");
                 navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`, { replace: true })
                 return
@@ -112,7 +116,7 @@ const AuctionAutoModal = ({id, category, bidderCount, bidding, setBidding, timel
             })}>
               <S.PopupInfo2>
                 <S.PopupLeft2>
-                  <S.Input type="text" placeholder="응찰가를 입력해주세요." autocomplete="off"
+                  <S.Input type="text" placeholder="응찰가를 입력해주세요." autoComplete="off"
                     {...register("price", {
                       required : true,
                       pattern : {
@@ -125,7 +129,7 @@ const AuctionAutoModal = ({id, category, bidderCount, bidding, setBidding, timel
                   </S.Info3Bid>
                   <S.Info3>
                       <S.H4>최소 응찰가 KRW</S.H4>
-                      <S.H3Red>{((Math.ceil(bidding?.auctionBiddingPrice * 1.1 / 1000) * 1000) || data?.auctionStartPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</S.H3Red>
+                      <S.H3Red>{((Math.ceil(bidding?.auctionBiddingPrice * 1.1 / 1000) * 1000) || auction?.auctionStartPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</S.H3Red>
                   </S.Info3>
                 </S.PopupLeft2>
                   
