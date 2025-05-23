@@ -148,7 +148,7 @@ useEffect(() => {
 
           <S.Map id="map" onClick={() => {
             const query = info.gradation.gradationExhibitionRealAddress;
-            const url = `https://map.kakao.com/link/to/18577297`;
+            const url = `https://map.kakao.com/?q=${encodeURIComponent(query)}`;
             window.open(url, '_blank');
           }} />
           
