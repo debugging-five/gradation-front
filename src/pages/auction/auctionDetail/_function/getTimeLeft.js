@@ -3,7 +3,16 @@ const getTimeLeft = (startDate, endDate, now) => {
   const start = new Date(startDate);
   const end = new Date(endDate);
 
-  const isAuction = now - new Date(start) > 0 ? "경매중" : "경매예정";
+  let isAuction = "";
+  
+  if(now < start){
+    isAuction = "경매예정"
+  }else if(now >= start && now <= end){
+    isAuction = "경매중"
+  }else {
+    isAuction = "경매종료"
+  }
+
   const StartDiff = start - now;
   const StartDays = Math.floor((StartDiff / 1000 / 60 / 60 / 24));
   const StartHours = Math.floor((StartDiff / 1000 / 60 / 60 ) % 24);
