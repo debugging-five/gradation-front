@@ -11,7 +11,6 @@ const ExhibitionGradation = () => {
   const [arts, setArts] = useState([]);
   const [info, setInfos] = useState();
   const [lastExhibition, setLastExhibition] = useState([]);
-  // const [images, setImages] = useState([]);
 
 
   useEffect(() => {
@@ -22,7 +21,7 @@ const ExhibitionGradation = () => {
         const arts = await response.json();
         setArts(arts);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        // console.error('Error fetching data:', error);
       }
     };
     fetchGradationImgs();
@@ -44,12 +43,42 @@ const ExhibitionGradation = () => {
 
     fetchGradationInfo()
       .then((res) => {
-        // console.log(res)
+        console.log(res)
       })
       .catch((error) => {
         // console.error(error)
       })
   }, []);
+
+  // 전시회 지도
+useEffect(() => {
+  if (!info?.gradation?.gradationExhibitionAddress) return;
+  if (!window.kakao || !window.kakao.maps) {
+    console.log("카카오 지도 API 로딩 실패");
+    return;
+  }
+
+  console.log("지도 주소:", info.gradation.gradationExhibitionAddress);
+
+  const container = document.getElementById('map');
+  const map = new window.kakao.maps.Map(container, {
+    center: new window.kakao.maps.LatLng(37.5665, 126.9780),
+    level: 3,
+  });
+
+  const geocoder = new window.kakao.maps.services.Geocoder();
+  geocoder.addressSearch("서울 종로구 인사동길 41", (result, status) => {
+    if (status === window.kakao.maps.services.Status.OK) {
+      const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+      new window.kakao.maps.Marker({ map, position: coords });
+      map.setCenter(coords);
+    } else {
+      console.warn("주소 변환 실패:", status);
+    }
+  });
+}, [info]);
+
+
 
   useEffect(() => {
     const fetchLastExhibition = async () => {
@@ -63,13 +92,12 @@ const ExhibitionGradation = () => {
     };
     fetchLastExhibition()
       .then((res) => {
-        console.log(res)
+        // console.log(res)
       })
       .catch((error) => {
-        console.error(error)
+        // console.error(error)
       })
   }, [])
-
 
   return (
     <div>
@@ -116,8 +144,7 @@ const ExhibitionGradation = () => {
 
         <S.MapWrap>
 
-          <S.Map>
-            지도
+          <S.Map id="map">
           </S.Map>
           
           <div>
@@ -154,26 +181,47 @@ const ExhibitionGradation = () => {
           </div>
         </S.MapWrap>
 
-        <S.gradationInfo>
-          <S.Address>{info?.gradation?.gradationExhibitionAddress}</S.Address>
-          <S.Line src={`/assets/images/icon/Line.png`} alt='line'></S.Line>
-          <S.Date>{info?.gradation?.gradationExhibitionDate}</S.Date>
-        </S.gradationInfo>
+        <S.gradationContainer>
+          <S.gradationInfo>
+            <S.Address>{info?.gradation?.gradationExhibitionAddress}</S.Address>
+            <S.Line src={`/assets/images/icon/Line.png`} alt='line'></S.Line>
+            <S.Date>{info?.gradation?.gradationExhibitionDate}</S.Date>
+          </S.gradationInfo>
 
-        <S.LastExhibition>
-          {lastExhibition.map((exhibition, idx) => (
-            <div key={idx}>
-              {Array.isArray(exhibition)
-                ? exhibition.map((item, i) => <p key={i}>{item}</p>)
-                : <p>{exhibition}</p>
-              }
-            </div>
-          ))}
-        </S.LastExhibition>
+          <S.LastExhibition>
+            {lastExhibition.map((exhibition, idx) => (
+              <div key={idx}>
+                {Array.isArray(exhibition)
+                  ? exhibition.map((item, i) => (
+                    <S.NavLink key={i} to={`/exhibition/past/${item}`}>
+                      <p>{item}</p>
+                    </S.NavLink>
+                  ))
+                  : (
+                    <S.NavLink to={`/exhibition/past/${exhibition}`}>
+                    <p>{exhibition}</p>
+                    </S.NavLink>
+                  )
+                }
+              </div>
+            ))}
+          </S.LastExhibition>
+        </S.gradationContainer>
 
       </S.InfoContainer>
 
-
+      {info?.images?.length > 0 && (
+        <S.GradationImgWrap>
+          <S.GradationInfo>공간 정보</S.GradationInfo>
+          {info.images?.map((img, idx) => (
+              <S.GradationImg 
+                key={idx}
+                src={`http://localhost:10000/files/api/get/${img.gradationExhibitionImgName}?filePath=${img.gradationExhibitionImgPath}`}
+                alt={`${idx}번째 전시회 이미지`}
+              />
+          ))}
+        </S.GradationImgWrap>
+      )}
 
     </div>
   );
