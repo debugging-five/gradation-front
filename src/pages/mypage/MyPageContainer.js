@@ -9,7 +9,7 @@ const MyPageContainer = () => {
 
   const [userName, setUserName] = useState(currentUser?.userName);
   const [profileImg, setProfileImg] = useState(
-    'http://localhost:10000/files/api/get/defaultProfile.jpg?filePath=images/mypage'
+    `http://localhost:10000/files/api/get/${currentUser.userImgName}?filePath=${currentUser.userImgPath}`
   );
 
   const fileInputRef = useRef(null);
@@ -27,7 +27,7 @@ const MyPageContainer = () => {
       const formData = new FormData();
       formData.append('file', file);
 
-      fetch(`http://localhost:10000/files/api/upload/profile/${currentUser.id}`, {
+      fetch(`http://localhost:10000/files/api/upload/profile/${currentUser.userIdentification}`, {
         method: 'POST',
         body: formData,
       })

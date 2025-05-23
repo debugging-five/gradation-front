@@ -106,7 +106,6 @@ const UserInfoContainer = () => {
   };
 
   useEffect(() => {
-    console.log('formData state:', formData);
     const script = document.createElement("script");
     script.src = "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
     script.async = true;
