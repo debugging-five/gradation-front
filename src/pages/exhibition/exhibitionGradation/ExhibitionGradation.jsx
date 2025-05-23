@@ -64,10 +64,12 @@ useEffect(() => {
   const map = new window.kakao.maps.Map(container, {
     center: new window.kakao.maps.LatLng(37.5665, 126.9780),
     level: 3,
+    draggable: true,
+    scrollwheel: false,
   });
 
   const geocoder = new window.kakao.maps.services.Geocoder();
-  geocoder.addressSearch("서울 종로구 인사동길 41", (result, status) => {
+  geocoder.addressSearch(info.gradation.gradationExhibitionRealAddress, (result, status) => {
     if (status === window.kakao.maps.services.Status.OK) {
       const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
       new window.kakao.maps.Marker({ map, position: coords });
@@ -144,8 +146,11 @@ useEffect(() => {
 
         <S.MapWrap>
 
-          <S.Map id="map">
-          </S.Map>
+          <S.Map id="map" onClick={() => {
+            const query = info.gradation.gradationExhibitionRealAddress;
+            const url = `https://map.kakao.com/link/to/18577297`;
+            window.open(url, '_blank');
+          }} />
           
           <div>
             <S.InfoDetail>

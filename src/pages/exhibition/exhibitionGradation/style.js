@@ -34,6 +34,7 @@ S.SwiperSlide = styled(SwiperSlide)`
 S.ArtInfo = styled.div`
   width: 100%;
   height: 100%;
+  gap: 32px;
   position: absolute;
   top: 0; 
   left: 0;
