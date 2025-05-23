@@ -1,7 +1,9 @@
 import * as CS from "../../../styles/common";
 import styled from "styled-components";
 
-export const Container = styled.div`
+const S = {};
+
+S.Container = styled.div`
   width: 100%; 
   min-height: 100vh;
   background-color: #fbfcfc;
@@ -12,7 +14,7 @@ export const Container = styled.div`
   box-sizing: border-box;
 `;
 
-export const TitleWrapper = styled.div`
+S.TitleWrapper = styled.div`
   width: 1160px;
   display: flex;
   flex-direction: column;
@@ -20,13 +22,13 @@ export const TitleWrapper = styled.div`
   margin-bottom: 20px;
 `;
 
-export const PageTitle = styled.h1`
+S.PageTitle = styled.h1`
   ${CS.EN_H2}
   color: #000000;
   margin-bottom: 70px;
 `;
 
-export const RegistrationLabel = styled.div`
+S.RegistrationLabel = styled.div`
   ${CS.EN_H3}
   color: #ee3333;
   border-bottom: 2px solid #ee3333;
@@ -35,13 +37,13 @@ export const RegistrationLabel = styled.div`
   text-align: left;
 `;
 
-export const Form = styled.form`
+S.Form = styled.form`
   display: flex;
   justify-content: space-between;
   width: 1160px;
 `;
 
-export const ImageUploadWrapper = styled.div`
+S.ImageUploadWrapper = styled.div`
   width: 560px;
   display: flex;
   flex-direction: column;
@@ -49,7 +51,7 @@ export const ImageUploadWrapper = styled.div`
   margin-top: 50px;
 `;
 
-export const ImageBox = styled.div`
+S.ImageBox = styled.div`
   width: 480px;
   height: 480px;
   border: 2px dashed #cccccc;
@@ -66,7 +68,7 @@ export const ImageBox = styled.div`
   }
 `;
 
-export const PreviewImage = styled.img`
+S.PreviewImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -74,31 +76,31 @@ export const PreviewImage = styled.img`
   
 `;
 
-export const UploadIcon = styled.img`
+S.UploadIcon = styled.img`
   width: 36px;
   height: 36px;
   margin-bottom: 26px;
 `;
 
-export const UploadDescription = styled.p`
+S.UploadDescription = styled.p`
   margin-top: 12px;
   ${CS.H8}
   color: #666666;
   text-align: center;
 `;
 
-export const InputSection = styled.div`
+S.InputSection = styled.div`
   width: 450px;
   margin-top: 90px;
 `;
 
-export const InputGroup = styled.div`
+S.InputGroup = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 24px;
 `;
 
-export const InfoRow = styled.div`
+S.InfoRow = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
@@ -106,7 +108,7 @@ export const InfoRow = styled.div`
   margin-bottom: 10px;
 `;
 
-export const Label = styled.label`
+S.Label = styled.label`
   ${CS.H5}
   width: 80px;
   color: #000000;
@@ -114,19 +116,19 @@ export const Label = styled.label`
   white-space: nowrap;
 `;
 
-export const Required = styled.span`
+S.Required = styled.span`
   color: #ee3333;
   margin-left: 2px;
 `;
 
-export const SchoolSearchRow = styled.div`
+S.SchoolSearchRow = styled.div`
   display: flex;
   flex: 1;
   justify-content: space-between;
   gap: 10px;
 `;
 
-export const Input = styled.input`
+S.Input = styled.input`
   ${CS.H8}
   flex: 1;
   padding: 10px;
@@ -142,7 +144,7 @@ export const Input = styled.input`
   }
 `;
 
-export const SearchButton = styled.button`
+S.SearchButton = styled.button`
   padding: 10px 16px;
   background-color: #ee3333;
   color: #fbfcfc;
@@ -153,7 +155,7 @@ export const SearchButton = styled.button`
   cursor: pointer;
 `;
 
-export const InputGroupRow = styled.div`
+S.InputGroupRow = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
@@ -161,13 +163,13 @@ export const InputGroupRow = styled.div`
   border-bottom: 2px solid #000000;
 `;
 
-export const DateWrapper = styled.div`
+S.DateWrapper = styled.div`
   flex: 1;
   position: relative;
   height: 36px;
 `;
 
-export const CalendarInput = styled.div`
+S.CalendarInput = styled.div`
   display: flex;
   align-items: center;
   height: 100%;
@@ -191,25 +193,25 @@ export const CalendarInput = styled.div`
   }
 `;
 
-export const CalendarIcon = styled.img`
+S.CalendarIcon = styled.img`
   width: 20px;
   height: 20px;
   flex-shrink: 0;
   margin-left: 10px;
 `;
 
-export const SizeSection = styled.div`
+S.SizeSection = styled.div`
   margin-bottom: 50px;
 `;
 
-export const SizeInputGroup = styled.div`
+S.SizeInputGroup = styled.div`
   display: flex;
   flex-direction: column;
   gap: 14px;
   margin-top: 10px;
 `;
 
-export const SizeInput = styled.div`
+S.SizeInput = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
@@ -218,7 +220,7 @@ export const SizeInput = styled.div`
   }
 `;
 
-export const InputWrapper = styled.div`
+S.InputWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 6px;
@@ -240,25 +242,25 @@ export const InputWrapper = styled.div`
   }
 `;
 
-export const InputSizeGroupRow = styled.div`
+S.InputSizeGroupRow = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
   margin-bottom: 20px;
 `;
 
-export const SizeRow = styled.div`
+S.SizeRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-left: 15px;
 `;
 
-export const MaterialSection = styled.div`
+S.MaterialSection = styled.div`
   margin-bottom: 50px;
 `;
 
-export const CheckboxGroup = styled.div`
+S.CheckboxGroup = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
@@ -281,7 +283,7 @@ export const CheckboxGroup = styled.div`
   }
 `;
 
-export const Textarea = styled.textarea`
+S.Textarea = styled.textarea`
   width: 428px;
   height: 100px;
   padding: 10px;
@@ -294,14 +296,14 @@ export const Textarea = styled.textarea`
   background-color: #fbfcfc;
 `;
 
-export const ButtonGroup = styled.div`
+S.ButtonGroup = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 12px;
   margin-top: 32px;
 `;
 
-export const CancelButton = styled.button`
+S.CancelButton = styled.button`
   width: 125px;
   height: 50px;
   padding: 10px 28px;
@@ -313,7 +315,7 @@ export const CancelButton = styled.button`
   cursor: pointer;
 `;
 
-export const SubmitButton = styled.button`
+S.SubmitButton = styled.button`
   width: 125px;
   height: 50px;
   padding: 10px 28px;
@@ -325,7 +327,7 @@ export const SubmitButton = styled.button`
   cursor: pointer;
 `;
 
-export const PopupOverlay = styled.div`
+S.PopupOverlay = styled.div`
   position: fixed;
   top: 0; 
   left: 0; 
@@ -338,7 +340,7 @@ export const PopupOverlay = styled.div`
   z-index: 9999;
 `;
 
-export const PopupBox = styled.div`
+S.PopupBox = styled.div`
   width: 390px;
   height: 190px;
   background-color: #fff;
@@ -354,26 +356,26 @@ export const PopupBox = styled.div`
   text-align: center;
 `;
 
-export const PopupIcon = styled.div`
+S.PopupIcon = styled.div`
   width: 48px;
   height: 48px;
   font-size: 32px;
   margin-bottom: 15px;
 `;
 
-export const PopupMessage = styled.div`
+S.PopupMessage = styled.div`
   font-size: 16px;
   color: #333;
   margin-bottom: 35px;
 `;
 
-export const PopupButtonGroup = styled.div`
+S.PopupButtonGroup = styled.div`
   display: flex;
   justify-content: center;
   gap: 12px;
 `;
 
-export const PopupButton = styled.button`
+S.PopupButton = styled.button`
   width: 80px;
   height: 32px;
   padding: 10px 20px;
@@ -396,3 +398,5 @@ export const PopupButton = styled.button`
     border: none;
   }
 `;
+
+export default S;
