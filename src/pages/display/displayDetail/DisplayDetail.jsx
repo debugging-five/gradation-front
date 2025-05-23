@@ -5,9 +5,7 @@ import S from './style';
 const DisplayDetail = async () => {
     // const email = "donggeon@test.app"
 
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/displays/api/read/${postId}`, {
-
-    })
+    // const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/displays/api/read/${postId}`)
 
 
   return (
