@@ -163,6 +163,9 @@ S.MinPrice = styled.div`
 S.ButtonWrapper = styled.div`
   margin : 26px 0 0 0;
   display : flex;
+  width: 100%;
+  justify-content: space-between;
+  justify-self: right;
   gap : 60px;
 `
 

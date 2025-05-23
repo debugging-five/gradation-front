@@ -1,16 +1,25 @@
 import { useForm } from 'react-hook-form';
 import S from './style';
 import { useSelector } from 'react-redux';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import getLatestPrice from '../_function/getLatePrice';
+import AuctionBiddingPopupTime from '../AuctionBiddingPopup/AuctionBiddingPopupTime';
+import AuctionBiddingPopupPrice from '../AuctionBiddingPopup/AuctionBiddingPopupPrice';
 
-const AuctionAutoModal = ({id, category, bidderCount, bidding, setBidding, timeleft, auction, setOpenAutoBidding }) => {
+const AuctionAutoModal = ({
+  id, auction, setOpenAutoBidding, auctionStartDate, auctionEndDate, auctionBidDate,
+  price, isPriceUpdate, setIsPriceUpdate
+}) => {
   const { currentUser, isLogin } = useSelector((state) => state.user);
-  const { register, handleSubmit } = useForm({mode:"onChange"});
+  const { category } = useParams;
+  const { register, handleSubmit, getValues, formState: {isSubmitting, isSubmitted, errors}} = useForm({mode:"onChange"});
   const navigate = useNavigate();
   const pricePattern = /^[0-9]+$/;
+  
   if(!isLogin) {
     return <Navigate to={"/login"} />
   }
+
   return (
     <S.PopupBody>
       <S.PopupContainer>
@@ -25,15 +34,17 @@ const AuctionAutoModal = ({id, category, bidderCount, bidding, setBidding, timel
               <S.PopupLeft>
                 <S.Info>
                   <S.H4>{auction.artTitle}</S.H4>
-                  <S.H4>자동응찰 경매중</S.H4>
+                  <S.H4>경매중</S.H4>
                 </S.Info>
                 <S.Info>
-                  <S.H4>마감시간</S.H4>
-                  <S.RedH4>{timeleft}</S.RedH4>
+                  <AuctionBiddingPopupTime 
+                    id={id} auctionBidDate={auction.auctionBidDate} 
+                    auctionStartDate={auction.auctionStartDate} auctionEndDate={auction.auctionEndDate}
+                  />
                 </S.Info>
                 <S.Info>
                   <S.H4>경쟁응찰자</S.H4>
-                  {/* <S.H4>{bidderCount}명</S.H4> */}
+                  <S.H4>{price.bidderCount || 0}명</S.H4>
                 </S.Info>
                 
                 {/* <!-- 추정가, 시작가 --> */}
@@ -52,48 +63,40 @@ const AuctionAutoModal = ({id, category, bidderCount, bidding, setBidding, timel
               </S.PopupRight>
             </S.PopupWrapper>
             
-            <form onSubmit={handleSubmit(async (price) => {
-              const getCurrentBidding = await fetch(`http://localhost:10000/auction/api/read-bidder/${id}`);
-              const currentBidding = await getCurrentBidding.json();
-              const getCurrentAuction = await fetch(`http://localhost:10000/auction/api/detail/${id}`);
-              const currentAuction = await getCurrentAuction.json();
-              
-              if(currentAuction.auctionBiddingTime) {
-                alert("종료된 경매입니다");
-                navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`)
-                return
-              }
+            <form onSubmit={handleSubmit(async (formDatas) => {
+              const latestPrice = await getLatestPrice(id)
+              const myId = currentUser.id;
+              const currentUserId = price.userId;
+              const latestUserId = latestPrice.price.userId;
 
-              if(currentBidding.id){
-                if(bidding.id !== currentBidding.id) {
+              if(latestUserId) {
+                if(currentUserId !== latestUserId) {
                   alert("응찰가 변동으로 인한 응찰 실패\n다시 응찰 하시겠습니까?");
                   navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`)
                   return
                 }
               }
 
-
-              if(price.price < (Math.ceil(bidding?.auctionBiddingPrice * 1.1 / 1000) * 1000) || price.price < auction?.auctionStartPrice){
+              if(formDatas.price < (price.auctionBiddingMinimumPrice || Math.ceil(auction?.auctionStartPrice * 1.1 / 1000) * 1000)){
                 alert("응찰가는 반드시\n최소 응찰가 이상이어야 합니다.");
-                navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`, { replace: true })
+                setIsPriceUpdate(!isPriceUpdate)
                 return
               }
 
-              if(bidding.userId === currentUser.id){
+              if(latestUserId === myId || currentUserId === myId){
                 alert("이미 입찰 하셨습니다.");
                 setOpenAutoBidding(false)
-                navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`, { replace: true })
+                setIsPriceUpdate(!isPriceUpdate)
                 return
               }
+
               const auctionBiddingVO = {
-                auctionBiddingPrice : Number(price.price),
+                auctionBiddingPrice : Number(formDatas.biddingPrice),
                 auctionBiddingAutoOk : true,
                 auctionId : Number(id),
-                userId : Number(currentUser.id)
+                userId : Number(myId)
               }
 
-              // console.log(auctionBiddingVO);
-              
               await fetch("http://localhost:10000/auction/api/bidding", {
                 method : "POST",
                 headers : {
@@ -109,28 +112,20 @@ const AuctionAutoModal = ({id, category, bidderCount, bidding, setBidding, timel
                   }
                   alert("응찰에 성공하셨습니다");
                   setOpenAutoBidding(false)
-                  navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`, { replace: true })
-                  return res.json()
+                  setIsPriceUpdate(!isPriceUpdate) // 가격 반영
                 })
                 .catch(console.error)
             })}>
               <S.PopupInfo2>
                 <S.PopupLeft2>
                   <S.Input type="text" placeholder="응찰가를 입력해주세요." autoComplete="off"
-                    {...register("price", {
+                    {...register("biddingPrice", {
                       required : true,
                       pattern : {
                         value : pricePattern,
                       }
                   })}/>
-                  <S.Info3Bid>
-                      <S.H4>현재 입찰가 KRW</S.H4>
-                      <S.H3>{(bidding?.auctionBiddingPrice || '-').toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</S.H3>
-                  </S.Info3Bid>
-                  <S.Info3>
-                      <S.H4>최소 응찰가 KRW</S.H4>
-                      <S.H3Red>{((Math.ceil(bidding?.auctionBiddingPrice * 1.1 / 1000) * 1000) || auction?.auctionStartPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</S.H3Red>
-                  </S.Info3>
+                  <AuctionBiddingPopupPrice price={price} auction={auction} />
                 </S.PopupLeft2>
                   
                 <S.PopupButton>

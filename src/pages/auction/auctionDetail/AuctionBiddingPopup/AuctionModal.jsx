@@ -44,7 +44,7 @@ const AuctionModal = ({
                 </S.Info>
                 <S.Info>
                   <S.H4>경쟁응찰자</S.H4>
-                  {/* <S.H4>{bidderCount}명</S.H4> */}
+                  <S.H4>{price.bidderCount || 0}명</S.H4>
                 </S.Info>
                 
                 {/* <!-- 추정가, 시작가 --> */}
@@ -63,71 +63,63 @@ const AuctionModal = ({
               </S.PopupRight>
             </S.PopupWrapper>
             
-            <form onSubmit={handleSubmit(async (datas) => {
+            <form onSubmit={handleSubmit(async (formDatas) => {
               const latestPrice = await getLatestPrice(id)
               const myId = currentUser.id;
               const currentUserId = price.userId;
               const latestUserId = latestPrice.price.userId;
-              console.log(myId)
-              // price.id가 지금 마지막에 최신으로 경매에 입찰한사람
-              console.log(currentUserId)
-              // currentUserId 클릭할 때 DB에 최신으로 들어가 있는 사람
-              console.log(latestUserId)
 
-              // if(currentBidding.id) {
-              //   if(bidding.id !== currentBidding.id) {
-              //     alert("응찰가 변동으로 인한 응찰 실패\n다시 응찰 하시겠습니까?");
-              //     navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`)
-              //     return
-              //   }
-              // }
+              if(latestUserId) {
+                if(currentUserId !== latestUserId) {
+                  alert("응찰가 변동으로 인한 응찰 실패\n다시 응찰 하시겠습니까?");
+                  navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`)
+                  return
+                }
+              }
 
-              // if(price.price < (Math.ceil(bidding?.auctionBiddingPrice * 1.1 / 1000) * 1000) || price.price < auction?.auctionStartPrice){
-              //   alert("응찰가는 반드시\n최소 응찰가 이상이어야 합니다.");
-              //   navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`, { replace: true })
-              //   return
-              // }
+              if(formDatas.price < (price.auctionBiddingMinimumPrice || Math.ceil(auction?.auctionStartPrice * 1.1 / 1000) * 1000)){
+                alert("응찰가는 반드시\n최소 응찰가 이상이어야 합니다.");
+                setIsPriceUpdate(!isPriceUpdate)
+                return
+              }
 
-              // if(bidding.userId === currentUser.id){
-              //   alert("이미 입찰 하셨습니다.");
-              //   setOpenBidding(false)
-              //   navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`, { replace: true })
-              //   return
-              // }
+              if(latestUserId === myId || currentUserId === myId){
+                alert("이미 입찰 하셨습니다.");
+                setOpenBidding(false)
+                setIsPriceUpdate(!isPriceUpdate)
+                return
+              }
 
-              // const auctionBiddingVO = {
-              //   auctionBiddingPrice : Number(price.price),
-              //   auctionBiddingAutoOk : false,
-              //   auctionId : Number(id),
-              //   userId : Number(currentUser.id)
-              // }
+              const auctionBiddingVO = {
+                auctionBiddingPrice : Number(formDatas.biddingPrice),
+                auctionBiddingAutoOk : false,
+                auctionId : Number(id),
+                userId : Number(myId)
+              }
 
-              // // console.log(auctionBiddingVO);
-              
-              // await fetch("http://localhost:10000/auction/api/bidding", {
-              //   method : "POST",
-              //   headers : {
-              //     "Content-Type" : "application/json"
-              //   }, 
-              //   body : JSON.stringify(auctionBiddingVO)
-              // })
-              //   .then((res) => {
-              //     if(!res.ok){
-              //     return res.json().then((res) => {
-              //         alert(res.message)
-              //       })
-              //     }
-              //     alert("응찰에 성공하셨습니다");
-              //     setOpenBidding(false)
-              //     navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`, { replace: true })
-              //     return res.json()
-              //   })
-              //   .catch(console.error)
+              await fetch("http://localhost:10000/auction/api/bidding", {
+                method : "POST",
+                headers : {
+                  "Content-Type" : "application/json"
+                }, 
+                body : JSON.stringify(auctionBiddingVO)
+              })
+                .then((res) => {
+                  if(!res.ok){
+                  return res.json().then((res) => {
+                      alert(res.message)
+                    })
+                  }
+                  alert("응찰에 성공하셨습니다");
+                  setOpenBidding(false)
+                  setIsPriceUpdate(!isPriceUpdate) // 가격 반영
+                })
+                .catch(console.error)
             })}>
               <S.PopupInfo2>
                 <S.PopupLeft2>
                   <S.Input type="text" placeholder="응찰가를 입력해주세요." autoComplete="off"
-                    {...register("price", {
+                    {...register("biddingPrice", {
                       required : true,
                       pattern : {
                         value : pricePattern,
