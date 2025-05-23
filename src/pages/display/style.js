@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { EN_H2, H10, H8 } from '../../styles/common';
+import { EN_H2, H1, H10, H8 } from '../../styles/common';
 import { Link } from 'react-router-dom';
 const primary = "#EE3333";
 const gray900 = "#6E7476";
@@ -87,12 +87,13 @@ S.Input = styled.input`
   border-radius: 3px;
   margin-left: auto;
   background-color: #FBFCFC;
-
+  outline: none;
+  padding: 0 0 0 9px;
+  ${H10}
 
   &::placeholder {
     ${H10}
     color: #6E7476;
-    padding: 9px 11px;
   }
 `
 
@@ -111,18 +112,64 @@ S.H8 = styled.p`
   ${H8}
 `
 
-S.Dropdown = styled.div`
 
-`
-
+// 드롭다운 스타일
 S.Menu = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 20px 0 0 0;
   width: 1160px;
+  position: relative;
 `
 
+S.DropdownWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+`
+S.DropdownButton = styled.div`
+  width: px;
+  height: 35px;
+  border-radius: 2px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${H8}
+`
 
+S.DropdownIcon = styled.img`
+  width: 16px;
+  height: 16px;
+`
 
+S.Dropdown = styled.div`
+  position: absolute;
+  top: 36px; 
+  left: auto;
+  right: 0;
+  background-color: #FBFCFC;
+  border-radius: 2px;
+  z-index: 100; 
+  display: flex;
+  flex-direction: column;
+
+  :hover {
+    background-color: #EE3333;
+    color: #FBFCFC;
+  }
+`
+
+S.Option = styled.div`
+  border: 1px solid #6E7476;
+  width: 75px;
+  height: 35px;
+  ${H8}
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+`
 
 export default S;

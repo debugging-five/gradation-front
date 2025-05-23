@@ -5,7 +5,6 @@ import { Navigate } from 'react-router-dom';
 
 const AuctionBiddingPopupTime = ({id, auctionStartDate, auctionEndDate, auctionBidDate}) => {
 
-  console.log("모달 시간 리랜더링")
   const isComplete = !!auctionBidDate;
 
   // 1초마다 시간을 비교 화면에서 자식컴포넌트 리랜더링
