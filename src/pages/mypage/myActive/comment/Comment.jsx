@@ -8,8 +8,6 @@ const Comment = () => {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    if (!currentUser?.id) return;
-
     const fetchComments = async () => {
       try {
         const response = await fetch(`http://localhost:10000/comments/api/list/${currentUser.id}`);
@@ -23,7 +21,7 @@ const Comment = () => {
     };
 
     fetchComments();
-  }, [currentUser]);
+  }, []);
 
   return (
     <S.MainWrapper>
@@ -44,7 +42,7 @@ const Comment = () => {
               <S.Number>{idx + 1}</S.Number>
               <S.Category>{comment.artTitle || '작품명 없음'}</S.Category>
               <S.Emptybox></S.Emptybox>
-              <S.TitleNavigate as={NavLink} to={`/service-center/qna/detail/${comment.id}`} end>
+              <S.TitleNavigate to={`/display/detail/${comment.artId}`} >
                 <S.Content>{comment.commentContent || '댓글 내용 없음'}</S.Content>
               </S.TitleNavigate>
               <S.Emptybox>{comment.commentDat || '-'}</S.Emptybox>

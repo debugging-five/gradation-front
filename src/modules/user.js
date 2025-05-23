@@ -19,7 +19,7 @@ const UserInitialValue = {
         userEmail : "",
         userProvider : ""
     },
-    isLogin : false,
+    isLogin : null,
     previousUrl : "",
 };
  

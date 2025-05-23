@@ -44,6 +44,18 @@ S.File = styled.input`
   opacity: 0;
 `
 
+S.IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+S.Icon = styled.img`
+  width: 56px;
+  height: 56px;
+  margin: 0 0 32px 0;
+`
+
 S.H5 = styled.p`
   ${H5}
 `
@@ -104,7 +116,7 @@ S.Label = styled.label`
 
 S.H7 = styled.p`
   ${H7}
-  width : 127px;
+  width : 100px;
 
   span {
     color: #EE3333;
@@ -115,7 +127,7 @@ S.Input = styled.input`
 border: none;
 background-color: #FBFCFC;
 outline: none;
-width: 225px;
+${H8}
 
   &::placeholder {
     ${H8}
@@ -164,26 +176,24 @@ S.Icon = styled.img`
 S.Warning = styled.p`
   ${H10}
   color: #E49804;
-  margin: 4px 0 0 140px;
+  margin: 4px 0 0 100px;
 `
 
-S.Error = styled.p`
-  ${H10};
-  color: #EE3333; 
-  margin: 4px 0 0 140px;
-`
 
 S.Description = styled.div`
   margin: 48px 0 0 0;
 `
 
-S.InputBox = styled.input`
+S.InputBox = styled.textarea`
   width: 1160px;
   height: 335px;
   border: 1px solid #6E7476;
   border-radius: 2px;
   margin: 8px 0 0 0;
   background-color: #FBFCFC;
+  outline: none;
+  padding: 12px;
+  ${H8}
 `
 
 

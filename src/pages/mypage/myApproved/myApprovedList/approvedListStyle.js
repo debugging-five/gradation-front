@@ -52,6 +52,9 @@ export const ApprovedBox = styled.div`
 export const ApprovedStatus = styled.div`
     width: 120px;
     text-align: center;
+    color: ${({ status }) =>
+        status === '승인완료' ? 'red' :
+        status === '기각' ? 'orange' : 'black'};
 `;
 
 export const ContentBox = styled.div`

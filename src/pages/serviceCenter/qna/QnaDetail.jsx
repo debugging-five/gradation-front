@@ -49,6 +49,14 @@ const QnaDetail = () => {
     }
   };
 
+  const formatDate = (isoString) => {
+    const date = new Date(isoString);
+    const year = String(date.getFullYear()).slice(2); // '25'
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // '05'
+    const day = String(date.getDate()).padStart(2, '0'); // '22'
+    return `${year}.${month}.${day}`;
+  };
+
   // 첫 번째 팝업에서 "취소" 클릭 시 팝업 닫기
   const handleCancel = () => {
     setShowConfirmation(false); // 첫 번째 팝업 닫기
@@ -63,8 +71,11 @@ const QnaDetail = () => {
       <SQ.Wrapper>
         <SF.Category>{qna.qnaCategory} 관련 문의</SF.Category>
         <SQ.Title>
-          <SQ.QSize>Q</SQ.QSize>
-          <SQ.QTitle>{qna.qnaTitle}</SQ.QTitle>
+          <SQ.TitleDiv>
+            <SQ.QSize>Q</SQ.QSize>
+            <SQ.QTitle>{qna.qnaTitle}</SQ.QTitle>
+          </SQ.TitleDiv>
+          <span>{formatDate(qna.qnaTime)}</span>
         </SQ.Title>
         <SQ.Line/>
         <SQ.QContent>{qna.qnaContent}</SQ.QContent>
@@ -73,6 +84,21 @@ const QnaDetail = () => {
       <SQ.ImageDiv>
         {qna.qnaImgName && (<SQ.QnaImage src={`http://localhost:10000/files/api/get/${qna.qnaImgName}?filePath=images/qna`} alt="qnaImage"/>)}
       </SQ.ImageDiv>
+
+      {qna.qnaAnswerContent?.trim() && (
+        <SQ.Wrapper>
+          <SQ.Title>
+            <SQ.TitleDiv>
+              <SQ.ASize>A</SQ.ASize>
+              <SQ.ATitle>답변완료</SQ.ATitle>
+            </SQ.TitleDiv>
+            <span>{formatDate(qna.qnaAnswerTime)}</span>
+          </SQ.Title>
+          <SQ.Line />
+          <SQ.QContent>{qna.qnaAnswerContent}</SQ.QContent>
+        </SQ.Wrapper>
+      )}
+
 
       <S.ButtonDiv>
         <S.Button120x45W onClick={() => navigate(-1)}>목록</S.Button120x45W>

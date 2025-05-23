@@ -9,3 +9,7 @@ export const ContentBox = styled.div`
     gap: 10px;
     align-items: center;
 `;
+export const NoneText = styled.p`
+    padding: 20px 0;
+`;
+

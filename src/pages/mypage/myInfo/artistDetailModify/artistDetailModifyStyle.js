@@ -129,5 +129,6 @@ export const InputBox = styled.input`
   outline: none;
   background-color: transparent;
   width: 600px;
+  color: gray;
 `;
 
