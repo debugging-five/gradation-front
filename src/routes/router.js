@@ -279,16 +279,6 @@ const router = createBrowserRouter([
             element: <ExhibitionUniversity />,
           },
           {
-            path: "gradation/past",
-            element: <ExhibitionGradationPastContainer />,
-            children: [
-              {
-                path: ":id",
-                element: <ExhibitionGradationPast />,
-              },
-            ],
-          },
-          {
             path: "university/registration",
             element: <LoginLayout />,
             children: [
@@ -297,6 +287,16 @@ const router = createBrowserRouter([
                 element: <ExhibitionRegistration />,
               },
             ],
+          },
+        ],
+      },
+      {
+        path: "/exhibition/gradation/past",
+        element: <ExhibitionGradationPastContainer />,
+        children: [
+          {
+            path: ":id",
+            element: <ExhibitionGradationPast />,
           },
         ],
       },
