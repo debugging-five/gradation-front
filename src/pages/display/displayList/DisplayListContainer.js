@@ -22,7 +22,7 @@ const DisplayListContainer = () => {
   return (
     <S.Wrapper>
       {display.map((post) => (
-        <S.Display key={post.id} to={`/display/${category}/detail/${post.id}`}>
+        <S.Display key={post.id} to={`/display/${category}/detail/${post.artPostId}`}>
           <S.Overlay className="overlay">
             <S.Content>
               <S.H2>{post.artTitle}</S.H2>
@@ -33,7 +33,6 @@ const DisplayListContainer = () => {
         </S.Display>
       ))}
     </S.Wrapper>
-    
   );
 };
 

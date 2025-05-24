@@ -62,6 +62,7 @@ const DisplayRegistration = () => {
         return res.json();
       })
       .then((res) => {
+        console.log(res)
         const artId = res.artId;
         console.log(artId)
 
@@ -175,6 +176,12 @@ const DisplayRegistration = () => {
                       required : true,
                     })}
                   />
+                  {/* <S.DropdownWrapper onCli>
+                    <S.DropdownButton>
+                      <p>작품 분류를 선택하세요.</p>
+                    </S.DropdownButton>
+                    <S.DropdownIcon src={'/assets/images/icon/down.png'} alt='드롭다운' />
+                  </S.DropdownWrapper> */}
                   </S.Label>
                 </S.InputWrapper>
               </S.Border>
