@@ -107,27 +107,6 @@ const router = createBrowserRouter([
         path: "",
         element: <MainContainer />,
       },
-        // {
-        //   path: "/join",
-        //   element: <Join />,
-        // },
-        // {
-        //   path: "/login",
-        //   element: <Login />,
-        // },
-        // {
-        //   path: "/find-id",
-        //   element: <FindId />,
-        // },
-        // {
-        //   path: "/find-password",
-        //   element: <FindPassword />,
-        // },
-        // {
-        //   path: "/new-password",
-        //   element: <NewPassword />,
-        // },
-    
       {
         path: "/display",
         element: <DisplayContainer />, // display 메인
