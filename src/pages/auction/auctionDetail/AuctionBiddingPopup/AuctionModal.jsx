@@ -59,7 +59,7 @@ const AuctionModal = ({
               </S.PopupLeft>
         
               <S.PopupRight>
-                  <S.PopupArtImg src={`http://localhost:10000/files/api/get/${auction.artImgName}?filePath=${auction.artImgPath}`} alt="경매 작품" />
+                  <S.PopupArtImg src={`http://localhost:10000/files/api/get/${auction.argImgList[0].artImgName}?filePath=${auction.argImgList[0].artImgPath}`} alt="경매 작품" />
               </S.PopupRight>
             </S.PopupWrapper>
             
