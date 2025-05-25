@@ -17,8 +17,8 @@ const MyPaymentContainer = () => {
     <S.MainWrapper>
       <S.MainTitle>내 결제내역 / {title}</S.MainTitle>
       <S.ChooseBarWapper>
-        <S.ChooseBar as={NavLink} to="auction-list" end>경매 내역</S.ChooseBar>
-        <S.ChooseBar as={NavLink} to="payment-list" end>구매 내역</S.ChooseBar>
+        <S.ChooseBar as={NavLink} to="auction-list">경매 내역</S.ChooseBar>
+        <S.ChooseBar as={NavLink} to="payment-list">구매 내역</S.ChooseBar>
       </S.ChooseBarWapper>
 
       <div>
