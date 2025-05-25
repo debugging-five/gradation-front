@@ -78,6 +78,12 @@ const AuctionBiddingDetail = ({auction, timeLeft}) => {
     };
   }
 
+	if(dayjs(auction.auctionEndDate) < dayjs()) {
+		// 경매 마감 로직
+		alert("경매가 종료되었습니다!")
+	}
+	
+
   const modify = () => {
     navigate(`../expected/${category}/modify/${auction.id}`)
   }
@@ -189,7 +195,7 @@ const AuctionBiddingDetail = ({auction, timeLeft}) => {
 										</>
 									) : (
 										<>
-												<AuctionTime id={id} auctionBidDate={auction.auctionBidDate} auctionStartDate={auction.auctionStartDate}/>
+											<AuctionTime id={id} auctionBidDate={auction.auctionBidDate} auctionStartDate={auction.auctionStartDate}/>
 										</>
 									)}
 								</>

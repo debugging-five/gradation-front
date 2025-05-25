@@ -12,15 +12,13 @@ const AuctionPayment = () => {
   const [data, setData] = useState({});
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
+  
   const [userData, setUserData] = useState(() => structuredClone(currentUser));
   const [paymentData, setPaymentData] = useState({});
   const [postCode, setPostCode] = useState();
   const [searchParams] = useSearchParams();
   const [successModal, setSuccessModal] = useState(false);
 
-  console.log(currentUser);
-  
-  
   useEffect(() => {
     const verifyPayment = async () => {
       const paymentKey = searchParams.get("paymentKey");
@@ -55,6 +53,7 @@ const AuctionPayment = () => {
   useEffect(() => {
     if (currentUser) {
       setUserData(currentUser);
+      setPostCode(currentUser.userPostalCode)
     }
   }, [currentUser]);
   
@@ -63,16 +62,23 @@ const AuctionPayment = () => {
     const fetchData = async () => {
       const response = await fetch(`http://localhost:10000/auction/api/detail/${id}`)
       const auctionData = await response.json();
-      setData(auctionData[0]);
+      const data = await auctionData.auction;
+      setData(data);
+      const isPaidResponse = await fetch(`http://localhost:10000/payments/api/payment/auction/${id}`)
+      const isPaid = await isPaidResponse.json();
+      return isPaid.status;
     }
     fetchData()
+      .then((data) => {
+        if(data) {
+          navigate("/auction", { replace : true})
+        }
+      })
   }, [id])
   
   const handleAddressSearch = () => {
     new window.daum.Postcode({
       oncomplete: function (data) {
-        console.log(data);
-        
         let fullAddress = data.address;
         let extraAddress = '';
 
@@ -108,20 +114,21 @@ const AuctionPayment = () => {
   
     if (data) {
       setPaymentData(JSON.parse(data))
-      // localStorage.removeItem('paymentData')
+      localStorage.removeItem('paymentData')
     }
   }, [])
   
-  if(data && currentUser) {
+  if(data.argImgList && currentUser) {
     
     if(userData !== null && userData.id !== 0){
       
-      // if(data.userId === null){
-      //   navigate("/auction")
-      // }
-      // if(data.userId !== currentUser.id){
-      //   navigate("/auction")
-      // }
+      if(data.userId === null){
+        navigate("/auction", { replace : true})
+      }
+      if(data.userId !== currentUser.id){
+        navigate("/auction", { replace : true})
+      }
+      
       return (
         <S.Wrapper>
           <S.Payment>
@@ -134,7 +141,9 @@ const AuctionPayment = () => {
           </S.PopupBody>
           }
             <S.imgWrapper>
-              <S.auctionImg src={`http://localhost:10000/files/api/get/${data.artImgName}?filePath=${data.artImgPath}`} alt="경매 작품" />
+              { data.argImgList && data.argImgList.map((img, i) => (
+                <S.auctionImg key={i} src={`http://localhost:10000/files/api/get/${img.artImgName}?filePath=${img.artImgPath}`} alt="경매 작품" />
+              ))}
             </S.imgWrapper>
             
             <S.StyledForm onSubmit={handleSubmit((pay) => {
@@ -149,7 +158,6 @@ const AuctionPayment = () => {
               }
               
               setPaymentData(data1)
-              console.log(paymentData);
               toggleTossPayment()
             })}>
               <S.H3>낙찰을 축하드립니다!</S.H3>
@@ -296,8 +304,6 @@ const AuctionPayment = () => {
     }else {
       // navigate("/login")
     }
-  }else {
-    navigate("/auction")
   }
 };
 
