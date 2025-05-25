@@ -8,11 +8,6 @@ const AuctionPaymentSuccess = (data) => {
   const [isReqeustSent, setIsRequestSent] = useState(false);
   const navigate = useNavigate()
   const [body, setbody] = useState({});
-
-  console.log(data);
-  console.log(data.paymentData);
-  console.log(data.auction);
-  
   
   useEffect(() => {
     const confirm = async () => {
@@ -29,6 +24,8 @@ const AuctionPaymentSuccess = (data) => {
         deliveryPhone : data.paymentData.userPhone
       }
 
+      console.log(requestData);
+      
       const response = await fetch("http://localhost:10000/payments/api/payment", {
         method : "POST",
         headers : {
@@ -48,17 +45,13 @@ const AuctionPaymentSuccess = (data) => {
   }, [navigate, isReqeustSent, searchParams])
 
   const goToList = () => {
-    navigate("/auction")
+    navigate("/auction", {replace : true})
   }
   const goToMyPayment = () => {
-    navigate("/mypage/my-payment/payment-list")
+    navigate("/mypage/my-payment/payment-list", {replace : true})
   }
-  console.log(body.status);
   
-  if(!body.status) {
-    console.log("안녕");
-    navigate("/auction")
-  }
+  
   
   return (
     <S.Wrapper>
@@ -77,7 +70,7 @@ const AuctionPaymentSuccess = (data) => {
         
         <S.Info>
           <div id="info-left">
-            <S.InfoLeftImg src={`http://localhost:10000/files/api/get/${data.auction.artImgName}?filePath=${data.auction.artImgPath}`} alt="경매 작품" />
+            <S.InfoLeftImg src={`http://localhost:10000/files/api/get/${data.auction.argImgList[0].artImgName}?filePath=${data.auction.argImgList[0].artImgPath}`} alt="경매 작품" />
           </div>
           
           {body.status? 
