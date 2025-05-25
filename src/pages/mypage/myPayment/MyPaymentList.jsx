@@ -75,7 +75,6 @@ const MyPaymentList = () => {
 
               <SP.ButtonDiv>
                 <S.Button120x45W onClick={() => window.open(payment.trackingUrl || '#')}>배송조회</S.Button120x45W>
-                <a href="https://tracker.delivery/#/:carrier_id/:track_id" target="_blank">배송조회</a>
                 <S.Button120x45R onClick={() => handleShowDetail(payment)}>주문상세</S.Button120x45R>
               </SP.ButtonDiv>
             </div>

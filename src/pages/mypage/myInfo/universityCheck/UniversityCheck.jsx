@@ -1,13 +1,27 @@
 import React, { useRef, useState } from 'react';
 import * as S from '../../style';
 import * as SU from './universityCheckStyle';
+import { useSelector } from 'react-redux';
 
 const UniversityCheck = () => {
-  const [school, setSchool] = useState('');
+  const [university, setUniversity] = useState('');
   const [major, setMajor] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [popupStep, setPopupStep] = useState(0); // 0: 없음, 1: 첫 팝업, 2: 완료 팝업
   const fileInputRef = useRef(null);
+  const [errors, setErrors] = useState({ university: '', major: '' });
+  // Redux에서 currentUser 가져오기
+  const currentUser = useSelector(state => state.user.currentUser);
+  
+
+  const validate = () => {
+    const newErrors = { university: '', major: '' };
+    if (!university.trim()) newErrors.university = '필수항목입니다.';
+    if (!major.trim()) newErrors.major = '필수항목입니다.';
+    setErrors(newErrors);
+    return !newErrors.university && !newErrors.major;
+  };
+
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -21,16 +35,46 @@ const UniversityCheck = () => {
     }
   };
 
-  const handleCertificationClick = () => {
-    setPopupStep(1); // 첫 번째 팝업 열기
+ const handleCertificationClick = () => {
+    if (!validate()) return;
+    setPopupStep(1); // 1단계 팝업 열기
   };
-
   const closePopup = () => setPopupStep(0);
 
-  const goToNextPopup = () => {
-    // 실제로 인증 요청 API 등을 여기에 추가할 수 있음
-    setPopupStep(2); // 두 번째 팝업으로 이동
+  const goToNextPopup = async () => {
+    if (!selectedFile) {
+      alert('파일을 첨부해주세요.');
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+      formData.append('university', university);
+      formData.append('major', major);
+      formData.append('userId', currentUser.id);
+
+      const response = await fetch(`http://localhost:10000/files/api/upload/certification/${currentUser.id}`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('서버 오류');
+      }
+
+      const data = await response.json();
+      console.log('파일 업로드 성공:', data);
+
+      setPopupStep(2); // 업로드 성공 시 완료 팝업
+    } catch (error) {
+      console.error('업로드 실패:', error);
+      alert('업로드에 실패했습니다.');
+      setPopupStep(0); // 실패하면 팝업 닫기
+    }
   };
+
+  
 
   return (
     <S.MainWrapper>
@@ -39,17 +83,30 @@ const UniversityCheck = () => {
       <SU.Box>
         <S.OneLine>
           <S.TitleBox>학교</S.TitleBox>
-          <S.InputBox placeholder="학교를 입력하세요." value={school} onChange={(e) => setSchool(e.target.value)} />
+          <S.InputBox 
+            placeholder="학교를 입력하세요." 
+            value={university} 
+            onChange={(e) => {
+            setUniversity(e.target.value);
+            if (errors.university) setErrors((prev) => ({ ...prev, university: '' }));
+          }} />
         </S.OneLine>
         <S.EndBar />
+        {errors.university && <SU.ErrorMessege>{errors.university}</SU.ErrorMessege>}
       </SU.Box>
 
       <SU.Box>
         <S.OneLine>
           <S.TitleBox>학과</S.TitleBox>
-          <S.InputBox placeholder="학과를 입력하세요." value={major} onChange={(e) => setMajor(e.target.value)} />
+          <S.InputBox placeholder="학과를 입력하세요." 
+            value={major} 
+            onChange={(e) => {
+            setMajor(e.target.value);
+            if (errors.major) setErrors((prev) => ({ ...prev, major: '' }));
+          }} />
         </S.OneLine>
         <S.EndBar />
+        {errors.major && <SU.ErrorMessege>{errors.major}</SU.ErrorMessege>}
       </SU.Box>
 
       <S.OneLine>

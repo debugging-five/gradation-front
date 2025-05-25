@@ -45,7 +45,7 @@ const Comment = () => {
               <S.TitleNavigate to={`/display/detail/${comment.artId}`} >
                 <S.Content>{comment.commentContent || '댓글 내용 없음'}</S.Content>
               </S.TitleNavigate>
-              <S.Emptybox>{comment.commentDat || '-'}</S.Emptybox>
+              <S.Emptybox>{new Date(comment.commentDate|| '-').toLocaleDateString('ko-KR')}</S.Emptybox>
             </S.ContentBox>
           ))
         ) : (
