@@ -8,8 +8,9 @@ import { useSelector } from 'react-redux';
 import AuctionTime from './AuctionTime';
 import AuctionPrice from './AuctionPrice';
 import getLatestPrice from './_function/getLatePrice';
+import endBidding from './_function/endBidding.js';
 const AuctionBiddingDetail = ({auction, timeLeft}) => {
-
+	
 	const {id, category} = useParams();
 	const { currentUser } = useSelector((state) => state.user);
 	const navigate = useNavigate();
@@ -78,13 +79,7 @@ const AuctionBiddingDetail = ({auction, timeLeft}) => {
     };
   }
 
-	if(dayjs(auction.auctionEndDate) < dayjs()) {
-		// 경매 마감 로직
-		alert("경매가 종료되었습니다!")
-	}
-	
-
-  const modify = () => {
+	const modify = () => {
     navigate(`../expected/${category}/modify/${auction.id}`)
   }
 
