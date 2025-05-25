@@ -47,7 +47,7 @@ const DisplayDetail = () => {
       <p>{post.artCategory}</p>
       <p>{post.artMaterial}</p>
       <p>{post.artSize}</p>
-      {/* {post.comments.length === 0 ? (
+      {post.comments.length === 0 ? (
       <p>댓글이 없습니다.</p>
     ) : (
       post.comments.map((comment) => (
@@ -55,8 +55,8 @@ const DisplayDetail = () => {
           <p>{comment.commentContent}</p>
         </div>
       ))
-    )} */}
-    <p>{post.comments}</p>
+    )}
+    {/* <p>{post.comments}</p> */}
 
     </S.Container>
   );

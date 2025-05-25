@@ -25,6 +25,13 @@ const DisplayContainer = () => {
   }
 
   useEffect(() => {
+  const pageCount = Math.ceil(display.length / 10);
+  if (cursor >= pageCount) {
+    setCursor(Math.max(0, pageCount - 1)); 
+  }
+}, [display]); 
+
+  useEffect(() => {
 
     const getDisplayList = async () => {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/displays/api/list`, {
