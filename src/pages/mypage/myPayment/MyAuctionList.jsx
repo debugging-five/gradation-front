@@ -1,12 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import * as S from '../style';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const MyAuctionList = () => {
+  const currentUser = useSelector(state => state.user.currentUser);
+  const userId = currentUser?.id; 
+
+  const [auctions, setAuctions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (!userId) return; 
+
+    fetch(`http://localhost:10000/auction/api/my-bidding/${userId}`)
+      .then(res => {
+        if (!res.ok) throw new Error('네트워크 응답 에러');
+        return res.json();
+      })
+      .then(data => {
+        setAuctions(data.auction || []);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, [userId]);
+
+  if (loading) return <p>로딩중...</p>;
+  if (error) return <p>에러 발생: {error}</p>;
+  if (auctions.length === 0) return <div style={{ padding: "1rem", textAlign: "center" }}>경매 정보가 없습니다.</div>;
+
   return (
     <S.MainWrapper>
       <S.Wrapper>
-        {/* 리스트 헤더 */}
         <S.ListHeader>
           <S.NumberBold>번호</S.NumberBold>
           <S.CategoryBold>구분</S.CategoryBold>
@@ -15,16 +44,17 @@ const MyAuctionList = () => {
           <S.EmptyboxBold>내 입찰가</S.EmptyboxBold>
         </S.ListHeader>
 
-        {/* 리스트 배열 */}
-        <S.ContentBox>
-          <S.Number>1</S.Number>
-          <S.Category>조각</S.Category>
-          <S.RedText>낙찰</S.RedText>
-          <S.TitleNavigate  as={NavLink} to="/service-center/qna/detail/1" end>
-            <S.Content>빌라모형</S.Content>
-          </S.TitleNavigate>
-          <S.Emptybox>20,000,000</S.Emptybox>
-        </S.ContentBox>
+        {auctions.map((item, index) => (
+          <S.ContentBox key={item.ID}>
+            <S.Number>{index + 1}</S.Number>
+            <S.Category>{item.artCategory}</S.Category>
+            <S.RedText>{item.auctionAttracted ? '낙찰' : '진행중'}</S.RedText>
+            <S.TitleNavigate as={NavLink} to={`/auction/detail/${item.ID}`} end>
+              <S.Content>{item.artTitle}</S.Content>
+            </S.TitleNavigate>
+            <S.Emptybox>{item.auctionBiddingPrice?.toLocaleString()} 원</S.Emptybox>
+          </S.ContentBox>
+        ))}
       </S.Wrapper>
     </S.MainWrapper>
   );

@@ -67,6 +67,7 @@ export const RedText3 = styled.p`
 export const Text1 = styled.p`
     padding: 10px 0 0 16px;
     width: 356px;
+    margin-bottom: 10px;
 `;
 export const Text2 = styled.p`
     width: 300px;
