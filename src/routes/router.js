@@ -98,7 +98,7 @@ import DisplayDetail from "../pages/display/displayDetail/DisplayDetail";
 import UserManagementLayout from "../pages/admin/userManagement/UserManagementLayout";
 import UserManagementPendingList from "../pages/admin/userManagement/UserManagementPendingList";
 import UserManagementCompletedList from "../pages/admin/userManagement/UserManagementCompletedList";
-import FormManagementPendingList from "../pages/admin/formManagement/list/FormManagementPendingList";
+import FormManagementPendingList from "../pages/admin/formManagement/list/FormManagementPendingList.jsx";
 import FormManagementCompletedList from "../pages/admin/formManagement/list/FormManagementCompletedList";
 
 console.log("🚨 FormManagementPendingList:", FormManagementPendingList);

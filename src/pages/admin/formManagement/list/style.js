@@ -66,4 +66,43 @@ S.Category = styled(NavLink)`
   }
 `;
 
+S.Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+`;
+
+S.TableHeader = styled.thead`
+  background-color: #f0f0f0;
+`;
+
+S.TableRow = styled.tr`
+  border-bottom: 1px solid #ccc;
+`;
+
+S.Cell = styled.td`
+  padding: 12px;
+  text-align: center;
+`;
+
+S.Pagination = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+
+  button {
+    margin: 0 4px;
+    padding: 6px 12px;
+    border: none;
+    background-color: #eee;
+    cursor: pointer;
+
+    &.active {
+      background-color: #ee3333;
+      color: white;
+      font-weight: bold;
+    }
+  }
+`;
+
+
 export default S;
