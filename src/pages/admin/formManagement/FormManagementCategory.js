@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 
-const FormManageMentCategory = () => {
+const FormManagementCategory = () => {
   return (
     <div>
       <div>
@@ -15,4 +15,4 @@ const FormManageMentCategory = () => {
   );
 };
 
-export default FormManageMentCategory;
+export default FormManagementCategory;
