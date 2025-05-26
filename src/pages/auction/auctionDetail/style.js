@@ -80,7 +80,7 @@ S.TitleButtonWrapper = styled.div`
 S.TitleButton1 = styled.button`
   ${H5}
   position: absolute;
-
+  top: -52px;
   width : 120px;
   height : 45px;
   border-radius : 3px;
@@ -92,6 +92,7 @@ S.TitleButton1 = styled.button`
 S.TitleButton2 = styled.button`
   ${H5}
   position: absolute;
+  top: -52px;
   width : 120px;
   height : 45px;
   border-radius : 3px;
@@ -290,9 +291,5 @@ S.Notice = styled.div`
 	justify-content : space-between;
 	margin : 20px 0 0 0;
 `
-
-
-
-
 
 export default S;
