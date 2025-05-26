@@ -51,6 +51,8 @@ S.Content = styled.div`
   display: flex;
   flex-direction: column;
   gap: 32px;
+  align-items: center;
+  justify-content: center;
 `
 S.H2 = styled.p`
   ${H2}

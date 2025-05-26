@@ -1,30 +1,62 @@
 import { useEffect, useState } from 'react';
-import { useOutletContext, useParams } from 'react-router-dom';
+import { Link, useOutletContext, useParams } from 'react-router-dom';
 import S from './style';
 
 const DisplayDetail = () => {
   const { id } = useParams();
   const { isLoading, isError } = useOutletContext();
-  const [ post, setPost ] = useState(null);
+  const [post, setPost] = useState(null);
+  const [text, setText] = useState("");
+  const [comments, setComments] = useState([]);
+  const [cursor, setCursor] = useState(1);
+  const [commentOrder, setCommentOrder] = useState('date');
+  const [isCommentDropdownOpen, setIsCommentDropdownOpen] = useState(false);
+
+  const commentDropdownOption = {
+    date: "등록순",
+    like: "좋아요순"
+  }
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/displays/api/read/${id}`)
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         if(!res.ok) {
           throw new Error("에러")
         }
         return res.json();
       })
       .then((res) => {
-        console.log("res", res);
-        console.log("res.post", res.post);
+        // console.log("res", res);
+        // console.log("res.post", res.post);
         setPost(res.post); 
       })
       .catch((error) => {
-        console.error(error)
+        // console.error(error)
       })
   }, [id])
+
+  useEffect(() => {
+  if (!id) return;
+
+  fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/api/list`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      postId: id,
+      order: commentOrder,
+      cursor: cursor 
+    })
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("commentOrder", commentOrder);
+      setComments(data.commentList);
+    })
+    .catch((err) => console.error(err));
+}, [id, commentOrder]);
 
   if(isLoading) {
     return <p>로딩 중,,</p>
@@ -42,7 +74,7 @@ const DisplayDetail = () => {
 
   return (
     <S.Container>
-      <p>{post.artTitle}</p>
+      {/* <p>{post.artTitle}</p>
       <p>{post.userName}</p>
       <p>{post.artCategory}</p>
       <p>{post.artMaterial}</p>
@@ -55,8 +87,102 @@ const DisplayDetail = () => {
           <p>{comment.commentContent}</p>
         </div>
       ))
-    )}
-    {/* <p>{post.comments}</p> */}
+    )} */}
+      <S.Detail>
+        <S.LeftWrapper>
+          <S.ArtImg src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${post.artImgName}?filePath=${post.artImgPath}`} alt={post.artTitle}/>
+          <S.ButtonWrapper>
+            <S.LikeButton className="button">
+              좋아요
+              <S.LikeIcon src={'/assets/images/icon/heart.png'} alt="좋아요"/>
+            </S.LikeButton>
+            <S.Link to={`/mypage/contact-artist/write/${post.userEmail}`}>
+              <S.ArtistButton className="button">
+                작가와 연락
+                <S.MessageIcon src={'/assets/images/icon/message-white.png'} alt="작가오 연락" />
+              </S.ArtistButton>
+            </S.Link>
+          </S.ButtonWrapper>
+        </S.LeftWrapper>
+        <S.RightWrapper>
+          <S.TitleWrapper>
+            <S.Title>{post.artTitle}</S.Title>
+            <S.Artist>
+              <S.H3>작가명<span>|</span></S.H3>
+              <S.H3>{post.userName}</S.H3>
+            </S.Artist>
+          </S.TitleWrapper>
+          <S.LikeCountWrapper>
+            <S.LikeLabel>좋아요</S.LikeLabel>
+            <S.LikeCount className='like-count'>{post.artLikeCount}개</S.LikeCount>
+            <S.NoticeIcon src={'/assets/images/icon/question-gray.png'} alt="좋아요 설명"/>
+          </S.LikeCountWrapper>
+          <S.ArtInfoContainer>
+            <S.ArtInfoWrapper>
+              <S.ArtInfoLabel>제작연도</S.ArtInfoLabel>
+              <S.ArtInfo>{post.artEndDate.slice(0, 4)}</S.ArtInfo>
+            </S.ArtInfoWrapper>
+            <S.ArtInfoWrapper>
+              <S.ArtInfoLabel>재료</S.ArtInfoLabel>
+              <S.ArtInfo>{post.artMaterial}</S.ArtInfo>
+            </S.ArtInfoWrapper>
+            <S.ArtInfoWrapper>
+              <S.ArtInfoLabel>규격</S.ArtInfoLabel>
+              <S.ArtInfo>{post.artSize}</S.ArtInfo>
+            </S.ArtInfoWrapper>
+            <S.ArtInfoWrapper>
+              <S.ArtInfoLabel>부문</S.ArtInfoLabel>
+              <S.ArtInfo>{post.artCategory}</S.ArtInfo>
+            </S.ArtInfoWrapper>
+
+          </S.ArtInfoContainer>
+          <S.ArtDescription>{post.artDescription}</S.ArtDescription>
+        </S.RightWrapper>
+      </S.Detail>
+
+      <S.CommentWrapper>
+        <S.EnH3>comments</S.EnH3>
+        <S.Line />
+        <S.InputWrapper>
+          <S.Input type="text" placeholder="댓글을 작성하세요." maxLength={300} 
+          value={text} onChange={(e) => setText(e.target.value)}/>
+          <S.CountButtonWrapper>
+            <S.Count>{text.length}/300</S.Count>
+            <S.RegisterButton>등록</S.RegisterButton>
+          </S.CountButtonWrapper>
+        </S.InputWrapper>
+
+        <S.DropdownWrapper onClick={() => setIsCommentDropdownOpen(!isCommentDropdownOpen)}>
+          <S.DropdownButton>{commentDropdownOption[commentOrder]}</S.DropdownButton>
+        </S.DropdownWrapper>
+        {isCommentDropdownOpen && (
+          <S.Dropdown>
+            <S.Option onClick={() => setCommentOrder("date")}>등록순</S.Option>
+            <S.Option onClick={() => setCommentOrder("like")}>좋아요순</S.Option>
+          </S.Dropdown>
+        )}
+
+        {comments.length === 0 ? (
+          <p>댓글이 존재하지 않습니다.</p>
+        ) : (
+          comments.map((comment) => (
+        <S.Comment key={comment.id}>
+          <S.ProfileWrapper>
+            <S.Profile src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${comment.userImgName}?filePath=${comment.userImgPath}`} alt={post.artTitle} />
+            <S.Name>{comment.userName}</S.Name>
+          </S.ProfileWrapper>
+          <S.Content>{comment.commentContent}</S.Content>
+          <S.LikeWrapper>
+            <S.LikeIcon src={'/assets/images/icon/like.png'} alt="댓글 좋아요" />
+            <S.LikeCount>{comment.commentLikeCount}</S.LikeCount>
+          </S.LikeWrapper>
+        </S.Comment>
+      ))
+        )}
+
+      </S.CommentWrapper>
+
+
 
     </S.Container>
   );

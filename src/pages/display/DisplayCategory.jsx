@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet, useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import S from './style';
-import DisplayPagination from './displayPagination/DisplayPagination';
 
 const DisplayCategory = ({props}) => {
   const navigate = useNavigate();
@@ -11,6 +10,7 @@ const DisplayCategory = ({props}) => {
 
   const [value, setValue] = useState("")
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  
 
   const onChangeValue = (e) => {
     setValue(e.target.value)
@@ -130,12 +130,6 @@ const DisplayCategory = ({props}) => {
       </S.Menu>
       <Outlet context={useOutletContext()}/>
 
-      <DisplayPagination 
-        postsLength={display.length}
-        itemCount={10}
-        cursor={cursor}
-        setCursor={setCursor}
-      />
     </div>
   );
 };

@@ -6,13 +6,7 @@ const DisplayListContainer = () => {
   const { display, isLoading, isError, cursor } = useOutletContext()
   // const id = 1
   // console.log(category)
-
-    const itemCount = 10;
-    const start = cursor * itemCount;
-    const end = start + itemCount;
-    const pagedDisplay = display.slice(start, end);
-
-    console.log("현재 페이지 cursor:", cursor);
+  // console.log("cursor:", cursor);
 
   if(isLoading) {
     return <S.H6>로딩중!</S.H6>
@@ -28,7 +22,7 @@ const DisplayListContainer = () => {
 
   return (
     <S.Wrapper>
-      {pagedDisplay.map((post) => (
+      {display.map((post) => (
         <S.Display key={post.id} to={`/display/${category}/detail/${post.artPostId}`}>
           <S.Overlay className="overlay">
             <S.Content>
