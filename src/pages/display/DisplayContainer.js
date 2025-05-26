@@ -16,6 +16,9 @@ const DisplayContainer = () => {
   const [isUpdate, setIsUpdate] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [isError, setIsError] = useState(false)
+  const [hasNextPage, setHasNextPage] = useState(false);
+  const [maxCursor, setMaxCursor] = useState(1);
+
 
   const params = {
     order : order,
@@ -48,6 +51,10 @@ const DisplayContainer = () => {
         setDisplay(res.posts)
         setIsLoading(false)
         setIsError(false)
+        setHasNextPage(res.posts.length === 15)
+        if (res.posts.length < 15) {
+          setMaxCursor(cursor); 
+        }
       })
       .catch((error) => {
         console.error(error)
@@ -55,6 +62,11 @@ const DisplayContainer = () => {
         setIsError(true)
       })
   }, [order, category, cursor, keyword, isUpdate])
+
+  useEffect(() => {
+  setCursor(1);
+}, [order, category, keyword]);
+
 
   return (
     <S.Container>

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import S from './style';
 import Flatpickr from "react-flatpickr";
 import dayjs from 'dayjs';
@@ -20,17 +20,20 @@ const AuctionExpectedModify = () => {
     const fetchAuction = async () => {
       const response = await fetch(`http://localhost:10000/auction/api/detail/${id}`);
       const auction = await response.json();
-      const auctionData = auction[0];
+      const auctionData = await auction.auction;
+      
       setData(auctionData);
-      // if (auctionData.artistId !== currentUser.id) {
-      //   alert("수정 권한이 없습니다!")
-      //   navigate(`/auction/bidding/${category}/detail/${id}`, { replace: true })
-      //   return
-      // }
+      if (auctionData.artistId !== currentUser.id) {
+        alert("수정 권한이 없습니다!")
+        navigate(`/auction/bidding/${category}/detail/${id}`, { replace: true })
+        return
+      }
+      
       setAuctionVO({
         id: id,
         artId: auctionData.artId,
         auctionStartDate: auctionData.auctionStartDate ? auctionData.auctionStartDate : null,
+        auctionEndDate: auctionData.auctionEndDate ? auctionData.auctionEndDate : null,
         auctionEstimatedMinPrice: auctionData.auctionEstimatedMinPrice,
         auctionEstimatedMaxPrice: auctionData.auctionEstimatedMaxPrice,
         auctionStartPrice: auctionData.auctionStartPrice
@@ -55,7 +58,7 @@ const AuctionExpectedModify = () => {
       <S.ContentWrap>
         <S.ImageWrap>
           <S.ImgWrapper>
-            <S.AuctionImg src={`http://localhost:10000/files/api/get/${data.artImgName}?filePath=${data.artImgPath}`} alt="경매 작품" />
+            <S.AuctionImg src={`http://localhost:10000/files/api/get/${data.argImgList[0].artImgName}?filePath=${data.argImgList[0].artImgPath}`} alt="경매 작품" />
           </S.ImgWrapper>
         </S.ImageWrap>
 
@@ -124,7 +127,8 @@ const AuctionExpectedModify = () => {
                     onChange={([date]) =>
                       setAuctionVO(prev => ({
                         ...prev,
-                        auctionStartDate: dayjs(date).format("YYYY-MM-DD HH:mm:ss")
+                        auctionStartDate: dayjs(date).format("YYYY-MM-DD HH:mm:ss"),
+                        auctionEndDate: dayjs(date).add(3).format("YYYY-MM-DD HH:mm:ss")
                       }))
                     }
                     render={({ value, defaultValue, id, name }, ref) => (

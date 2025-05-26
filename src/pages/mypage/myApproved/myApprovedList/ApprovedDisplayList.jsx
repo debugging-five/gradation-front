@@ -43,7 +43,7 @@ const ApprovedDisplayList = () => {
             <SA.TitleNavigate as={NavLink} to={`/art/detail/${art.id}`}>
               <SA.Content>{art.artTitle}</SA.Content>
             </SA.TitleNavigate>
-            <SA.ApprovedStatus status={art.artStatus}>{art.artStatus}</SA.ApprovedStatus>
+            <SA.ApprovedStatus status={art.artStatus}>{art.artStatus === '신청' && '대기' ? '승인대기' : art.artStatus}</SA.ApprovedStatus>
           </SA.ContentBox>
         ))}
       </SA.Wrapper>

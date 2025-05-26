@@ -107,27 +107,6 @@ const router = createBrowserRouter([
         path: "",
         element: <MainContainer />,
       },
-        // {
-        //   path: "/join",
-        //   element: <Join />,
-        // },
-        // {
-        //   path: "/login",
-        //   element: <Login />,
-        // },
-        // {
-        //   path: "/find-id",
-        //   element: <FindId />,
-        // },
-        // {
-        //   path: "/find-password",
-        //   element: <FindPassword />,
-        // },
-        // {
-        //   path: "/new-password",
-        //   element: <NewPassword />,
-        // },
-    
       {
         path: "/display",
         element: <DisplayContainer />, // display 메인
@@ -279,6 +258,16 @@ const router = createBrowserRouter([
             element: <ExhibitionUniversity />,
           },
           {
+            path: "gradation/past",
+            element: <ExhibitionGradationPastContainer />,
+            children: [
+              {
+                path: ":id",
+                element: <ExhibitionGradationPast />,
+              },
+            ],
+          },
+          {
             path: "university/registration",
             element: <LoginLayout />,
             children: [
@@ -287,16 +276,6 @@ const router = createBrowserRouter([
                 element: <ExhibitionRegistration />,
               },
             ],
-          },
-        ],
-      },
-      {
-        path: "/exhibition/gradation/past",
-        element: <ExhibitionGradationPastContainer />,
-        children: [
-          {
-            path: ":id",
-            element: <ExhibitionGradationPast />,
           },
         ],
       },

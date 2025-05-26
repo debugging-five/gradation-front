@@ -1,25 +1,35 @@
-import React from 'react';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useOutletContext, useParams } from 'react-router-dom';
+import S from './style';
 
 const AuctionListContainer = () => {
-  let { type, category, id } = useParams()
-  id = 36
+  const { auction, isError } = useOutletContext()
+  
+  const { type, category } = useParams();
 
-  if(!(category === "korean" || category === "sculpture" || category === "craft" || category === "architecture" || category === "calligraphy" || category === "painting" || category === null)) {
-    return <Navigate to="/auction/bidding/korean"></Navigate>
+  if(!auction) {
+    return <S.H6>작품이 존재하지 않습니다.</S.H6>
   }
+
   
-  
-  return (
-    <div>
-      리스트 페이지
-      <div>
-        <Link to={`/auction/${type}/${category}/detail/${id}`}>게시글 1번</Link>
-        <Link to={`/auction/${type}/${category}/detail/${id}`}>게시글 2번</Link>
-        <Link to={`/auction/${type}/${category}/detail/${id}`}>게시글 3번</Link>
-      </div>
-    </div>
-  );
+  if(auction.auctionList) {
+    return (
+      <S.Wrapper>
+        {auction.auctionList.map((post) => (
+          <S.Display key={post.id} to={`/auction/${type}/${category}/detail/${post.id}`}>
+            <S.Overlay className="overlay">
+              <S.Content>
+                <S.H2>{post.artTitle}</S.H2>
+                <S.H4>{post.artistName}</S.H4>
+              </S.Content>
+            </S.Overlay>
+            <img src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${post.artImgName}?filePath=${post.artImgPath}`} alt={post.artTitle} />
+          </S.Display>
+        ))}
+      </S.Wrapper>
+    );
+  } 
 };
+
 
 export default AuctionListContainer;

@@ -59,7 +59,7 @@ const AuctionModal = ({
               </S.PopupLeft>
         
               <S.PopupRight>
-                  <S.PopupArtImg src={`http://localhost:10000/files/api/get/${auction.artImgName}?filePath=${auction.artImgPath}`} alt="경매 작품" />
+                  <S.PopupArtImg src={`http://localhost:10000/files/api/get/${auction.argImgList[0].artImgName}?filePath=${auction.argImgList[0].artImgPath}`} alt="경매 작품" />
               </S.PopupRight>
             </S.PopupWrapper>
             
@@ -77,7 +77,7 @@ const AuctionModal = ({
                 }
               }
 
-              if(formDatas.price < (price.auctionBiddingMinimumPrice || Math.ceil(auction?.auctionStartPrice * 1.1 / 1000) * 1000)){
+              if(formDatas.biddingPrice < price.auctionBiddingMinimumPrice || formDatas.biddingPrice < auction?.auctionStartPrice){
                 alert("응찰가는 반드시\n최소 응찰가 이상이어야 합니다.");
                 setIsPriceUpdate(!isPriceUpdate)
                 return

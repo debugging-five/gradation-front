@@ -6,12 +6,11 @@ const DisplayCategory = ({props}) => {
   const navigate = useNavigate();
   
   const { category } = useParams();
-  const { order, setOrder, cursor, setCursor, keyword, setKeyword, isLoading, isError } = useOutletContext();
+  const { order, setOrder, cursor, setCursor, keyword, setKeyword, isLoading, isError, display } = useOutletContext();
 
   const [value, setValue] = useState("")
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-
-
+  
 
   const onChangeValue = (e) => {
     setValue(e.target.value)
@@ -130,6 +129,7 @@ const DisplayCategory = ({props}) => {
         )}
       </S.Menu>
       <Outlet context={useOutletContext()}/>
+
     </div>
   );
 };
