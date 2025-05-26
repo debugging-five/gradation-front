@@ -52,35 +52,43 @@ const ExhibitionGradation = () => {
 
   // 전시회 지도
 useEffect(() => {
-  if (!info?.gradation?.gradationExhibitionAddress) return;
-  if (!window.kakao || !window.kakao.maps) {
-    console.log("카카오 지도 API 로딩 실패");
-    return;
+  if (!info?.gradation?.gradationExhibitionRealAddress) return;
+
+  // 이미 SDK가 로드된 경우
+  if (window.kakao && window.kakao.maps) {
+    loadMap();
+  } else {
+    // 동적으로 Kakao 지도 API 로드
+    const script = document.createElement("script");
+    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=009a52c6bf731449d477ab86172f9d4e&autoload=false&libraries=services`;
+    script.async = true;
+    script.onload = () => {
+      window.kakao.maps.load(() => {
+        loadMap();
+      });
+    };
+    document.head.appendChild(script);
   }
 
-  console.log("지도 주소:", info.gradation.gradationExhibitionAddress);
+  function loadMap() {
+    const container = document.getElementById("map");
+    const map = new window.kakao.maps.Map(container, {
+      center: new window.kakao.maps.LatLng(37.5665, 126.9780),
+      level: 3,
+      draggable: true,
+      scrollwheel: false,
+    });
 
-  const container = document.getElementById('map');
-  const map = new window.kakao.maps.Map(container, {
-    center: new window.kakao.maps.LatLng(37.5665, 126.9780),
-    level: 3,
-    draggable: true,
-    scrollwheel: false,
-  });
-
-  const geocoder = new window.kakao.maps.services.Geocoder();
-  geocoder.addressSearch(info.gradation.gradationExhibitionRealAddress, (result, status) => {
-    if (status === window.kakao.maps.services.Status.OK) {
-      const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
-      new window.kakao.maps.Marker({ map, position: coords });
-      map.setCenter(coords);
-    } else {
-      console.warn("주소 변환 실패:", status);
-    }
-  });
+    const geocoder = new window.kakao.maps.services.Geocoder();
+    geocoder.addressSearch(info.gradation.gradationExhibitionRealAddress, (result, status) => {
+      if (status === window.kakao.maps.services.Status.OK) {
+        const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+        new window.kakao.maps.Marker({ map, position: coords });
+        map.setCenter(coords);
+      }
+    });
+  }
 }, [info]);
-
-
 
   useEffect(() => {
     const fetchLastExhibition = async () => {
@@ -89,7 +97,7 @@ useEffect(() => {
         throw new Error(`lastGradation fetch Error`)
       }
       const data = await response.json();
-      setLastExhibition(data);
+      setLastExhibition(data.exhibitions);
       return data;
     };
     fetchLastExhibition()
@@ -195,20 +203,9 @@ useEffect(() => {
 
           <S.LastExhibition>
             {lastExhibition.map((exhibition, idx) => (
-              <div key={idx}>
-                {Array.isArray(exhibition)
-                  ? exhibition.map((item, i) => (
-                    <S.NavLink key={i} to={`/exhibition/gradation/past/${item}`}>
-                      <p>{item}</p>
-                    </S.NavLink>
-                  ))
-                  : (
-                    <S.NavLink to={`/exhibition/gradation/past/${exhibition}`}>
-                    <p>{exhibition}</p>
-                    </S.NavLink>
-                  )
-                }
-              </div>
+              <S.NavLink key={idx} to={`/exhibition/gradation/past/${exhibition.id}`}>
+                <p>{exhibition.title}</p>
+              </S.NavLink>
             ))}
           </S.LastExhibition>
         </S.gradationContainer>
