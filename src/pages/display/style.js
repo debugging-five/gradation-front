@@ -128,7 +128,7 @@ S.DropdownWrapper = styled.div`
   gap: 4px;
 `
 S.DropdownButton = styled.div`
-  width: px;
+  width: 60px;
   height: 35px;
   border-radius: 2px;
   cursor: pointer;

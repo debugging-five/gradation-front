@@ -252,6 +252,11 @@ S.Comment = styled.div`
 
 `
 
+S.Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
 S.ProfileWrapper = styled.div`
   display: flex;
   gap: 8px;
@@ -266,6 +271,12 @@ S.Profile = styled.img`
 S.Name = styled.div`
   ${H3}
 
+`
+
+S.MoreIcon = styled.img`
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
 `
 
 S.Content = styled.div`
@@ -293,20 +304,62 @@ S.LikeCount = styled.p`
   }
 `
 
-S.DropdownWrapper = styled.div`
+S.Menu = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+`
 
+S.DropdownWrapper = styled.div`
+  margin: 64px 0 40px 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 `
 
 S.DropdownButton = styled.div`
+  width: 60px;
+  height: 35px;
+  border-radius: 2px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${H8}
+`
 
+S.DropdownIcon = styled.img`
+  width: 16px;
+  height: 16px;
 `
 
 S.Dropdown = styled.div`
+  position: absolute;
+  top: 100px; 
+  left: auto;
+  right: 0;
+  background-color: #FBFCFC;
+  border-radius: 2px;
+  z-index: 100; 
+  display: flex;
+  flex-direction: column;
 
+  :hover {
+    background-color: #EE3333;
+    color: #FBFCFC;
+  }
 `
 
 S.Option = styled.div`
-`
+  border: 1px solid #6E7476;
+  width: 75px;
+  height: 35px;
+  ${H8}
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 
+`
 
 export default S;

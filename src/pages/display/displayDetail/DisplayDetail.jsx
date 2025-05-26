@@ -10,9 +10,16 @@ const DisplayDetail = () => {
   const [comments, setComments] = useState([]);
   const [cursor, setCursor] = useState(1);
   const [commentOrder, setCommentOrder] = useState('date');
-  const [isCommentDropdownOpen, setIsCommentDropdownOpen] = useState(false);
-  const [showNotice, setShowNotice] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  
+  const handleOrder = (order) => {
+    setCommentOrder(order);
+    setIsDropdownOpen(false)
+  }
 
+  // const onClickToDeleteComment = () => {
+  //   setIsDeleteComment(true)
+  // }
 
   const commentDropdownOption = {
     date: "등록순",
@@ -38,38 +45,22 @@ const DisplayDetail = () => {
       })
   }, [id])
 
-  useEffect(() => {
-  if (!id) return;
-
-  fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/api/list`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      postId: id,
-      order: commentOrder,
-      cursor: cursor 
-    })
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      // console.log("commentOrder", commentOrder);
-      setComments(data.commentList);
-    })
-    .catch((err) => console.error(err));
-  }, [id, commentOrder]);
-
 
   const commentVO = {
     commentContent : text,
     artPostId : id,
   }
 
+  const params = {
+    postId: id,
+    order: commentOrder,
+    cursor: cursor 
+  }
+
 
   // 댓글 등록
   const registerComment = async () => {
-    const token = localStorage.getItem("jwtToken");
+    // const token = localStorage.getItem("jwtToken");
     await fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/api/registration`, {
       method : "POST",
       headers : {
@@ -82,8 +73,63 @@ const DisplayDetail = () => {
       .then((res) => {
         if(!res.ok) {
           return res.json().then((res) => {
-            console.log(res)
+            // console.log(res)
             // alert(res.message)
+          })
+        }
+        return res.json()
+      })
+      .then((res) => {
+        getCommentsList()
+        setText("")
+        alert(res.message)
+      })
+      .catch(console.error)
+  }
+
+
+  // 댓글 리스트
+  const getCommentsList = () => {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/api/list`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(params)
+    })
+      .then((res) => {
+        if (!res.ok) {
+          return res.json().then((res) => {
+            console.log(res);
+            // alert(res.message);
+          });
+        }
+        return res.json(); 
+      })
+      .then((res) => {
+        if(res) {
+          setComments(res.commentList);
+          console.log("res", res)
+        }
+      })
+      .catch(console.error);
+  };
+  
+  useEffect(() => {
+    getCommentsList()
+  }, [id, commentOrder]);
+
+
+  // 댓글 삭제
+  const deleteComment = async (comment) => {
+    const id = comment.id;
+    await fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/api/delete/${id}`, {
+      method : "DELETE",
+    })
+      .then((res) => {
+        if(!res.ok) {
+          return res.json().then((res) => {
+            console.log(res)
           })
         }
         return res.json()
@@ -92,9 +138,30 @@ const DisplayDetail = () => {
         console.log(res)
       })
       .catch(console.error)
-
-
   }
+
+  // 댓글 수정
+  const modifyComment = async (comment) => {
+    const id = comment.id;
+    await fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/api/modify/${id}`, {
+      method : "PUT",
+    })
+      .then((res) => {
+        if(!res.ok) {
+          return res.json().then((res) => {
+            console.log(res)
+          })
+        }
+        return res.json()
+      })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch(console.error)
+  }
+
+
+
   if(isLoading) {
     return <p>로딩 중,,</p>
   }
@@ -192,25 +259,35 @@ const DisplayDetail = () => {
           </S.CountButtonWrapper>
         </S.InputWrapper>
 
-        <S.DropdownWrapper onClick={() => setIsCommentDropdownOpen(!isCommentDropdownOpen)}>
-          <S.DropdownButton>{commentDropdownOption[commentOrder]}</S.DropdownButton>
-        </S.DropdownWrapper>
-        {isCommentDropdownOpen && (
-          <S.Dropdown>
-            <S.Option onClick={() => setCommentOrder("date")}>등록순</S.Option>
-            <S.Option onClick={() => setCommentOrder("like")}>좋아요순</S.Option>
-          </S.Dropdown>
-        )}
+        <S.Menu>
+          <S.DropdownWrapper onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+            <S.DropdownButton>
+              {commentDropdownOption[commentOrder]}
+            </S.DropdownButton>
+          <S.DropdownIcon src={'/assets/images/icon/down.png'} alt='드롭다운' />
+          </S.DropdownWrapper>
+          {isDropdownOpen && (
+            <S.Dropdown>
+              <S.Option onClick={() => handleOrder("date")}>등록순</S.Option>
+              <S.Option onClick={() => handleOrder("like")}>좋아요순</S.Option>
+            </S.Dropdown>
+          )}
+        </S.Menu>
 
         {comments.length === 0 ? (
           <p>댓글이 존재하지 않습니다.</p>
         ) : (
           comments.map((comment) => (
         <S.Comment key={comment.id}>
-          <S.ProfileWrapper>
-            <S.Profile src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${comment.userImgName}?filePath=${comment.userImgPath}`} alt={post.artTitle} />
-            <S.Name>{comment.userName}</S.Name>
-          </S.ProfileWrapper>
+          <S.Wrapper>
+            <S.ProfileWrapper>
+              <S.Profile src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${comment.userImgName}?filePath=${comment.userImgPath}`} alt={post.artTitle} />
+              <S.Name>{comment.userName}</S.Name>
+            </S.ProfileWrapper>
+            <S.MoreIcon src={'/assets/images/icon/more.png'} alt="더보기"/>
+            <p onClick={() => deleteComment(comment)}>삭제</p>
+            <p onClick={() => modifyComment(comment)}>수정</p>
+          </S.Wrapper>
           <S.Content>{comment.commentContent}</S.Content>
           <S.LikeWrapper>
             <S.LikeIcon src={'/assets/images/icon/like.png'} alt="댓글 좋아요" />
