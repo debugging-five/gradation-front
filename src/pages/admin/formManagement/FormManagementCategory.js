@@ -5,10 +5,10 @@ const FormManagementCategory = () => {
   return (
     <div>
       <div>
-        <Link to={"/mypage/admin/form-management/upcycling"}>upcycling</Link> |
-        <Link to={"/mypage/admin/form-management/display"}>display</Link> |
-        <Link to={"/mypage/admin/form-management/exhibition"}>exhibition</Link> |
-        <Link to={"/mypage/admin/form-management/university"}>university</Link>
+        <Link to={"pending/upcycling"}>upcycling</Link> |
+        <Link to={"pending/display"}>display</Link> |
+        <Link to={"pending/exhibition"}>exhibition</Link> |
+        <Link to={"pending/university"}>university</Link>
       </div>
       <Outlet />
     </div>

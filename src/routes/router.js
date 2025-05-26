@@ -60,10 +60,8 @@ import AdminQnaDetail from "../pages/admin/qna/AdminQnaDetail";
 import AdminQnaCompletedList from "../pages/admin/qna/AdminQnaCompletedList";
 import AdminQnaAnswer from "../pages/admin/qna/AdminQnaAnswer";
 import FormManagementLayout from "../pages/admin/formManagement/FormManagementLayout";
-import FormManagementApprovedList from "../pages/admin/formManagement/list/FormManagementApprovedList";
 import FormManagementDetailContainer from "../pages/admin/formManagement/detail/FormManagementDetailContainer";
-import FormManageMentCategory from "../pages/admin/formManagement/FormManageMentCategory";
-import UserManagementContainer from "../pages/admin/userManagement/UserManagementContainer";
+import FormManagementCategory from "../pages/admin/formManagement/FormManagementCategory";
 import UserInfoContainer from "../pages/mypage/myInfo/userInfo/UserInfoContainer";
 import ChangePasswordContainer from "../pages/mypage/myInfo/changePassword/ChangePasswordContainer";
 import AuctionLayout from "../pages/auction/AuctionLayout";
@@ -97,7 +95,13 @@ import NewPassword from "../pages/account/newPassword/NewPassword";
 import MainContainer from "../pages/main/MainContainer";
 import MainLayout from "../pages/layout/MainLayout";
 import DisplayDetail from "../pages/display/displayDetail/DisplayDetail";
+import UserManagementLayout from "../pages/admin/userManagement/UserManagementLayout";
+import UserManagementPendingList from "../pages/admin/userManagement/UserManagementPendingList";
+import UserManagementCompletedList from "../pages/admin/userManagement/UserManagementCompletedList";
+import FormManagementPendingList from "../pages/admin/formManagement/list/FormManagementPendingList";
+import FormManagementCompletedList from "../pages/admin/formManagement/list/FormManagementCompletedList";
 
+console.log("🚨 FormManagementPendingList:", FormManagementPendingList);
 const router = createBrowserRouter([
   {
     path: "/",
@@ -509,19 +513,23 @@ const router = createBrowserRouter([
                         children: [
                           {
                             path: "",
-                            element: <FormManageMentCategory />,
+                            element: <FormManagementCategory />,
                             children: [
                               {
-                                path: ":type",
-                                element: <FormManagementApprovedList />,
+                                path: "pending/:category",
+                                element: <FormManagementPendingList />,
+                              },
+                              {
+                                path: "completed/:category",
+                                element: <FormManagementCompletedList />,
                               },
                             ],
                           },
+                          {
+                            path: "detail/:type/:id",
+                            element: <FormManagementDetailContainer />,
+                          },
                         ],
-                      },
-                      {
-                        path: "form-management/detail/:type/:id",
-                        element: <FormManagementDetailContainer />,
                       },
                       {
                         path: "qna/detail/:id",
@@ -529,7 +537,17 @@ const router = createBrowserRouter([
                       },
                       {
                         path: "user-management",
-                        element: <UserManagementContainer />,
+                        element: <UserManagementLayout />,
+                        children: [
+                          {
+                            path: "pending/:category",
+                            element: <UserManagementPendingList />,
+                          },
+                          {
+                            path: "completed/:category",
+                            element: <UserManagementCompletedList />,
+                          },
+                        ],
                       },
                     ],
                   },

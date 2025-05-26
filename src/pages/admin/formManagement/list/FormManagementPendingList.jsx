@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import S from "./UserManagementListStyle";
+import S from "./style";
 
-const UserManagementPendingList = () => {
+const FormManagementPendingList = () => {
   const { category } = useParams();
   const [isAdmin, setIsAdmin] = useState(false);
   const [list, setList] = useState([]);
@@ -34,8 +34,14 @@ const UserManagementPendingList = () => {
     fetch(`http://localhost:10000/admin/api/approval/${category}/pending`, {
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then((res) => res.json())
-      .then((data) => setList(data))
+    .then((res) => res.json())
+    .then((data) => {
+      if (!Array.isArray(data.data)) {
+        console.error("❌ 응답 data가 배열이 아님:", data);
+        return;
+      }
+      setList(data.data); // ✅ data.data로 설정
+    })
       .catch((err) => console.error("데이터 로딩 실패:", err));
   }, [isAdmin, category, token]);
 
@@ -102,19 +108,27 @@ const UserManagementPendingList = () => {
         case "university": return item.userName;
         default: return "";
       }
+      
     };
 
     const getDate = () => {
-      const rawDate =
-        item.artEndDate ||
-        item.universityExhibitionStartDate ||
-        item.upcyclingDate ||
-        item.userUniversityDate ||
-        "";
-      if (!rawDate) return "";
-      const [year, month, day] = rawDate.split("-");
-      return `${year.slice(2)}.${month}.${day}`;
-    };
+  const rawDate =
+    item.artEndDate ||
+    item.universityExhibitionStartDate ||
+    item.upcyclingDate ||
+    item.userUniversityDate ||
+    "";
+
+    console.log("🟢 rawDate:", rawDate, typeof rawDate);
+
+  if (!rawDate) return "";
+  // 문자열 강제 변환 (Date 객체일 가능성까지 커버)
+  const dateString = typeof rawDate === "string" ? rawDate : new Date(rawDate).toISOString();
+    console.log("🔧 dateString:", dateString);
+  const [year, month, day] = dateString.slice(0, 10).split("-");
+  return `${year.slice(2)}.${month}.${day}`;
+  
+};
 
     return (
       <S.TableRow key={item.id}>
@@ -155,4 +169,4 @@ const UserManagementPendingList = () => {
   );
 };
 
-export default UserManagementPendingList;
+export default FormManagementPendingList;

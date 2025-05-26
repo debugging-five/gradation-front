@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import S from "./UserManagementListStyle";
+import S from "./style";
 
-const UserManagementPendingList = () => {
+const FormManagementCompletedList = () => {
   const { category } = useParams();
   const [isAdmin, setIsAdmin] = useState(false);
   const [list, setList] = useState([]);
@@ -27,7 +27,7 @@ const UserManagementPendingList = () => {
       .catch((err) => console.error("관리자 인증 실패:", err));
   }, []);
 
-  // 관리자 인증된 경우 데이터 요청
+  // 데이터 로딩 (승인된 것만 필터링)
   useEffect(() => {
     if (!isAdmin) return;
 
@@ -35,7 +35,18 @@ const UserManagementPendingList = () => {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
-      .then((data) => setList(data))
+      .then((data) => {
+        const approved = data.filter((item) => {
+          switch (category) {
+            case "display": return item.artStatus === "승인";
+            case "exhibition": return item.universityExhibitionStatus === "승인";
+            case "upcycling": return item.upcyclingStatus === "승인";
+            case "university": return item.userUniversityStatus === "승인";
+            default: return false;
+          }
+        });
+        setList(approved);
+      })
       .catch((err) => console.error("데이터 로딩 실패:", err));
   }, [isAdmin, category, token]);
 
@@ -155,4 +166,4 @@ const UserManagementPendingList = () => {
   );
 };
 
-export default UserManagementPendingList;
+export default FormManagementCompletedList;

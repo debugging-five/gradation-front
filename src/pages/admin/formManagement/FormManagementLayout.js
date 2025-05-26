@@ -1,13 +1,62 @@
-import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import React from "react";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
+import S from "./style";
 
 const FormManagementLayout = () => {
+  const location = useLocation();
+
+  // 현재 경로에서 pending / completed 구분
+  const isPending = location.pathname.includes("/pending");
+  const isCompleted = location.pathname.includes("/completed");
+
   return (
-    <div>
-      <div><Link to={"/mypage/admin/form-management"}>미승인</Link></div>
-      <div><Link to={"/mypage/admin/form-management/complete"}>승인완료</Link></div>
+    <S.Container>
+      <S.PageTitle>관리자 / 양식 관리</S.PageTitle>
+
+      <S.TabWrapper>
+        <S.TabButton
+          to="/mypage/admin/form-management/pending/display"
+          className={({ isActive }) => (isPending ? "active" : "")}
+        >
+          미승인
+        </S.TabButton>
+        <S.TabButton
+          to="/mypage/admin/form-management/completed/display"
+          className={({ isActive }) => (isCompleted ? "active" : "")}
+        >
+          승인완료
+        </S.TabButton>
+      </S.TabWrapper>
+
+      <S.CategoryWrapper>
+        <S.Category
+          to="/mypage/admin/form-management/pending/display"
+          className={({ isActive }) => (isActive ? "active" : "")}
+        >
+          display
+        </S.Category>
+        <S.Category
+          to="/mypage/admin/form-management/pending/exhibition"
+          className={({ isActive }) => (isActive ? "active" : "")}
+        >
+          exhibition
+        </S.Category>
+        <S.Category
+          to="/mypage/admin/form-management/pending/upcycling"
+          className={({ isActive }) => (isActive ? "active" : "")}
+        >
+          upcycling
+        </S.Category>
+        <S.Category
+          to="/mypage/admin/form-management/pending/university"
+          className={({ isActive }) => (isActive ? "active" : "")}
+        >
+          university
+        </S.Category>
+      </S.CategoryWrapper>
+
       <Outlet />
-    </div>
+    </S.Container>
   );
 };
 
