@@ -3,9 +3,10 @@ import S from './style';
 
 const DisplayListContainer = () => {
   const { category } = useParams()
-  const { display, isLoading, isError } = useOutletContext()
+  const { display, isLoading, isError, cursor } = useOutletContext()
   // const id = 1
   // console.log(category)
+  // console.log("cursor:", cursor);
 
   if(isLoading) {
     return <S.H6>로딩중!</S.H6>
@@ -22,7 +23,7 @@ const DisplayListContainer = () => {
   return (
     <S.Wrapper>
       {display.map((post) => (
-        <S.Display key={post.id} to={`/display/${category}/detail/${post.id}`}>
+        <S.Display key={post.id} to={`/display/${category}/detail/${post.artPostId}`}>
           <S.Overlay className="overlay">
             <S.Content>
               <S.H2>{post.artTitle}</S.H2>
@@ -33,7 +34,6 @@ const DisplayListContainer = () => {
         </S.Display>
       ))}
     </S.Wrapper>
-    
   );
 };
 

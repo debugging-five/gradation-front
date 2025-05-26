@@ -4,8 +4,7 @@ import SubButton from '../../../components/button/SubButton';
 import PrimaryButton from '../../../components/button/PrimaryButton';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
+
 
 const DisplayRegistration = () => {
   const { register, handleSubmit, formState: {isSubmitting, errors} } = useForm({mode: "onBlur"});
@@ -62,6 +61,7 @@ const DisplayRegistration = () => {
         return res.json();
       })
       .then((res) => {
+        console.log(res)
         const artId = res.artId;
         console.log(artId)
 
@@ -104,31 +104,6 @@ const DisplayRegistration = () => {
               </S.IconWrapper>
             )}
 
-            {thumbnailUrls.length > 0 && (
-              <Swiper
-                modules={[Navigation, Pagination]}
-                navigation
-                pagination={{ clickable: true }}
-                spaceBetween={10}
-                slidesPerView={1}
-                style={{ width: '100%', height: '100%' }}>
-                {thumbnailUrls.map((url, i) => (
-                  <SwiperSlide key={i}>
-                    <img
-                      src={url}
-                      alt={`preview-${i}`}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "contain",
-                        // objectFit: "cover",
-                        borderRadius: "10px"
-                      }}
-                    />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            )}
           </S.FileWrapper>
           <S.InputContainer>
             <S.BorderWrapper>
@@ -175,6 +150,12 @@ const DisplayRegistration = () => {
                       required : true,
                     })}
                   />
+                  {/* <S.DropdownWrapper onCli>
+                    <S.DropdownButton>
+                      <p>작품 분류를 선택하세요.</p>
+                    </S.DropdownButton>
+                    <S.DropdownIcon src={'/assets/images/icon/down.png'} alt='드롭다운' />
+                  </S.DropdownWrapper> */}
                   </S.Label>
                 </S.InputWrapper>
               </S.Border>
