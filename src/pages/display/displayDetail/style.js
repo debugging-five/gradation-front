@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { EN_H3, EN_H6, H2, H3, H5, H8 } from '../../../styles/common';
+import { EN_H3, EN_H6, H10, H2, H3, H5, H8 } from '../../../styles/common';
 import { Line } from '../../serviceCenter/qna/qnaSendStyle';
 import { Link } from 'react-router-dom';
 
@@ -108,6 +108,7 @@ S.LikeCountWrapper = styled.div`
   height: 19px;
   color: #EE3333;
   margin: 44px 0 0 0;
+  position: relative;
 `
 
 S.LikeLabel = styled.p`
@@ -119,9 +120,27 @@ S.LikeCount = styled.p`
   ${H5}
   width: 66px;
 `
+
+S.NoticeIconWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  &:hover p {
+    display: block;
+  }
+`;
+
 S.NoticeIcon = styled.img`
   width: 16px;
   height: 16px;
+`
+
+S.Notice = styled.p`
+  ${H10}
+  display: none;
+  margin-left: 6px;
+  color: #6E7476;
 `
 
 S.ArtInfoContainer = styled.div`
@@ -196,7 +215,7 @@ S.Input = styled.textarea`
   border-radius: 2px;
   border: solid 1px #6E7476;
   resize: none;
-  background-color: #FCFBFC;
+  background-color: #FBFCFC;
   padding: 12px;
   margin: 16px 0 0 0;
   box-sizing: border-box;
@@ -267,6 +286,11 @@ S.LikeIcon = styled.img`
 
 S.LikeCount = styled.p`
   ${EN_H6}
+
+  .unit {
+    ${H5}
+    margin: 0 0 0 2px;
+  }
 `
 
 S.DropdownWrapper = styled.div`

@@ -11,6 +11,8 @@ const DisplayDetail = () => {
   const [cursor, setCursor] = useState(1);
   const [commentOrder, setCommentOrder] = useState('date');
   const [isCommentDropdownOpen, setIsCommentDropdownOpen] = useState(false);
+  const [showNotice, setShowNotice] = useState(false);
+
 
   const commentDropdownOption = {
     date: "등록순",
@@ -28,7 +30,7 @@ const DisplayDetail = () => {
       })
       .then((res) => {
         // console.log("res", res);
-        // console.log("res.post", res.post);
+        console.log("res.post", res.post);
         setPost(res.post); 
       })
       .catch((error) => {
@@ -52,12 +54,47 @@ const DisplayDetail = () => {
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log("commentOrder", commentOrder);
+      // console.log("commentOrder", commentOrder);
       setComments(data.commentList);
     })
     .catch((err) => console.error(err));
-}, [id, commentOrder]);
+  }, [id, commentOrder]);
 
+
+  const commentVO = {
+    commentContent : text,
+    artPostId : id,
+  }
+
+
+  // 댓글 등록
+  const registerComment = async () => {
+    const token = localStorage.getItem("jwtToken");
+    await fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/api/registration`, {
+      method : "POST",
+      headers : {
+        "Content-Type" : "application/json",
+        // "Authorization": `Bearer ${token}`
+      },
+      credentials: "include",
+      body : JSON.stringify(commentVO)
+    }) 
+      .then((res) => {
+        if(!res.ok) {
+          return res.json().then((res) => {
+            console.log(res)
+            // alert(res.message)
+          })
+        }
+        return res.json()
+      })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch(console.error)
+
+
+  }
   if(isLoading) {
     return <p>로딩 중,,</p>
   }
@@ -114,8 +151,11 @@ const DisplayDetail = () => {
           </S.TitleWrapper>
           <S.LikeCountWrapper>
             <S.LikeLabel>좋아요</S.LikeLabel>
-            <S.LikeCount className='like-count'>{post.artLikeCount}개</S.LikeCount>
-            <S.NoticeIcon src={'/assets/images/icon/question-gray.png'} alt="좋아요 설명"/>
+            <S.LikeCount>{post.artLikeCount}<span className='unit'>개</span></S.LikeCount>
+            <S.NoticeIconWrapper>
+              <S.NoticeIcon src={'/assets/images/icon/question-gray.png'} alt="좋아요 설명"/>
+              <S.Notice>좋아요 50개 이상인 작품은 경매 등록 가능합니다.</S.Notice>
+            </S.NoticeIconWrapper>
           </S.LikeCountWrapper>
           <S.ArtInfoContainer>
             <S.ArtInfoWrapper>
@@ -148,7 +188,7 @@ const DisplayDetail = () => {
           value={text} onChange={(e) => setText(e.target.value)}/>
           <S.CountButtonWrapper>
             <S.Count>{text.length}/300</S.Count>
-            <S.RegisterButton>등록</S.RegisterButton>
+            <S.RegisterButton onClick={registerComment}>등록</S.RegisterButton>
           </S.CountButtonWrapper>
         </S.InputWrapper>
 
