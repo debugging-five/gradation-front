@@ -201,5 +201,55 @@ S.InputBox = styled.textarea`
   resize: none;
   ${H8}
 `
+// 드롭다운
+S.DropdownWrapper = styled.div`
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  
+`
 
+S.DropdownButton = styled.div`
+`
+
+S.OptionList = styled.div`
+  position: absolute;
+  /* left: 0; */
+  top: 645px;
+  left: 810px;
+  /* right: auto; */
+  width: 75px;
+  border: solid 1px #6E7476;
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
+  background-color: #FCFBFB;
+  border-radius: 2px;
+`
+
+S.Option = styled.div`
+  height: 35px;
+  width: 75px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    background-color: #EE3333;
+    color: #FBFCFC;
+  }
+`
+
+S.H8 = styled.p`
+  ${H8}
+  color: ${({ selected }) => (selected ? '#333333' : '#6E7476')}
+
+`
+
+S.DropdownIcon = styled.img`
+  width: 16px;
+  height: 16px;
+  margin: 0 0 0 4px;
+`
 export default S;

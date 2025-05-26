@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Link, useOutletContext, useParams } from 'react-router-dom';
+import { Link, useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import S from './style';
+import { useSelector } from 'react-redux';
 
 const DisplayDetail = () => {
   const { id } = useParams();
@@ -11,15 +12,21 @@ const DisplayDetail = () => {
   const [cursor, setCursor] = useState(1);
   const [commentOrder, setCommentOrder] = useState('date');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [modifyCommentId, setModifyCommentId] = useState(null);
+  const [modifyCommentContent, setModifyCommentContent] = useState("")
+  const [isLiked, setIsLiked] = useState(false)
+  const [openMenuId, setOpenMenuId] = useState(null)
+
+  // const { currentUser } = useOutletContext();
+
+  const { currentUser } = useSelector((state) => state.user);
+  // console.log(currentUser)
   
+  const navigate = useNavigate()
   const handleOrder = (order) => {
     setCommentOrder(order);
     setIsDropdownOpen(false)
   }
-
-  // const onClickToDeleteComment = () => {
-  //   setIsDeleteComment(true)
-  // }
 
   const commentDropdownOption = {
     date: "등록순",
@@ -37,7 +44,7 @@ const DisplayDetail = () => {
       })
       .then((res) => {
         // console.log("res", res);
-        console.log("res.post", res.post);
+        // console.log("res.post", res.post);
         setPost(res.post); 
       })
       .catch((error) => {
@@ -57,15 +64,12 @@ const DisplayDetail = () => {
     cursor: cursor 
   }
 
-
   // 댓글 등록
   const registerComment = async () => {
-    // const token = localStorage.getItem("jwtToken");
     await fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/api/registration`, {
       method : "POST",
       headers : {
         "Content-Type" : "application/json",
-        // "Authorization": `Bearer ${token}`
       },
       credentials: "include",
       body : JSON.stringify(commentVO)
@@ -74,7 +78,8 @@ const DisplayDetail = () => {
         if(!res.ok) {
           return res.json().then((res) => {
             // console.log(res)
-            // alert(res.message)
+            alert(res.message)
+            navigate("/login")
           })
         }
         return res.json()
@@ -89,7 +94,7 @@ const DisplayDetail = () => {
 
 
   // 댓글 리스트
-  const getCommentsList = () => {
+  const getCommentsList = async () => {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/api/list`, {
       method: "POST",
       headers: {
@@ -109,7 +114,7 @@ const DisplayDetail = () => {
       .then((res) => {
         if(res) {
           setComments(res.commentList);
-          console.log("res", res)
+          // console.log("res", res)
         }
       })
       .catch(console.error);
@@ -121,9 +126,9 @@ const DisplayDetail = () => {
 
 
   // 댓글 삭제
-  const deleteComment = async (comment) => {
-    const id = comment.id;
-    await fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/api/delete/${id}`, {
+  const deleteComment = async (commentId) => {
+    // const id = comment.id;
+    await fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/api/delete/${commentId}`, {
       method : "DELETE",
     })
       .then((res) => {
@@ -136,15 +141,58 @@ const DisplayDetail = () => {
       })
       .then((res) => {
         console.log(res)
+        alert(res.message)
+        getCommentsList()
       })
       .catch(console.error)
   }
 
   // 댓글 수정
-  const modifyComment = async (comment) => {
-    const id = comment.id;
-    await fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/api/modify/${id}`, {
+  const modifyComment = async (commentId, commentContent) => {
+    // const id = comment.id;
+    await fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/api/modify/${commentId}`, {
       method : "PUT",
+      headers : {
+        "Content-Type" : "application/json"
+      },
+      body: JSON.stringify({ commentContent }),
+    })
+      .then((res) => {
+        if(!res.ok) {
+          return res.json().then((res) => {
+            // console.log(res)
+          })
+        }
+        return res.json()
+      })
+      .then((res) => {
+        console.log(res)
+        getCommentsList()
+      })
+      .catch(console.error)
+  }
+
+
+  // 작품 좋아요 등록
+  const registerLike = async () => {
+    //   if (!post.artId) {
+    //     console.log("post 로딩 중,,");
+    //   return;
+    // }
+    
+  const userVO = {
+    userId : currentUser.id,
+    artId: post.artId
+  }
+
+  console.log("userVO", userVO);
+
+    await fetch(`${process.env.REACT_APP_BACKEND_URL}/art/likes/api/registration`, {
+      method : "POST",
+      headers : {
+        "Content-Type" : "application/json"
+      },
+      body : JSON.stringify(userVO)
     })
       .then((res) => {
         if(!res.ok) {
@@ -152,15 +200,50 @@ const DisplayDetail = () => {
             console.log(res)
           })
         }
-        return res.json()
+        return
       })
       .then((res) => {
         console.log(res)
+        setIsLiked(true)
       })
       .catch(console.error)
   }
 
+  // 작품 좋아요 취소
+  const deleteLike = async () => {
+    //   if (!post.artId) {
+    //     console.log("post 로딩 중,,");
+    //   return;
+    // }
+    
+  const userVO = {
+    userId : currentUser.id,
+    artId: post.artId
+  }
 
+  console.log("userVO", userVO);
+
+    await fetch(`${process.env.REACT_APP_BACKEND_URL}/art/likes/api/delete`, {
+      method : "DELETE",
+      headers : {
+        "Content-Type" : "application/json"
+      },
+      body : JSON.stringify(userVO)
+    })
+      .then((res) => {
+        if(!res.ok) {
+          return res.json().then((res) => {
+            console.log(res)
+          })
+        }
+        return 
+      })
+      .then((res) => {
+        console.log(res)
+        setIsLiked(false)
+      })
+      .catch(console.error)
+  }
 
   if(isLoading) {
     return <p>로딩 중,,</p>
@@ -170,11 +253,9 @@ const DisplayDetail = () => {
     return <p>오류 발생 ,,</p>
   }
 
-  
   if (!post) {
     return <p>작품 정보 불러오는 중,,</p>; 
   }
-
 
   return (
     <S.Container>
@@ -196,14 +277,14 @@ const DisplayDetail = () => {
         <S.LeftWrapper>
           <S.ArtImg src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${post.artImgName}?filePath=${post.artImgPath}`} alt={post.artTitle}/>
           <S.ButtonWrapper>
-            <S.LikeButton className="button">
+            <S.LikeButton className="button" onClick={isLiked ? deleteLike : registerLike} $isLiked={isLiked}>
               좋아요
               <S.LikeIcon src={'/assets/images/icon/heart.png'} alt="좋아요"/>
             </S.LikeButton>
             <S.Link to={`/mypage/contact-artist/write/${post.userEmail}`}>
               <S.ArtistButton className="button">
                 작가와 연락
-                <S.MessageIcon src={'/assets/images/icon/message-white.png'} alt="작가오 연락" />
+                <S.MessageIcon src={'/assets/images/icon/message-white.png'} alt="작가와 연락" />
               </S.ArtistButton>
             </S.Link>
           </S.ButtonWrapper>
@@ -284,11 +365,45 @@ const DisplayDetail = () => {
               <S.Profile src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${comment.userImgName}?filePath=${comment.userImgPath}`} alt={post.artTitle} />
               <S.Name>{comment.userName}</S.Name>
             </S.ProfileWrapper>
-            <S.MoreIcon src={'/assets/images/icon/more.png'} alt="더보기"/>
-            <p onClick={() => deleteComment(comment)}>삭제</p>
-            <p onClick={() => modifyComment(comment)}>수정</p>
+            <S.MoreIcon src={'/assets/images/icon/more.png'} alt="더보기"
+              onClick={() => setOpenMenuId(openMenuId === comment.id? null : comment.id)}/>
+            {/* <button onClick={() => deleteComment(comment.id)}>삭제</button> */}
+            {openMenuId === comment.id && (
+              <S.MoreMenu>
+                <S.Option onClick={() => {
+                  setModifyCommentContent(comment.commentContent);
+                  setModifyCommentId(comment.id);
+                  setOpenMenuId(null); }}>
+                  수정
+                </S.Option>
+                <S.Option onClick={() => {
+                  deleteComment(comment.id);
+                  setOpenMenuId(null);}}>
+                  삭제
+                </S.Option>
+              </S.MoreMenu>
+            )}
           </S.Wrapper>
-          <S.Content>{comment.commentContent}</S.Content>
+          { modifyCommentId === comment.id ? (
+            <S.ModifyWrapper>
+              <S.Input
+                type="text"
+                maxLength={300}
+                value={modifyCommentContent}
+                onChange={(e) => setModifyCommentContent(e.target.value)}
+              />
+              <S.ButtonContainer>
+                <S.CancelButton onClick={() => setModifyCommentId(null)}>취소</S.CancelButton>
+                <S.SaveButton onClick={() => {
+                  modifyComment(comment.id, modifyCommentContent);
+                  setModifyCommentId(null);
+                }}>저장</S.SaveButton>
+              </S.ButtonContainer>
+            </S.ModifyWrapper>
+            ) : (
+            <S.Content>{comment.commentContent}</S.Content>
+            )}
+
           <S.LikeWrapper>
             <S.LikeIcon src={'/assets/images/icon/like.png'} alt="댓글 좋아요" />
             <S.LikeCount>{comment.commentLikeCount}</S.LikeCount>
@@ -298,9 +413,6 @@ const DisplayDetail = () => {
         )}
 
       </S.CommentWrapper>
-
-
-
     </S.Container>
   );
 };

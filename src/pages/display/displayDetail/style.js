@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { EN_H3, EN_H6, H10, H2, H3, H5, H8 } from '../../../styles/common';
-import { Line } from '../../serviceCenter/qna/qnaSendStyle';
 import { Link } from 'react-router-dom';
 
 const S = {};
@@ -44,13 +43,10 @@ S.LikeButton = styled.button`
   align-items: center;
   justify-content: center;
   gap: 4px;
-  color: #EE3333;
-  background-color: #FBFCFC;
-`
-
-S.LikeIcon = styled.img`
-  width: 16px;
-  height: 16px;
+  /* color: #EE3333; */
+  /* background-color: #FBFCFC; */
+  background-color: ${(props) => (props.isLiked ? "#EE3333" : "#FBFCFC")};
+  color: ${(props) => (props.isLiked ? "#FBFCFC" : "#EE3333")};
 `
 
 S.Link = styled(Link)`
@@ -255,6 +251,8 @@ S.Comment = styled.div`
 S.Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  position: relative;
+  width: 1132px;
 `
 
 S.ProfileWrapper = styled.div`
@@ -288,6 +286,7 @@ S.LikeWrapper = styled.div`
   display: flex;
   gap: 8px;
   margin: 16px 0 0 0;
+  cursor: pointer;
 `
 
 S.LikeIcon = styled.img`
@@ -303,6 +302,23 @@ S.LikeCount = styled.p`
     margin: 0 0 0 2px;
   }
 `
+
+S.MoreMenu = styled.div`
+  position: absolute;
+  /* top: 30px;  */
+  left: 1144px;
+  /* left: auto; */
+  right: 0;
+  background-color: #FBFCFC;
+  border-radius: 2px;
+  /* display: flex; */
+  /* flex-direction: column; */
+  :hover {
+    background-color: #EE3333;
+    color: #FBFCFC;
+  }
+`;
+
 
 S.Menu = styled.div`
   display: flex;
@@ -359,7 +375,52 @@ S.Option = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-
 `
+
+S.ModifyWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  margin-top: 16px;
+`;
+
+S.ButtonContainer = styled.div`
+  position: absolute;
+  bottom: 18px;
+  right: 12px;
+  display: flex;
+  gap: 10px;
+`;
+
+
+S.SaveButton = styled.button`
+  /* position: absolute;
+  bottom: 12px;
+  right: 12px; */
+  padding: 6px 16px;
+  background-color: #EE3333;
+  border: solid 1.2px #EE3333;
+  border-radius: 2px;
+  color: #FBFCFC;
+  ${H8}
+  width: 75px;
+  height: 35px;
+  padding: 6px 12px;
+`
+
+S.CancelButton = styled.button`
+  /* position: absolute;
+  bottom: 12px;
+  right: 12px; */
+  padding: 6px 16px;
+  background-color: #FBFCFC;
+  border: solid 1.2px #EE3333;
+  border-radius: 2px;
+  color: #EE3333;
+  ${H8}
+  width: 75px;
+  height: 35px;
+  padding: 6px 12px;
+`
+
 
 export default S;

@@ -9,12 +9,22 @@ import { Navigation, Pagination } from 'swiper/modules';
 import { useNavigate } from 'react-router-dom';
 
 const DisplayRegistration = () => {
-  const { register, handleSubmit, formState: {isSubmitting, errors} } = useForm({mode: "onBlur"});
+  const { register, handleSubmit, setValue, formState: {isSubmitting, errors} } = useForm({mode: "onBlur"});
   const { currentUser } = useSelector((state) => state.user);
   const userId = currentUser.id;
   const [thumbnailUrls, setThumbnailUrls] = useState([]);
   const [selectFiles, setSelectFiles] = useState([]);
   const navigate = useNavigate();
+
+  const categoryList = ["한국화", "조각", "공예", "건축", "서예", "회화"]
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+    setIsDropdownOpen(false);
+    setValue("artCategory", category)
+  };
 
   const handleThumbnailImage = async (e) => {
     const files = Array.from(e.target.files);
@@ -170,7 +180,25 @@ const DisplayRegistration = () => {
                 <S.InputWrapper>
                   <S.Label>
                     <S.H7>작품 분류<span>*</span></S.H7>
-                    <S.Input type='text' placeholder='작품 분류를 선택하세요.'
+                    <S.DropdownWrapper onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+                      <S.DropdownButton>
+                        <S.H8 selected={selectedCategory}>
+                          {selectedCategory || '작품 분류를 선택하세요.'}
+                        </S.H8>
+                      </S.DropdownButton>
+                      <S.DropdownIcon src="/assets/images/icon/down.png" alt="드롭다운" />
+                    </S.DropdownWrapper>
+
+                    {isDropdownOpen && (
+                      <S.OptionList>
+                        {categoryList.map((category) => (
+                          <S.Option key={category} onClick={() => handleCategorySelect(category)}>
+                            {category}
+                          </S.Option>
+                        ))}
+                      </S.OptionList>
+                    )}
+                    <S.Input type='hidden' value={selectedCategory}
                     {...register("artCategory", {
                       required : true,
                     })}
