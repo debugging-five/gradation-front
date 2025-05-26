@@ -2,8 +2,6 @@ import React from 'react';
 import S from './style';
 
 const AuctionBiddingPopupPrice = ({price, auction}) => {
-  console.log(price);
-  console.log(auction);
   if(price && price.id === null) {
     return (
       <>

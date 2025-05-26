@@ -37,6 +37,7 @@ const AuctionCategory = () => {
 
   const onChangeValue = (e) => {
     setValue(e.target.value)
+    
   }
 
   const handleOrder = (order) => {
@@ -58,21 +59,27 @@ const AuctionCategory = () => {
 
   const goKorean = () => {
     navigate(`/auction/${type}/korean`);
+    setCursor(1);
   }
   const goSculpture = () => {
     navigate(`/auction/${type}/sculpture`);
+    setCursor(1);
   }
   const goCraft = () => {
     navigate(`/auction/${type}/craft`);
+    setCursor(1);
   }
   const goArchitecture = () => {
     navigate(`/auction/${type}/architecture`);
+    setCursor(1);
   }
   const goCalligraphy = () => {
     navigate(`/auction/${type}/calligraphy`);
+    setCursor(1);
   }
   const goPainting = () => {
     navigate(`/auction/${type}/painting`);
+    setCursor(1);
   }
 
   useEffect(() => {

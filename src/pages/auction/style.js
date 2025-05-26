@@ -74,7 +74,6 @@ S.CategoryContainer = styled.div`
 
 S.CategoryWrapper = styled.div`
   display: flex;
-  margin: 64px 0 0 0;
   justify-content: center;
 `
 
