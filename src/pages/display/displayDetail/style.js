@@ -1,6 +1,5 @@
 import styled from 'styled-components'
-import { EN_H3, EN_H6, H2, H3, H5, H8 } from '../../../styles/common';
-import { Line } from '../../serviceCenter/qna/qnaSendStyle';
+import { EN_H3, EN_H6, H10, H2, H3, H5, H8 } from '../../../styles/common';
 import { Link } from 'react-router-dom';
 
 const S = {};
@@ -44,13 +43,10 @@ S.LikeButton = styled.button`
   align-items: center;
   justify-content: center;
   gap: 4px;
-  color: #EE3333;
-  background-color: #FBFCFC;
-`
-
-S.LikeIcon = styled.img`
-  width: 16px;
-  height: 16px;
+  /* color: #EE3333; */
+  /* background-color: #FBFCFC; */
+  background-color: ${(props) => (props.isLiked ? "#EE3333" : "#FBFCFC")};
+  color: ${(props) => (props.isLiked ? "#FBFCFC" : "#EE3333")};
 `
 
 S.Link = styled(Link)`
@@ -108,6 +104,7 @@ S.LikeCountWrapper = styled.div`
   height: 19px;
   color: #EE3333;
   margin: 44px 0 0 0;
+  position: relative;
 `
 
 S.LikeLabel = styled.p`
@@ -119,9 +116,27 @@ S.LikeCount = styled.p`
   ${H5}
   width: 66px;
 `
+
+S.NoticeIconWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  &:hover p {
+    display: block;
+  }
+`;
+
 S.NoticeIcon = styled.img`
   width: 16px;
   height: 16px;
+`
+
+S.Notice = styled.p`
+  ${H10}
+  display: none;
+  margin-left: 6px;
+  color: #6E7476;
 `
 
 S.ArtInfoContainer = styled.div`
@@ -196,7 +211,7 @@ S.Input = styled.textarea`
   border-radius: 2px;
   border: solid 1px #6E7476;
   resize: none;
-  background-color: #FCFBFC;
+  background-color: #FBFCFC;
   padding: 12px;
   margin: 16px 0 0 0;
   box-sizing: border-box;
@@ -233,6 +248,13 @@ S.Comment = styled.div`
 
 `
 
+S.Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  width: 1132px;
+`
+
 S.ProfileWrapper = styled.div`
   display: flex;
   gap: 8px;
@@ -249,6 +271,12 @@ S.Name = styled.div`
 
 `
 
+S.MoreIcon = styled.img`
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+`
+
 S.Content = styled.div`
   margin: 12px 0 0 0;
   ${H8}
@@ -258,6 +286,7 @@ S.LikeWrapper = styled.div`
   display: flex;
   gap: 8px;
   margin: 16px 0 0 0;
+  cursor: pointer;
 `
 
 S.LikeIcon = styled.img`
@@ -267,21 +296,130 @@ S.LikeIcon = styled.img`
 
 S.LikeCount = styled.p`
   ${EN_H6}
+
+  .unit {
+    ${H5}
+    margin: 0 0 0 2px;
+  }
+`
+
+S.MoreMenu = styled.div`
+  position: absolute;
+  /* top: 30px;  */
+  left: 1144px;
+  /* left: auto; */
+  right: 0;
+  background-color: #FBFCFC;
+  border-radius: 2px;
+  /* display: flex; */
+  /* flex-direction: column; */
+  :hover {
+    background-color: #EE3333;
+    color: #FBFCFC;
+  }
+`;
+
+
+S.Menu = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
 `
 
 S.DropdownWrapper = styled.div`
-
+  margin: 64px 0 40px 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 `
 
 S.DropdownButton = styled.div`
+  width: 60px;
+  height: 35px;
+  border-radius: 2px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${H8}
+`
 
+S.DropdownIcon = styled.img`
+  width: 16px;
+  height: 16px;
 `
 
 S.Dropdown = styled.div`
+  position: absolute;
+  top: 100px; 
+  left: auto;
+  right: 0;
+  background-color: #FBFCFC;
+  border-radius: 2px;
+  z-index: 100; 
+  display: flex;
+  flex-direction: column;
 
+  :hover {
+    background-color: #EE3333;
+    color: #FBFCFC;
+  }
 `
 
 S.Option = styled.div`
+  border: 1px solid #6E7476;
+  width: 75px;
+  height: 35px;
+  ${H8}
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`
+
+S.ModifyWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  margin-top: 16px;
+`;
+
+S.ButtonContainer = styled.div`
+  position: absolute;
+  bottom: 18px;
+  right: 12px;
+  display: flex;
+  gap: 10px;
+`;
+
+
+S.SaveButton = styled.button`
+  /* position: absolute;
+  bottom: 12px;
+  right: 12px; */
+  padding: 6px 16px;
+  background-color: #EE3333;
+  border: solid 1.2px #EE3333;
+  border-radius: 2px;
+  color: #FBFCFC;
+  ${H8}
+  width: 75px;
+  height: 35px;
+  padding: 6px 12px;
+`
+
+S.CancelButton = styled.button`
+  /* position: absolute;
+  bottom: 12px;
+  right: 12px; */
+  padding: 6px 16px;
+  background-color: #FBFCFC;
+  border: solid 1.2px #EE3333;
+  border-radius: 2px;
+  color: #EE3333;
+  ${H8}
+  width: 75px;
+  height: 35px;
+  padding: 6px 12px;
 `
 
 

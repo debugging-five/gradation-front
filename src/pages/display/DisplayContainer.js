@@ -47,7 +47,7 @@ const DisplayContainer = () => {
 
     getDisplayList()
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         setDisplay(res.posts)
         setIsLoading(false)
         setIsError(false)

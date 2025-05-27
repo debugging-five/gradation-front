@@ -1,5 +1,6 @@
-import styled from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 import { EN_H3, H10, H2, H3, H4, H5, H7, H8 } from '../../../styles/common';
+import Swiper from 'swiper';
 
 const S = {};
 
@@ -28,7 +29,7 @@ S.Form = styled.div`
   gap: 120px;
 `
 
-S.FileWrapper = styled.div`
+S.FileWrapper = styled.label`
   width: 560px;
   height: 560px;
   background-color: #D9D9D9;
@@ -46,6 +47,7 @@ S.File = styled.input`
 
 S.IconWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 `
@@ -55,6 +57,17 @@ S.Icon = styled.img`
   height: 56px;
   margin: 0 0 32px 0;
 `
+
+// S.SwiperWrapper = styled.div`
+//   .swiper-button-prev,
+//   .swiper-button-next {
+//     color: red;
+//     width: 30px;
+//     height: 30px;
+//   }
+// `;
+
+
 
 S.H5 = styled.p`
   ${H5}
@@ -165,14 +178,6 @@ S.H4 = styled.p`
   color : #FBFCFC;
 `
 
-
-S.Icon = styled.img`
-  width : 16px;
-  height : 10px;
-  margin: 0 8px 12px 0;
-  cursor: pointer;
-`
-
 S.Warning = styled.p`
   ${H10}
   color: #E49804;
@@ -193,8 +198,58 @@ S.InputBox = styled.textarea`
   background-color: #FBFCFC;
   outline: none;
   padding: 12px;
+  resize: none;
   ${H8}
 `
+// 드롭다운
+S.DropdownWrapper = styled.div`
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  
+`
 
+S.DropdownButton = styled.div`
+`
 
+S.OptionList = styled.div`
+  position: absolute;
+  /* left: 0; */
+  top: 645px;
+  left: 810px;
+  /* right: auto; */
+  width: 75px;
+  border: solid 1px #6E7476;
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
+  background-color: #FCFBFB;
+  border-radius: 2px;
+`
+
+S.Option = styled.div`
+  height: 35px;
+  width: 75px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    background-color: #EE3333;
+    color: #FBFCFC;
+  }
+`
+
+S.H8 = styled.p`
+  ${H8}
+  color: ${({ selected }) => (selected ? '#333333' : '#6E7476')}
+
+`
+
+S.DropdownIcon = styled.img`
+  width: 16px;
+  height: 16px;
+  margin: 0 0 0 4px;
+`
 export default S;
