@@ -42,11 +42,21 @@ export const BarContent = styled(NavLink)`
   }
 `;
 
+export const ProfileBox = styled.div`
+  display : flex;
+  padding-bottom: 40px;
+`;
+export const ProfileText = styled.div`
+  font-size: 21px;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+`;
+
 export const ImageBox = styled.div`
   display : flex;
   align-items: center;
-  margin-bottom: 36px;
-  gap: 40px;
+  gap: 20px;
   font-size: 21px;
   font-weight: bold;
 `;
@@ -67,6 +77,6 @@ export const CameraImage = styled.img`
   height: 20px;
   cursor: pointer;
   position: relative;
-  top: 28px;
-  left: -156px;
+  top: 30px;
+  left: -44px;
 `;

@@ -77,7 +77,7 @@ const AuctionModal = ({
                 }
               }
 
-              if(formDatas.price < (price.auctionBiddingMinimumPrice || Math.ceil(auction?.auctionStartPrice * 1.1 / 1000) * 1000)){
+              if(formDatas.biddingPrice < price.auctionBiddingMinimumPrice || formDatas.biddingPrice < auction?.auctionStartPrice){
                 alert("응찰가는 반드시\n최소 응찰가 이상이어야 합니다.");
                 setIsPriceUpdate(!isPriceUpdate)
                 return

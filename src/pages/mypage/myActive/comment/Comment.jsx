@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import * as S from '../../style';
-import { NavLink } from 'react-router-dom';
 
 const Comment = () => {
   const currentUser = useSelector(state => state.user.currentUser);
@@ -21,7 +20,7 @@ const Comment = () => {
     };
 
     fetchComments();
-  }, []);
+  }, [currentUser]);
 
   return (
     <S.MainWrapper>
@@ -45,11 +44,11 @@ const Comment = () => {
               <S.TitleNavigate to={`/display/detail/${comment.artId}`} >
                 <S.Content>{comment.commentContent || '댓글 내용 없음'}</S.Content>
               </S.TitleNavigate>
-              <S.Emptybox>{comment.commentDat || '-'}</S.Emptybox>
+              <S.Emptybox>{new Date(comment.commentDate|| '-').toLocaleDateString('ko-KR')}</S.Emptybox>
             </S.ContentBox>
           ))
         ) : (
-          <p>작성한 댓글이 없습니다.</p>
+          <div style={{ padding: "1rem", textAlign: "center" }}>작성한 댓글이 없습니다.</div>
         )}
       </S.Wrapper>
     </S.MainWrapper>
