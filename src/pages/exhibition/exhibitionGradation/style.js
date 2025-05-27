@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { H1, H5, H8, H7, EN_H3, H3, EN_H4, H6 } from "../../../styles/common";
+import { H1, H5, H8, H7, EN_H3, H3, EN_H4 } from "../../../styles/common";
 import { SwiperSlide } from "swiper/react";
 import { NavLink } from "react-router-dom";
 
@@ -150,14 +150,11 @@ S.Date = styled.p`
 S.LastExhibition = styled.div`
   ${H8}
   margin-top: 40px;
-
-  div {
-    margin-bottom: 20px
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 
   p {
-    display: inline-block;
-    padding: 0.2em 0;
     transform-origin: left top;
     transition: transform 0.4s ease;
   }
