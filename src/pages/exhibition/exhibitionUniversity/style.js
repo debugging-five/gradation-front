@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import { H10, H6, H8, H9 } from '../../../styles/common';
+import { SwiperSlide } from 'swiper/react';
 const primary = "#EE3333";
 const gray900 = "#6E7476";
+const gray500 = "#C0C5C7";
 const black = "#333333";
 const white = "#FFFFFF"
 
@@ -16,10 +18,15 @@ S.Map = styled.div`
   height: 425px;
   border: 1px solid ${black};
   margin-top: 84px;
+  text-align: center;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: relative;
+  overflow: visible;
+  
+  #map {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 S.Wrap = styled.div`
@@ -95,7 +102,7 @@ S.SearchBox = styled.div`
     height: 32px;
     border: 1px solid ${gray900};
     border-radius: 3px;
-    padding: 0px 8px;
+    padding: 0 32px 0 8px;
   }
 `;
 
@@ -108,9 +115,7 @@ S.SearchIcon = styled.img`
 S.ImgWrap = styled.div`
   width: 558px;
   height: 444px;
-  border: 1px solid ${black};
   margin-left: auto;
-  /* border-radius: 20px; */
 `
 
 S.ContentWrap = styled.div`
@@ -185,7 +190,7 @@ S.UniversityLogoBox = styled.div`
   width: 128px;
   height: 128px;
   border-radius: 10px;
-  border: 1px solid ${black};
+  border: 1px solid ${gray500};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -244,7 +249,7 @@ S.VisitButton = styled.button`
   width: 196px;
   height: 28px;
   background-color: ${white};
-  border: 1px solid ${black};
+  border: 1px solid ${gray900};
   border-radius: 3px;
   display: flex;
   justify-content: center;
@@ -277,6 +282,14 @@ S.heart = styled.img`
   width: 16px;
   height: 16px;
 `
+
+S.SwiperSlide = styled(SwiperSlide)`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 
 export default S;

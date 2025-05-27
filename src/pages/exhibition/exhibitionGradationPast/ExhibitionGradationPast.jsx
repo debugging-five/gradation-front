@@ -7,7 +7,7 @@ const ExhibitionGradationPast = () => {
 
   const [arts, setArt] = useState([]);
   const { id: exhibitionId } = useParams();
-  const [cursor, setCursor] = useState(1);
+  // const [cursor, setCursor] = useState(1);
 
   useEffect(() => {
     const fetchArt = async () => {
