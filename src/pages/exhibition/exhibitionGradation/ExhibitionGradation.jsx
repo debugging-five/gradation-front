@@ -154,11 +154,13 @@ useEffect(() => {
 
         <S.MapWrap>
 
-          <S.Map id="map" onClick={() => {
-            const query = info.gradation.gradationExhibitionRealAddress;
-            const url = `https://map.kakao.com/?q=${encodeURIComponent(query)}`;
-            window.open(url, '_blank');
-          }} />
+          <S.Map id="map" 
+          // onClick={() => {
+          //   const query = info.gradation.gradationExhibitionRealAddress;
+          //   const url = `https://map.kakao.com/?q=${encodeURIComponent(query)}`;
+          //   window.open(url, '_blank');
+          // }} 
+          />
           
           <div>
             <S.InfoDetail>

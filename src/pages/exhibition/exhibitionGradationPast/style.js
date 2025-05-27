@@ -26,9 +26,9 @@ S.TitleWrap = styled.div`
 `
 
 S.Title = styled.h1`
-	${H3};
-	margin-bottom :7px;
-`	
+   ${H3};
+   margin-bottom :7px;
+`   
 S.Container = styled.div`
   width: 100%;
   margin: 0 auto;
