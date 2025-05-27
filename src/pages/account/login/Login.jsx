@@ -56,7 +56,9 @@ const Login = () => {
         method : "POST",
         headers : {
           "Content-Type" : "application/json"
-        }, body : JSON.stringify(userVO)
+        },
+        credentials: "include", 
+        body : JSON.stringify(userVO)
       })
         .then((res) => {
           if(!res.ok){

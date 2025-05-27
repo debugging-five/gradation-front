@@ -3,24 +3,40 @@ import S from './style';
 import SubButton from '../../../components/button/SubButton';
 import PrimaryButton from '../../../components/button/PrimaryButton';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
-
+import { useRef, useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
+import { useNavigate } from 'react-router-dom';
 
 const DisplayRegistration = () => {
-  const { register, handleSubmit, formState: {isSubmitting, errors} } = useForm({mode: "onBlur"});
+  const { register, handleSubmit, setValue, formState: {isSubmitting, errors} } = useForm({mode: "onBlur"});
   const { currentUser } = useSelector((state) => state.user);
   const userId = currentUser.id;
   const [thumbnailUrls, setThumbnailUrls] = useState([]);
   const [selectFiles, setSelectFiles] = useState([]);
+  const navigate = useNavigate();
+
+  const categoryList = ["한국화", "조각", "공예", "건축", "서예", "회화"]
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+    setIsDropdownOpen(false);
+    setValue("artCategory", category)
+  };
 
   const handleThumbnailImage = async (e) => {
     const files = Array.from(e.target.files);
     setSelectFiles(files)
 
-    const previewUrls = files.map(file => URL.createObjectURL(file));
+  const previewUrls = files.map(file => URL.createObjectURL(file));
     setThumbnailUrls(previewUrls); 
   };
 
+  const handleCancel = () => {
+    navigate(-1);
+  }
 
   return (
     <form encType='multipart/form-data' autoComplete="off" onSubmit={handleSubmit(async (data) => {
@@ -96,14 +112,33 @@ const DisplayRegistration = () => {
         <S.Form>
           <S.FileWrapper>
             <S.File type="file" accept="image/*" multiple {...register("files")}
-            onChange={handleThumbnailImage} />
-            {!thumbnailUrls && (
+              onChange={handleThumbnailImage} />
+            {thumbnailUrls.length === 0 && (
               <S.IconWrapper>
                 <S.Icon src={"/assets/images/icon/add.png"} alt="업로드" />
                 <S.H5>첨부파일 업로드</S.H5>
               </S.IconWrapper>
             )}
 
+            {thumbnailUrls.length > 0 && (
+              <Swiper
+                modules={[Navigation, Pagination]}
+                navigation
+                pagination={{ clickable: true }}
+                spaceBetween={10}
+                slidesPerView={1}
+                style={{width: "100%", height: "100%"}} >
+                {thumbnailUrls.map((url, i) => (
+                  <SwiperSlide key={i}>
+                    <img src={url} alt={`previewImg${i}`}
+                      style={{ width: "100%", height: "100%",
+                      objectFit: "contain",
+                      // objectFit: "cover",
+                      }}/>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            )}
           </S.FileWrapper>
           <S.InputContainer>
             <S.BorderWrapper>
@@ -145,7 +180,25 @@ const DisplayRegistration = () => {
                 <S.InputWrapper>
                   <S.Label>
                     <S.H7>작품 분류<span>*</span></S.H7>
-                    <S.Input type='text' placeholder='작품 분류를 선택하세요.'
+                    <S.DropdownWrapper onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+                      <S.DropdownButton>
+                        <S.H8 selected={selectedCategory}>
+                          {selectedCategory || '작품 분류를 선택하세요.'}
+                        </S.H8>
+                      </S.DropdownButton>
+                      <S.DropdownIcon src="/assets/images/icon/down.png" alt="드롭다운" />
+                    </S.DropdownWrapper>
+
+                    {isDropdownOpen && (
+                      <S.OptionList>
+                        {categoryList.map((category) => (
+                          <S.Option key={category} onClick={() => handleCategorySelect(category)}>
+                            {category}
+                          </S.Option>
+                        ))}
+                      </S.OptionList>
+                    )}
+                    <S.Input type='hidden' value={selectedCategory}
                     {...register("artCategory", {
                       required : true,
                     })}
@@ -232,7 +285,7 @@ const DisplayRegistration = () => {
       </S.FormWrapper>
 
       <S.ButtonWrapper>
-        <SubButton>취소</SubButton>
+        <SubButton onClick={handleCancel}>취소</SubButton>
         <PrimaryButton disabled={isSubmitting}>등록</PrimaryButton>
       </S.ButtonWrapper>
     </S.Container>
