@@ -5,26 +5,24 @@ import { useSelector } from 'react-redux';
 
 const DisplayDetail = () => {
   const { id } = useParams();
-  const { isLoading, isError } = useOutletContext();
-  const [post, setPost] = useState(null);
-  const [text, setText] = useState("");
-  const [comments, setComments] = useState([]);
-  const [cursor, setCursor] = useState(1);
-  const [commentOrder, setCommentOrder] = useState('date');
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [modifyCommentId, setModifyCommentId] = useState(null);
+  const { isLoading, isError } = useOutletContext()
+  const [post, setPost] = useState(null)
+  const [text, setText] = useState("")
+  const [comments, setComments] = useState([])
+  const [cursor, setCursor] = useState(1)
+  const [commentOrder, setCommentOrder] = useState('date')
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [modifyCommentId, setModifyCommentId] = useState(null)
   const [modifyCommentContent, setModifyCommentContent] = useState("")
   const [isLiked, setIsLiked] = useState(false)
   const [openMenuId, setOpenMenuId] = useState(null)
-
-  // const { currentUser } = useOutletContext();
 
   const { currentUser } = useSelector((state) => state.user);
   // console.log(currentUser)
   
   const navigate = useNavigate()
   const handleOrder = (order) => {
-    setCommentOrder(order);
+    setCommentOrder(order)
     setIsDropdownOpen(false)
   }
 
@@ -277,7 +275,9 @@ const DisplayDetail = () => {
         <S.LeftWrapper>
           <S.ArtImg src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${post.artImgName}?filePath=${post.artImgPath}`} alt={post.artTitle}/>
           <S.ButtonWrapper>
-            <S.LikeButton className="button" onClick={isLiked ? deleteLike : registerLike} $isLiked={isLiked}>
+            <S.LikeButton className="button"
+              onClick={isLiked ? deleteLike : registerLike}
+              $isLiked={isLiked}>
               좋아요
               <S.LikeIcon src={'/assets/images/icon/heart.png'} alt="좋아요"/>
             </S.LikeButton>
@@ -340,6 +340,7 @@ const DisplayDetail = () => {
           </S.CountButtonWrapper>
         </S.InputWrapper>
 
+        {/* 댓글 드롭다운 */}
         <S.Menu>
           <S.DropdownWrapper onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
             <S.DropdownButton>
