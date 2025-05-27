@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Outlet, useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import S from './style';
+import { useSelector } from 'react-redux';
 
 const DisplayCategory = ({props}) => {
   const navigate = useNavigate();
+  const { isLogin, currentUser } = useSelector((state) => state.user);
+  console.log(currentUser)
   
   const { category } = useParams();
   const { order, setOrder, cursor, setCursor, keyword, setKeyword, isLoading, isError, display } = useOutletContext();
@@ -32,6 +35,14 @@ const DisplayCategory = ({props}) => {
     popular: "좋아요순",
     comment: "댓글순"
 };
+
+const handleUpload = () => {
+  if(!isLogin) {
+    navigate("/login")
+    
+  }
+
+}
 
 
   const goKorean = () => {
