@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { EN_H1, EN_H2, H10, H8 } from '../../styles/common';
+import { EN_H2, H10, H3, H8 } from '../../styles/common';
 import { Link } from 'react-router-dom';
 const primary = "#EE3333";
 const gray100 = "#FBFCFC";
@@ -17,7 +17,6 @@ S.Link = styled(Link)`
 
 S.EN_H2 = styled.p`
   ${EN_H2}
-  margin-top: 133px;
 `
 
 S.H8 = styled.p`
@@ -177,7 +176,7 @@ S.PagenationWrapper = styled.div`
 S.PagenationButton = styled.div`
   width: 9px;
   height: 20px;
-  color: ${(props) => (props.active ? '#FF3333' : '#6E7476')};
+  color: ${(props) => (props.$active ? primary : gray900)};
   cursor: pointer;
   display: flex;
   align-items: center; 
@@ -192,6 +191,18 @@ S.PagenationIcon = styled.img`
   width: 20px;
   height: 20px;
   cursor: pointer;
+`
+
+S.NotFoundDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+`
+
+S.NotFoundH3 = styled.p`
+  ${H3}
+  color: ${gray500};
 `
 
 

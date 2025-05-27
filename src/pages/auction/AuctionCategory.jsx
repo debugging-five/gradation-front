@@ -144,6 +144,10 @@ const AuctionCategory = () => {
     }
   }
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [cursor])
+
   if(pageLength){
     return (
       <S.CategoryContainer>
@@ -219,25 +223,29 @@ const AuctionCategory = () => {
             </S.Dropdown>
           )}
         </S.Menu>
-        <Outlet context={{ 
+        {auction.contents === 0 ? <S.NotFoundDiv><S.NotFoundH3>조회된 작품이 없습니다</S.NotFoundH3></S.NotFoundDiv> : 
+
+        <div>
+          <Outlet context={{ 
             isLoading, isError,
             auction
-        }}/>
-        
-        <S.PagenationWrapper>
-          <S.PagenationIcon src='/assets/images/icon/left.png' onClick={minusLargeCursor}/>
-            {pageLength.map((datas, i) => (
-              i === largeCursor ?
-              datas.map((data, i) => (
-                data !== null?
-                <S.PagenationButton key={i} onClick={() => setCursor((i+1))} active={cursor === data+1}>
-                {data + 1}
-                </S.PagenationButton> : ''
-              )) : ''
-            ))}
-            
-          <S.PagenationIcon src='/assets/images/icon/right.png' onClick={plusLargeCursor}/>
-        </S.PagenationWrapper>
+          }}/>
+          <S.PagenationWrapper>
+            <S.PagenationIcon src='/assets/images/icon/left.png' onClick={minusLargeCursor}/>
+              {pageLength.map((datas, i) => (
+                i === largeCursor ?
+                datas.map((data, i) => (
+                  data !== null?
+                  <S.PagenationButton key={i} onClick={() => setCursor(i+1)} $active={cursor === data + 1}>
+                  {data + 1}
+                  </S.PagenationButton> : ''
+                )) : ''
+              ))}
+              
+            <S.PagenationIcon src='/assets/images/icon/right.png' onClick={plusLargeCursor}/>
+          </S.PagenationWrapper>
+        </div>
+        }
       </S.CategoryContainer>
     );
   }
