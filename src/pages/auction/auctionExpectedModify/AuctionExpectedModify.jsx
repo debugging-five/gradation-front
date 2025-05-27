@@ -15,6 +15,8 @@ const AuctionExpectedModify = () => {
   const { register, handleSubmit, getValues, formState: { isSubmitting, isSubmitted, errors } } = useForm({ mode: "onChange", shouldFocusError: false });
   const [auctionVO, setAuctionVO] = useState({});
   const [back, setBack] = useState(false);
+  const [inputMinWidth, setInputMinWidth] = useState("")
+  const [inputMaxWidth, setInputMaxWidth] = useState("")
 
   useEffect(() => {
     const fetchAuction = async () => {
@@ -166,11 +168,17 @@ const AuctionExpectedModify = () => {
                       {...register("auctionEstimatedMinPrice", {
                         required: true,
                       })}
-                      onChange={(e) =>
+                      inputMinWidth={inputMinWidth}
+                      onChange={(e) => {
                         setAuctionVO(prev => ({ ...prev, auctionEstimatedMinPrice: e.target.value }))
-                      }
+                        setInputMinWidth((prev) => {
+                          let width = e.target.value.length * 10 + "px";
+                          
+                          return e.target.value.length === 0 ? "160px" : (e.target.value.length > 20 ? "200px" : width);
+                        })
+                      }}
                       autoComplete="off"
-                      />
+                    />
                     <span>~</span>
                     <S.InputMax
                       type="text"
@@ -179,9 +187,14 @@ const AuctionExpectedModify = () => {
                       {...register("auctionEstimatedMaxPrice", {
                         required: true,
                       })}
-                      onChange={(e) =>
+                      inputMaxWidth={inputMaxWidth}
+                      onChange={(e) => {
                         setAuctionVO(prev => ({ ...prev, auctionEstimatedMaxPrice: e.target.value }))
-                      }
+                        setInputMaxWidth((prev) => {
+                          let width = e.target.value.length * 10 + "px";
+                          return e.target.value.length === 0 ? "160px" : (e.target.value.length > 20 ? "200px" : width);
+                        })
+                      }}
                       autoComplete="off"
                       />
                   </S.InputBoxInfo>
@@ -200,9 +213,14 @@ const AuctionExpectedModify = () => {
                     {...register("auctionEstimatedMinPrice", {
                       required: true,
                     })}
-                    onChange={(e) =>
+                    inputMinWidth={inputMinWidth}
+                    onChange={(e) => {
                       setAuctionVO(prev => ({ ...prev, auctionEstimatedMinPrice: e.target.value }))
-                    }
+                      setInputMinWidth((prev) => {
+                        let width = e.target.value.length * 10 + "px";
+                        return e.target.value.length === 0 ? "160px" : (e.target.value.length > 20 ? "200px" : width);
+                      })
+                    }}
                     autoComplete="off"
                   />
                   <span>~</span>
@@ -213,9 +231,14 @@ const AuctionExpectedModify = () => {
                     {...register("auctionEstimatedMaxPrice", {
                       required: true,
                     })}
-                    onChange={(e) =>
+                    inputMaxWidth={inputMaxWidth}
+                    onChange={(e) => {
                       setAuctionVO(prev => ({ ...prev, auctionEstimatedMaxPrice: e.target.value }))
-                    }
+                      setInputMaxWidth((prev) => {
+                        let width = e.target.value.length * 10 + "px";
+                        return e.target.value.length === 0 ? "160px" : (e.target.value.length > 20 ? "200px" : width);
+                      })
+                    }}
                     autoComplete="off"
                   />
                 </S.InputBoxInfo>

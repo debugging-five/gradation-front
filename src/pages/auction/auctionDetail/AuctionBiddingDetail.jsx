@@ -22,12 +22,12 @@ const AuctionBiddingDetail = ({auction, timeLeft}) => {
 
 	useEffect(() => {
 		if(isBiddingConfirm){
-			navigate(`/auction/bidding/${category}/detail/${id}`)
+			navigate(`/auction/bidding/${category}/detail/${id}`, {replace: true})
 		}else if(isExpectedConfirm){
-			navigate(`/auction/expected/${category}/detail/${id}`)
+			navigate(`/auction/expected/${category}/detail/${id}`, {replace: true})
 		}else {
 			// 경매 완료
-			navigate(`/auction/complete/${category}/detail/${id}`)
+			navigate(`/auction/complete/${category}/detail/${id}`, {replace: true})
 		}
 	}, [id])
 
