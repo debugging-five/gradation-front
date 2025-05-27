@@ -160,7 +160,7 @@ const MyPageContainer = () => {
               </S.BarContent>
               <S.BarContent
                 as={NavLink}
-                to="admin/form-management"
+                to="admin/form-management/pending/display"
                 end
                 onClick={() => window.scrollTo(0, 0)}
               >

@@ -4,53 +4,45 @@ import S from "./style";
 
 const FormManagementLayout = () => {
   const location = useLocation();
-
-  // 현재 경로에서 pending / completed 구분
   const isPending = location.pathname.includes("/pending");
   const isCompleted = location.pathname.includes("/completed");
 
+  // 탭 상태에 따라 prefix 동적으로 설정
+  const tabPrefix = isPending ? "pending" : "completed";
+
   return (
     <S.Container>
-      <S.PageTitle>관리자 / 양식 관리</S.PageTitle>
-
       <S.TabWrapper>
-        <S.TabButton
-          to="/mypage/admin/form-management/pending/display"
-          className={({ isActive }) => (isPending ? "active" : "")}
-        >
-          미승인
-        </S.TabButton>
-        <S.TabButton
-          to="/mypage/admin/form-management/completed/display"
-          className={({ isActive }) => (isCompleted ? "active" : "")}
-        >
-          승인완료
-        </S.TabButton>
+        <S.TabBox>
+          <S.TabButton to="/mypage/admin/form-management/pending/display"
+            $active={isPending}>
+            미승인
+          </S.TabButton>
+          <S.TabButton to="/mypage/admin/form-management/completed/display"
+            $active={isCompleted}>
+            승인완료
+          </S.TabButton>
+        </S.TabBox>
       </S.TabWrapper>
 
       <S.CategoryWrapper>
-        <S.Category
-          to="/mypage/admin/form-management/pending/display"
-          className={({ isActive }) => (isActive ? "active" : "")}
-        >
+        <S.Category to={`/mypage/admin/form-management/${tabPrefix}/display`}
+          className={({ isActive }) => (isActive ? "active" : "")}>
           display
         </S.Category>
-        <S.Category
-          to="/mypage/admin/form-management/pending/exhibition"
-          className={({ isActive }) => (isActive ? "active" : "")}
-        >
+        <S.Separator>|</S.Separator>
+        <S.Category to={`/mypage/admin/form-management/${tabPrefix}/exhibition`}
+          className={({ isActive }) => (isActive ? "active" : "")}>
           exhibition
         </S.Category>
-        <S.Category
-          to="/mypage/admin/form-management/pending/upcycling"
-          className={({ isActive }) => (isActive ? "active" : "")}
-        >
+        <S.Separator>|</S.Separator>
+        <S.Category to={`/mypage/admin/form-management/${tabPrefix}/upcycling`}
+          className={({ isActive }) => (isActive ? "active" : "")}>
           upcycling
         </S.Category>
-        <S.Category
-          to="/mypage/admin/form-management/pending/university"
-          className={({ isActive }) => (isActive ? "active" : "")}
-        >
+        <S.Separator>|</S.Separator>
+        <S.Category to={`/mypage/admin/form-management/${tabPrefix}/university`}
+          className={({ isActive }) => (isActive ? "active" : "")}>
           university
         </S.Category>
       </S.CategoryWrapper>
@@ -59,5 +51,6 @@ const FormManagementLayout = () => {
     </S.Container>
   );
 };
+
 
 export default FormManagementLayout;

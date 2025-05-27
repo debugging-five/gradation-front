@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import S from "./style";
+import { NavLink, useParams } from "react-router-dom";
+import S from "./FormManagementCompletedListStyle";
 
 const FormManagementCompletedList = () => {
   const { category } = useParams();
@@ -31,17 +31,17 @@ const FormManagementCompletedList = () => {
   useEffect(() => {
     if (!isAdmin) return;
 
-    fetch(`http://localhost:10000/admin/api/approval/${category}/pending`, {
+    fetch(`http://localhost:10000/admin/api/approval/${category}/completed`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
       .then((data) => {
         const approved = data.filter((item) => {
           switch (category) {
-            case "display": return item.artStatus === "승인";
-            case "exhibition": return item.universityExhibitionStatus === "승인";
-            case "upcycling": return item.upcyclingStatus === "승인";
-            case "university": return item.userUniversityStatus === "승인";
+            case "display": return item.artStatus === "승인완료";
+            case "exhibition": return item.universityExhibitionStatus === "승인완료";
+            case "upcycling": return item.upcyclingStatus === "승인완료";
+            case "university": return item.userUniversityStatus === "승인완료";
             default: return false;
           }
         });
@@ -115,23 +115,35 @@ const FormManagementCompletedList = () => {
       }
     };
 
-    const getDate = () => {
-      const rawDate =
-        item.artEndDate ||
-        item.universityExhibitionStartDate ||
-        item.upcyclingDate ||
-        item.userUniversityDate ||
-        "";
-      if (!rawDate) return "";
-      const [year, month, day] = rawDate.split("-");
-      return `${year.slice(2)}.${month}.${day}`;
-    };
+  const getDate = () => {
+    const rawDate =
+      item.artEndDate ||
+      item.universityExhibitionStartDate ||
+      item.upcyclingDate ||
+      item.userUniversityDate ||
+      "";
+    console.log("awDate:", rawDate, typeof rawDate);
+    console.log("item:", item);
+
+
+  if (!rawDate) return "";
+  // 문자열 강제 변환 (Date 객체일 가능성까지 커버)
+  const dateString = typeof rawDate === "string" ? rawDate : new Date(rawDate).toISOString();
+    console.log("dateString:", dateString);
+  const [year, month, day] = dateString.slice(0, 10).split("-");
+  return `${year.slice(2)}.${month}.${day}`;
+};
 
     return (
       <S.TableRow key={item.id}>
-        <S.Cell>{startIndex + index + 1}</S.Cell>
-        <S.Cell>{getTitle()}</S.Cell>
-        <S.Cell>{getDate()}</S.Cell>
+        <S.FormNumberCell>{startIndex + index + 1}</S.FormNumberCell>
+        <S.FormTitleCell
+          as={NavLink}
+          to={`/mypage/admin/form-management/detail/${category}/${item.id}`}
+        >{getTitle()}
+        </S.FormTitleCell>
+        <S.FormDateCell>{getDate()}
+        </S.FormDateCell>
       </S.TableRow>
     );
   };

@@ -61,7 +61,6 @@ import AdminQnaCompletedList from "../pages/admin/qna/AdminQnaCompletedList";
 import AdminQnaAnswer from "../pages/admin/qna/AdminQnaAnswer";
 import FormManagementLayout from "../pages/admin/formManagement/FormManagementLayout";
 import FormManagementDetailContainer from "../pages/admin/formManagement/detail/FormManagementDetailContainer";
-import FormManagementCategory from "../pages/admin/formManagement/FormManagementCategory";
 import UserInfoContainer from "../pages/mypage/myInfo/userInfo/UserInfoContainer";
 import ChangePasswordContainer from "../pages/mypage/myInfo/changePassword/ChangePasswordContainer";
 import AuctionLayout from "../pages/auction/AuctionLayout";
@@ -98,10 +97,9 @@ import DisplayDetail from "../pages/display/displayDetail/DisplayDetail";
 import UserManagementLayout from "../pages/admin/userManagement/UserManagementLayout";
 import UserManagementPendingList from "../pages/admin/userManagement/UserManagementPendingList";
 import UserManagementCompletedList from "../pages/admin/userManagement/UserManagementCompletedList";
-import FormManagementPendingList from "../pages/admin/formManagement/list/FormManagementPendingList.jsx";
+import FormManagementPendingList from "../pages/admin/formManagement/list/FormManagementPendingList";
 import FormManagementCompletedList from "../pages/admin/formManagement/list/FormManagementCompletedList";
 
-console.log("🚨 FormManagementPendingList:", FormManagementPendingList);
 const router = createBrowserRouter([
   {
     path: "/",
@@ -512,23 +510,17 @@ const router = createBrowserRouter([
                         element: <FormManagementLayout />,
                         children: [
                           {
-                            path: "",
-                            element: <FormManagementCategory />,
-                            children: [
-                              {
-                                path: "pending/:category",
-                                element: <FormManagementPendingList />,
-                              },
-                              {
-                                path: "completed/:category",
-                                element: <FormManagementCompletedList />,
-                              },
-                            ],
+                            path: "pending/:category",
+                            element: <FormManagementPendingList />,
+                          },
+                          {
+                            path: "completed/:category",
+                            element: <FormManagementCompletedList />,
                           },
                           {
                             path: "detail/:type/:id",
                             element: <FormManagementDetailContainer />,
-                          },
+                          }
                         ],
                       },
                       {

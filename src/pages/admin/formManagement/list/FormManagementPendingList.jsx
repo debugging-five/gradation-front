@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import S from "./style";
+import { NavLink, useParams } from "react-router-dom";
+import S from "./FormManagementPendingListStyle";
 
 const FormManagementPendingList = () => {
   const { category } = useParams();
@@ -36,11 +36,13 @@ const FormManagementPendingList = () => {
     })
     .then((res) => res.json())
     .then((data) => {
-      if (!Array.isArray(data.data)) {
-        console.error("❌ 응답 data가 배열이 아님:", data);
+      console.log("응답 받은 데이터:", data);
+      if (!Array.isArray(data)) {
+        console.error("진짜 배열이 아님:", data);
         return;
       }
-      setList(data.data); // ✅ data.data로 설정
+      console.log("배열임, setList 진입");
+      setList(data);
     })
       .catch((err) => console.error("데이터 로딩 실패:", err));
   }, [isAdmin, category, token]);
@@ -108,18 +110,16 @@ const FormManagementPendingList = () => {
         case "university": return item.userName;
         default: return "";
       }
-      
     };
 
-    const getDate = () => {
-  const rawDate =
-    item.artEndDate ||
-    item.universityExhibitionStartDate ||
-    item.upcyclingDate ||
-    item.userUniversityDate ||
-    "";
-
-    console.log("🟢 rawDate:", rawDate, typeof rawDate);
+  const getDate = () => {
+    const rawDate =
+      item.artEndDate ||
+      item.universityExhibitionStartDate ||
+      item.upcyclingDate ||
+      item.userUniversityDate ||
+      "";
+    console.log("awDate:", rawDate, typeof rawDate);
 
   if (!rawDate) return "";
   // 문자열 강제 변환 (Date 객체일 가능성까지 커버)
@@ -132,9 +132,14 @@ const FormManagementPendingList = () => {
 
     return (
       <S.TableRow key={item.id}>
-        <S.Cell>{startIndex + index + 1}</S.Cell>
-        <S.Cell>{getTitle()}</S.Cell>
-        <S.Cell>{getDate()}</S.Cell>
+        <S.FormNumberCell>{startIndex + index + 1}</S.FormNumberCell>
+        <S.FormTitleCell
+          as={NavLink}
+          to={`/mypage/admin/form-management/detail/${category}/${item.id}`}
+        >{getTitle()}
+        </S.FormTitleCell>
+        <S.FormDateCell>{getDate()}
+        </S.FormDateCell>
       </S.TableRow>
     );
   };
