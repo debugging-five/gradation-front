@@ -53,7 +53,8 @@ const AuctionCategory = () => {
 
   const dropDownOption = {
     "" : "등록순",
-    popular: "좋아요순"
+    popular: "좋아요순",
+    date: "시작일순"
   }
 
 
@@ -107,9 +108,8 @@ const AuctionCategory = () => {
     }
     getAuctions().then((data) => {
       setAuction(data)
-      let pages = Math.floor((data.contents + 1) / 15) + 1
-      if(data.contents % 15 === 0) { pages-- }
-      if((data.contests + 1) % 15 === 0) { pages-- }
+      
+      let pages = data.contents === 0? 0 : (data.contents % 15 === 0? data.contents / 15 - 1 : data.contents / 15)
 
       const result = [];
       let count = 0
@@ -148,6 +148,10 @@ const AuctionCategory = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [cursor])
+
+  useEffect(() => {
+    setCursor(1)
+  }, [type])
 
   if(pageLength){
     return (
@@ -221,6 +225,7 @@ const AuctionCategory = () => {
             <S.Dropdown>
               <S.Option onClick={() => handleOrder("")}>등록순</S.Option>
               <S.Option onClick={() => handleOrder("popular")}>좋아요순</S.Option>
+              <S.Option onClick={() => handleOrder("date")}>시작일순</S.Option>
             </S.Dropdown>
           )}
         </S.Menu>
