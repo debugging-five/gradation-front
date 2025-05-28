@@ -53,7 +53,8 @@ const AuctionCategory = () => {
 
   const dropDownOption = {
     "" : "등록순",
-    popular: "좋아요순"
+    popular: "좋아요순",
+    date: "시작일순"
   }
 
 
@@ -107,8 +108,8 @@ const AuctionCategory = () => {
     }
     getAuctions().then((data) => {
       setAuction(data)
-      let pages = Math.floor((data.contents + 1) / 15) + 1
-      if(data.contents % 15 === 0) { pages-- }
+      
+      let pages = data.contents === 0? 0 : (data.contents % 15 === 0? data.contents / 15 - 1 : data.contents / 15)
 
       const result = [];
       let count = 0
@@ -147,6 +148,10 @@ const AuctionCategory = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [cursor])
+
+  useEffect(() => {
+    setCursor(1)
+  }, [type])
 
   if(pageLength){
     return (
@@ -220,6 +225,7 @@ const AuctionCategory = () => {
             <S.Dropdown>
               <S.Option onClick={() => handleOrder("")}>등록순</S.Option>
               <S.Option onClick={() => handleOrder("popular")}>좋아요순</S.Option>
+              <S.Option onClick={() => handleOrder("date")}>시작일순</S.Option>
             </S.Dropdown>
           )}
         </S.Menu>
@@ -231,18 +237,18 @@ const AuctionCategory = () => {
             auction
           }}/>
           <S.PagenationWrapper>
-            <S.PagenationIcon src='/assets/images/icon/left.png' onClick={minusLargeCursor}/>
+            <S.PagenationIcon src='/assets/images/icon/left.png' onClick={plusLargeCursor}/>
               {pageLength.map((datas, i) => (
                 i === largeCursor ?
                 datas.map((data, i) => (
                   data !== null?
-                  <S.PagenationButton key={i} onClick={() => setCursor(i+1)} $active={cursor === data + 1}>
+                  <S.PagenationButton key={i} onClick={() => setCursor(data+1)} $active={cursor === data + 1}>
                   {data + 1}
                   </S.PagenationButton> : ''
                 )) : ''
               ))}
               
-            <S.PagenationIcon src='/assets/images/icon/right.png' onClick={plusLargeCursor}/>
+            <S.PagenationIcon src='/assets/images/icon/right.png' onClick={minusLargeCursor}/>
           </S.PagenationWrapper>
         </div>
         }

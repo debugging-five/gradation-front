@@ -9,6 +9,7 @@ const AuctionDetailContainer = () => {
 
   const { id } = useParams()
   const [cursor, setCursor] = useState(1);
+  const [pages, setPages] = useState(0);
   const [list, setList] = useState([]);
   const navigate = useNavigate();
 
@@ -17,38 +18,25 @@ const AuctionDetailContainer = () => {
     const fetchList = async () => {
       const response = await fetch(`http://localhost:10000/auction/api/footer/${cursor}`);
       const data = await response.json();
-      setList(data);
+      setList(data.footerList);
+      const page = data.contents === 0? 0 : (data.contents % 4 === 0? data.contents / 4 : data.contents / 4 + 1)
+      setPages(Math.floor(page));
     };
-
     fetchList();
   }, [cursor]);
 
-  // 최대 커서 찾기
   const cursorUp = async () => {
-    const nextCursor = cursor + 1;
-    const response = await fetch(`http://localhost:10000/auction/api/footer/${nextCursor}`);
-    
-    const data = await response.json();
-      if (data.length === 0) {
-        setCursor(1);
-      } else {
-        setCursor(nextCursor);
-      }
+    if(cursor >= pages) {
+      setCursor(1)
+    }else {
+      setCursor(prev => ++prev)
+    }
   };
   const cursorDown = async () => {
-    if (cursor === 1) {
-      let tempCursor = 1;
-      let data = [];
-
-      do {
-        const response = await fetch(`http://localhost:10000/auction/api/footer/${tempCursor}`);
-        data = await response.json();
-        if (data.length === 4) tempCursor++;
-      } while (data.length === 4);
-
-      setCursor(tempCursor - 1);
-    } else {
-      setCursor(prev => prev - 1);
+    if(cursor <= 1) {
+      setCursor(pages)
+    }else {
+      setCursor(prev => --prev)
     }
   };
 
