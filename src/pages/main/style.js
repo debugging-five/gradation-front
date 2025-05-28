@@ -11,7 +11,23 @@ const warning = "#E49804";
 
 const S = {};
 
+S.Bg = styled.div`
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+  filter: grayscale(1);
+  /* background-image: url('../assets/images/icon/main-section1.png'); */
+  /* background-image: url('/assets/images/main/main_bg.jpg'); */
+  background-image: url('/assets/images/main/main_walkable_bg.jpg');
+  background-size: cover;
+  background-position: center;
+`
+
 S.VerticalSwiper = styled(Swiper)`
+  background:transparent;
   width: 100%;
   height: 100vh;
 
@@ -25,28 +41,29 @@ S.MainSection = styled.div`
   width: 100%;
   height: 100vh;
   /* padding-top: 120px; */
-  background-image: url('../assets/images/icon/main-section1.png');
-  background-size: cover;
-  background-position: center;
+  /* background-image: url('../assets/images/icon/main-section1.png'); */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: relative;
-  overflow: hidden;
-  padding: 0px;
+
+  .swiper-wrapper {
+    align-items: center;
+  }
 `;
 
 S.MainSectionTitle = styled.p`
-  font-size: 48px;
+  font-size: 34px;
   font-weight: bold;
-  margin-top: 60px;
+  margin-top: 40px;
 `
 
 S.SwiperWrap = styled.div`
   width: 100%;
-  overflow: hidden;
-  margin-top: 80px;
+  & .swiper {
+    overflow: visible;
+    padding: 0 100px;
+  }
 
   .horizontal-swiper .swiper-wrapper {
     flex-direction: row !important;
@@ -54,22 +71,23 @@ S.SwiperWrap = styled.div`
 `;
 
 S.SwiperSlide = styled(SwiperSlide)`
-  width: 320px;
-  height: 320px;
+  border-width: 4px;
+  border: 4px solid transparent;
+  border-image: linear-gradient(135deg, rgba(255, 254, 248, .8) 0%, rgba(255, 255, 255, .5) 20%, rgba(255, 255, 255, .8) 50%, rgba(200, 200, 200, .8) 100%) 1;
+  box-shadow: -4px 10px 5px rgba(0, 0, 0, 0.1);
+  width: 220px;
   background-color: #111;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
   text-align: center;
   flex-shrink: 0;
 `;
 
 S.ImgWrap = styled.div`
-  width: 320px;
-  height: 320px;
+  /* width: 320px;
+  height: 320px; */
   position: relative;
-  overflow: hidden;
   cursor: pointer;
 
   &:hover div {
@@ -102,7 +120,8 @@ S.ArtInfo = styled.div`
 `;
 
 S.ArtTitle = styled.p`
-  ${H2};
+  font-size: 18px;
+  font-weight: 400;
 `
 S.UserName = styled.p`
   ${H4};
@@ -110,7 +129,7 @@ S.UserName = styled.p`
 
 S.MainTextWrap = styled.div`
   width: 100%;
-  margin-top: 60px;
+  margin: 40px 0 100px 0;
   text-align: center;
   z-index: 2;
 `;
@@ -136,7 +155,7 @@ S.Link = styled(Link)`
   text-decoration: none;
   color: inherit;
   display: block;
-
+  margin: 0 0 100px 0;
   &:hover {
     ${S.SectionTitle} {
       cursor: pointer;
@@ -150,6 +169,7 @@ S.SectionTitleWrap = styled.div`
   align-items: center;
   width: 1160px;
   margin-bottom: 32px;
+  height: 60px;
 
   h1 {
     margin-right: 20px;
@@ -169,6 +189,16 @@ S.Banner = styled.div`
   height: 500px;
   display: flex;
   gap: 20px;
+
+  & .linear-bg {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    opacity: 0.5;
+    background: linear-gradient(to top, black, transparent);
+    width: 100%;
+    height: 50%;
+  }
 `;
 
 S.BannerText = styled.div`
@@ -185,16 +215,20 @@ S.TextGradation2 = styled.div`
 
 S.Text1 = styled.p`
   ${H2}
-  margin-bottom: 36px;
+  margin-bottom: 16px;
+  font-weight: 600;
 `
 S.Text2 = styled.p`
   ${H3}
-`
+  font-weight: 300;
+  `
 S.Text3 = styled.p`
-  ${H3}
+  ${H2};
+  margin: 0 0 16px 0;
 `
 S.Text4 = styled.p`
-  ${H2};
+  ${H3}
+  font-weight: 300;
 `
 
 export default S;
