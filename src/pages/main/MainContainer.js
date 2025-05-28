@@ -5,11 +5,10 @@ import { Autoplay, Navigation, Mousewheel, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/pagination';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const MainContainer = () => {
   const [artList, setArtList] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchArts = async () => {
@@ -20,8 +19,8 @@ const MainContainer = () => {
       return data;
     };
     fetchArts()
-      .then((res) => console.log(res))
-      .catch((error) => console.error(error));
+      // .then((res) => console.log(res))
+      // .catch((error) => console.error(error));
   }, []);
 
   return (
@@ -42,7 +41,6 @@ const MainContainer = () => {
               modules={[Navigation, Autoplay]}
               slidesPerView={'auto'}
               spaceBetween={68}
-              loop={artList.length >= 6}
               speed={3000}
               autoplay={{
                 delay: 0,
@@ -59,8 +57,8 @@ const MainContainer = () => {
                     />
                     <NavLink to={`/display/detail/${art.id}`}>
                       <S.ArtInfo>
-                        <p>{art.artTitle}</p>
-                        <p>{art.userName}</p>
+                        <S.ArtTitle>{art.artTitle}</S.ArtTitle>
+                        <S.UserName>{art.userName}</S.UserName>
                       </S.ArtInfo>
                     </NavLink>
                   </S.ImgWrap>
@@ -69,7 +67,7 @@ const MainContainer = () => {
             </Swiper>
           </S.SwiperWrap>
           <S.MainTextWrap>
-            <p>모든 작품들은 빛날 가치가 있습니다</p>
+            <S.MainSectionTitle>모든 작품들은 빛날 가치가 있습니다</S.MainSectionTitle>
           </S.MainTextWrap>
         </S.MainSection>
       </SwiperSlide>
@@ -78,7 +76,7 @@ const MainContainer = () => {
         <S.Section>
           <S.Link to="/auction/bidding/korean">
             <S.SectionTitleWrap>
-              <h1>Gradation Auction</h1>
+              <S.SectionTitle>Gradation Auction</S.SectionTitle>
               <S.Line/>
             </S.SectionTitleWrap>
             <S.Banner>
@@ -86,9 +84,9 @@ const MainContainer = () => {
                 <img src={`/assets/images/icon/main-auction.png`} alt="auction" />
               </div>
               <S.BannerText>
-                <h3>졸업작품 전문 경매 플랫폼</h3>
-                <h2>그라데이션은 미래의 창작가를</h2>
-                <h2>응원할 당신을 기다립니다.</h2>
+                <S.Text1>졸업작품 전문 경매 플랫폼</S.Text1>
+                <S.Text2>그라데이션은 미래의 창작가를</S.Text2>
+                <S.Text2>응원할 당신을 기다립니다.</S.Text2>
               </S.BannerText>
             </S.Banner>
           </S.Link>
@@ -99,7 +97,7 @@ const MainContainer = () => {
         <S.Section>
           <S.Link to="/display/korean">
             <S.SectionTitleWrap>
-              <h1>Gradation Art</h1>
+              <S.SectionTitle>Gradation Art</S.SectionTitle>
               <S.Line/>
             </S.SectionTitleWrap>
             <S.Banner>
@@ -108,14 +106,8 @@ const MainContainer = () => {
                 <img src={`/assets/images/icon/main-exhibition2.png`} alt="exhibition2" />
               </div>
               <S.BannerText>
-                <div>
-                  <h3>세상이 알지 못한</h3>
-                  <h2>숨겨진 작품들</h2>
-                </div>
-                <div style={{ marginTop: '20px' }}>
-                  <h3>꿈꾸는 청춘들을</h3>
-                  <h2>만나보세요</h2>
-                </div>
+                  <S.Text3>세상이 알지 못한 숨겨진 작품들</S.Text3>
+                  <S.Text4>꿈꾸는 청춘들을 만나보세요</S.Text4>
               </S.BannerText>
             </S.Banner>
           </S.Link>
@@ -123,10 +115,10 @@ const MainContainer = () => {
       </SwiperSlide>
 
       <SwiperSlide>
-        <S.Section style={{ marginBottom: '200px' }}>
+        <S.Section style={{ marginBottom: "200px" }}>
           <S.Link to="/upcycling">
             <S.SectionTitleWrap>
-              <h1>Gradation Upcycling</h1>
+              <S.SectionTitle>Gradation Upcycling</S.SectionTitle>
               <S.Line/>
             </S.SectionTitleWrap>
             <S.Banner>
@@ -134,10 +126,8 @@ const MainContainer = () => {
                 <img src={`/assets/images/icon/main-upcycling.png`} alt="upcycling" />
               </div>
               <S.BannerText>
-                <div>
-                  <h3>창작과 환경의 공존</h3>
-                  <h2>작은 노력이 큰 변화를 만들어 냅니다.</h2>
-                </div>
+                  <S.Text4 style={{marginBottom:"40px"}}>창작과 환경의 공존</S.Text4>
+                  <S.Text2>작은 노력이 큰 변화를 만들어 냅니다.</S.Text2>
               </S.BannerText>
             </S.Banner>
           </S.Link>
