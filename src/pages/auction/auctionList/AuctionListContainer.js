@@ -7,11 +7,6 @@ const AuctionListContainer = () => {
   
   const { type, category } = useParams();
 
-  if(!auction) {
-    return <S.H6>작품이 존재하지 않습니다.</S.H6>
-  }
-
-  
   if(auction.auctionList) {
     return (
       <S.Wrapper>

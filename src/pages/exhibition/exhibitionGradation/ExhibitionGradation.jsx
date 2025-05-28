@@ -14,7 +14,6 @@ const ExhibitionGradation = () => {
 
 
   useEffect(() => {
-
     const fetchGradationImgs = async () => {
       try {
         const response = await fetch(`http://localhost:10000/exhibitions/api/gradation/top-liked-art`);
@@ -40,7 +39,6 @@ const ExhibitionGradation = () => {
       setInfos(data);
       return data;
     };
-
     fetchGradationInfo()
       .then((res) => {
         // console.log(res)
@@ -154,11 +152,13 @@ useEffect(() => {
 
         <S.MapWrap>
 
-          <S.Map id="map" onClick={() => {
-            const query = info.gradation.gradationExhibitionRealAddress;
-            const url = `https://map.kakao.com/?q=${encodeURIComponent(query)}`;
-            window.open(url, '_blank');
-          }} />
+          <S.Map id="map" 
+          // onClick={() => {
+          //   const query = info.gradation.gradationExhibitionRealAddress;
+          //   const url = `https://map.kakao.com/?q=${encodeURIComponent(query)}`;
+          //   window.open(url, '_blank');
+          // }} 
+          />
           
           <div>
             <S.InfoDetail>

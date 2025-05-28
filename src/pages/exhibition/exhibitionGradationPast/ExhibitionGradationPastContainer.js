@@ -55,8 +55,8 @@ const ExhibitionGradationPastContainer = () => {
         </S.ListWrap>
 
           {lastExhibitions.map((exhibition) => (
-            <S.ListWrap2>
-              <S.ListItem key={exhibition.id}
+            <S.ListWrap2 key={exhibition.id}>
+              <S.ListItem 
                 onClick={() => {
                   setTitle(exhibition.gradationExhibitionTitle); 
                   navigate(`/exhibition/gradation/past/${exhibition.id}`);
