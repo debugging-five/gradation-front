@@ -11,7 +11,7 @@ const FormDisplayDetail = ({ id: propId }) => {
   const [status, setStatus] = useState("");   // 미승인/승인완료/반려 등
   const [isAdmin, setIsAdmin] = useState(false);
 
-  // 1. 관리자 인증
+  // 관리자 인증
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
     if (!token) return;
@@ -35,7 +35,7 @@ const FormDisplayDetail = ({ id: propId }) => {
       });
   }, [navigate]);
 
-  // 2. 작품 상세 데이터 호출
+  // 작품 상세 데이터 호출
   useEffect(() => {
     if (!isAdmin) return;
 
@@ -61,7 +61,7 @@ const FormDisplayDetail = ({ id: propId }) => {
     fetchDetail();
   }, [id, isAdmin]);
 
-  // 3. 승인/기각/취소 처리
+  // 승인/기각/취소 처리
   const handleApprove = async () => {
     if (!window.confirm("정말 승인 처리할까요?")) return;
     try {
@@ -73,7 +73,7 @@ const FormDisplayDetail = ({ id: propId }) => {
           Authorization: `Bearer ${token}`
         },
         body: JSON.stringify({
-          id: Number(id),
+          id,
           artStatus: "승인완료"
         })
       });
@@ -99,7 +99,7 @@ const FormDisplayDetail = ({ id: propId }) => {
           Authorization: `Bearer ${token}`
         },
         body: JSON.stringify({
-          id: Number(id),
+          id,
           artStatus: "반려"
         })
       });
@@ -140,21 +140,44 @@ const FormDisplayDetail = ({ id: propId }) => {
     }
   };
 
-  // 4. 목록 버튼
+    const getArtImgUrl = (artImgName, artImgPath) => {
+    if (!artImgName) return "/images/default-art.jpg";
+    return `http://localhost:10000/files/api/get/${artImgName}?filePath=${artImgPath}`;
+  };
+
+    const formatDate = (dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    const year = String(date.getFullYear()).slice(2);
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}.${month}.${day}`;
+  };
+
+    const renderWithLineBreaks = (text) =>
+    text.split('\n').map((line, i) => (
+      <React.Fragment key={i}>
+        {line}
+        <br />
+      </React.Fragment>
+    ));
+
+  // 목록 버튼
   const handleList = () => navigate(-1);
 
-  // 5. 로딩 처리
+  // 로딩 처리
   if (!isAdmin) return null;
   if (!data) return <div>로딩 중...</div>;
 
-  // 6. 화면 렌더링 (스타일은 예시! 실 레이아웃에 맞게 조정)
   return (
     <S.Container>
       <S.CategoryText>display</S.CategoryText>
+      
       <S.Header>
         <S.Title>작품 전시 승인 요청</S.Title>
-        <S.ApplyDate>{data.artEndDate?.slice(2, 10).replace("-", ".") || ""}</S.ApplyDate>
+        <S.ApplyDate>{formatDate(data.artEndDate)}</S.ApplyDate>
       </S.Header>
+      
       <S.ContactTable>
         <tbody>
           <tr>
@@ -167,27 +190,28 @@ const FormDisplayDetail = ({ id: propId }) => {
           </tr>
         </tbody>
       </S.ContactTable>
-      <S.ContentWrapper>
+      
+      <S.ContentFlex>
         <S.ImageBox>
-          <img
-            src={data.artImgPath || "/images/default-art.jpg"}
+          <S.ArtImage
+            src={getArtImgUrl(data.artImgName, data.artImgPath)}
             alt="작품 이미지"
-            style={{ width: "250px", objectFit: "cover" }}
           />
         </S.ImageBox>
         <S.InfoBox>
-          <S.InfoRow><S.InfoLabel>작가명</S.InfoLabel> {data.artistName}</S.InfoRow>
-          <S.InfoRow><S.InfoLabel>작품명</S.InfoLabel> {data.artTitle}</S.InfoRow>
-          <S.InfoRow><S.InfoLabel>작품 분류</S.InfoLabel> {data.artCategory}</S.InfoRow>
-          <S.InfoRow><S.InfoLabel>작품 재료</S.InfoLabel> {data.artMaterial}</S.InfoRow>
-          <S.InfoRow><S.InfoLabel>작품 규격</S.InfoLabel> {data.artSize}</S.InfoRow>
-          <S.InfoRow><S.InfoLabel>제작 완료일</S.InfoLabel> {data.artEndDate}</S.InfoRow>
+          <S.InfoRow><S.InfoLabel>작가명</S.InfoLabel>{data.userName}</S.InfoRow>
+          <S.InfoRow><S.InfoLabel>작품명</S.InfoLabel>{data.artTitle}</S.InfoRow>
+          <S.InfoRow><S.InfoLabel>작품 분류</S.InfoLabel>{data.artCategory}</S.InfoRow>
+          <S.InfoRow><S.InfoLabel>작품 재료</S.InfoLabel>{data.artMaterial}</S.InfoRow>
+          <S.InfoRow><S.InfoLabel>작품 규격</S.InfoLabel>{data.artSize}</S.InfoRow>
+          <S.InfoRow><S.InfoLabel>제작 완료일</S.InfoLabel>{formatDate(data.artEndDate)}</S.InfoRow>
           <S.InfoRow>
             <S.InfoLabel>작품 설명</S.InfoLabel>
-            <div style={{ whiteSpace: "pre-line" }}>{data.artDescription}</div>
+            <S.ArtDescription>{renderWithLineBreaks(data.artDescription)}</S.ArtDescription>
           </S.InfoRow>
         </S.InfoBox>
-      </S.ContentWrapper>
+      </S.ContentFlex>
+      
       <S.ButtonWrapper>
         <S.ListButton onClick={handleList}>목록</S.ListButton>
         {status === "미승인" && (
@@ -201,6 +225,7 @@ const FormDisplayDetail = ({ id: propId }) => {
         )}
       </S.ButtonWrapper>
     </S.Container>
+
   );
 };
 

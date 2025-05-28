@@ -1,27 +1,25 @@
 import styled from "styled-components";
+import * as CS from "../../../../styles/common"; // 공통 스타일 import
 
 const S = {};
 
-// 전체 레이아웃 컨테이너
 S.Container = styled.div`
-  width: 900px;
+  width: 800px;
   margin: 40px auto 0 auto;
-  background: #fff;
+  background: #FBFCFC;
   padding: 36px 48px 48px 48px;
   border-radius: 10px;
-  box-shadow: 0 4px 20px 0 #00000015;
+
   min-height: 700px;
 `;
 
-// 상단 카테고리 (display 등)
 S.CategoryText = styled.div`
-  font-size: 17px;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 8px;
+  ${CS.H5}
+  color: #333333;
+  border-bottom: 1px solid #EE3333;
+  margin-bottom: 60px;
 `;
 
-// 제목/날짜 영역
 S.Header = styled.div`
   display: flex;
   justify-content: space-between;
@@ -29,53 +27,54 @@ S.Header = styled.div`
   margin-bottom: 12px;
 `;
 
-S.Title = styled.h2`
-  font-size: 24px;
-  font-weight: bold;
-  color: #222;
+S.Title = styled.h1`
+  ${CS.H3}
+  font-weight: 700;
 `;
 
 S.ApplyDate = styled.div`
-  color: #666;
-  font-size: 15px;
-  font-weight: 500;
+  ${CS.H5}
+  color: #333333;
 `;
 
-// 신청자 정보 빨간 테이블
 S.ContactTable = styled.table`
   width: 100%;
-  background: #ee3333;
-  color: #fff;
+  background: #EE3333;
+  color: #FBFCFC;
   font-size: 16px;
   margin: 20px 0 32px 0;
-  border-radius: 6px;
+  border-radius: 2px;
   overflow: hidden;
-  th, td {
-    padding: 12px 18px;
-    font-weight: 500;
+  td, th {
+    padding: 18px 10px;
+    color: #FBFCFC;
   }
 `;
 
-// 테이블 헤더셀
 S.TableHeadCell = styled.th`
+  color: #333333;
   font-weight: 600;
-  background: #ee3333;
 `;
 
-// 본문 정보 (이미지+정보)
-S.ContentWrapper = styled.div`
+S.ContentFlex = styled.div`
   display: flex;
   gap: 44px;
   margin-bottom: 30px;
 `;
 
-// 이미지 영역
 S.ImageBox = styled.div`
+  flex: 0 0 250px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+`;
+
+S.ArtImage = styled.img`
   min-width: 250px;
   max-width: 250px;
   min-height: 350px;
-  background: #f5f5f5;
-  border-radius: 10px;
+  background: #C0C5C7;
+  border-radius: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -88,78 +87,81 @@ S.ImageBox = styled.div`
   }
 `;
 
-// 오른쪽 작품 정보들
 S.InfoBox = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding-top: 10px;
+  font-size: 16px;
+  gap: 18px;
 `;
 
 S.InfoRow = styled.div`
   display: flex;
   align-items: flex-start;
-  font-size: 16px;
-  gap: 18px;
+  margin-bottom: 3px;
+  gap: 20px;
+  margin-top: 14px;
 `;
 
-S.InfoLabel = styled.div`
+S.InfoLabel = styled.span`
   font-weight: 700;
   min-width: 110px;
-  color: #111;
-  margin-top: 2px;
+  color: #333333;
 `;
 
-// 버튼 박스
+S.ArtDescription = styled.div`
+  white-space: pre-line;
+  font-size: 15px;
+  color: #333333;
+  padding-top: 2px;
+`;
+
 S.ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 18px;
-  margin-top: 36px;
+  margin-top: 60px;
 `;
 
-// 버튼 공통
-const baseBtn = `
-  padding: 12px 34px;
+const baseButton = `
+  width: 125px;
+  height: 50px;
   border: none;
-  border-radius: 6px;
+  border-radius: 2px;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   transition: 0.1s;
 `;
 
-// 목록 버튼
 S.ListButton = styled.button`
-  ${baseBtn}
-  background: #888;
-  color: #fff;
-  &:hover { background: #666; }
+  ${baseButton}
+  background: #EE3333;
+  color: #FBFCFC;
+  &:hover { background:rgb(255, 0, 0); }
 `;
 
-// 승인
 S.ApproveButton = styled.button`
-  ${baseBtn}
-  background: #0cbb58;
-  color: #fff;
-  &:hover { background: #09984a; }
+  ${baseButton}
+  background: #FBFCFC;
+  color: #EE3333;
+  border: 1px solid #EE3333;
+  &:hover { background:rgb(255, 249, 249); }
 `;
 
-// 기각
 S.RejectButton = styled.button`
-  ${baseBtn}
-  background: #ee3333;
-  color: #fff;
-  &:hover { background: #d62626; }
+  ${baseButton}
+  background: #EE3333;
+  color: #FBFCFC;
+  &:hover { background: rgb(255, 0, 0); }
 `;
 
-// 승인 취소
 S.CancelButton = styled.button`
-  ${baseBtn}
-  background: #ffa900;
-  color: #fff;
-  &:hover { background: #cc8600; }
+  ${baseButton}
+  background: #FBFCFC;
+  color: #EE3333;
+  border: 1px solid #EE3333;
+  &:hover { background:rgb(255, 249, 249); }
 `;
 
 export default S;
