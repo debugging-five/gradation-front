@@ -1,6 +1,13 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { H2, H4, EN_H2, H5, H3 } from '../../styles/common';
+const primary = "#EE3333";
+const gray100 = "#FBFCFC";
+const gray500 = "#C0C5C7";
+const gray900 = "#6E7476";
+const black = "#333333";
+const warning = "#E49804";
 
 const S = {};
 
@@ -29,6 +36,12 @@ S.MainSection = styled.div`
   overflow: hidden;
   padding: 0px;
 `;
+
+S.MainSectionTitle = styled.p`
+  font-size: 48px;
+  font-weight: bold;
+  margin-top: 60px;
+`
 
 S.SwiperWrap = styled.div`
   width: 100%;
@@ -79,7 +92,7 @@ S.ArtInfo = styled.div`
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  color: white;
+  color: ${gray100};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -88,18 +101,18 @@ S.ArtInfo = styled.div`
   transition: opacity 0.3s ease;
 `;
 
+S.ArtTitle = styled.p`
+  ${H2};
+`
+S.UserName = styled.p`
+  ${H4};
+`
+
 S.MainTextWrap = styled.div`
   width: 100%;
   margin-top: 60px;
   text-align: center;
   z-index: 2;
-
-  p {
-    font-size: 48px;
-    color: #111;
-    font-weight: bold;
-    margin-top: 60px;
-  }
 `;
 
 S.Section = styled.section`
@@ -111,7 +124,12 @@ S.Section = styled.section`
   height: 100vh;
   padding: 60px 0;
   box-sizing: border-box;
+`;
 
+S.SectionTitle = styled.h1`
+  font-size: 40px;
+  margin-right: 20px;
+  transition: 0.3s;
 `;
 
 S.Link = styled(Link)`
@@ -120,7 +138,7 @@ S.Link = styled(Link)`
   display: block;
 
   &:hover {
-    h1 {
+    ${S.SectionTitle} {
       cursor: pointer;
       font-size: 44px;
     }
@@ -154,10 +172,29 @@ S.Banner = styled.div`
 `;
 
 S.BannerText = styled.div`
-  color: #eee;
   position: absolute;
+  color: ${gray100};
   bottom: 32px;
   left: 48px;
 `;
+
+S.TextGradation1 = styled.div`
+`
+S.TextGradation2 = styled.div`
+`
+
+S.Text1 = styled.p`
+  ${H2}
+  margin-bottom: 36px;
+`
+S.Text2 = styled.p`
+  ${H3}
+`
+S.Text3 = styled.p`
+  ${H3}
+`
+S.Text4 = styled.p`
+  ${H2};
+`
 
 export default S;

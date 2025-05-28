@@ -93,7 +93,7 @@ const Header = ({ onLogout }) => {
           </S.BellWrap>
           {isLogin ? (
             <S.SignInWrap>
-              <span className="sign-in">{currentUser.userName}님</span>
+              <span className="sign-in">{(currentUser.userNickName) ? `${currentUser.userNickName}님` : `${currentUser.userName}님`}</span>
               <S.Dropdown>
                 <li><S.DropdownLink to="/mypage">마이페이지</S.DropdownLink></li>
                 <li><S.DropdownLink to="/service-center/qna">고객센터</S.DropdownLink></li>
