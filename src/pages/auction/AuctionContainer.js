@@ -1,4 +1,3 @@
-import React, { useEffect, useRef, useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import S from './style';
 

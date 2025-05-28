@@ -109,6 +109,7 @@ const AuctionCategory = () => {
       setAuction(data)
       let pages = Math.floor((data.contents + 1) / 15) + 1
       if(data.contents % 15 === 0) { pages-- }
+      if((data.contests + 1) % 15 === 0) { pages-- }
 
       const result = [];
       let count = 0
@@ -231,18 +232,18 @@ const AuctionCategory = () => {
             auction
           }}/>
           <S.PagenationWrapper>
-            <S.PagenationIcon src='/assets/images/icon/left.png' onClick={minusLargeCursor}/>
+            <S.PagenationIcon src='/assets/images/icon/left.png' onClick={plusLargeCursor}/>
               {pageLength.map((datas, i) => (
                 i === largeCursor ?
                 datas.map((data, i) => (
                   data !== null?
-                  <S.PagenationButton key={i} onClick={() => setCursor(i+1)} $active={cursor === data + 1}>
+                  <S.PagenationButton key={i} onClick={() => setCursor(data+1)} $active={cursor === data + 1}>
                   {data + 1}
                   </S.PagenationButton> : ''
                 )) : ''
               ))}
               
-            <S.PagenationIcon src='/assets/images/icon/right.png' onClick={plusLargeCursor}/>
+            <S.PagenationIcon src='/assets/images/icon/right.png' onClick={minusLargeCursor}/>
           </S.PagenationWrapper>
         </div>
         }
