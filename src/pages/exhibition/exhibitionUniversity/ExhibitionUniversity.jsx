@@ -9,7 +9,7 @@ import { Navigation, Pagination } from 'swiper/modules';
 const ExhibitionUniversity = () => {
   
   // 주소
-  const [selectedAddress, setSelectedAddress] = useState("");
+  const [selectedAddress, setSelectedAddress] = useState("서울특별시 중구 세종대로 110");
 
   const [location, setLocation] = useState("전체지역")
   const [universityExhibitionStatus, setUniversityExhibitionStatus] = useState("예정전시")
@@ -154,7 +154,7 @@ const ExhibitionUniversity = () => {
 
 
   return (
-    <S.Container>
+    <div>
 
       <S.Map>
         <div id="map">학교 지도</div>
@@ -303,7 +303,7 @@ const ExhibitionUniversity = () => {
           />
         </div>
       </div> */}
-    </S.Container>
+    </div>
   );
 };
 

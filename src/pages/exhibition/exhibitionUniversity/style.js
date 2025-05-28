@@ -9,10 +9,6 @@ const white = "#FFFFFF"
 
 const S = {};
 
-S.Container = styled.div`
-  background-color: ${white};
-`
-
 S.Map = styled.div`
   width: 1160px;
   height: 425px;
@@ -45,6 +41,7 @@ S.FilterContainer = styled.div`
 
 S.Dropdown = styled.div`
   position: relative;
+  background-color: ${white};
 `;
 
 S.DropdownButton = styled.button`
