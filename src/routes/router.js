@@ -518,7 +518,7 @@ const router = createBrowserRouter([
                             element: <FormManagementCompletedList />,
                           },
                           {
-                            path: "detail/:type/:id",
+                            path: "detail/:category/:id",
                             element: <FormManagementDetailContainer />,
                           }
                         ],

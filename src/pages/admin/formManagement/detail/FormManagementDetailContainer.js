@@ -4,21 +4,20 @@ import FormDisplayDetail from "./FormDisplayDetail"
 import FormExhibitionDetail from "./FormExhibitionDetail";
 import FormUpcyclingDetail from "./FormUpcyclingDetail";
 import FormUniversityDetail from "./FormUniversityDetail";
-console.log("FormDisplayDetail import:", FormDisplayDetail);
-const FormManagementDetailContainer = () => {
-  const { type, id } = useParams();
 
-  switch (type) {
-    case "display":
-      return <FormDisplayDetail id={id} />;
-    case "exhibition":
-      return <FormExhibitionDetail id={id} />;
-    case "upcycling":
-      return <FormUpcyclingDetail id={id} />;
-    case "university":
-      return <FormUniversityDetail id={id} />;
-    default:
-      return <div>지원하지 않는 카테고리입니다.</div>;
+const FormManagementDetailContainer = () => {
+  const { category, id } = useParams ();
+    switch (category) {
+        case "display":
+        return <FormDisplayDetail id={id} />;
+      case "exhibition":
+        return <FormExhibitionDetail id={id} />;
+      case "university":
+        return <FormUniversityDetail id={id} />;
+      case "upcycling":
+        return <FormUpcyclingDetail id={id} />;
+      default:
+        return <div>잘못된 접근입니다.</div>;
   }
 };
 
