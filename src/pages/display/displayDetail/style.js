@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { EN_H3, EN_H6, H10, H2, H3, H5, H8 } from '../../../styles/common';
+import { EN_H3, EN_H6, H10, H2, H3, H5, H6, H8 } from '../../../styles/common';
 import { Link } from 'react-router-dom';
 
 const S = {};
@@ -260,17 +260,20 @@ S.Wrapper = styled.div`
 S.ProfileWrapper = styled.div`
   display: flex;
   gap: 8px;
+  align-items: center;
   /* cursor: pointer; */
 `
 
 S.Profile = styled.img`
-  width: 28px;
-  height: 28px;
+  /* width: 28px;
+  height: 28px; */
+  width: 32px;
+  height: 32px;
   border-radius: 50px;
 `
 
 S.Name = styled.div`
-  ${H3}
+  ${H6}
 
 `
 
@@ -281,14 +284,14 @@ S.MoreIcon = styled.img`
 `
 
 S.Content = styled.div`
-  margin: 12px 0 0 0;
+  margin: 12px 0 0 40px;
   ${H8}
 `
 
 S.LikeWrapper = styled.div`
   display: flex;
   gap: 8px;
-  margin: 16px 0 0 0;
+  margin: 16px 0 0 40px;
   cursor: pointer;
 `
 
