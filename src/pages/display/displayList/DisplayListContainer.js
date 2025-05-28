@@ -9,7 +9,7 @@ const DisplayListContainer = () => {
   // console.log(category)
   // console.log("cursor:", cursor);
 
-  const { order, keyword,  } = useOutletContext();
+  const { order, keyword } = useOutletContext();
   const { category } = useParams();
   const [cursor, setCursor] = useState(1)
   const [display, setDisplay] = useState([]);
@@ -54,17 +54,17 @@ const DisplayListContainer = () => {
           setIsError(false)
           // setDisplay(res.posts)
           setDisplay(data.postList)
-          // let pages = Math.ceil(data.contents / 15)
-          let pages = Math.floor(data.contents / 15) + 1
+          // let pages = Math.floor(data.contents / 15) + 1
           // let pages = Math.floor((data.contents + 1) / 15) + 1
-          if(data.contents % 15 === 0) { pages-- }
+          // if(data.contents % 15 === 0) { pages-- }
+          // if((data.contents + 1) % 15 === 0 ) { pages -- }
+          let pages = data.contents === 0? 0 : (data.contents % 15 === 0? data.contents / 15 - 1 : data.contents / 15)
+
 
           const result = [];
           let count = 0
-          // const totalGroups = Math.ceil(pages/5)
 
           // 받은 값 기준으로 2차원 배열을 만든다.
-          // for (let i = 0; i < pages/5; i++) {
           for (let i = 0; i < pages/5; i++) {
             const row = [];
             for (let j = 0; j < 5; j++) {
@@ -119,34 +119,35 @@ const DisplayListContainer = () => {
 
   if(pageLength) {
     return (
-      <S.Wrapper>
-        {display.map((post) => (
-          <S.Display key={post.id} to={`/display/${category}/detail/${post.artPostId}`}>
-            <S.Overlay className="overlay">
-              <S.Content>
-                <S.H2>{post.artTitle}</S.H2>
-                <S.H4>{post.userName}</S.H4>
-              </S.Content>
-            </S.Overlay>
-            <img src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${post.artImgName}?filePath=${post.artImgPath}`} alt={post.artTitle} />
-          </S.Display>
-        ))}
-
-        <S.PagenationWrapper>
-          <S.PagenationIcon src='/assets/images/icon/left.png' onClick={minusLargeCursor}/>
-            {pageLength.map((datas, i) => (
-              i === largeCursor ?
-              datas.map((data, i) => (
-                data !== null?
-                <S.PagenationButton key={i} onClick={() => {setCursor((data+1))}} $active={cursor === data+1}>
-                {data + 1}
-                </S.PagenationButton> : ''
-              )) : ''
-            ))}
-            
-          <S.PagenationIcon src='/assets/images/icon/right.png' onClick={plusLargeCursor}/>
-        </S.PagenationWrapper>
-      </S.Wrapper>
+      <S.Container>
+        <S.Wrapper>
+          {display.map((post) => (
+            <S.Display key={post.id} to={`/display/${category}/detail/${post.artPostId}`}>
+              <S.Overlay className="overlay">
+                <S.Content>
+                  <S.H2>{post.artTitle}</S.H2>
+                  <S.H4>{post.artistName}</S.H4>
+                </S.Content>
+              </S.Overlay>
+              <img src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${post.artImgName}?filePath=${post.artImgPath}`} alt={post.artTitle} />
+            </S.Display>
+          ))}
+        </S.Wrapper>
+          <S.PagenationWrapper>
+            <S.PagenationIcon src='/assets/images/icon/left.png' onClick={minusLargeCursor}/>
+              {pageLength.map((datas, i) => (
+                i === largeCursor ?
+                datas.map((data, i) => (
+                  data !== null?
+                  <S.PagenationButton key={i} onClick={() => {setCursor((data+1))}} $active={cursor === data+1}>
+                  {data + 1}
+                  </S.PagenationButton> : ''
+                )) : ''
+              ))}
+        
+            <S.PagenationIcon src='/assets/images/icon/right.png' onClick={plusLargeCursor}/>
+          </S.PagenationWrapper>
+      </S.Container>
     );
   }
 

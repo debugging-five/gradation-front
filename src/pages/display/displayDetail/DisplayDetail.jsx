@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
+import { Link, useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import S from './style';
 import { useSelector } from 'react-redux';
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 const DisplayDetail = () => {
-  const { id } = useParams();
+  const { id, category } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [post, setPost] = useState(null)
@@ -303,7 +303,7 @@ const DisplayDetail = () => {
             <S.Title>{post.artTitle}</S.Title>
             <S.Artist>
               <S.H3>작가명<span>|</span></S.H3>
-              <S.H3>{post.userName}</S.H3>
+              <S.H3>{post.artistName}</S.H3>
             </S.Artist>
           </S.TitleWrapper>
           <S.LikeCountWrapper>
@@ -371,10 +371,19 @@ const DisplayDetail = () => {
           comments.map((comment) => (
         <S.Comment key={comment.id}>
           <S.Wrapper>
-            <S.ProfileWrapper>
-              <S.Profile src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${comment.userImgName}?filePath=${comment.userImgPath}`} alt={post.artTitle} />
-              <S.Name>{comment.userName}</S.Name>
-            </S.ProfileWrapper>
+            {comment.userWriterStatus === "승인" ? (
+              <S.Link to={`/artist/${category}/detail/${comment.userId}`}>
+                <S.ProfileWrapper>
+                  <S.Profile src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${comment.userImgName}?filePath=${comment.userImgPath}`} alt={post.artTitle} />
+                  <S.Name>{comment.userName}</S.Name>
+                </S.ProfileWrapper>
+              </S.Link>
+            ) : (
+              <S.ProfileWrapper>
+                <S.Profile src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${comment.userImgName}?filePath=${comment.userImgPath}`} alt={post.artTitle} />
+                <S.Name>{comment.userName}</S.Name>
+              </S.ProfileWrapper>
+            )}
             {currentUser.id === comment.userId ? (
               <S.MoreIcon src={'/assets/images/icon/more.png'} alt="더보기"
                 onClick={() => setOpenMenuId(openMenuId === comment.id? null : comment.id)}/>

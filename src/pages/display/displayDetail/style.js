@@ -51,6 +51,8 @@ S.LikeButton = styled.button`
 
 S.Link = styled(Link)`
   text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 `
 
 S.ArtistButton = styled.button`
@@ -258,6 +260,7 @@ S.Wrapper = styled.div`
 S.ProfileWrapper = styled.div`
   display: flex;
   gap: 8px;
+  /* cursor: pointer; */
 `
 
 S.Profile = styled.img`

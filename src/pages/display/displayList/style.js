@@ -4,12 +4,16 @@ import { Link } from 'react-router-dom';
 
 const S = {};
 
+S.Container = styled.div`
+  margin: 40px 0 0 0;
+`
+
 S.Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 300px);
   gap: 130px;
   justify-content: center;
-  margin: 40px 0 0 0;
+  /* margin: 40px 0 0 0; */
 `
 
 S.Display = styled(Link)`
@@ -74,8 +78,9 @@ S.H6 = styled.p`
 S.PagenationWrapper = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 40px;
-  margin: 30px 0 0 0;
+  margin: 160px 0 0 0;
 `
 
 S.PagenationButton = styled.div`
