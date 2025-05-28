@@ -50,7 +50,7 @@ const Header = ({ onLogout }) => {
         <S.Menu>
 
           <S.MenuItem>
-            <S.MenuLink to="/display">display</S.MenuLink>
+            <S.MenuLink to="/display/korean">display</S.MenuLink>
             <S.Dropdown>
               <li><S.DropdownLink to="/display/korean">전시 중인 작품</S.DropdownLink></li>
               <li><S.DropdownLink to="/display/registration">작품 업로드</S.DropdownLink></li>
