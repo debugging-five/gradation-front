@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate, useOutletContext, useParams } from 'react-router-dom';
+import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import S from './style';
 import { useSelector } from 'react-redux';
+import { Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 const DisplayDetail = () => {
   const { id } = useParams();
-  const { isLoading, isError } = useOutletContext()
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   const [post, setPost] = useState(null)
   const [text, setText] = useState("")
   const [comments, setComments] = useState([])
@@ -41,12 +44,16 @@ const DisplayDetail = () => {
         return res.json();
       })
       .then((res) => {
-        // console.log("res", res);
-        // console.log("res.post", res.post);
+        console.log("res", res);
+        console.log("res.post", res.post);
         setPost(res.post); 
+        setIsError(false)
+        setIsLoading(false)
       })
       .catch((error) => {
         // console.error(error)
+        setIsError(true)
+        setIsLoading(false)
       })
   }, [id])
 
@@ -112,7 +119,7 @@ const DisplayDetail = () => {
       .then((res) => {
         if(res) {
           setComments(res.commentList);
-          // console.log("res", res)
+          console.log("res", res)
         }
       })
       .catch(console.error);
@@ -257,23 +264,25 @@ const DisplayDetail = () => {
 
   return (
     <S.Container>
-      {/* <p>{post.artTitle}</p>
-      <p>{post.userName}</p>
-      <p>{post.artCategory}</p>
-      <p>{post.artMaterial}</p>
-      <p>{post.artSize}</p>
-      {post.comments.length === 0 ? (
-      <p>댓글이 없습니다.</p>
-    ) : (
-      post.comments.map((comment) => (
-        <div key={comment.commentId}>
-          <p>{comment.commentContent}</p>
-        </div>
-      ))
-    )} */}
       <S.Detail>
         <S.LeftWrapper>
-          <S.ArtImg src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${post.artImgName}?filePath=${post.artImgPath}`} alt={post.artTitle}/>
+          {/* <S.ArtImg src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${post.artImgName}?filePath=${post.artImgPath}`} alt={post.artTitle}/> */}
+          <S.Wrapper style={{width : "560px"}}>
+            <Swiper
+              modules={[Navigation, Pagination]}
+              navigation
+              pagination={{ clickable: true }}
+              spaceBetween={10}
+              slidesPerView={1}
+              style={{width: "100%", height: "100%", objectFit: "contain"}}>
+              {post.images.map((img, i) => (
+                <SwiperSlide key={i}>
+                  <S.ArtImg src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${img.artImgName}?filePath=${img.artImgPath}`} alt="이미지" />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </S.Wrapper>
+
           <S.ButtonWrapper>
             <S.LikeButton className="button"
               onClick={isLiked ? deleteLike : registerLike}
@@ -366,8 +375,10 @@ const DisplayDetail = () => {
               <S.Profile src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${comment.userImgName}?filePath=${comment.userImgPath}`} alt={post.artTitle} />
               <S.Name>{comment.userName}</S.Name>
             </S.ProfileWrapper>
-            <S.MoreIcon src={'/assets/images/icon/more.png'} alt="더보기"
-              onClick={() => setOpenMenuId(openMenuId === comment.id? null : comment.id)}/>
+            {currentUser.id === comment.userId ? (
+              <S.MoreIcon src={'/assets/images/icon/more.png'} alt="더보기"
+                onClick={() => setOpenMenuId(openMenuId === comment.id? null : comment.id)}/>
+            ) : (<div></div>)}
             {/* <button onClick={() => deleteComment(comment.id)}>삭제</button> */}
             {openMenuId === comment.id && (
               <S.MoreMenu>
@@ -393,6 +404,7 @@ const DisplayDetail = () => {
                 value={modifyCommentContent}
                 onChange={(e) => setModifyCommentContent(e.target.value)}
               />
+              
               <S.ButtonContainer>
                 <S.CancelButton onClick={() => setModifyCommentId(null)}>취소</S.CancelButton>
                 <S.SaveButton onClick={() => {

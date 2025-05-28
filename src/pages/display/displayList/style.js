@@ -53,11 +53,13 @@ S.Content = styled.div`
   gap: 32px;
   align-items: center;
   justify-content: center;
+  text-align: center;
 `
 S.H2 = styled.p`
   ${H2}
   color: #FBFCFC;
-  `
+  width: 236px;
+`
 
 S.H4 = styled.p`
   ${H4}
@@ -66,5 +68,33 @@ S.H4 = styled.p`
 
 S.H6 = styled.p`
   ${H6}
+`
+
+// 페이지네이션
+S.PagenationWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 30px 0 0 0;
+`
+
+S.PagenationButton = styled.div`
+  width: 9px;
+  height: 20px;
+  color: ${(props) => (props.$active ? '#FF3333' : '#6E7476')};
+  cursor: pointer;
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+
+  &:hover {
+    color: #333333;
+  }
+`
+
+S.PagenationIcon = styled.img`
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
 `
 export default S;

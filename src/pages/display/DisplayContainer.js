@@ -27,41 +27,41 @@ const DisplayContainer = () => {
     keyword : keyword,
   }
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    const getDisplayList = async () => {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/displays/api/list`, {
-        method : "POST",
-        headers : {
-          "Content-Type" : "application/json"
-        },
-        body : JSON.stringify(params)
-      })
-      if(!response.ok) {
-        setIsError(true);
-        throw new Error(`getDisplayList fetch`)
-      } 
-      const datas = await response.json()
-      return datas;
-    }
+  //   const getDisplayList = async () => {
+  //     const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/displays/api/list`, {
+  //       method : "POST",
+  //       headers : {
+  //         "Content-Type" : "application/json"
+  //       },
+  //       body : JSON.stringify(params)
+  //     })
+  //     if(!response.ok) {
+  //       setIsError(true);
+  //       throw new Error(`getDisplayList fetch`)
+  //     } 
+  //     const datas = await response.json()
+  //     return datas;
+  //   }
 
-    getDisplayList()
-      .then((res) => {
-        // console.log(res)
-        setDisplay(res.posts)
-        setIsLoading(false)
-        setIsError(false)
-        setHasNextPage(res.posts.length === 15)
-        if (res.posts.length < 15) {
-          setMaxCursor(cursor); 
-        }
-      })
-      .catch((error) => {
-        console.error(error)
-        setIsLoading(false)
-        setIsError(true)
-      })
-  }, [order, category, cursor, keyword, isUpdate])
+  //   getDisplayList()
+  //     .then((res) => {
+  //       console.log(res)
+  //       setDisplay(res.posts)
+  //       setIsLoading(false)
+  //       setIsError(false)
+  //       setHasNextPage(res.posts.length === 15)
+  //       if (res.posts.length < 15) {
+  //         setMaxCursor(cursor); 
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error(error)
+  //       setIsLoading(false)
+  //       setIsError(true)
+  //     })
+  // }, [order, category, cursor, keyword, isUpdate])
 
   useEffect(() => {
   setCursor(1);
@@ -70,7 +70,7 @@ const DisplayContainer = () => {
 
   return (
     <S.Container>
-      <S.Link to="/display">
+      <S.Link to="/display/korean">
         <S.EN_H2>display</S.EN_H2>
       </S.Link>
         <Outlet context={{ 

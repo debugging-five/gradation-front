@@ -1,6 +1,5 @@
-import styled, { createGlobalStyle } from 'styled-components'
+import styled from 'styled-components'
 import { EN_H3, H10, H2, H3, H4, H5, H7, H8 } from '../../../styles/common';
-import Swiper from 'swiper';
 
 const S = {};
 
