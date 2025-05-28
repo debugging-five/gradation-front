@@ -67,22 +67,24 @@ const MyPageContainer = () => {
   return (
     <S.MainWrapper>
       <S.Leftbar>
-        <S.ImageBox>
-          <S.ProfileImage src={profileImg} alt="profile" />
-          <span>{userName}</span>
-          <input
-            type="file"
-            accept="image/*"
-            ref={fileInputRef}
-            style={{ display: 'none' }}
-            onChange={handleFileChange}
-          />
-          <S.CameraImage
-            src="http://localhost:10000/files/api/get/camera.png?filePath=images/mypage"
-            alt="edit img"
-            onClick={handleCameraClick}
-          />
-        </S.ImageBox>
+        <S.ProfileBox>
+          <S.ImageBox>
+            <S.ProfileImage src={profileImg} alt="profile" />
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              style={{ display: 'none' }}
+              onChange={handleFileChange}
+              />
+            <S.CameraImage
+              src="http://localhost:10000/files/api/get/camera.png?filePath=images/mypage"
+              alt="edit img"
+              onClick={handleCameraClick}
+              />
+          </S.ImageBox>
+          <S.ProfileText>{userName}</S.ProfileText>
+        </S.ProfileBox>
 
         {/* 메뉴 그룹 */}
         <S.BarTitle>내 정보</S.BarTitle>

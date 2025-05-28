@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 import AuctionTime from './AuctionTime';
 import AuctionPrice from './AuctionPrice';
 import getLatestPrice from './_function/getLatePrice';
-import endBidding from './_function/endBidding.js';
 const AuctionBiddingDetail = ({auction, timeLeft}) => {
 	
 	const {id, category} = useParams();
@@ -23,14 +22,14 @@ const AuctionBiddingDetail = ({auction, timeLeft}) => {
 
 	useEffect(() => {
 		if(isBiddingConfirm){
-			navigate(`/auction/bidding/${category}/detail/${id}`)
+			navigate(`/auction/bidding/${category}/detail/${id}`, {replace: true})
 		}else if(isExpectedConfirm){
-			navigate(`/auction/expected/${category}/detail/${id}`)
+			navigate(`/auction/expected/${category}/detail/${id}`, {replace: true})
 		}else {
 			// 경매 완료
-			navigate(`/auction/complete/${category}/detail/${id}`)
+			navigate(`/auction/complete/${category}/detail/${id}`, {replace: true})
 		}
-	}, [])
+	}, [id])
 
 	// 모달 띄우는거
 	const [openBidding, setOpenBidding] = useState(false);
@@ -62,10 +61,10 @@ const AuctionBiddingDetail = ({auction, timeLeft}) => {
 				setPrice(price)
 			})
 			.catch(console.err)
-		}, 10000);
+		}, 5000);
 
 		return () => clearInterval(getPrice)
-	}, [isPriceUpdate])
+	}, [isPriceUpdate, id])
 
 	// 본인일 때 수정
 	  const remove = async () => {

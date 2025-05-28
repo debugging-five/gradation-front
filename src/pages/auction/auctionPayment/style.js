@@ -48,7 +48,7 @@ S.PopupPosition = styled.div`
 S.WarningText = styled.p`
   ${H10}
   color: ${warning};
-  margin: 5px 0 0 108px;
+  margin: 5px 0 0 120px;
 `
 
 S.LastWarningText = styled.p`

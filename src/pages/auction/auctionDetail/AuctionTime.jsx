@@ -20,7 +20,6 @@ const AuctionTime = ({id, auctionStartDate, auctionEndDate, auctionBidDate}) => 
     return () => clearInterval(timer)
   }, [])
 
-  console.log(timeLeft);
   const { isAuction, isBidding, isExpected } = timeLeft;
   
   const { days, hours, minutes, seconds } = isBidding; 

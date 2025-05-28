@@ -48,7 +48,7 @@ const AuctionPayment = () => {
     verifyPayment();
   }, []);
 
-  const { register, handleSubmit, getValues, formState: { isSubmitting, isSubmitted, errors } } = useForm({ mode: "onChange" });
+  const { register, handleSubmit, getValues, setValue, trigger, formState: { isSubmitting, isSubmitted, errors } } = useForm({ mode: "onChange" });
   
   useEffect(() => {
     if (currentUser) {
@@ -94,6 +94,8 @@ const AuctionPayment = () => {
 
         setUserData(prev => ({ ...prev, userAddress: fullAddress}));
         setPostCode(data.zonecode);
+        setValue("userAddress", fullAddress);
+        trigger("userAddress");
       }
     }).open();
   };
@@ -128,6 +130,9 @@ const AuctionPayment = () => {
       if(data.userId !== currentUser.id){
         navigate("/auction", { replace : true})
       }
+
+      console.log(userData.userAddress);
+      
       
       return (
         <S.Wrapper>
@@ -204,7 +209,6 @@ const AuctionPayment = () => {
                 <S.SearchAddress type='button' onClick={handleAddressSearch}>
                   주소검색
                 </S.SearchAddress>
-
               </S.InputWrapper>
               <S.WarningArea>
               {errors.userAddress && <S.WarningText>필수 항목입니다</S.WarningText>}

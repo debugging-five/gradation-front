@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import S from "./FormDisplayDetailStyle";
 
-const FormDisplayDetail = ({ id }) => {
+console.log("FormDisplayDetail 모듈 진입!");
+
+const FormDisplayDetail = () => {
+  const {id} = useParams();
   const [data, setData] = useState(null);
   const navigate = useNavigate();
   const token = localStorage.getItem("jwtToken");
@@ -22,7 +25,7 @@ const FormDisplayDetail = ({ id }) => {
   if (!data) return <div>로딩 중...</div>;
 
   const isPending = data.artStatus === "미승인";
-  const isComplteted = data.artStus === "승인완료";
+  const isComplteted = data.artStatus === "승인완료";
 
   const handleApprove = () => {
     // 승인 처리 로직

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import * as S from '../style';
 import * as SP from './myPaymentListStyle';
+import { NavLink } from 'react-router-dom';
 
 const MyPaymentList = () => {
   const currentUser = useSelector(state => state.user.currentUser);
@@ -74,15 +75,14 @@ const MyPaymentList = () => {
               </SP.MenuBox>
 
               <SP.ButtonDiv>
-                <S.Button120x45W onClick={() => window.open(payment.trackingUrl || '#')}>배송조회</S.Button120x45W>
-                <a href="https://tracker.delivery/#/:carrier_id/:track_id" target="_blank">배송조회</a>
+                <S.Button120x45W as={NavLink} to="delivery-info/1">배송조회</S.Button120x45W>
                 <S.Button120x45R onClick={() => handleShowDetail(payment)}>주문상세</S.Button120x45R>
               </SP.ButtonDiv>
             </div>
           </SP.Wrapper>
         ))
       ) : (
-        <S.Wrapper>결제 내역이 없습니다.</S.Wrapper>
+        <div style={{ padding: "1rem", textAlign: "center" }}>결제 내역이 없습니다.</div>
       )}
 
       {showPopup && selectedPayment && (
@@ -100,11 +100,11 @@ const MyPaymentList = () => {
               </S.OneLine>
               <S.OneLine>
                 <SP.BigPopUpSub>연락처</SP.BigPopUpSub>
-                <SP.BigPopUpText>{selectedPayment.deliveryPhone || ''}</SP.BigPopUpText>
+                <SP.BigPopUpText>{selectedPayment.userPhone || ''}</SP.BigPopUpText>
               </S.OneLine>
               <S.OneLine>
                 <SP.BigPopUpSub>받는 주소</SP.BigPopUpSub>
-                <SP.BigPopUpText>{selectedPayment.deliveryAddress} {selectedPayment.deliveryDetailAddress}</SP.BigPopUpText>
+                <SP.BigPopUpText>{selectedPayment.userAddress} {selectedPayment.userDetailAddress}</SP.BigPopUpText>
               </S.OneLine>
               <S.OneLine>
                 <SP.BigPopUpSub>배송 메세지</SP.BigPopUpSub>

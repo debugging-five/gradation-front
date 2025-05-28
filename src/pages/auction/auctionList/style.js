@@ -16,7 +16,7 @@ S.Wrapper = styled.div`
   grid-template-columns: repeat(3, 300px);
   gap: 130px;
   justify-content: center;
-  margin: 40px 0 0 0;
+  margin: 40px 0 160px 0;
 `
 
 S.Display = styled(Link)`
@@ -71,5 +71,38 @@ S.H4 = styled.p`
 
 S.H6 = styled.p`
   ${H6}
+`
+
+S.InputWrapper = styled.div`
+  display: flex;
+  margin: 84px 0 0 0;
+`
+
+S.Input = styled.input`
+  width: 200px;
+  height: 32px;
+  border: solid 1px #6E7476;
+  border-radius: 3px;
+  margin-left: auto;
+  background-color: #FBFCFC;
+  outline: none;
+  padding: 0 0 0 9px;
+  ${H10}
+
+  &::placeholder {
+    ${H10}
+    color: #6E7476;
+  }
+`
+
+S.Upload = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+`
+
+S.Icon = styled.img`
+  width: 18px;
+  height: 18px;
 `
 export default S;

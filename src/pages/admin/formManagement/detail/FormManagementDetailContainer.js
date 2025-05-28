@@ -4,7 +4,7 @@ import FormDisplayDetail from "./FormDisplayDetail"
 import FormExhibitionDetail from "./FormExhibitionDetail";
 import FormUpcyclingDetail from "./FormUpcyclingDetail";
 import FormUniversityDetail from "./FormUniversityDetail";
-
+console.log("FormDisplayDetail import:", FormDisplayDetail);
 const FormManagementDetailContainer = () => {
   const { type, id } = useParams();
 

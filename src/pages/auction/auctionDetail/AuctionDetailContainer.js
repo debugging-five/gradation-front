@@ -27,9 +27,7 @@ const AuctionDetailContainer = () => {
   const cursorUp = async () => {
     const nextCursor = cursor + 1;
     const response = await fetch(`http://localhost:10000/auction/api/footer/${nextCursor}`);
-    if (!response.ok) {
-      navigate("../")
-    }
+    
     const data = await response.json();
       if (data.length === 0) {
         setCursor(1);
@@ -73,8 +71,6 @@ const AuctionDetailContainer = () => {
       if(!response.ok) return console.error(`getAuction err ${response}`)
       const datas = await response.json()
       const data = await datas.auction
-      console.log(data);
-      
 
       // 조회한 경매가 끝난 경매지만 업데이트가 안되어있을 때
       if(dayjs(data.auctionEndDate) < dayjs()) {
@@ -112,7 +108,7 @@ const AuctionDetailContainer = () => {
             },
             body: JSON.stringify(auctionEndData)
           }).then(() => {
-            navigate(0)
+            navigate(0, {replace : true})
           })
         }
       }
@@ -149,7 +145,7 @@ const AuctionDetailContainer = () => {
           <Link to={`/auction/bidding/${categoryMap.get(list[0].artCategory)}/detail/${list[0].id}`}>
               <S.ArtListImg
                 src={`http://localhost:10000/files/api/get/${list[0].artImgName}?filePath=${list[0].artImgPath}`}
-                // 유저가 올린 데이터로 교체될 경우 섬네일이 있으므로 해당 코드로 교체한다.
+                // 유저가 올린 데이터로 교체될 경우 썸네일이 있으므로 해당 코드로 교체한다.
                 // src={`http://localhost:10000/files/api/get/t_${list[0].artImgName}?filePath=${list[0].artImgPath}`}
                 alt="작품1"
               />
@@ -161,6 +157,7 @@ const AuctionDetailContainer = () => {
           <Link to={`/auction/bidding/${categoryMap.get(list[1].artCategory)}/detail/${list[1].id}`}>
               <S.ArtListImg
                 src={`http://localhost:10000/files/api/get/${list[1].artImgName}?filePath=${list[1].artImgPath}`}
+                // src={`http://localhost:10000/files/api/get/t_${list[1].artImgName}?filePath=${list[1].artImgPath}`}
                 alt="이미지 호출 오류"
               />
           </Link>
@@ -171,6 +168,7 @@ const AuctionDetailContainer = () => {
           <Link to={`/auction/bidding/${categoryMap.get(list[2].artCategory)}/detail/${list[2].id}`}>
               <S.ArtListImg
                 src={`http://localhost:10000/files/api/get/${list[2].artImgName}?filePath=${list[2].artImgPath}`}
+                // src={`http://localhost:10000/files/api/get/t_${list[2].artImgName}?filePath=${list[2].artImgPath}`}
                 alt="이미지 호출 오류"
               />
           </Link>
@@ -181,6 +179,7 @@ const AuctionDetailContainer = () => {
           <Link to={`/auction/bidding/${categoryMap.get(list[3].artCategory)}/detail/${list[3].id}`}>
             <S.ArtListImg
               src={`http://localhost:10000/files/api/get/${list[3].artImgName}?filePath=${list[3].artImgPath}`}
+                // src={`http://localhost:10000/files/api/get/t_${list[3].artImgName}?filePath=${list[3].artImgPath}`}
               alt="이미지 호출 오류"
               />
             </Link>

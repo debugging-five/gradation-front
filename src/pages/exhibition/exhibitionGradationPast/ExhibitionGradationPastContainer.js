@@ -1,13 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import S from './style';
 
 const ExhibitionGradationPastContainer = () => {
 
   const [lastExhibitions, setLastExhibition] = useState([]);
+  const [title, setTitle] = useState("");
+  const navigate = useNavigate();
+  const { id } = useParams();
 
   useEffect(() => {
-    const fetchLastExhibition  = async () => {
+  if (id && lastExhibitions.length > 0) {
+    const selected = lastExhibitions.find(item => String(item.id) === id);
+    if (selected) {
+      setTitle(selected.gradationExhibitionTitle);
+    }
+  }
+}, [id, lastExhibitions]);
+
+  useEffect(() => {
+    const fetchLastExhibition = async () => {
       const response = await fetch(`http://localhost:10000/exhibitions/api/gradation/past`)
      
       if(!response.ok) {
@@ -15,37 +27,52 @@ const ExhibitionGradationPastContainer = () => {
       }
 
       const data = await response.json();
-      setLastExhibition(data);
-      return data;
+      setLastExhibition(data.exhibitions);
+      return data.exhibitions;
     };
     fetchLastExhibition()
       .then((res) => {
-        console.log(res)
+        // console.log(res)
       })
       .catch((error) => {
-        console.error(error)
+        // console.error(error)
       })
   }, []);
-
-
 
   return (
     <S.Wrap >
       <S.EN_H2>exhibition</S.EN_H2>
       
       <S.TitleWrap>
-        <S.Title>2023 아트스펙트럼</S.Title>
+        <S.Title>{title}</S.Title>
       </S.TitleWrap>
 
-      {/* <div>
-        {lastExhibitions.map((lastExhibition, idx) => (
-          <div key={idx}>
-            <p>{lastExhibition.gradationExhibitionTitle}</p>
-          </div>
-        ))}
-      </div> */}
+      <S.Container>
 
-      <Outlet />
+        <S.Sidebar>
+        <S.ListWrap>
+          <S.ListTitle>지난 전시회</S.ListTitle>
+        </S.ListWrap>
+
+          {lastExhibitions.map((exhibition) => (
+            <S.ListWrap2>
+              <S.ListItem key={exhibition.id}
+                onClick={() => {
+                  setTitle(exhibition.gradationExhibitionTitle); 
+                  navigate(`/exhibition/gradation/past/${exhibition.id}`);
+              }}
+              >
+                {exhibition.gradationExhibitionTitle}
+              </S.ListItem>
+            </S.ListWrap2>
+          ))}
+        </S.Sidebar>
+
+        <S.Content>
+          <Outlet />
+        </S.Content>
+
+      </S.Container>
     </S.Wrap>
   );
 };
