@@ -62,12 +62,12 @@ const ExhibitionUniversity = () => {
     }
 
     getExhibitions()
-      // .then(console.log)
-      // .catch(console.error)
+      .then(console.log)
+      .catch(console.error)
 
-    // console.log("location", location)
-    // console.log("keyword", keyword)
-    // console.log("universityExhibitionStatus", universityExhibitionStatus)
+    console.log("location", location)
+    console.log("keyword", keyword)
+    console.log("universityExhibitionStatus", universityExhibitionStatus)
  
   }, [location, keyword, universityExhibitionStatus])
 
@@ -90,13 +90,13 @@ const ExhibitionUniversity = () => {
 
       const selected = universityExhibitions.find(item => item.id === id);
       if (selected) {
-        // console.log("선택된 주소:", selected.universityLocation);
+        console.log("선택된 주소:", selected.universityLocation);
         setSelectedAddress(selected.universityLocation);
       }
 
-      // console.log(data.message);
+      console.log(data.message);
     } catch (error) {
-      // console.error(error);
+      console.error(error);
     }
   };
 
@@ -131,7 +131,7 @@ const ExhibitionUniversity = () => {
 
           map.setCenter(coords);
         } else {
-          // console.log("주소 검색 실패:", selectedAddress);
+          console.log("주소 검색 실패:", selectedAddress);
         }
       });
     };

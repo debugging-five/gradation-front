@@ -133,13 +133,13 @@ S.TipWrap = styled.div`
 
 S.question = styled.img`
   cursor: pointer;
-	width: 16px;
-	height: 16px;
-	
+   width: 16px;
+   height: 16px;
+   
 
-	&:hover + div{
-		display: block;
-	}
+   &:hover + div{
+      display: block;
+   }
 `
 
 S.Tip = styled.div`
