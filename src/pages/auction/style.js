@@ -85,7 +85,7 @@ S.Input = styled.input`
   width: 200px;
   height: 32px;
   border: solid 1px #6E7476;
-  border-radius: 3px;
+  border-radius: 1px;
   margin-left: auto;
   background-color: #FBFCFC;
   outline: none;
@@ -144,20 +144,21 @@ S.Dropdown = styled.div`
   top: 36px; 
   left: auto;
   right: 0;
+  border: 1px solid #6E7476;
   background-color: #FBFCFC;
   border-radius: 2px;
   z-index: 100; 
   display: flex;
   flex-direction: column;
 
+
   :hover {
-    background-color: #EE3333;
-    color: #FBFCFC;
+    
+    color: ${primary};
   }
 `
 
 S.Option = styled.div`
-  border: 1px solid #6E7476;
   width: 75px;
   height: 35px;
   ${H8}
