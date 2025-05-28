@@ -43,7 +43,6 @@ S.HeaderLogoWrap = styled.div`
 
 S.HeaderLogo = styled.img`
   width: 96px;
-  height: 34px;
 `;
 
 S.Menu = styled.ul`
