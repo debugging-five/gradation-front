@@ -10,7 +10,6 @@ S.Container = styled.div`
   flex-direction: column;
   align-items: center;
 `
-
 S.Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 300px);
@@ -58,11 +57,16 @@ S.Content = styled.div`
   display: flex;
   flex-direction: column;
   gap: 32px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 `
+
 S.H2 = styled.p`
   ${H2}
   color: #FBFCFC;
-  `
+  width: 236px;
+`
 
 S.H4 = styled.p`
   ${H4}
