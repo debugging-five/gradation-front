@@ -5,6 +5,14 @@ import * as S from '../../style';
 const Comment = () => {
   const currentUser = useSelector(state => state.user.currentUser);
   const [comments, setComments] = useState([]);
+  const categoryMap = {
+    '한국화': 'korean',
+    '건축': 'architecture',
+    '조각': 'sculpture',
+    '공예': 'craft',
+    '회화': 'painting',
+    '서예': 'calligraphy',
+  };
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -41,7 +49,7 @@ const Comment = () => {
               <S.Number>{idx + 1}</S.Number>
               <S.Category>{comment.artTitle || '작품명 없음'}</S.Category>
               <S.Emptybox></S.Emptybox>
-              <S.TitleNavigate to={`/display/detail/${comment.artId}`} >
+              <S.TitleNavigate to={`/display/${categoryMap[comment.artCategory]}/detail/${comment.artId}`} >
                 <S.Content>{comment.commentContent || '댓글 내용 없음'}</S.Content>
               </S.TitleNavigate>
               <S.Emptybox>{new Date(comment.commentDate|| '-').toLocaleDateString('ko-KR')}</S.Emptybox>
