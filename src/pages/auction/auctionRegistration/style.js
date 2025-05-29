@@ -100,6 +100,7 @@ S.ImageWrap = styled.div`
 	display: flex;
 	justify-content: center;
 	margin-right: 120px;
+  margin-bottom: 200px;
 `
 
 S.ImgWrapper = styled.div`
@@ -180,24 +181,31 @@ S.InputText = styled.input`
 	outline: none;
 `
 
-S.InputMin = styled.input`
+S.InputMin = styled.input.withConfig({
+   shouldForwardProp: (prop) => prop !== 'inputMinWidth',
+})`
+  width : ${({inputMinWidth}) => inputMinWidth};
   ${EN_H6};
-	color: ${gray900};
-	text-align: right;
-	background: none;
-	border: none;
-	outline: none;
-  min-width: 20px;
-  width: auto;
-  `
-
-S.InputMax = styled.input`
-  ${EN_H6};
-	color: ${gray900};
-	text-align: right;
-	background: none;
-	border: none;
+  color: ${gray900};
+  text-align: right;
+  background: none;
+  border: none;
   outline: none;
+  min-width: 20px;
+`
+
+
+S.InputMax = styled.input.withConfig({
+   shouldForwardProp: (prop) => prop !== 'inputMaxWidth',
+})`
+  width : ${({inputMaxWidth}) => inputMaxWidth};
+  ${EN_H6};
+  color: ${gray900};
+  text-align: right;
+  background: none;
+  border: none;
+  outline: none;
+  min-width: 20px;
 `
 
 S.InputDate = styled.input`
