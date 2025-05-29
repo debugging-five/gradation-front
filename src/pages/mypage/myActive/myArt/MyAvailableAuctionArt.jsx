@@ -48,7 +48,7 @@ const MyAvailableAuctionArt = () => {
                 <S.Content>{art.artTitle}</S.Content>
               </S.TitleNavigate>
               <S.Emptybox>
-                <S.Button120x45R onClick={() => window.location.href = '/auction/bidding'}>경매 등록</S.Button120x45R>
+                <S.Button120x45R onClick={() => window.location.href = `/auction/registration/${art.id}`}>경매 등록</S.Button120x45R>
               </S.Emptybox>
             </SA.ContentBox>
           ))

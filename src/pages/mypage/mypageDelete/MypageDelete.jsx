@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import * as S from '../style';
 import * as SD from './mypageDeleteStyle';
+import { useSelector } from 'react-redux';
 
 const MypageDelete = () => {
+  const currentUser = useSelector(state => state.user.currentUser);
   const [isChecked, setChecked] = useState(false);
   const [popupStep, setPopupStep] = useState(0); // 0: 없음, 1: 첫팝업, 2: 두번째, 3: 완료
   const navigate = useNavigate();
@@ -14,7 +16,9 @@ const MypageDelete = () => {
   const uncheckedUrl = 'http://localhost:10000/files/api/get/uncheck.png?filePath=images/mypage';
 
   const handleMainClick = () => {
-    navigate('/');
+    localStorage.removeItem('accessToken'); // 토큰 삭제
+    localStorage.removeItem('refreshToken'); // 만약 리프레시 토큰도 있다면 같이 제거
+    window.location.href = '/login'; // 새로고침 + 로그인 페이지 이동
   };
 
   const handleDeleteClick = () => {
@@ -29,7 +33,7 @@ const MypageDelete = () => {
   const goToNextPopup = () => setPopupStep(prev => prev + 1);
 
   const handleWithdraw = () => {
-  fetch('http://localhost:10000/api/user/withdraw/jihuni@hanmail.net', {
+  fetch(`http://localhost:10000/mypage/api/withdraw?userId=${currentUser.id}`, {
     method: 'DELETE',
   })
     .then((res) => {
@@ -61,7 +65,6 @@ const MypageDelete = () => {
         <S.EndBar />
       </SD.MainContent2>
 
-      {/* 설명 섹션들 */}
       {[
         {
           title: '개인 정보 및 기록 삭제',

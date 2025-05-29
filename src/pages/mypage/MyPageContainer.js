@@ -69,7 +69,7 @@ const MyPageContainer = () => {
       <S.Leftbar>
         <S.ProfileBox>
           <S.ImageBox>
-            <S.ProfileImage src={profileImg} alt="profile" />
+            <S.ProfileImage src={profileImg} />
             <input
               type="file"
               accept="image/*"
@@ -78,7 +78,7 @@ const MyPageContainer = () => {
               onChange={handleFileChange}
               />
             <S.CameraImage
-              src="http://localhost:10000/files/api/get/camera.png?filePath=images/mypage"
+              src="/assets/images/icon/camera.png"
               alt="edit img"
               onClick={handleCameraClick}
               />

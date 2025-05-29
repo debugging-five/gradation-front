@@ -137,7 +137,7 @@ const UniversityCheck = () => {
               <S.BigPopUpX onClick={closePopup}>⨉</S.BigPopUpX>
             </S.BigPopUpCloseBox>
             <S.BigPopUpContent>
-              <S.BigPopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="attention" />
+              <S.BigPopUpIcon src="/assets/images/icon/quest.png" alt="attention" />
               <S.BigPopUpTextDiv>
                 <S.BigPopUpTitle>대학교 인증을 요청하시겠습니까?</S.BigPopUpTitle>
                 <S.BigPopUpText>관리자가 확인 후 승인이 완료되면 쪽지를 통해 알려드리겠습니다.</S.BigPopUpText>
@@ -159,7 +159,7 @@ const UniversityCheck = () => {
               <S.BigPopUpX onClick={closePopup}>⨉</S.BigPopUpX>
             </S.BigPopUpCloseBox>
             <S.BigPopUpContent>
-              <S.BigPopUpIcon src="http://localhost:10000/files/api/get/check-circle.png?filePath=images/mypage" alt="check-circle" />
+              <S.BigPopUpIcon src="/assets/images/icon/check.png" alt="check" />
               <S.BigPopUpTextDiv>
                 <S.BigPopUpTitle>대학교 인증 요청 완료</S.BigPopUpTitle>
                 <S.BigPopUpText>요청이 완료되었습니다.</S.BigPopUpText>

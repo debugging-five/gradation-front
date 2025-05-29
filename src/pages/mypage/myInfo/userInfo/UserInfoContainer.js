@@ -5,104 +5,125 @@ import * as SU from './userInfoContainerStyle';
 
 const UserInfoContainer = () => {
   const currentUser = useSelector(state => state.user.currentUser);
-  
 
-  const [edit, setEdit] = useState(false);
   const [formData, setFormData] = useState(null);
-  const [originalData, setOriginalData] = useState(null);
-  const [smsAgree, setSmsAgree] = useState(false);
-  const [emailAgree, setEmailAgree] = useState(false);
-
-  // 팝업 상태
+  const [edit, setEdit] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+  const [emailVerified, setEmailVerified] = useState(false);
+  const [verificationCode, setVerificationCode] = useState('');
+  const [isVerified, setIsVerified] = useState(false);
+  const [verificationSuccessMessage, setVerificationSuccessMessage] = useState('');
 
-  const checkedUrl = 'http://localhost:10000/files/api/get/checked.png?filePath=images/mypage';
-  const uncheckedUrl = 'http://localhost:10000/files/api/get/uncheck.png?filePath=images/mypage';
 
-  useEffect(() => {
-    if (currentUser) {
-      setFormData({ ...currentUser });
-      setOriginalData({ ...currentUser });
-      setSmsAgree(currentUser.userSmsAgree || false);
-      setEmailAgree(currentUser.userEmailAgree || false);
+  
+  const handleVerifyCode = () => {
+    if (!verificationCode) {
+      alert("인증번호를 입력해주세요.");
+      return;
     }
-  }, [currentUser]);
-
-  const handleEdit = () => {
-    setEdit(true);
-    setOriginalData({ ...formData });
+    
+    fetch("http://localhost:10000/auth/verifyCode", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(verificationCode), // 코드도 문자열 그대로 전송
+    })
+      .then(async (res) => {
+        const data = await res.json();
+        if (res.ok) {
+          setIsVerified(true);
+          setVerificationSuccessMessage(data.message || "인증에 성공하였습니다.");
+        } else {
+          setIsVerified(false);
+          setVerificationSuccessMessage(data.message || "인증번호가 틀렸습니다.");
+        }
+      })
+      .catch(() => {
+        setIsVerified(false);
+        setVerificationSuccessMessage("서버 오류가 발생했습니다.");
+      });
   };
 
+  
+  // 인증번호 입력 시 메시지 제거
+  const handleVerificationCodeChange = (e) => {
+    setVerificationCode(e.target.value);
+    setVerificationSuccessMessage(''); // 입력 중에는 메시지 제거
+  };
+
+  const handleEmailVerify = () => {
+    if (!formData?.userEmail) {
+      alert("이메일을 입력해주세요.");
+      return;
+    }
+    
+    fetch("http://localhost:10000/auth/sendEmail", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData.userEmail), // 문자열이라서 그대로 보내도 됨
+    })
+      .then(async (res) => {
+        if (res.ok) {
+          setEmailVerified(true);
+        } else {
+          const errorData = await res.json();
+          alert(errorData.message || "인증번호 전송에 실패했습니다.");
+        }
+      })
+      .catch(() => alert("서버 오류가 발생했습니다."));
+  };
+
+
+  const checkedUrl = "/assets/images/icon/checked_on.png";
+  const uncheckedUrl = "/assets/images/icon/checked_off.png";
+
+  const fetchUserInfo = (email) => {
+    fetch(`http://localhost:10000/users/api/user/${email}`)
+      .then(res => {
+        if (!res.ok) throw new Error('회원 정보 불러오기 실패');
+        return res.json();
+      })
+      .then(data => {
+        const user = data.currentUser;
+        setFormData(user);
+      })
+      .catch(console.error);
+  };
+
+  useEffect(() => {
+    if (!currentUser || !currentUser.userEmail) return;
+    fetchUserInfo(currentUser.userEmail);
+  }, [currentUser]);
+
+  const handleEdit = () => setEdit(true);
+
   const handleCancelEdit = () => {
-    setFormData({ ...originalData });
-    setSmsAgree(originalData.userSmsAgree || false);
-    setEmailAgree(originalData.userEmailAgree || false);
+    if (formData && currentUser?.userEmail) {
+      fetchUserInfo(currentUser.userEmail);
+    }
     setEdit(false);
     window.scrollTo(0, 0);
   };
 
+  // 입력값 수정 시 메시지 제거
   const handleChange = (field, value) => {
+    setVerificationSuccessMessage(''); // 메시지 초기화
     setFormData(prev => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
-  const handleSave = async () => {
-  const updatedData = {
-      ...formData,
-      userSmsAgree: smsAgree,
-      userEmailAgree: emailAgree,
-    };
-
-    console.log(updatedData)
-    console.log("-------------------------------")
-    console.log(updatedData)
-    console.log("-------------------------------")
-    try {
-      const response = await fetch('http://localhost:10000/users/api/modify', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedData),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        if (data.modifyUser) {
-          setFormData(data.modifyUser);
-          setOriginalData(data.modifyUser);
-          setSmsAgree(data.modifyUser.userSmsAgree || false);
-          setEmailAgree(data.modifyUser.userEmailAgree || false);
-          setEdit(false);
-          setShowSuccessPopup(true);
-        } else {
-          alert(data.message || '회원 정보 수정 실패');
-        }
-      } else {
-        const errorData = await response.json();
-        alert(errorData.message || '서버 오류 발생');
-      }
-    } catch (error) {
-      alert('서버와 연결할 수 없습니다.');
-      console.error(error);
-    }
-
-    window.scrollTo(0, 0);
-  };
-
-  const formatPhoneNumber = (phone) => {
+  const formatPhoneNumber = phone => {
     if (!phone) return '';
     const onlyNums = phone.replace(/[^\d]/g, '');
-    if (onlyNums.length === 11) {
-      return onlyNums.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-    } else if (onlyNums.length === 10) {
-      return onlyNums.replace(/(\d{3})(\d{3,4})(\d{4})/, '$1-$2-$3');
-    } else {
-      return phone;
-    }
+    if (onlyNums.length === 11) return onlyNums.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+    if (onlyNums.length === 10) return onlyNums.replace(/(\d{3})(\d{3,4})(\d{4})/, '$1-$2-$3');
+    return phone;
   };
 
   useEffect(() => {
@@ -110,44 +131,69 @@ const UserInfoContainer = () => {
     script.src = "https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
     script.async = true;
     document.body.appendChild(script);
-  }, [formData]);
+  }, []);
 
   const handleAddressSearch = () => {
     new window.daum.Postcode({
       oncomplete: function (data) {
-        const fullAddress = data.address;
         setFormData(prev => ({
           ...prev,
-          userAddress: fullAddress,
-          // userDetailAddress: '',
+          userAddress: data.address,
         }));
       }
     }).open();
   };
 
-  if (!formData) {
-    return <div>회원 정보를 불러오는 중입니다...</div>;
-  }
+  const handleSave = () => {
+    if (!formData) return;
+
+    fetch('http://localhost:10000/users/api/modify', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.modifyUser) {
+          fetchUserInfo(data.modifyUser.userEmail);
+          setEdit(false);
+          setShowConfirmPopup(false);
+          setShowSuccessPopup(true);
+        } else {
+          alert(data.message || '수정 실패');
+        }
+      })
+      .catch(() => alert('서버 오류가 발생했습니다.'));
+  };
+
+  if (!formData) return <div>회원 정보를 불러오는 중입니다...</div>;
 
   return (
     <div>
       <SU.UserInfo>{edit ? "회원정보 수정" : "회원정보"}</SU.UserInfo>
 
-      {/* 아이디 */}
       <SU.IdBox>
         <SU.IdTitle>아이디</SU.IdTitle>
         <SU.IdBar>|</SU.IdBar>
         <SU.IdContent>{formData.userIdentification}</SU.IdContent>
       </SU.IdBox>
 
+      {/* 이름 */}
+      <SU.Box>
+        <SU.IdTitle>이름</SU.IdTitle>
+        <SU.IdBar>|</SU.IdBar>
+        <SU.PStyle>{formData.userName}</SU.PStyle>
+      </SU.Box>
+
       {/* 닉네임 */}
       <SU.Box>
         <SU.Title><span>닉네임</span></SU.Title>
         {edit ? (
           <>
-            <SU.InputStyle value={formData.userNickName || ''} onChange={e => handleChange('userNickName', e.target.value)} />
-            <SU.NickNameSpace />
-            <SU.Button120x35R>중복체크</SU.Button120x35R>
+            <SU.LongInputStyle
+              value={formData.userNickName || ''}
+              onChange={e => handleChange('userNickName', e.target.value)}
+            />
           </>
         ) : (
           <SU.PStyle>{formData.userNickName || '-'}</SU.PStyle>
@@ -155,30 +201,28 @@ const UserInfoContainer = () => {
       </SU.Box>
       <SU.EndBar />
 
-      {/* 이름 */}
-      <SU.Box>
-        <SU.Title><span>이름</span><S.Important>*</S.Important></SU.Title>
-        {edit ? (
-          <SU.InputStyle value={formData.userName || ''} onChange={e => handleChange('userName', e.target.value)} />
-        ) : (
-          <SU.PStyle>{formData.userName || '-'}</SU.PStyle>
-        )}
-      </SU.Box>
-      <SU.EndBar />
-
       {/* 전화번호 */}
       <SU.Box>
-        <SU.Title><span>전화번호</span><S.Important>*</S.Important></SU.Title>
+        <SU.Title><span>전화번호 <S.Important>*</S.Important></span></SU.Title>
         {edit ? (
           <>
-            <SU.InputStyle value={formData.userPhone || ''} onChange={e => handleChange('userPhone', e.target.value)} />
-            <SU.CheckDiv onClick={() => setSmsAgree(!smsAgree)}>
-              <img src={smsAgree ? checkedUrl : uncheckedUrl} alt="sms-agree" width={16} height={16} style={{ marginRight: '0.5rem' }} />
+            <SU.InputStyle
+              value={formData.userPhone || ''}
+              onChange={e => handleChange('userPhone', e.target.value)}
+            />
+            <SU.CheckDiv onClick={() => handleChange('userSnsOk', !formData.userSnsOk)}>
+              <img
+                src={formData.userSnsOk ? checkedUrl : uncheckedUrl}
+                alt="sms-agree"
+                width={16}
+                height={16}
+                style={{ marginRight: '0.5rem' }}
+              />
               문자수신동의
             </SU.CheckDiv>
             <SU.NumEmailSpace />
             <SU.InputButtonDiv>
-              <SU.Button120x35R>휴대폰 인증</SU.Button120x35R>
+              <SU.Button90x30R>휴대폰 인증</SU.Button90x30R>
             </SU.InputButtonDiv>
           </>
         ) : (
@@ -189,17 +233,26 @@ const UserInfoContainer = () => {
 
       {/* 이메일 */}
       <SU.Box>
-        <SU.Title><span>이메일</span><S.Important>*</S.Important></SU.Title>
+        <SU.Title><span>이메일 <S.Important>*</S.Important></span></SU.Title>
         {edit ? (
           <>
-            <SU.InputStyle value={formData.userEmail || ''} onChange={e => handleChange('userEmail', e.target.value)} />
-            <SU.CheckDiv onClick={() => setEmailAgree(!emailAgree)}>
-              <img src={emailAgree ? checkedUrl : uncheckedUrl} alt="email-agree" width={16} height={16} style={{ marginRight: '0.5rem' }} />
+            <SU.InputStyle
+              value={formData.userEmail || ''}
+              onChange={e => handleChange('userEmail', e.target.value)}
+            />
+            <SU.CheckDiv onClick={() => handleChange('userMailOk', !formData.userMailOk)}>
+              <img
+                src={formData.userMailOk ? checkedUrl : uncheckedUrl}
+                alt="email-agree"
+                width={16}
+                height={16}
+                style={{ marginRight: '0.5rem' }}
+              />
               이메일 수신동의
             </SU.CheckDiv>
             <SU.NumEmailSpace />
             <SU.InputButtonDiv>
-              <SU.Button120x35R>이메일 인증</SU.Button120x35R>
+              <SU.Button90x30R onClick={handleEmailVerify}>이메일 인증</SU.Button90x30R>  
             </SU.InputButtonDiv>
           </>
         ) : (
@@ -207,6 +260,31 @@ const UserInfoContainer = () => {
         )}
       </SU.Box>
       <SU.EndBar />
+
+      {/* 인증번호 확인 */}
+      {emailVerified && (
+        <>
+          <SU.Box>
+            <SU.Title><span>인증번호</span></SU.Title>
+            <SU.LongInputStyle
+              value={verificationCode}
+              onChange={handleVerificationCodeChange}
+            />
+            <SU.ApproveSpace />
+            {isVerified ? (
+              <SU.Button90x30R onClick={handleVerifyCode}>인증번호 확인</SU.Button90x30R>
+            ) : (
+              <SU.Button90x30G onClick={handleVerifyCode}>인증번호 확인</SU.Button90x30G>
+            )}
+          </SU.Box>
+          <SU.EndBar />
+          {verificationSuccessMessage && (
+            <SU.MessageText isError={!isVerified}>
+              {verificationSuccessMessage}
+            </SU.MessageText>
+          )}
+        </>
+      )}
 
       {/* 주소 */}
       <SU.Box>
@@ -216,8 +294,8 @@ const UserInfoContainer = () => {
             <SU.PStyle>{formData.userAddress || '-'}</SU.PStyle>
             <SU.AddressSpace />
             <SU.InputButtonDiv>
-              <SU.Button120x35W onClick={() => handleChange('userAddress', '')}>주소 삭제</SU.Button120x35W>
-              <SU.Button120x35R onClick={handleAddressSearch}>주소 검색</SU.Button120x35R>
+              <SU.Button90x30W onClick={() => handleChange('userAddress', '')}>주소 삭제</SU.Button90x30W>
+              <SU.Button90x30R onClick={handleAddressSearch}>주소 검색</SU.Button90x30R>
             </SU.InputButtonDiv>
           </>
         ) : (
@@ -230,7 +308,10 @@ const UserInfoContainer = () => {
       <SU.Box>
         <SU.Title><span>상세주소</span></SU.Title>
         {edit ? (
-          <SU.InputStyle value={formData.userDetailAddress || ''} onChange={e => handleChange('userDetailAddress', e.target.value)} />
+          <SU.LongInputStyle
+            value={formData.userDetailAddress || ''}
+            onChange={e => handleChange('userDetailAddress', e.target.value)}
+          />
         ) : (
           <SU.PStyle>{formData.userDetailAddress || '-'}</SU.PStyle>
         )}
@@ -240,7 +321,7 @@ const UserInfoContainer = () => {
       {/* 대학교 */}
       <SU.Box>
         <SU.Title><span>대학교</span></SU.Title>
-        <SU.PStyle></SU.PStyle>
+        <SU.PStyle>{formData.userUniversityStatus === '승인완료' ? formData.userMyUniversity : '-'}</SU.PStyle>
       </SU.Box>
       <SU.EndBar />
 
@@ -256,30 +337,37 @@ const UserInfoContainer = () => {
         )}
       </S.ButtonDiv>
 
-      {/* 수정 확인 팝업 */}
+      {/* 팝업 */}
       {showConfirmPopup && (
         <S.PopUpOverlay>
           <S.PopUp>
             <S.PopUpContent>
-              <S.PopUpIcon src="http://localhost:10000/files/api/get/question.png?filePath=images/mypage" alt="question" />
+              <S.PopUpIcon
+                src="/assets/images/icon/quest.png"
+                alt="question"
+              />
               <S.PopUpText>회원정보를 수정하시겠습니까?</S.PopUpText>
               <S.PopUpButtonDiv>
                 <S.PopUpButtonW onClick={() => setShowConfirmPopup(false)}>취소</S.PopUpButtonW>
-                <S.PopUpButtonR onClick={() => { setShowConfirmPopup(false); handleSave(); }}>확인</S.PopUpButtonR>
+                <S.PopUpButtonR onClick={handleSave}>확인</S.PopUpButtonR>
               </S.PopUpButtonDiv>
             </S.PopUpContent>
           </S.PopUp>
         </S.PopUpOverlay>
       )}
 
-      {/* 수정 완료 팝업 */}
       {showSuccessPopup && (
         <S.PopUpOverlay>
           <S.PopUp>
             <S.PopUpContent>
-              <S.PopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="attention" />
-              <S.PopUpText>회원정보 수정이 완료되었습니다.</S.PopUpText>
-              <S.PopUpButtonR onClick={() => setShowSuccessPopup(false)}>확인</S.PopUpButtonR>
+              <S.PopUpIcon
+                src="/assets/images/icon/check.png"
+                alt="success"
+              />
+              <S.PopUpText>회원정보가 수정되었습니다.</S.PopUpText>
+              <S.PopUpButtonDiv>
+                <S.PopUpButtonR onClick={() => { setShowSuccessPopup(false); window.location.reload();}}>확인</S.PopUpButtonR>
+              </S.PopUpButtonDiv>
             </S.PopUpContent>
           </S.PopUp>
         </S.PopUpOverlay>
