@@ -10,6 +10,10 @@ const FormDisplayDetail = ({ id: propId }) => {
   const [data, setData] = useState(null);     // 작품 상세 정보
   const [status, setStatus] = useState("");   // 미승인/승인완료/반려 등
   const [isAdmin, setIsAdmin] = useState(false);
+  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+  const [showRejectPopup, setShowRejectPopup] = useState(false);
+  const [showCancelPopup, setShowCancelPopup] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   // 관리자 인증
   useEffect(() => {
@@ -78,8 +82,10 @@ const FormDisplayDetail = ({ id: propId }) => {
         })
       });
       if (res.ok) {
-        setStatus("승인완료");
-        alert("승인 처리되었습니다.");
+        setShowSuccessPopup(true); //성공 알림용 팝업을 보여주기
+        setTimeout(() => {
+          navigate("/mypage/admin/form-management/pending/display");
+        }, 1000);
       } else {
         alert("승인 실패!");
       }
@@ -100,12 +106,14 @@ const FormDisplayDetail = ({ id: propId }) => {
         },
         body: JSON.stringify({
           id,
-          artStatus: "반려"
+          artStatus: "기각"
         })
       });
       if (res.ok) {
-        setStatus("반려");
-        alert("기각 처리되었습니다.");
+        setShowRejectPopup(true); //성공 알림용 팝업을 보여주기
+        setTimeout(() => {
+          navigate("/mypage/admin/form-management/pending/display");
+        }, 1000);
       } else {
         alert("기각 실패!");
       }
@@ -130,8 +138,10 @@ const FormDisplayDetail = ({ id: propId }) => {
         })
       });
       if (res.ok) {
-        setStatus("미승인");
-        alert("승인 취소되었습니다.");
+        setShowCancelPopup(true);
+        setTimeout(() => {
+          navigate("/mypage/admin/form-management/pending/display");
+        }, 1000);
       } else {
         alert("취소 실패!");
       }
@@ -140,7 +150,7 @@ const FormDisplayDetail = ({ id: propId }) => {
     }
   };
 
-    const getArtImgUrl = (artImgName, artImgPath) => {
+  const getArtImgUrl = (artImgName, artImgPath) => {
     if (!artImgName) return "/images/default-art.jpg";
     return `http://localhost:10000/files/api/get/${artImgName}?filePath=${artImgPath}`;
   };
@@ -154,16 +164,29 @@ const FormDisplayDetail = ({ id: propId }) => {
     return `${year}.${month}.${day}`;
   };
 
-    const renderWithLineBreaks = (text) =>
-    text.split('\n').map((line, i) => (
-      <React.Fragment key={i}>
-        {line}
-        <br />
-      </React.Fragment>
-    ));
+  const formatPhoneNumber = (phone) => {
+    if (!phone) return "";
+
+    const part1 = phone.slice(0, 3); 
+    const part2 = phone.slice(3, 7); 
+    const part3 = phone.slice(7); 
+// 하이픈!
+    return `${part1}-${part2}-${part3}`;
+  };
+
+// DB \n br태그로 바꾸기
+  const renderWithLineBreaks = (text) =>
+    (text ? text.split('\\n') : []).map((line, i) => (
+    <React.Fragment key={i}>
+      {line}
+      <br />
+    </React.Fragment>
+    )
+  );
 
   // 목록 버튼
   const handleList = () => navigate(-1);
+
 
   // 로딩 처리
   if (!isAdmin) return null;
@@ -184,7 +207,7 @@ const FormDisplayDetail = ({ id: propId }) => {
             <S.TableHeadCell>이름</S.TableHeadCell>
             <td>{data.userName}</td>
             <S.TableHeadCell>연락처</S.TableHeadCell>
-            <td>{data.userPhone}</td>
+            <td>{formatPhoneNumber(data.userPhone)}</td>
             <S.TableHeadCell>메일주소</S.TableHeadCell>
             <td>{data.userEmail}</td>
           </tr>
@@ -216,14 +239,68 @@ const FormDisplayDetail = ({ id: propId }) => {
         <S.ListButton onClick={handleList}>목록</S.ListButton>
         {status === "미승인" && (
           <>
-            <S.ApproveButton onClick={handleApprove}>승인</S.ApproveButton>
-            <S.RejectButton onClick={handleReject}>기각</S.RejectButton>
+            <S.ApproveButton onClick={() => setShowConfirmPopup(true)}>승인</S.ApproveButton>
+            <S.RejectButton onClick={() => setShowRejectPopup(true)}>기각</S.RejectButton>
           </>
         )}
         {status === "승인완료" && (
-          <S.CancelButton onClick={handleCancel}>승인 취소</S.CancelButton>
+          <S.CancelButton onClick={() => setShowCancelPopup(true)}>승인 취소</S.CancelButton>
         )}
       </S.ButtonWrapper>
+
+      {showConfirmPopup && (
+        <S.PopupOverlay>
+          <S.PopupBox>
+            <S.PopupIcon src="/assets/images/icon/quest.png" alt="question-icon" />
+            <S.PopupMessage>정말 승인하시겠습니까?</S.PopupMessage>
+            <S.PopupButtonGroup>
+              <S.PopupButton className="cancel" onClick={() => setShowConfirmPopup(false)}>취소</S.PopupButton>
+              <S.PopupButton className="confirm" onClick={() => {
+                setShowConfirmPopup(false);
+                handleApprove();
+              }}>확인</S.PopupButton>
+            </S.PopupButtonGroup>
+          </S.PopupBox>
+        </S.PopupOverlay>
+      )}
+      {showRejectPopup && (
+        <S.PopupOverlay>
+          <S.PopupBox>
+            <S.PopupIcon src="/assets/images/icon/quest.png" alt="question-icon" />
+            <S.PopupMessage>정말 기각하시겠습니까?</S.PopupMessage>
+            <S.PopupButtonGroup>
+              <S.PopupButton className="cancel" onClick={() => setShowRejectPopup(false)}>취소</S.PopupButton>
+              <S.PopupButton className="confirm" onClick={() => {
+                setShowRejectPopup(false);
+                handleReject();
+              }}>확인</S.PopupButton>
+            </S.PopupButtonGroup>
+          </S.PopupBox>
+        </S.PopupOverlay>
+      )}
+      {showCancelPopup && (
+        <S.PopupOverlay>
+          <S.PopupBox>
+            <S.PopupIcon src="/assets/images/icon/quest.png" alt="question-icon" />
+            <S.PopupMessage>정말 승인 취소하시겠습니까?</S.PopupMessage>
+            <S.PopupButtonGroup>
+              <S.PopupButton className="cancel" onClick={() => setShowCancelPopup(false)}>취소</S.PopupButton>
+              <S.PopupButton className="confirm" onClick={() => {
+                setShowCancelPopup(false);
+                handleCancel();
+              }}>확인</S.PopupButton>
+            </S.PopupButtonGroup>
+          </S.PopupBox>
+        </S.PopupOverlay>
+      )}
+      {showSuccessPopup && (
+        <S.PopupOverlay>
+          <S.PopupBox>
+            <S.PopupIcon src="/assets/images/icon/ok.png" alt="ok-icon" />
+            <S.PopupMessage>처리가 완료되었습니다.</S.PopupMessage>
+          </S.PopupBox>
+        </S.PopupOverlay>
+      )}
     </S.Container>
 
   );
