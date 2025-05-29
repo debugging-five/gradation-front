@@ -13,6 +13,12 @@ const S = {};
     width: 100dvw;
     min-height: 100%;
     background-color: ${gray100};
+
+    footer {
+      position: relative;
+      z-index: 10;
+      background-color: #FBFCFC;
+    }
   `
 
   S.Main = styled.main`

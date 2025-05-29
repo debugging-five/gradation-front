@@ -104,6 +104,7 @@ S.ImageWrap = styled.div`
 	display: flex;
 	justify-content: center;
 	margin-right: 120px;
+  margin-bottom: 200px;
 `
 
 S.ImgWrapper = styled.div`

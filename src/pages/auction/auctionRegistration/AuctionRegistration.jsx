@@ -16,22 +16,17 @@ const AuctionExpectedModify = () => {
   const [back, setBack] = useState(false);
   const [imageData, setImageData] = useState({});
   
-  const [inputMinWidth, setInputMinWidth] = useState("")
-  const [inputMaxWidth, setInputMaxWidth] = useState("")
+  const [inputMinWidth, setInputMinWidth] = useState("160px")
+  const [inputMaxWidth, setInputMaxWidth] = useState("160px")
 
   useEffect(() => {
     const fetchAuction = async () => {
-      const response = await fetch(`http://localhost:10000/displays/api/display/${id}`);
+      const response = await fetch(`http://localhost:10000/displays/api/read/${id}`);
       const auction = await response.json();
       const auctionData = await auction.post;
-      const imgData = await auction.images[0];
+      const imgData = await auctionData.images[0];
       const isExistFetch = await fetch(`http://localhost:10000/auction/api/read-bidding/${auctionData.artId}`);
       const isExist = await isExistFetch.json();
-
-      if(isExist) {
-        navigate(`/auction`, { replace: true })
-        return
-      }
       
       setData(auctionData);
       setImageData(imgData)
@@ -39,7 +34,8 @@ const AuctionExpectedModify = () => {
         artId: auctionData.artId
       });
       
-      if (auction.likeCount < 50 || auctionData.userId !== currentUser.id) {
+      if (isExist || auctionData.artLikeCount < 50 || auctionData.userId !== currentUser.id) {
+        alert("등록 권한이 없습니다")
         navigate("/auction");
         return
       }
