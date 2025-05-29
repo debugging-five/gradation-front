@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import S from './style';
 import getTimeLeft from './_function/getTimeLeft';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import endBidding from './_function/endBidding';
 
 // 상태만 업데이트
 const AuctionTime = ({id, auctionStartDate, auctionEndDate, auctionBidDate}) => {
   const navigate = useNavigate();
-
   const isComplete = !!auctionBidDate;
 
   // 1초마다 시간을 비교 화면에서 자식컴포넌트 리랜더링
   const [timeLeft, setTimeLeft] = useState(getTimeLeft(auctionStartDate, auctionEndDate, new Date()))
   useEffect(() => {
+    setTimeLeft(getTimeLeft(auctionStartDate, auctionEndDate, new Date()));
     const timer = setInterval(() => {
       setTimeLeft(getTimeLeft(auctionStartDate, auctionEndDate, new Date()))
     }, 1000);
 
     return () => clearInterval(timer)
-  }, [])
+  }, [id])
 
   const { isAuction, isBidding, isExpected } = timeLeft;
   
