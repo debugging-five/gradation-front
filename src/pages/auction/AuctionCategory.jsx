@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Outlet, replace, useLocation, useNavigate, useParams } from 'react-router-dom';
 import S from './style';
 
 const AuctionCategory = () => {
@@ -93,18 +93,29 @@ const AuctionCategory = () => {
     }
   
     const getAuctions = async () => {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/auction/api/list`, {
-        method : "POST",
-        headers : {
-          "Content-Type" : "application/json"
-        },
-        body : JSON.stringify(sendParam)
-      })
-      if(!response.ok) {
-        throw new Error(`getDisplayList fetch`)
-      } 
-      const datas = await response.json()
-      return datas;
+      try{
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/auction/api/list`, {
+          method : "POST",
+          headers : {
+            "Content-Type" : "application/json"
+          },
+          body : JSON.stringify(sendParam)
+        })
+
+        if(!response.ok) {
+          navigate("/")
+          // throw new Error(`getDisplayList fetch`)
+        } 
+        
+        const datas = await response.json()
+        return datas;
+      } catch(error) {
+        console.error(error);
+        
+        navigate("/")
+        return
+      }
+      
     }
     getAuctions().then((data) => {
       setAuction(data)
