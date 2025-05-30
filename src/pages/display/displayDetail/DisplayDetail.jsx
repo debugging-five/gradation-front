@@ -1,12 +1,11 @@
-// DisplayDetail.jsx
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import S from './style';
 import { useSelector } from 'react-redux';
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import ArtLikeButton from './button/artLikeButton/ArtLikeButton';
 import CommentLikeButton from './button/comentLikeButton/CommentLikeButton';
+import S from './style';
 
 const DisplayDetail = () => {
   const { id, category } = useParams();
@@ -51,7 +50,7 @@ const DisplayDetail = () => {
         })
         .then((res) => {
           // console.log("res", res);
-          // console.log("res.post", res.post);
+          console.log("res.post", res.post);
           setPost(res.post); 
           setIsError(false)
           setIsLoading(false)
@@ -264,8 +263,7 @@ const DisplayDetail = () => {
               setIsLiked={setIsLiked}
               setPost={setPost}
               setLikeCount={(count) =>
-                setPost((prev) => ({ ...prev, artLikeCount: post.artLikeCount }))
-              } />
+                setPost((prev) => ({ ...prev, artLikeCount : post.artLikeCount }))} />
             <S.Link to={`/mypage/contact-artist/write/${post.userEmail}`}>
               <S.ArtistButton className="button">
                 작가와 연락
@@ -425,7 +423,7 @@ const DisplayDetail = () => {
       )}
       </S.CommentWrapper>
     </S.Container>
-  );
+  )
 };
 
 export default DisplayDetail;
