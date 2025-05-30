@@ -1,6 +1,5 @@
-import styled, { createGlobalStyle } from 'styled-components'
+import styled from 'styled-components'
 import { EN_H3, H10, H2, H3, H4, H5, H7, H8 } from '../../../styles/common';
-import Swiper from 'swiper';
 
 const S = {};
 
@@ -235,10 +234,10 @@ S.Option = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  &:hover {
-    background-color: #EE3333;
-    color: #FBFCFC;
-  }
+  
+    &:hover {
+      color: #EE3333;
+    }
 `
 
 S.H8 = styled.p`

@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Outlet, useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import S from './style';
+import { useSelector } from 'react-redux';
 
 const DisplayCategory = ({props}) => {
   const navigate = useNavigate();
+  const { isLogin, currentUser } = useSelector((state) => state.user);
+  // console.log(currentUser)
   
   const { category } = useParams();
   const { order, setOrder, cursor, setCursor, keyword, setKeyword, isLoading, isError, display } = useOutletContext();
@@ -32,6 +35,16 @@ const DisplayCategory = ({props}) => {
     popular: "좋아요순",
     comment: "댓글순"
 };
+
+const handleUpload = () => {
+  if(!isLogin) {
+    navigate("/login")
+  } else if (currentUser.userWriterStatus === "미승인") {
+    alert("작가 아님!")
+  } else {
+    navigate("/display/registration")
+  }
+}
 
 
   const goKorean = () => {
@@ -108,12 +121,12 @@ const DisplayCategory = ({props}) => {
       </S.InputWrapper>
 
       <S.Menu>
-        <S.Link to={"/display/registration"}>
-        <S.Upload>
+        {/* <S.Link to={"/display/registration"}> */}
+        <S.Upload onClick={handleUpload}>
           <S.Icon src={"/assets/images/icon/upload.png"} />
           <S.H8>작품 업로드</S.H8>
         </S.Upload>
-        </S.Link>
+        {/* </S.Link> */}
         <S.DropdownWrapper onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
           <S.DropdownButton>
             {dropDownOption[order]}
