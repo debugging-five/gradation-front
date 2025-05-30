@@ -65,7 +65,7 @@ export const ProfileImage = styled.img`
   height: 80px;
   border-radius: 50px;
   border-bottom: solid 1px;
-  object-fit: cover;  /* 핵심: 이미지 비율 유지하며 자르기 */
+  object-fit: cover;  
   object-position: center; 
 `;
 

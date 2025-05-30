@@ -25,9 +25,11 @@ export const OneLine = styled.div`
 export const SendedWrapper = styled.div`
   display: flex;
   gap :8px;
+  align-items: center;
 `;
 export const TextOneLine = styled.div`
   display: flex;
+  margin: 5px 0;
 `;
 export const Title = styled.div`
   width: 120px;

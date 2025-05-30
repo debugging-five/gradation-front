@@ -67,7 +67,7 @@ const ContactArtistReceivedDetail = () => {
           <S.PopUpOverlay>
             <S.PopUp>
               <S.PopUpContent>
-                <S.PopUpIcon src="http://localhost:10000/files/api/get/question.png?filePath=images/mypage" alt="question" />
+                <S.PopUpIcon src="/assets/images/icon/quest.png" alt="question" />
                 <S.PopUpText>쪽지를 삭제하시겠습니까?</S.PopUpText>
                 <S.PopUpButtonDiv>
                   <S.PopUpButtonW onClick={() => setShowConfirm(false)}>취소</S.PopUpButtonW>
@@ -83,7 +83,7 @@ const ContactArtistReceivedDetail = () => {
           <S.PopUpOverlay>
             <S.PopUp>
               <S.PopUpContent>
-                <S.PopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="attention" />
+                <S.PopUpIcon src="/assets/images/icon/check.png" alt="check" />
                 <S.PopUpText>알림이 삭제되었습니다.</S.PopUpText>
                 <S.PopUpButtonR onClick={() => { setShowSuccess(false); navigate(-1); }}>확인</S.PopUpButtonR>
               </S.PopUpContent>

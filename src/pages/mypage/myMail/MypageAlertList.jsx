@@ -5,8 +5,9 @@ import * as S from '../style';
 
 const MypageAlertList = () => {
   const [alerts, setAlerts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
-  // Redux에서 현재 로그인한 사용자 정보 가져오기
   const currentUser = useSelector(state => state.user.currentUser);
 
   useEffect(() => {
@@ -22,6 +23,11 @@ const MypageAlertList = () => {
     return <div>사용자 정보를 불러오는 중입니다...</div>;
   }
 
+  const indexOfLast = currentPage * itemsPerPage;
+  const indexOfFirst = indexOfLast - itemsPerPage;
+  const currentAlerts = alerts.slice(indexOfFirst, indexOfLast);
+  const totalPages = Math.ceil(alerts.length / itemsPerPage);
+
   return (
     <S.MainWrapper>
       <S.Wrapper>
@@ -33,22 +39,40 @@ const MypageAlertList = () => {
           <S.Emptybox>작성일</S.Emptybox>
         </S.ListHeader>
 
-      {Array.isArray(alerts) && alerts.length > 0 ? (
-        alerts.map((alert, index) => (
-          <S.ContentBox key={alert.id}>
-            <S.Number>{index + 1}</S.Number>
-            <S.RedText>{alert.sendUserName}</S.RedText>
-            <S.Emptybox></S.Emptybox>
-            <S.TitleNavigate as={NavLink} to={`/mypage/alert/detail/${alert.id}`} end>
-              <S.Content>{alert.mailTitle}</S.Content>
-            </S.TitleNavigate>
-            <S.Emptybox>{new Date(alert.mailSendTime).toLocaleDateString('ko-KR')}</S.Emptybox>
-          </S.ContentBox>
-        ))
-      ) : (
-        <div style={{ padding: "1rem", textAlign: "center" }}>알림이 없습니다.</div>
-      )}
+        {Array.isArray(currentAlerts) && currentAlerts.length > 0 ? (
+          currentAlerts.map((alert, index) => (
+            <S.ContentBox key={alert.id}>
+              <S.Number>{(currentPage - 1) * itemsPerPage + index + 1}</S.Number>
+              <S.RedText>{alert.sendUserName}</S.RedText>
+              <S.Emptybox></S.Emptybox>
+              <S.TitleNavigate as={NavLink} to={`/mypage/alert/detail/${alert.id}`} end>
+                <S.Content>{alert.mailTitle}</S.Content>
+              </S.TitleNavigate>
+              <S.Emptybox>{new Date(alert.mailSendTime).toLocaleDateString('ko-KR')}</S.Emptybox>
+            </S.ContentBox>
+          ))
+        ) : (
+          <div style={{ padding: "1rem", textAlign: "center" }}>알림이 없습니다.</div>
+        )}
       </S.Wrapper>
+
+      {/* 페이지네이션 버튼 */}
+      {totalPages > 1 && (
+        <S.Pagination>
+          {Array.from({ length: totalPages }, (_, idx) => (
+            <S.PageButton
+              key={idx}
+              onClick={() => {
+                setCurrentPage(idx + 1);
+                window.scrollTo(0, 0);
+              }}
+              $active={currentPage === idx + 1}
+            >
+              {idx + 1}
+            </S.PageButton>
+          ))}
+        </S.Pagination>
+      )}
     </S.MainWrapper>
   );
 };

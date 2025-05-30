@@ -55,7 +55,7 @@ const ApprovedUniversityList = () => {
             </SA.ContentBox>
             ))
         ) : (
-        <div style={{ padding: "1rem", textAlign: "center" }}>요청한 인증이 없습니다.</div>
+          <div style={{ padding: "1rem", textAlign: "center" }}>요청한 인증이 없습니다.</div>
         )}
       </SA.Wrapper>
     </SA.MainWrapper>
