@@ -135,7 +135,7 @@ const DisplayListContainer = () => {
                 i === largeCursor ?
                 datas.map((data, i) => (
                   data !== null?
-                  <S.PagenationButton key={i} onClick={() => {setCursor((data+1))}} $active={cursor === data+1}>
+                  <S.PagenationButton key={i} onClick={() => {setCursor((data + 1))}} $active={cursor === data + 1}>
                   {data + 1}
                   </S.PagenationButton> : ''
                 )) : ''

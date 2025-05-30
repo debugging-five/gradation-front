@@ -433,6 +433,33 @@ S.CancelButton = styled.button`
   height: 35px;
   padding: 6px 12px;
 `
+// 페이지네이션
+S.PagenationWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin: 160px 0 0 0;
+`
 
+S.PagenationButton = styled.div`
+  width: 9px;
+  height: 20px;
+  color: ${(props) => (props.$active ? '#FF3333' : '#6E7476')};
+  cursor: pointer;
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+
+  &:hover {
+    color: #333333;
+  }
+`
+
+S.PagenationIcon = styled.img`
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+`
 
 export default S;
