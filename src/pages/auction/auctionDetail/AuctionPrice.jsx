@@ -25,7 +25,7 @@ const AuctionPrice = ({price, auction}) => {
       </S.CurrentPrice>
       <S.MinPrice>
           <S.H3>최소 응찰가</S.H3>
-          <S.H3>KRW {typeof price?.auctionBiddingMinimumPrice === 'number' && price?.auctionBiddingMinimumPrice.toLocaleString('ko-KR').toLocaleString('ko-KR').replace(/\B(?=(\d{3})+(?!\d))/g, ",") || Math.ceil(auction?.auctionStartPrice * 1.1 / 1000) * 1000}원</S.H3>
+          <S.H3>KRW {typeof price?.auctionBiddingMinimumPrice === 'number' && price?.auctionBiddingMinimumPrice.toLocaleString('ko-KR').toLocaleString('ko-KR').replace(/\B(?=(\d{3})+(?!\d))/g, ",") || (Math.ceil(auction?.auctionStartPrice * 1.1 / 1000) * 1000)}원</S.H3>
       </S.MinPrice>
     </div>
   );
