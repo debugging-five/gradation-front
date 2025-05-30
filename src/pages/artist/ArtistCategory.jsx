@@ -1,32 +1,114 @@
-import React from 'react';
-import { NavLink, Outlet, useOutletContext } from 'react-router-dom';
+import React, { useState } from 'react';
+import { NavLink, Outlet, useNavigate, useOutletContext } from 'react-router-dom';
+import S from './style'
 
 const ArtistCategory = () => {
+  const navigate = useNavigate();
 
   const {artists, keyword, setKeyword, cursor, setCursor, category, order, setOrder, onKeyDownKeyword, onChangeValue} = useOutletContext()
+  
+  const [value, setValue] = useState("")
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  
+  const handleOrder = (order) => {
+    setOrder(order);
+    setIsDropdownOpen(false)
+  }
+
+  const dropDownOption = {
+    recent: "등록순",
+    name: "이름순",
+  };
+
+  
+  const goKorean = () => {
+    navigate(`/artist/korean`);
+  }
+  const goSculpture = () => {
+    navigate(`/artist/sculpture`);
+  }
+  const goCraft = () => {
+    navigate(`/artist/craft`);
+  }
+  const goArchitecture = () => {
+    navigate(`/artist/architecture`);
+  }
+  const goCalligraphy = () => {
+    navigate(`/artist/calligraphy`);
+  }
+  const goPainting = () => {
+    navigate(`/artist/painting`);
+  }
+
   return (
     <div>
-      <div>
-        <NavLink to={"korean"}>한국화</NavLink>
-        <NavLink to={"painting"}>조각</NavLink>
-        <NavLink to={"sculpture"}>공예</NavLink>
-        <NavLink to={"craft"}>건축</NavLink>
-        <NavLink to={"architecture"}>서예</NavLink>
-        <NavLink to={"calligraphy"}>회화</NavLink>
-      </div>
-      <div className='category' style={{display: "flex", gap: "10px"}}>
-        <div>
-          <p onClick={(e) => setOrder("recent")}>최근</p>
-          <p onClick={(e) => setOrder("name")}>이름순</p>
-        </div>
-        <div>
-          <span>검색</span>
-          <input 
-            placeholder='검색어를 입력하세요.'
-            onChange={onChangeValue} onKeyDown={onKeyDownKeyword} 
-          />
-        </div>
-      </div>
+     <S.CategoryWrapper>
+        <S.TypeDiv>
+          {category === "korean"? 
+            <S.SelectedRed>한국화</S.SelectedRed> : 
+            <S.UnSelectedType onClick={goKorean}>한국화</S.UnSelectedType>
+          }
+        </S.TypeDiv>
+        <S.Bar>|</S.Bar>
+        <S.TypeDiv>
+          {category === "sculpture"? 
+            <S.SelectedRed>조각</S.SelectedRed> : 
+            <S.UnSelectedType onClick={goSculpture}>조각</S.UnSelectedType>
+          }
+        </S.TypeDiv>
+        <S.Bar>|</S.Bar>
+        <S.TypeDiv>
+          {category === "craft"? 
+            <S.SelectedRed>공예</S.SelectedRed> : 
+            <S.UnSelectedType onClick={goCraft}>공예</S.UnSelectedType>
+          }
+        </S.TypeDiv>
+        <S.Bar>|</S.Bar>
+        <S.TypeDiv>
+          {category === "architecture"? 
+            <S.SelectedRed>건축</S.SelectedRed> : 
+            <S.UnSelectedType onClick={goArchitecture}>건축</S.UnSelectedType>
+          }
+        </S.TypeDiv>
+        <S.Bar>|</S.Bar>
+        <S.TypeDiv>
+          {category === "calligraphy"? 
+            <S.SelectedRed>서예</S.SelectedRed> : 
+            <S.UnSelectedType onClick={goCalligraphy}>서예</S.UnSelectedType>
+          }
+        </S.TypeDiv>
+        <S.Bar>|</S.Bar>
+        <S.TypeDiv>
+          {category === "painting"? 
+            <S.SelectedRed>회화</S.SelectedRed> : 
+            <S.UnSelectedType onClick={goPainting}>회화</S.UnSelectedType>
+          }
+        </S.TypeDiv>
+      </S.CategoryWrapper>
+
+      <S.InputWrapper>
+        <S.Input type="text" 
+          placeholder='작가명을 검색하세요.'
+          onChange={onChangeValue}
+          onKeyDown={onKeyDownKeyword}
+        />
+      </S.InputWrapper>
+
+      <S.Menu>
+        <S.DropdownWrapper onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+          <S.DropdownButton>
+            {dropDownOption[order]}
+          </S.DropdownButton>
+          <S.DropdownIcon src={'/assets/images/icon/down.png'} alt='드롭다운' />
+        </S.DropdownWrapper>
+        {isDropdownOpen && (
+          <S.Dropdown>
+            <S.Option onClick={(e) => handleOrder("recent")}>최근</S.Option>
+            <S.Option onClick={(e) => handleOrder("name")}>이름순</S.Option>
+          </S.Dropdown>
+        )}
+      </S.Menu>
+      
       <div>
         <Outlet context={{ artists }}
         />
