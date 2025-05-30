@@ -21,6 +21,8 @@ const DisplayDetail = () => {
   const [modifyCommentContent, setModifyCommentContent] = useState("")
   const [isLiked, setIsLiked] = useState(false)
   const [openMenuId, setOpenMenuId] = useState(null)
+  const [pageLength, setPageLength] = useState([]);
+  const [largeCursor, setLargeCursor] = useState(0);
 
   
   const navigate = useNavigate()
@@ -107,7 +109,6 @@ const DisplayDetail = () => {
     cursor: cursor 
   }
 
-  
   // 댓글 리스트
   const getCommentsList = async () => {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/api/list`, {
@@ -118,18 +119,38 @@ const DisplayDetail = () => {
       body: JSON.stringify(params)
     })
     .then((res) => {
-      if (!res.ok) {
+      if(!res.ok) {
           return res.json().then((res) => {
             console.log(res);
             // alert(res.message);
-          });
+          })
         }
-        return res.json(); 
+        return res.json()
       })
       .then((res) => {
         if(res) {
           setComments(res.commentList);
           // console.log("res", res)
+          let pages = res.contents === 0? 0 : (res.contents % 10 === 0? res.contents / 10 - 1 : res.contents / 10)
+
+
+          const result = [];
+          let count = 0
+
+          // 받은 값 기준으로 2차원 배열을 만든다.
+          for (let i = 0; i < pages/5; i++) {
+            const row = [];
+            for (let j = 0; j < 5; j++) {
+              if (count < pages) {
+                row.push(count++);
+              } else {
+                row.push(null);
+              }
+            }
+            result.push(row);
+          }
+          setPageLength(result)
+          console.log(result)
         }
       })
       .catch(console.error);
@@ -215,6 +236,22 @@ const DisplayDetail = () => {
       })
       .catch(console.error)
   }
+
+  
+      const minusLargeCursor = () => {
+        if (largeCursor !== 0) {
+          let value = largeCursor - 1
+          setLargeCursor(value);
+        }
+      }
+
+      const plusLargeCursor = () => {
+        if (pageLength && largeCursor !== (pageLength.length - 1)) {
+          let value = largeCursor + 1
+          setLargeCursor(value);
+        }
+      }
+      
 
 
   if (isLoading) {
@@ -321,7 +358,7 @@ const DisplayDetail = () => {
           <S.Input type="text" placeholder="댓글을 작성하세요." maxLength={300} 
           value={text} onChange={(e) => setText(e.target.value)}/>
           <S.CountButtonWrapper>
-            <S.Count>{text.length}/300</S.Count>
+            <S.Count>{text.length} / 300</S.Count>
             <S.RegisterButton onClick={registerComment}>등록</S.RegisterButton>
           </S.CountButtonWrapper>
         </S.InputWrapper>
@@ -422,8 +459,23 @@ const DisplayDetail = () => {
         ))
       )}
       </S.CommentWrapper>
+
+      <S.PagenationWrapper>
+        <S.PagenationIcon src='/assets/images/icon/left.png' onClick={minusLargeCursor}/>
+          {pageLength.map((datas, i) => (
+            i === largeCursor ?
+            datas.map((data, i) => (
+              data !== null?
+              <S.PagenationButton key={i} onClick={() => {setCursor((data + 1))}} $active={cursor === data + 1}>
+              {data + 1}
+              </S.PagenationButton> : ''
+            )) : ''
+          ))}
+    
+        <S.PagenationIcon src='/assets/images/icon/right.png' onClick={plusLargeCursor}/>
+      </S.PagenationWrapper>
     </S.Container>
-  )
+  );
 };
 
 export default DisplayDetail;

@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { EN_H3, H10, H2, H3, H4, H5, H7, H8 } from '../../../styles/common';
+import Flatpickr from 'react-flatpickr';
 
 const S = {};
 
@@ -31,7 +32,7 @@ S.Form = styled.div`
 S.FileWrapper = styled.label`
   width: 560px;
   height: 560px;
-  background-color: #D9D9D9;
+  background-color: #C0C5C7;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -56,17 +57,6 @@ S.Icon = styled.img`
   height: 56px;
   margin: 0 0 32px 0;
 `
-
-// S.SwiperWrapper = styled.div`
-//   .swiper-button-prev,
-//   .swiper-button-next {
-//     color: red;
-//     width: 30px;
-//     height: 30px;
-//   }
-// `;
-
-
 
 S.H5 = styled.p`
   ${H5}
@@ -140,11 +130,38 @@ border: none;
 background-color: #FBFCFC;
 outline: none;
 ${H8}
+width: 375px;
 
   &::placeholder {
     ${H8}
   }
 `
+
+S.SizeInputWrapper = styled.div`
+  display: flex;
+  width: 251px;
+  height: 19px;
+  gap: 12px;
+
+  span {
+    color: #6E7476;
+    width: 10px;
+  }
+`
+
+S.SizeInput = styled.input`
+border: none;
+background-color: #FBFCFC;
+outline: none;
+${H8}
+width: 61px;
+
+&::placeholder {
+    ${H8}
+  }
+`
+
+S.Count = styled.div``
 
 S.ButtonWrapper = styled.div`
   display: flex;
@@ -186,6 +203,7 @@ S.Warning = styled.p`
 
 S.Description = styled.div`
   margin: 48px 0 0 0;
+  position: relative;
 `
 
 S.InputBox = styled.textarea`
@@ -200,6 +218,13 @@ S.InputBox = styled.textarea`
   resize: none;
   ${H8}
 `
+
+S.Count = styled.div`
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+`
+
 // 드롭다운
 S.DropdownWrapper = styled.div`
   position: relative;
@@ -242,7 +267,7 @@ S.Option = styled.div`
 
 S.H8 = styled.p`
   ${H8}
-  color: ${({ selected }) => (selected ? '#333333' : '#6E7476')}
+  color: ${({ selected }) => (selected ? '#333333' : '#6E7476')};
 
 `
 
@@ -251,4 +276,27 @@ S.DropdownIcon = styled.img`
   height: 16px;
   margin: 0 0 0 4px;
 `
+
+S.calendar = styled.img`
+	width: 20px;
+	height: 20px;
+`
+
+S.Datewrap = styled.div`
+	display: flex;
+	align-items: center;
+`
+
+S.StyledFlatpickr = styled(Flatpickr)`
+  border: none !important;
+  outline: none !important;
+  background-color: transparent;
+  width: 355px;
+  ${H8}
+  &::placeholder {
+    color: #6E7476
+  }
+`
+
+
 export default S;
