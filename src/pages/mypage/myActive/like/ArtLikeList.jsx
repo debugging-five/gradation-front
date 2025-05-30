@@ -51,7 +51,7 @@ const ArtLikeList = () => {
       <S.ArtGrid>
         {currentItems.map((art) => (
           <SL.ArtContainer key={art.id}>
-            <S.TitleNavigate to={`/display/${categoryMap[art.artCategory]}/detail/${art.id}`}>
+            <S.TitleNavigate to={`/display/${categoryMap[art.artCategory]}/detail/${art.artPostId}`}>
               <S.ArtImage
                 src={`http://localhost:10000/files/api/get/${art.artImgName}?filePath=${art.artImgPath}`}
                 alt={art.artTitle || '좋아요 작품 이미지'}

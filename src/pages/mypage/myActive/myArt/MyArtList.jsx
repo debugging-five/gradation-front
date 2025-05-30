@@ -55,7 +55,7 @@ const MyArtList = () => {
                 src={`http://localhost:10000/files/api/get/${art.artImgName}?filePath=${art.artImgPath}`}
                 alt={art.artTitle}
               />
-              <NavLink to={`/display/${categoryMap[art.artCategory]}/detail/${art.id}`}>
+              <NavLink to={`/display/${categoryMap[art.artCategory]}/detail/${art.artPostId}`}>
                 <SA.Overlay>{art.artTitle}</SA.Overlay>
               </NavLink>
               <SA.LikeDiv>

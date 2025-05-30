@@ -200,7 +200,23 @@ export const MailTitle = styled.p`
   font-weight: bold;
 `;
 
+export const ButtonEdit = styled.button`
+  width: 16px;
+  height: 16px;
+  background-color: transparent;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  margin-left: 56px;
+  color: red; // 활성화 상태 기본 색상
 
+  &:disabled {
+    color: gray; // 비활성화일 때 색상
+    cursor: not-allowed;
+  }
+`;
 export const Button75x35R = styled.button`
   width: 75px;
   height: 35px;
