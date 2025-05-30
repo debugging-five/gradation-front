@@ -1,156 +1,163 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import S from "./UserManagementListStyle";
+import React, { useState, useEffect } from "react";
+import S from "./UserManagementStyle";
+
+const STATUS_LIST = ["선택", "일반회원", "댓글정지", "영구정지"];
 
 const UserManagementPendingList = () => {
-  const { category } = useParams();
+  const [users, setUsers] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("");
+  const [checkedIds, setCheckedIds] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [list, setList] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-  const token = localStorage.getItem("jwtToken");
 
-  // 관리자 인증
+  // 관리자 인증 (FAQ 패턴 복붙)
   useEffect(() => {
+    const token = localStorage.getItem("jwtToken");
     if (!token) return;
-
     fetch("http://localhost:10000/users/api/profile", {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.currentUser?.userAdminOk === true) {
-          setIsAdmin(true);
-        }
-      })
-      .catch((err) => console.error("관리자 인증 실패:", err));
+      .then(res => res.json())
+      .then(data => {
+        if (data.currentUser?.userAdminOk === true) setIsAdmin(true);
+      });
   }, []);
 
-  // 관리자 인증된 경우 데이터 요청
+  // 데이터 패칭
   useEffect(() => {
     if (!isAdmin) return;
-
-    fetch(`http://localhost:10000/admin/api/approval/${category}/pending`, {
-      headers: { Authorization: `Bearer ${token}` },
+    fetch("http://localhost:10000/admin/api/user/list", {
+      headers: { Authorization: `Bearer ${localStorage.getItem("jwtToken")}` }
     })
-      .then((res) => res.json())
-      .then((data) => setList(data))
-      .catch((err) => console.error("데이터 로딩 실패:", err));
-  }, [isAdmin, category, token]);
+      .then(res => res.json())
+      .then(data => setUsers(data));
+  }, [isAdmin]);
 
-  // 관리자 아님
-  if (!isAdmin) {
-    return <div>관리자만 접근할 수 있습니다.</div>;
-  }
-
-  // 페이징 계산
-  const totalPages = Math.ceil(list.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentItems = list.slice(startIndex, startIndex + itemsPerPage);
-  const pageGroup = Math.floor((currentPage - 1) / 5);
-  const firstPage = pageGroup * 5 + 1;
-  const lastPage = Math.min(firstPage + 4, totalPages);
-
-  // 헤더 렌더링
-  const renderHeader = () => {
-    switch (category) {
-      case "display":
-        return (
-          <>
-            <S.HeaderCell>번호</S.HeaderCell>
-            <S.HeaderCell>작품명</S.HeaderCell>
-            <S.HeaderCell>요청일자</S.HeaderCell>
-          </>
-        );
-      case "exhibition":
-        return (
-          <>
-            <S.HeaderCell>번호</S.HeaderCell>
-            <S.HeaderCell>학교명</S.HeaderCell>
-            <S.HeaderCell>요청일자</S.HeaderCell>
-          </>
-        );
-      case "upcycling":
-        return (
-          <>
-            <S.HeaderCell>번호</S.HeaderCell>
-            <S.HeaderCell>이메일</S.HeaderCell>
-            <S.HeaderCell>요청일자</S.HeaderCell>
-          </>
-        );
-      case "university":
-        return (
-          <>
-            <S.HeaderCell>번호</S.HeaderCell>
-            <S.HeaderCell>이름</S.HeaderCell>
-            <S.HeaderCell>요청일자</S.HeaderCell>
-          </>
-        );
-      default:
-        return null;
+  // 체크박스 로직
+  const handleAllCheck = (e) => {
+    if (e.target.checked) {
+      setCheckedIds(users.map(user => user.id));
+    } else {
+      setCheckedIds([]);
     }
   };
 
-  // 데이터 행 렌더링
-  const renderRow = (item, index) => {
-    const getTitle = () => {
-      switch (category) {
-        case "display": return item.artTitle;
-        case "exhibition": return item.universityName;
-        case "upcycling": return item.upcyclingEmail;
-        case "university": return item.userName;
-        default: return "";
-      }
-    };
-
-    const getDate = () => {
-      const rawDate =
-        item.artEndDate ||
-        item.universityExhibitionStartDate ||
-        item.upcyclingDate ||
-        item.userUniversityDate ||
-        "";
-      if (!rawDate) return "";
-      const [year, month, day] = rawDate.split("-");
-      return `${year.slice(2)}.${month}.${day}`;
-    };
-
-    return (
-      <S.TableRow key={item.id}>
-        <S.Cell>{startIndex + index + 1}</S.Cell>
-        <S.Cell>{getTitle()}</S.Cell>
-        <S.Cell>{getDate()}</S.Cell>
-      </S.TableRow>
+  const handleCheck = (id) => {
+    setCheckedIds(prev =>
+      prev.includes(id) ? prev.filter(_id => _id !== id) : [...prev, id]
     );
+  };
+
+  // 검색
+  const filteredUsers = users.filter(user =>
+    user.userName.includes(searchText) ||
+    user.userIdentification.includes(searchText) ||
+    user.userPhone?.includes(searchText)
+  );
+
+  // 개별 상태 변경
+  const handleStatusChange = (id, status) => {
+    // PATCH 요청 등 구현
+    // POST /admin/api/user/ban
+    // body: { userId: id, userBanStatus: status }
+  };
+
+  // 일괄 상태 변경
+  const handleBulkStatusChange = (status) => {
+    // 선택된 checkedIds 에 대해 일괄 PATCH
+    // POST /admin/api/user/ban (배열로 보내거나, 여러번 요청)
   };
 
   return (
     <S.Container>
+      <S.SearchBarWrapper>
+        <S.SearchInput
+          placeholder="이름/아이디/연락처"
+          value={searchText}
+          onChange={e => setSearchText(e.target.value)}
+        />
+        <S.SearchButton>검색</S.SearchButton>
+      </S.SearchBarWrapper>
       <S.Table>
-        <S.TableHeader>{renderHeader()}</S.TableHeader>
-        {currentItems.map((item, i) => renderRow(item, i))}
-      </S.Table>
-
-      {totalPages > 1 && (
-        <S.Pagination>
-          {firstPage > 1 && (
-            <button onClick={() => setCurrentPage(firstPage - 1)}>{`<`}</button>
-          )}
-          {Array.from({ length: lastPage - firstPage + 1 }, (_, i) => (
-            <button
-              key={firstPage + i}
-              className={currentPage === firstPage + i ? "active" : ""}
-              onClick={() => setCurrentPage(firstPage + i)}
-            >
-              {firstPage + i}
-            </button>
+        {/* Table Header */}
+        <S.TableHead>
+          <S.TableRow>
+            <S.TableTh $flex={0.7}>
+              <S.Checkbox
+                type="checkbox"
+                onChange={handleAllCheck}
+                checked={checkedIds.length === users.length && users.length > 0}
+              />
+            </S.TableTh>
+            <S.TableTh $flex={1.3}>이름</S.TableTh>
+            <S.TableTh $flex={2}>아이디</S.TableTh>
+            <S.TableTh $flex={1.7}>전화번호</S.TableTh>
+            <S.TableTh $flex={2.1}>
+              회원상태관리
+              <S.StatusDropdown
+                value={selectedStatus}
+                onChange={e => {
+                  setSelectedStatus(e.target.value);
+                  handleBulkStatusChange(e.target.value);
+                }}
+              >
+                {STATUS_LIST.map(status => (
+                  <option key={status} value={status}>{status}</option>
+                ))}
+              </S.StatusDropdown>
+            </S.TableTh>
+            <S.TableTh $flex={1.2}>회원상태</S.TableTh>
+            <S.TableTh $flex={0.8}></S.TableTh>
+          </S.TableRow>
+        </S.TableHead>
+        {/* Table Body */}
+        <S.TableBody>
+          {filteredUsers.map(user => (
+            <S.TableRow key={user.id}>
+              <S.TableTd $flex={0.7}>
+                <S.Checkbox
+                  type="checkbox"
+                  checked={checkedIds.includes(user.id)}
+                  onChange={() => handleCheck(user.id)}
+                />
+              </S.TableTd>
+              <S.TableTd $flex={1.3}>{user.userName}</S.TableTd>
+              <S.TableTd $flex={2}>{user.userIdentification}</S.TableTd>
+              <S.TableTd $flex={1.7}>{user.userPhone}</S.TableTd>
+              <S.TableTd $flex={2.1}>
+                <S.StatusDropdown
+                  value={user.userBanStatus || "선택"}
+                  onChange={e => handleStatusChange(user.id, e.target.value)}
+                >
+                  {STATUS_LIST.map(status => (
+                    <option
+                      key={status}
+                      value={status}
+                      style={
+                        status === "댓글정지" ? { color: "#E49804" } :
+                        status === "영구정지" ? { color: "#EE3333" } : {}
+                      }
+                    >
+                      {status}
+                    </option>
+                  ))}
+                </S.StatusDropdown>
+              </S.TableTd>
+              <S.TableTd $flex={1.2}>
+                <S.StatusLabel status={user.userBanStatus}>
+                  {user.userBanStatus}
+                </S.StatusLabel>
+              </S.TableTd>
+              <S.TableTd $flex={0.8}>
+                <S.DeleteButton>
+                  <i className="fa fa-trash" />
+                </S.DeleteButton>
+              </S.TableTd>
+            </S.TableRow>
           ))}
-          {lastPage < totalPages && (
-            <button onClick={() => setCurrentPage(lastPage + 1)}>{`>`}</button>
-          )}
-        </S.Pagination>
-      )}
+        </S.TableBody>
+      </S.Table>
     </S.Container>
   );
 };

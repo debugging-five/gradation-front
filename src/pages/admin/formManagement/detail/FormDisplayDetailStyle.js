@@ -182,9 +182,8 @@ S.PopupOverlay = styled.div`
   position: fixed;
   top: 0; 
   left: 0; 
-  right: 0; 
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  width: 100vw; height: 100vh;
+  background-color: rgba(30, 30, 30, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -193,7 +192,6 @@ S.PopupOverlay = styled.div`
 
 S.PopupBox = styled.div`
   width: 390px;
-  height: 190px;
   background-color: #FBFCFC;
   border: 2px solid #ee3333;
   border-radius: 8px;
@@ -249,5 +247,90 @@ S.PopupButton = styled.button`
     border: none;
   }
 `;
+
+
+S.RejectPopupOverlay = styled.div`
+  position: fixed;
+  z-index: 1100;
+  inset: 0;
+  background: rgba(51, 51, 51, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+S.RejectPopupBox = styled.div`
+  width: 400px;
+  background: #fff;
+  border-radius: 7px;
+  box-shadow: 0 4px 18px rgba(51,51,51,0.13);
+  padding: 24px 24px 18px 24px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+`;
+
+S.RejectPopupHeader = styled.div`
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 18px;
+  color: #222;
+  margin-bottom: 14px;
+  justify-content: space-between;
+`;
+
+S.RejectPopupClose = styled.button`
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: #888;
+  cursor: pointer;
+  margin-left: 8px;
+  line-height: 1;
+  padding: 0;
+`;
+
+S.RejectTextarea = styled.textarea`
+  width: 100%;
+  min-height: 120px;
+  resize: none;
+  font-size: 15px;
+  padding: 12px;
+  border: 1.5px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  margin-bottom: 18px;
+  box-sizing: border-box;
+  background: #fafbfc;
+  color: #333;
+`;
+
+S.RejectPopupFooter = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: -8px;
+`;
+
+S.RejectCharCount = styled.span`
+  color: #888;
+  font-size: 13px;
+  margin-right: 10px;
+`;
+
+S.RejectSubmitButton = styled.button`
+  background: #ee3333;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 7px 18px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.12s;
+  &:hover { background: #ce2323; }
+`;
+
 
 export default S;

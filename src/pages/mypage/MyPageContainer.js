@@ -78,7 +78,7 @@ const MyPageContainer = () => {
               onChange={handleFileChange}
               />
             <S.CameraImage
-              src="http://localhost:10000/files/api/get/camera.png?filePath=images/mypage"
+              src="http://localhost:10000/files/api/get/profile-update.png?filePath=images/mypage"
               alt="edit img"
               onClick={handleCameraClick}
               />

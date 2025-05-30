@@ -14,6 +14,10 @@ const FormUniversityDetail = ({ id: propId }) => {
   const [showRejectPopup, setShowRejectPopup] = useState(false);
   const [showCancelPopup, setShowCancelPopup] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [showRejectInputPopup, setShowRejectInputPopup] = useState(false);
+  const [rejectReason, setRejectReason] = useState("");
+  const [showRejectConfirmPopup, setShowRejectConfirmPopup] = useState(false);
+
 
   // 관리자 인증
   useEffect(() => {
@@ -56,8 +60,9 @@ const FormUniversityDetail = ({ id: propId }) => {
           alert("상세정보 조회 실패!");
           return;
         }
+        console.log("status값:", result.userUniversityStatus);
         setData(result);
-        setStatus(result.universityStatus); // "미승인" or "승인완료"
+        setStatus(result.userUniversityStatus); // "미승인" or "승인완료"
       } catch (err) {
         alert("상세 호출 실패!");
       }
@@ -67,7 +72,6 @@ const FormUniversityDetail = ({ id: propId }) => {
 
   // 승인/기각/취소 처리
   const handleApprove = async () => {
-    if (!window.confirm("정말 승인 처리할까요?")) return;
     try {
       const token = localStorage.getItem("jwtToken");
       const res = await fetch(`http://localhost:10000/admin/api/approval/university/status`, {
@@ -78,12 +82,13 @@ const FormUniversityDetail = ({ id: propId }) => {
         },
         body: JSON.stringify({
           id,
-          universityStatus: "승인완료"
+          userUniversityStatus: "승인완료"
         })
       });
       if (res.ok) {
-        setShowSuccessPopup(true); //성공 알림용 팝업을 보여주기
+        setShowSuccessPopup(true); // 성공 팝업 먼저 띄우고
         setTimeout(() => {
+          setShowSuccessPopup(false); // 팝업 닫고
           navigate("/mypage/admin/form-management/pending/university");
         }, 1000);
       } else {
@@ -95,7 +100,6 @@ const FormUniversityDetail = ({ id: propId }) => {
   };
 
   const handleReject = async () => {
-    if (!window.confirm("정말 기각 처리할까요?")) return;
     try {
       const token = localStorage.getItem("jwtToken");
       const res = await fetch(`http://localhost:10000/admin/api/approval/university/status`, {
@@ -106,12 +110,14 @@ const FormUniversityDetail = ({ id: propId }) => {
         },
         body: JSON.stringify({
           id,
-          universityStatus: "기각"
+          userUniversityStatus: "기각",
+          userUniversityRejectReason: rejectReason
         })
       });
       if (res.ok) {
-        setShowRejectPopup(true); //성공 알림용 팝업을 보여주기
+        setShowSuccessPopup(true); // 성공 팝업 먼저 띄우고
         setTimeout(() => {
+          setShowSuccessPopup(false); // 팝업 닫고
           navigate("/mypage/admin/form-management/pending/university");
         }, 1000);
       } else {
@@ -123,7 +129,6 @@ const FormUniversityDetail = ({ id: propId }) => {
   };
 
   const handleCancel = async () => {
-    if (!window.confirm("정말 승인 취소할까요?")) return;
     try {
       const token = localStorage.getItem("jwtToken");
       const res = await fetch(`http://localhost:10000/admin/api/approval/university/status`, {
@@ -134,12 +139,13 @@ const FormUniversityDetail = ({ id: propId }) => {
         },
         body: JSON.stringify({
           id: Number(id),
-          universityStatus: "미승인"
+          userUniversityStatus: "미승인"
         })
       });
       if (res.ok) {
-        setShowCancelPopup(true);
+        setShowSuccessPopup(true); // 성공 팝업 먼저 띄우고
         setTimeout(() => {
+          setShowSuccessPopup(false); // 팝업 닫고
           navigate("/mypage/admin/form-management/pending/university");
         }, 1000);
       } else {
@@ -155,9 +161,6 @@ const FormUniversityDetail = ({ id: propId }) => {
   // (슬래시/역슬래시 이슈 있으면 replace 써도 됨)
     return `http://localhost:10000/files/api/get/${imgName}?filePath=${imgPath}`;
   };
-
-  console.log('majorImgName:', data.majorImgName);
-console.log('majorImgPath:', data.majorImgPath);
 
     const formatDate = (dateString) => {
     if (!dateString) return "";
@@ -185,6 +188,9 @@ console.log('majorImgPath:', data.majorImgPath);
   // 로딩 처리
   if (!isAdmin) return null;
   if (!data) return <div>로딩 중...</div>;
+  console.log('userMajorImgName:', data.userMajorImgName);
+  console.log('userMajorImgPath:', data.userMajorImgPath);
+  console.log('data:', data);
 
   return (
     <S.Container>
@@ -192,7 +198,7 @@ console.log('majorImgPath:', data.majorImgPath);
       
       <S.Header>
         <S.Title>대학교 인증 승인 요청</S.Title>
-        <S.ApplyDate>25.05.09</S.ApplyDate>
+        <S.ApplyDate>{formatDate(data.userUniversityRequestDate)}</S.ApplyDate>
       </S.Header>
       
       <S.ContactTable>
@@ -211,7 +217,7 @@ console.log('majorImgPath:', data.majorImgPath);
       <S.ContentFlex>
         <S.ImageBox>
           <S.ArtImage
-            src={getMajorImgUrl(data.userMajorImgName, data.userMajorImgPath)}
+            src={getMajorImgUrl(data?.userMajorImgName, data?.userMajorImgPath)}
             alt="학생증 이미지"
           />
         </S.ImageBox>
@@ -227,7 +233,7 @@ console.log('majorImgPath:', data.majorImgPath);
         {status === "미승인" && (
           <>
             <S.ApproveButton onClick={() => setShowConfirmPopup(true)}>승인</S.ApproveButton>
-            <S.RejectButton onClick={() => setShowRejectPopup(true)}>기각</S.RejectButton>
+            <S.RejectButton onClick={() => setShowRejectInputPopup(true)}>기각</S.RejectButton>
           </>
         )}
         {status === "승인완료" && (
@@ -250,6 +256,35 @@ console.log('majorImgPath:', data.majorImgPath);
           </S.PopupBox>
         </S.PopupOverlay>
       )}
+      {showRejectInputPopup && (
+        <S.RejectPopupOverlay>
+          <S.RejectPopupBox>
+            <S.RejectPopupHeader>
+              기각 사유
+              <S.RejectPopupClose onClick={() => setShowRejectInputPopup(false)}>×</S.RejectPopupClose>
+            </S.RejectPopupHeader>
+            <S.RejectTextarea
+              value={rejectReason}
+              onChange={e => setRejectReason(e.target.value)}
+              placeholder="내용을 입력하세요"
+              maxLength={500}
+            />
+            <S.RejectPopupFooter>
+              <S.RejectCharCount>{rejectReason.length} / 500</S.RejectCharCount>
+              <S.RejectSubmitButton onClick={() => {
+                if (!rejectReason.trim()) {
+                  alert("기각 사유를 입력해주세요.");
+                  return;
+                }
+                setShowRejectInputPopup(false);
+                setShowRejectPopup(true);
+              }}>
+                전송
+              </S.RejectSubmitButton>
+            </S.RejectPopupFooter>
+          </S.RejectPopupBox>
+        </S.RejectPopupOverlay>
+      )}
       {showRejectPopup && (
         <S.PopupOverlay>
           <S.PopupBox>
@@ -264,7 +299,7 @@ console.log('majorImgPath:', data.majorImgPath);
             </S.PopupButtonGroup>
           </S.PopupBox>
         </S.PopupOverlay>
-      )}
+      )}    
       {showCancelPopup && (
         <S.PopupOverlay>
           <S.PopupBox>

@@ -14,6 +14,10 @@ const FormDisplayDetail = ({ id: propId }) => {
   const [showRejectPopup, setShowRejectPopup] = useState(false);
   const [showCancelPopup, setShowCancelPopup] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [showRejectInputPopup, setShowRejectInputPopup] = useState(false);
+  const [rejectReason, setRejectReason] = useState("");
+  const [showRejectConfirmPopup, setShowRejectConfirmPopup] = useState(false);
+
 
   // 관리자 인증
   useEffect(() => {
@@ -67,7 +71,6 @@ const FormDisplayDetail = ({ id: propId }) => {
 
   // 승인/기각/취소 처리
   const handleApprove = async () => {
-    if (!window.confirm("정말 승인 처리할까요?")) return;
     try {
       const token = localStorage.getItem("jwtToken");
       const res = await fetch(`http://localhost:10000/admin/api/approval/display/status`, {
@@ -84,6 +87,7 @@ const FormDisplayDetail = ({ id: propId }) => {
       if (res.ok) {
         setShowSuccessPopup(true); //성공 알림용 팝업을 보여주기
         setTimeout(() => {
+          setShowSuccessPopup(false);
           navigate("/mypage/admin/form-management/pending/display");
         }, 1000);
       } else {
@@ -95,7 +99,6 @@ const FormDisplayDetail = ({ id: propId }) => {
   };
 
   const handleReject = async () => {
-    if (!window.confirm("정말 기각 처리할까요?")) return;
     try {
       const token = localStorage.getItem("jwtToken");
       const res = await fetch(`http://localhost:10000/admin/api/approval/display/status`, {
@@ -106,12 +109,14 @@ const FormDisplayDetail = ({ id: propId }) => {
         },
         body: JSON.stringify({
           id,
-          artStatus: "기각"
+          artStatus: "기각",
+          artRejectReason: rejectReason
         })
       });
       if (res.ok) {
-        setShowRejectPopup(true); //성공 알림용 팝업을 보여주기
+        showSuccessPopup(true); //성공 알림용 팝업을 보여주기
         setTimeout(() => {
+          setShowSuccessPopup(false);
           navigate("/mypage/admin/form-management/pending/display");
         }, 1000);
       } else {
@@ -123,7 +128,6 @@ const FormDisplayDetail = ({ id: propId }) => {
   };
 
   const handleCancel = async () => {
-    if (!window.confirm("정말 승인 취소할까요?")) return;
     try {
       const token = localStorage.getItem("jwtToken");
       const res = await fetch(`http://localhost:10000/admin/api/approval/display/status`, {
@@ -138,8 +142,9 @@ const FormDisplayDetail = ({ id: propId }) => {
         })
       });
       if (res.ok) {
-        setShowCancelPopup(true);
+        setShowSuccessPopup(true); // 성공 팝업 먼저 띄우고
         setTimeout(() => {
+          setShowSuccessPopup(false); // 팝업 닫고
           navigate("/mypage/admin/form-management/pending/display");
         }, 1000);
       } else {
@@ -240,7 +245,7 @@ const FormDisplayDetail = ({ id: propId }) => {
         {status === "미승인" && (
           <>
             <S.ApproveButton onClick={() => setShowConfirmPopup(true)}>승인</S.ApproveButton>
-            <S.RejectButton onClick={() => setShowRejectPopup(true)}>기각</S.RejectButton>
+            <S.RejectButton onClick={() => setShowRejectInputPopup(true)}>기각</S.RejectButton>
           </>
         )}
         {status === "승인완료" && (
@@ -263,6 +268,35 @@ const FormDisplayDetail = ({ id: propId }) => {
           </S.PopupBox>
         </S.PopupOverlay>
       )}
+      {showRejectInputPopup && (
+        <S.RejectPopupOverlay>
+          <S.RejectPopupBox>
+            <S.RejectPopupHeader>
+              기각 사유
+              <S.RejectPopupClose onClick={() => setShowRejectInputPopup(false)}>×</S.RejectPopupClose>
+            </S.RejectPopupHeader>
+            <S.RejectTextarea
+              value={rejectReason}
+              onChange={e => setRejectReason(e.target.value)}
+              placeholder="내용을 입력하세요"
+              maxLength={500}
+            />
+            <S.RejectPopupFooter>
+              <S.RejectCharCount>{rejectReason.length} / 500</S.RejectCharCount>
+              <S.RejectSubmitButton onClick={() => {
+                if (!rejectReason.trim()) {
+                  alert("기각 사유를 입력해주세요.");
+                  return;
+                }
+                setShowRejectInputPopup(false);
+                setShowRejectPopup(true);
+              }}>
+                전송
+              </S.RejectSubmitButton>
+            </S.RejectPopupFooter>
+          </S.RejectPopupBox>
+        </S.RejectPopupOverlay>
+      )}
       {showRejectPopup && (
         <S.PopupOverlay>
           <S.PopupBox>
@@ -277,7 +311,7 @@ const FormDisplayDetail = ({ id: propId }) => {
             </S.PopupButtonGroup>
           </S.PopupBox>
         </S.PopupOverlay>
-      )}
+      )} 
       {showCancelPopup && (
         <S.PopupOverlay>
           <S.PopupBox>

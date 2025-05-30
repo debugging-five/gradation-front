@@ -115,9 +115,9 @@ const FormManagementPendingList = () => {
   const getDate = () => {
     const rawDate =
       item.artEndDate ||
-      item.universityExhibitionStartDate ||
-      item.upcyclingDate ||
-      item.userUniversityDate ||
+      item.userUniversityRequestDate ||
+      item.upcyclingRequestDate ||
+      item.universityExhibitionRequestDate ||
       "";
     console.log("awDate:", rawDate, typeof rawDate);
 
