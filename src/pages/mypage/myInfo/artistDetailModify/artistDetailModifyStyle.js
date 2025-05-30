@@ -39,6 +39,10 @@ export const Icon = styled.img`
     width: 20px;
     height: 20px;
 `;
+export const IconDelete = styled.img`
+    width: 16px;
+    height: 16px;
+`;
 export const SocialBox = styled.div`
     display: flex;
     padding-top: 12px;
