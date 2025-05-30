@@ -54,10 +54,6 @@ const DisplayListContainer = () => {
           setIsError(false)
           // setDisplay(res.posts)
           setDisplay(data.postList)
-          // let pages = Math.floor(data.contents / 15) + 1
-          // let pages = Math.floor((data.contents + 1) / 15) + 1
-          // if(data.contents % 15 === 0) { pages-- }
-          // if((data.contents + 1) % 15 === 0 ) { pages -- }
           let pages = data.contents === 0? 0 : (data.contents % 15 === 0? data.contents / 15 - 1 : data.contents / 15)
 
 
@@ -122,7 +118,7 @@ const DisplayListContainer = () => {
       <S.Container>
         <S.Wrapper>
           {display.map((post) => (
-            <S.Display key={post.id} to={`/display/${category}/detail/${post.artPostId}`}>
+             <S.Display key={post.artPostId} to={`/display/${category}/detail/${post.artPostId}`}>
               <S.Overlay className="overlay">
                 <S.Content>
                   <S.H2>{post.artTitle}</S.H2>
