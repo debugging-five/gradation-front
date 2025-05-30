@@ -9,6 +9,14 @@ const ApprovedDisplayList = () => {
   const [artList, setArtList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+  const categoryMap = {
+    '한국화': 'korean',
+    '건축': 'architecture',
+    '조각': 'sculpture',
+    '공예': 'craft',
+    '회화': 'painting',
+    '서예': 'calligraphy',
+  };
 
   useEffect(() => {
     const fetchMyArtList = async () => {
@@ -52,7 +60,7 @@ const ApprovedDisplayList = () => {
             {currentItems.map((art, index) => (
               <SA.ContentBox key={art.id}>
                 <SA.Number>{indexOfFirstItem + index + 1}</SA.Number>
-                <SA.TitleNavigate as={NavLink} to={`/art/detail/${art.id}`}>
+                <SA.TitleNavigate as={NavLink} to={`/display/${categoryMap[art.artCategory]}/detail/${art.artPostId}`}>
                   <SA.Content>{art.artTitle}</SA.Content>
                 </SA.TitleNavigate>
                 <SA.ApprovedStatus status={art.artStatus}>

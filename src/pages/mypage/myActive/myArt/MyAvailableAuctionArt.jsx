@@ -8,7 +8,15 @@ const MyAvailableAuctionArt = () => {
   const [auctionArts, setAuctionArts] = useState([]);
   const currentUser = useSelector(state => state.user.currentUser);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // 한 페이지에 보여줄 아이템 수
+  const itemsPerPage = 10; 
+  const categoryMap = {
+    '한국화': 'korean',
+    '건축': 'architecture',
+    '조각': 'sculpture',
+    '공예': 'craft',
+    '회화': 'painting',
+    '서예': 'calligraphy',
+  };
 
   useEffect(() => {
     if (!currentUser?.id) return;
@@ -53,11 +61,11 @@ const MyAvailableAuctionArt = () => {
               <S.Number>{indexOfFirstItem + index + 1}</S.Number> {/* 전체 기준 번호 */}
               <S.Category>{art.artCategory}</S.Category>
               <S.Emptybox></S.Emptybox>
-              <S.TitleNavigate as={NavLink} to={`/display/detail/${art.id}`} end>
+              <S.TitleNavigate as={NavLink} to={`/display/${categoryMap[art.artCategory]}/detail/${art.artPostId}`} end>
                 <S.Content>{art.artTitle}</S.Content>
               </S.TitleNavigate>
               <S.Emptybox>
-                <SA.Button75x35R onClick={() => window.location.href = `/auction/registration/${art.id}`}>
+                <SA.Button75x35R onClick={() => window.location.href = `/auction/registration/${art.artPostId}`}>
                   경매 등록
                 </SA.Button75x35R>
               </S.Emptybox>
