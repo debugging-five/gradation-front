@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { EN_H3, EN_H6, H10, H2, H3, H5, H6, H8 } from '../../../styles/common';
+import { EN_H3, EN_H6, H10, H2, H3, H5, H6, H8 } from '../../../../../styles/common';
 import { Link } from 'react-router-dom';
 
 const S = {};
@@ -114,10 +114,11 @@ S.LikeLabel = styled.p`
   width: 47px;
 `
 
-S.LikeCount = styled.p`
-  ${H5}
-  width: 66px;
-`
+// S.LikeCount = styled.p`
+//   ${H5}
+//   width: 66px;
+//   /* color: ${({ count }) => (count > 0 ? '#EE3333' : '#EEEEEE')}; */
+// `
 
 S.NoticeIconWrapper = styled.div`
   position: relative;
@@ -304,6 +305,7 @@ S.LikeWrapper = styled.div`
   gap: 8px;
   margin: 16px 0 0 40px;
   cursor: pointer;
+  height: 20px;
 `
 
 S.LikeIcon = styled.img`
@@ -313,6 +315,7 @@ S.LikeIcon = styled.img`
 
 S.LikeCount = styled.p`
   ${EN_H6}
+  color: ${({ count }) => (count > 0 ? '#EE3333' : '#EEEEEE')};
 
   .unit {
     ${H5}

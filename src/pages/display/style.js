@@ -84,7 +84,7 @@ S.Input = styled.input`
   width: 200px;
   height: 32px;
   border: solid 1px #6E7476;
-  border-radius: 3px;
+  border-radius: 1px;
   margin-left: auto;
   background-color: #FBFCFC;
   outline: none;
@@ -101,6 +101,7 @@ S.Upload = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
+  cursor: pointer;
 `
 
 S.Icon = styled.img`
@@ -125,8 +126,9 @@ S.Menu = styled.div`
 S.DropdownWrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 4px;
+  /* gap: 4px; */
 `
+
 S.DropdownButton = styled.div`
   width: 60px;
   height: 35px;
@@ -153,15 +155,15 @@ S.Dropdown = styled.div`
   z-index: 100; 
   display: flex;
   flex-direction: column;
+  border: 1px solid #6E7476;
 
   :hover {
-    background-color: #EE3333;
-    color: #FBFCFC;
+    /* background-color: #EE3333; */
+    color: #EE3333;
   }
 `
 
 S.Option = styled.div`
-  border: 1px solid #6E7476;
   width: 75px;
   height: 35px;
   ${H8}

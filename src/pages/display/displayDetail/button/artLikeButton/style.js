@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { EN_H3, EN_H6, H10, H2, H3, H5, H6, H8 } from '../../../styles/common';
+import { EN_H3, EN_H6, H10, H2, H3, H5, H6, H8 } from '../../../../../styles/common';
 import { Link } from 'react-router-dom';
 
 const S = {};
