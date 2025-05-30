@@ -12,13 +12,11 @@ const MypageDelete = () => {
 
   // 체크박스
   const toggleCheck = () => setChecked(!isChecked);
-  const checkedUrl = 'http://localhost:10000/files/api/get/checked.png?filePath=images/mypage';
-  const uncheckedUrl = 'http://localhost:10000/files/api/get/uncheck.png?filePath=images/mypage';
+  const checkedUrl = "/assets/images/icon/checked-on.png";
+  const uncheckedUrl = "/assets/images/icon/checked-off.png";
 
   const handleMainClick = () => {
-    localStorage.removeItem('accessToken'); // 토큰 삭제
-    localStorage.removeItem('refreshToken'); // 만약 리프레시 토큰도 있다면 같이 제거
-    window.location.href = '/login'; // 새로고침 + 로그인 페이지 이동
+    navigate('/');
   };
 
   const handleDeleteClick = () => {
@@ -122,7 +120,7 @@ const MypageDelete = () => {
               <S.BigPopUpX onClick={closePopup}>⨉</S.BigPopUpX>
             </S.BigPopUpCloseBox>
             <S.BigPopUpContent>
-              <S.BigPopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="attention" />
+              <S.BigPopUpIcon src="/assets/images/icon/attention-popup.png" alt="attention" />
               <S.BigPopUpTextDiv>
                 <S.BigPopUpTitle>회원탈퇴 하시겠습니까?</S.BigPopUpTitle>
                 <S.BigPopUpText>회원탈퇴시 24시간동안</S.BigPopUpText>
@@ -145,7 +143,7 @@ const MypageDelete = () => {
               <S.BigPopUpX onClick={closePopup}>⨉</S.BigPopUpX>
             </S.BigPopUpCloseBox>
             <S.BigPopUpContent>
-              <S.BigPopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="attention" />
+              <S.BigPopUpIcon src="/assets/images/icon/attention-popup.png" alt="attention" />
               <S.BigPopUpTextDiv>
                 <S.BigPopUpTitle>정말로 탈퇴 하시겠습니까?</S.BigPopUpTitle>
                 <S.BigPopUpText>회원탈퇴시 24시간동안</S.BigPopUpText>
@@ -168,7 +166,7 @@ const MypageDelete = () => {
               <S.BigPopUpX onClick={closePopup}>⨉</S.BigPopUpX>
             </S.BigPopUpCloseBox>
             <S.BigPopUpContent>
-              <S.BigPopUpIcon src="http://localhost:10000/files/api/get/check-circle.png?filePath=images/mypage" alt="check-circle" />
+              <S.BigPopUpIcon src="/assets/images/icon/check.png" alt="check" />
               <S.BigPopUpTextDiv>
                 <S.BigPopUpTitle>회원탈퇴 완료</S.BigPopUpTitle>
                 <S.BigPopUpText>탈퇴가 완료되었습니다.</S.BigPopUpText>

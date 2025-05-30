@@ -5,6 +5,9 @@ import * as S from '../../style';
 const Comment = () => {
   const currentUser = useSelector(state => state.user.currentUser);
   const [comments, setComments] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
   const categoryMap = {
     '한국화': 'korean',
     '건축': 'architecture',
@@ -16,9 +19,9 @@ const Comment = () => {
 
   useEffect(() => {
     const fetchComments = async () => {
+      if (!currentUser?.id) return;
       try {
         const response = await fetch(`http://localhost:10000/comments/api/list/${currentUser.id}`);
-        // http://localhost:10000/comments/api/list/7
         if (!response.ok) throw new Error('서버 응답 실패');
         const data = await response.json();
         setComments(data.commentList);
@@ -29,6 +32,14 @@ const Comment = () => {
 
     fetchComments();
   }, [currentUser]);
+
+  // 페이징 처리
+  const totalPages = Math.ceil(comments.length / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = comments.slice(indexOfFirstItem, indexOfLastItem);
+
+  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
     <S.MainWrapper>
@@ -43,20 +54,35 @@ const Comment = () => {
         </S.ListHeader>
 
         {/* 댓글 목록 */}
-        {comments.length > 0 ? (
-          comments.map((comment, idx) => (
+        {currentItems.length > 0 ? (
+          currentItems.map((comment, idx) => (
             <S.ContentBox key={comment.id || idx}>
-              <S.Number>{idx + 1}</S.Number>
+              <S.Number>{indexOfFirstItem + idx + 1}</S.Number>
               <S.Category>{comment.artTitle || '작품명 없음'}</S.Category>
               <S.Emptybox></S.Emptybox>
-              <S.TitleNavigate to={`/display/${categoryMap[comment.artCategory]}/detail/${comment.artId}`} >
+              <S.TitleNavigate to={`/display/${categoryMap[comment.artCategory]}/detail/${comment.artId}`}>
                 <S.Content>{comment.commentContent || '댓글 내용 없음'}</S.Content>
               </S.TitleNavigate>
-              <S.Emptybox>{new Date(comment.commentDate|| '-').toLocaleDateString('ko-KR')}</S.Emptybox>
+              <S.Emptybox>{new Date(comment.commentDate || '-').toLocaleDateString('ko-KR')}</S.Emptybox>
             </S.ContentBox>
           ))
         ) : (
           <div style={{ padding: "1rem", textAlign: "center" }}>작성한 댓글이 없습니다.</div>
+        )}
+
+        {/* 페이지네이션 */}
+        {totalPages > 1 && (
+          <S.Pagination>
+            {pageNumbers.map(number => (
+              <S.PageButton
+                key={number}
+                onClick={() => setCurrentPage(number)}
+                className={number === currentPage ? 'active' : ''}
+              >
+                {number}
+              </S.PageButton>
+            ))}
+          </S.Pagination>
         )}
       </S.Wrapper>
     </S.MainWrapper>

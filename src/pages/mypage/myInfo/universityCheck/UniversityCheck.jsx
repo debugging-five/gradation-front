@@ -166,7 +166,7 @@ const UniversityCheck = () => {
                 <S.BigPopUpText>공휴일을 제외한 최대 1~2 일의 시간이 소요될 수 있습니다.</S.BigPopUpText>
               </S.BigPopUpTextDiv>
               <S.BigPopUpButtonDiv>
-                <S.BigPopUpButtonR onClick={closePopup}>확인</S.BigPopUpButtonR>
+                <S.BigPopUpButtonR onClick={() => {closePopup(); window.location.reload();}}>확인</S.BigPopUpButtonR>
               </S.BigPopUpButtonDiv>
             </S.BigPopUpContent>
           </S.BigPopUp>

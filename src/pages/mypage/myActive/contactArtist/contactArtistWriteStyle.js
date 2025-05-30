@@ -55,6 +55,7 @@ export const Category = styled.div`
 export const InputTitle = styled.input`
     border: none;
     width: 720px;
+    font-size: 16px;
     background-color: transparent;
     &:focus {
     outline: none;
@@ -69,6 +70,7 @@ export const InputContent = styled.textarea`
   font-size: 16px;
   line-height: 1.5;
   box-sizing: border-box;
+  font-family: inherit;
 `;
 
 export const ButtonDiv = styled.div`

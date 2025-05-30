@@ -11,7 +11,6 @@ const MyPageContainer = () => {
   const [profileImg, setProfileImg] = useState(
     `http://localhost:10000/files/api/get/${currentUser.userImgName}?filePath=${currentUser.userImgPath}`
   );
-
   const fileInputRef = useRef(null);
 
   

@@ -12,4 +12,17 @@ export const ContentBox = styled.div`
 export const NoneText = styled.p`
     padding: 20px 0;
 `;
-
+export const Button75x35R = styled.button`
+  width: 75px;
+  height: 35px;
+  border-radius: 3px;
+  color: white;
+  background-color: red;
+  border: solid 1px red;
+  font-size: 12px;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 44px;
+`;

@@ -135,7 +135,7 @@ export const Content = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  text-align: center;
+  /* text-align: center; */
 `;
 // 여백 및 상태, 작성일, 금액
 export const Emptybox = styled.div`
@@ -208,7 +208,7 @@ export const Button75x35R = styled.button`
   color: white;
   background-color: red;
   border: solid 1px red;
-  font-size: 18px;
+  font-size: 12px;
   text-decoration: none;
   display: flex;
   justify-content: center;
@@ -416,3 +416,19 @@ export const BigPopUpButtonR = styled.button`
     font-size: 18px;
 `;
 
+// 페이지 네이션
+export const Pagination = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+
+  .active {
+    font-weight: bold;
+    color: red;
+  }
+`;
+
+export const PageButton = styled.span`
+  margin: 0 0.5rem;
+  cursor: pointer;
+`; 

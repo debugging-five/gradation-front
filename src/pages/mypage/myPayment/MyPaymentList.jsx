@@ -8,9 +8,18 @@ const MyPaymentList = () => {
   const currentUser = useSelector(state => state.user.currentUser);
   const [payments, setPayments] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
-
-  // 팝업에 보여줄 선택된 payment
   const [selectedPayment, setSelectedPayment] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
+  const categoryMap = {
+    '한국화': 'korean',
+    '건축': 'architecture',
+    '조각': 'sculpture',
+    '공예': 'craft',
+    '회화': 'painting',
+    '서예': 'calligraphy',
+  };
 
   useEffect(() => {
     if (!currentUser?.id) return;
@@ -23,6 +32,7 @@ const MyPaymentList = () => {
         }
         const data = await response.json();
         setPayments(data);
+        setCurrentPage(1);
       } catch (error) {
         console.error('결제 내역 불러오기 실패:', error);
       }
@@ -31,19 +41,35 @@ const MyPaymentList = () => {
     fetchPayments();
   }, [currentUser]);
 
-  // 주문상세 버튼 클릭 시 호출
+  // 주문상세 버튼 클릭
   const handleShowDetail = (payment) => {
     setSelectedPayment(payment);
     setShowPopup(true);
   };
 
+  // 최신순 정렬
+  const sortedPayments = [...payments].sort((a, b) => new Date(b.paymentDate) - new Date(a.paymentDate));
+
+  // 페이지네이션 계산
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentPayments = sortedPayments.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(payments.length / itemsPerPage);
+  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+
   return (
     <S.MainWrapper>
-      {payments.length > 0 ? (
-        payments.map((payment, index) => (
+      {currentPayments.length > 0 ? (
+        currentPayments.map((payment, index) => (
           <SP.Wrapper key={index}>
             <SP.ProductImage>
-              <SP.ArtImage src={`http://localhost:10000/files/api/get/${payment.artImgName}?filePath=${payment.artImgPath}`} alt={payment.artTitle} />
+              <NavLink to={`/display/${categoryMap[payment.artCategory]}/detail/${payment.artId}`}>
+                <SP.ArtImage
+                  src={`http://localhost:10000/files/api/get/${payment.artImgName}?filePath=${payment.artImgPath}`}
+                  alt={payment.artTitle}
+                />
+              </NavLink>
             </SP.ProductImage>
 
             <div>
@@ -75,16 +101,34 @@ const MyPaymentList = () => {
               </SP.MenuBox>
 
               <SP.ButtonDiv>
-                <S.Button120x45W as={NavLink} to="delivery-info/1">배송조회</S.Button120x45W>
+                <S.Button120x45W as={NavLink} to="delivery-info/1">
+                  배송조회
+                </S.Button120x45W>
                 <S.Button120x45R onClick={() => handleShowDetail(payment)}>주문상세</S.Button120x45R>
               </SP.ButtonDiv>
             </div>
           </SP.Wrapper>
         ))
       ) : (
-        <div style={{ padding: "1rem", textAlign: "center" }}>결제 내역이 없습니다.</div>
+        <div style={{ padding: '1rem', textAlign: 'center' }}>결제 내역이 없습니다.</div>
       )}
 
+      {/* 페이지네이션 */}
+      {totalPages > 1 && (
+        <S.Pagination>
+          {pageNumbers.map((number) => (
+            <S.PageButton
+              key={number}
+              onClick={() => setCurrentPage(number)}
+              className={number === currentPage ? 'active' : ''}
+            >
+              {number}
+            </S.PageButton>
+          ))}
+        </S.Pagination>
+      )}
+
+      {/* 주문상세 팝업 */}
       {showPopup && selectedPayment && (
         <S.PopUpOverlay>
           <SP.BigPopUp>
@@ -104,14 +148,16 @@ const MyPaymentList = () => {
               </S.OneLine>
               <S.OneLine>
                 <SP.BigPopUpSub>받는 주소</SP.BigPopUpSub>
-                <SP.BigPopUpText>{selectedPayment.userAddress} {selectedPayment.userDetailAddress}</SP.BigPopUpText>
+                <SP.BigPopUpText>
+                  {selectedPayment.userAddress} {selectedPayment.userDetailAddress}
+                </SP.BigPopUpText>
               </S.OneLine>
               <S.OneLine>
                 <SP.BigPopUpSub>배송 메세지</SP.BigPopUpSub>
                 <SP.BigPopUpText>{selectedPayment.deliveryMessage || ''}</SP.BigPopUpText>
               </S.OneLine>
 
-              <SP.EndBar/>
+              <SP.EndBar />
 
               <SP.BigPopUpTitle>결제 정보</SP.BigPopUpTitle>
               <SP.OneLine>
