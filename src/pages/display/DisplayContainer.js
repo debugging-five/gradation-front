@@ -13,11 +13,8 @@ const DisplayContainer = () => {
   // if(!category) return <Navigate to={"korea"} />
 
   // 데이터를 한 번에 불러오기
-  const [isUpdate, setIsUpdate] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [isError, setIsError] = useState(false)
-  const [hasNextPage, setHasNextPage] = useState(false);
-  const [maxCursor, setMaxCursor] = useState(1);
 
 
   const params = {

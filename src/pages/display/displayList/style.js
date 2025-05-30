@@ -60,7 +60,9 @@ S.Content = styled.div`
   text-align: center;
 `
 S.H2 = styled.p`
-  ${H2}
+  /* ${H2} */
+  font-size: 18px;
+  font-weight: 400;
   color: #FBFCFC;
   width: 236px;
 `

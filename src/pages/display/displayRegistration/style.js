@@ -234,10 +234,10 @@ S.Option = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  &:hover {
-    background-color: #EE3333;
-    color: #FBFCFC;
-  }
+  
+    &:hover {
+      color: #EE3333;
+    }
 `
 
 S.H8 = styled.p`

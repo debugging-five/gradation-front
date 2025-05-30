@@ -158,8 +158,8 @@ S.Dropdown = styled.div`
   border: 1px solid #6E7476;
 
   :hover {
-    background-color: #EE3333;
-    color: #FBFCFC;
+    /* background-color: #EE3333; */
+    color: #EE3333;
   }
 `
 
