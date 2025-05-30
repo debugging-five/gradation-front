@@ -6,8 +6,9 @@ import * as S from '../../mypage/style';
 
 const QnaList = () => {
   const [qnas, setQnas] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
-  // Redux에서 currentUser 가져오기
   const currentUser = useSelector(state => state.user.currentUser);
 
   useEffect(() => {
@@ -15,7 +16,6 @@ const QnaList = () => {
       fetch(`http://localhost:10000/qna/api/qna-list?userEmail=${currentUser.userEmail}`)
         .then(res => res.json())
         .then(data => {
-          // 내림차순 정렬 (최신이 위)
           const sortedData = data.sort((a, b) => new Date(b.qnaTime) - new Date(a.qnaTime));
           setQnas(sortedData);
         })
@@ -26,6 +26,12 @@ const QnaList = () => {
   if (!currentUser?.userEmail) {
     return <div>사용자 정보를 불러오는 중입니다...</div>;
   }
+
+  // 페이지 계산
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentQnas = qnas.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(qnas.length / itemsPerPage);
 
   return (
     <S.MainWrapper>
@@ -38,9 +44,9 @@ const QnaList = () => {
           <S.Emptybox>작성일</S.Emptybox>
         </S.ListHeader>
 
-        {qnas.map((qna, index) => (
+        {currentQnas.map((qna, index) => (
           <S.ContentBox key={qna.qnaId}>
-            <S.Number>{index + 1}</S.Number>
+            <S.Number>{(currentPage - 1) * itemsPerPage + index + 1}</S.Number>
             <S.Category>{qna.qnaCategory}</S.Category>
             <S.RedText>{qna.qnaAnswerTitle ? '답변완료' : '답변대기'}</S.RedText>
             <S.TitleNavigate as={NavLink} to={`/service-center/qna/detail/${qna.qnaId}`} end>
@@ -50,6 +56,22 @@ const QnaList = () => {
           </S.ContentBox>
         ))}
       </S.Wrapper>
+
+      {/* 페이지네이션 */}
+      <S.Pagination>
+        {[...Array(totalPages)].map((_, idx) => (
+          <S.PageButton
+            key={idx + 1}
+            onClick={() => {
+              setCurrentPage(idx + 1);
+              window.scrollTo(0, 0);
+            }}
+            className={currentPage === idx + 1 ? 'active' : ''}
+          >
+            {idx + 1}
+          </S.PageButton>
+        ))}
+      </S.Pagination>
 
       <S.ButtonDiv>
         <S.Button120x45R as={NavLink} to="/service-center/registration" onClick={() => window.scrollTo(0, 0)}>

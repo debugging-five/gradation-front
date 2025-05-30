@@ -58,7 +58,7 @@ const ContactArtistSendedDetail = () => {
   
             <S.ButtonDiv>
               <S.Button120x45W onClick={() => navigate(-1)}>목록</S.Button120x45W>
-              <S.Button120x45W onClick={() => setShowConfirm(true)}>삭제</S.Button120x45W>
+              <S.Button120x45R onClick={() => setShowConfirm(true)}>삭제</S.Button120x45R>
             </S.ButtonDiv>
         </S.Wrapper>
         {/* 첫 번째 팝업: 삭제 확인 */}
@@ -66,7 +66,7 @@ const ContactArtistSendedDetail = () => {
           <S.PopUpOverlay>
             <S.PopUp>
               <S.PopUpContent>
-                <S.PopUpIcon src="http://localhost:10000/files/api/get/question.png?filePath=images/mypage" alt="question" />
+                <S.PopUpIcon src="/assets/images/icon/quest.png" alt="quest" />
                 <S.PopUpText>쪽지를 삭제하시겠습니까?</S.PopUpText>
                 <S.PopUpButtonDiv>
                   <S.PopUpButtonW onClick={() => setShowConfirm(false)}>취소</S.PopUpButtonW>
@@ -82,7 +82,7 @@ const ContactArtistSendedDetail = () => {
           <S.PopUpOverlay>
             <S.PopUp>
               <S.PopUpContent>
-                <S.PopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="attention" />
+                <S.PopUpIcon src="/assets/images/icon/check.png" alt="check" />
                 <S.PopUpText>알림이 삭제되었습니다.</S.PopUpText>
                 <S.PopUpButtonR onClick={() => { setShowSuccess(false); navigate(-1); }}>확인</S.PopUpButtonR>
               </S.PopUpContent>

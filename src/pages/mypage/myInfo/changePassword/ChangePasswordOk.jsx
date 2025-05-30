@@ -11,15 +11,44 @@ const ChangePasswordOk = () => {
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
   const [popupStep, setPopupStep] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [passwordError, setPasswordError] = useState('');
+  const [passwordCheckError, setPasswordCheckError] = useState('');
+
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [passwordCheckVisible, setPasswordCheckVisible] = useState(false);
+
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,12}$/;
 
   const handleSubmit = async () => {
-    if (!password || !passwordCheck) {
-      alert('비밀번호를 모두 입력해주세요.');
-      return;
+    if (popupStep === 1 || isSubmitting) return;
+    setIsSubmitting(true);
+
+    let hasError = false;
+
+    if (!password) {
+      setPasswordError('필수 항목입니다.');
+      hasError = true;
+    } else if (!passwordRegex.test(password)) {
+      setPasswordError('8~12자 영문, 숫자, 특수문자를 포함해야 합니다.');
+      hasError = true;
+    } else {
+      setPasswordError('');
     }
 
-    if (password !== passwordCheck) {
-      alert('비밀번호가 일치하지 않습니다.');
+    if (!passwordCheck) {
+      setPasswordCheckError('필수 항목입니다.');
+      hasError = true;
+    } else if (password !== passwordCheck) {
+      setPasswordCheckError('비밀번호가 서로 일치하지 않습니다.');
+      hasError = true;
+    } else {
+      setPasswordCheckError('');
+    }
+
+    if (hasError) {
+      setIsSubmitting(false);
       return;
     }
 
@@ -34,17 +63,21 @@ const ChangePasswordOk = () => {
           userPassword: password,
         }),
       });
-
       const data = await response.json();
 
       if (response.ok) {
         setPopupStep(1);
+      } else if (data.message === '기존 비밀번호와 동일합니다.') {
+        setPasswordError('기존 비밀번호와 동일한 비밀번호는 사용할 수 없습니다.');
       } else {
-        alert(data.message || '비밀번호 변경 실패');
+        setPasswordError('기존 비밀번호와 동일한 비밀번호는 사용할 수 없습니다.');
       }
+
     } catch (error) {
       console.error('비밀번호 수정 실패:', error);
       alert('서버 오류가 발생했습니다.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -67,14 +100,34 @@ const ChangePasswordOk = () => {
           <SC.PasswordTitle>
             새 비밀번호<S.Important>*</S.Important>
           </SC.PasswordTitle>
-          <SC.InputContent
-            type="password"
-            placeholder="8~12자 영문, 숫자, 특수문자"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <SC.InputWrapper>
+            <SC.InputContent
+              type={passwordVisible ? 'text' : 'password'}
+              placeholder="8~12자 영문, 숫자, 특수문자"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setPasswordError('');
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  if (popupStep !== 1) {
+                    handleSubmit();
+                  }
+                }
+              }}
+            />
+            <SC.Eye
+              src={`/assets/images/icon/${passwordVisible ? 'open-eye' : 'close-eye'}.png`}
+              alt="toggle-eye"
+              onClick={() => setPasswordVisible(!passwordVisible)}
+              style={{ cursor: 'pointer' }}
+            />
+          </SC.InputWrapper>
         </SC.ChangePasswordBox>
         <SC.EndBar />
+        {passwordError && <SC.Error><p>{passwordError}</p></SC.Error>}
       </div>
 
       <SC.EmptyBox />
@@ -83,20 +136,42 @@ const ChangePasswordOk = () => {
           <SC.PasswordTitle>
             새 비밀번호 확인<S.Important>*</S.Important>
           </SC.PasswordTitle>
-          <SC.InputContent
-            type="password"
-            placeholder="새 비밀번호를 입력하세요."
-            value={passwordCheck}
-            onChange={(e) => setPasswordCheck(e.target.value)}
-          />
+          <SC.InputWrapper>
+            <SC.InputContent
+              type={passwordCheckVisible ? 'text' : 'password'}
+              placeholder="새 비밀번호를 입력하세요."
+              value={passwordCheck}
+              onChange={(e) => {
+                setPasswordCheck(e.target.value);
+                setPasswordCheckError('');
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  if (popupStep !== 1) {
+                    handleSubmit();
+                  }
+                }
+              }}
+            />
+            <SC.Eye
+              src={`/assets/images/icon/${passwordCheckVisible ? 'open-eye' : 'close-eye'}.png`}
+              alt="toggle-eye"
+              onClick={() => setPasswordCheckVisible(!passwordCheckVisible)}
+              style={{ cursor: 'pointer' }}
+            />
+          </SC.InputWrapper>
         </SC.ChangePasswordBox>
         <SC.EndBar />
+        {passwordCheckError && <SC.Error><p>{passwordCheckError}</p></SC.Error>}
       </div>
 
       <SC.EmptyBox />
       <SC.ButtonDiv>
         <S.Button210W onClick={() => navigate(-1)}>이전</S.Button210W>
-        <S.Button210R onClick={handleSubmit}>확인</S.Button210R>
+        <S.Button210R onClick={handleSubmit} disabled={isSubmitting}>
+          {isSubmitting ? '처리 중...' : '확인'}
+        </S.Button210R>
       </SC.ButtonDiv>
 
       <SC.EmptyBox /><SC.EmptyBox /><SC.EmptyBox /><SC.EmptyBox />
@@ -109,7 +184,7 @@ const ChangePasswordOk = () => {
             </S.BigPopUpCloseBox>
             <SC.BigPopUpContent>
               <S.BigPopUpIcon
-                src="http://localhost:10000/files/api/get/check-circle.png?filePath=images/mypage"
+                src="/assets/images/icon/check.png"
                 alt="check-circle"
               />
               <S.BigPopUpTextDiv>

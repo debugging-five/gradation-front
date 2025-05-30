@@ -5,11 +5,13 @@ import * as SF from './faqListStyle';
 
 const FaqList = () => {
   const [faqList, setFaqList] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(''); // ''이면 전체
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
   const dropdownRef = useRef(null);
 
-  const categories = ['전체', '전시', '전시회', '경매', '업사이클', '마이페이지', '기타'];
+  const categories = ['전체', '회원', '전시', '작품', '배송', '결제', '경매', '기타'];
 
   useEffect(() => {
     const fetchFaqData = async () => {
@@ -35,7 +37,20 @@ const FaqList = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const filteredFaqs = selectedCategory === '' ? faqList : faqList.filter(faq => faq.faqCategory === selectedCategory);
+  const filteredFaqs = selectedCategory === ''
+    ? faqList
+    : faqList.filter(faq => faq.faqCategory === selectedCategory);
+
+  // 페이지네이션 계산
+  const totalPages = Math.ceil(filteredFaqs.length / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentFaqs = filteredFaqs.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo(0, 0); // 페이지 이동 시 스크롤 상단으로
+  };
 
   return (
     <S.MainWrapper>
@@ -51,6 +66,7 @@ const FaqList = () => {
             {categories.map(status => (
               <SF.CategoryLi key={status} onClick={() => {
                 setSelectedCategory(status === '전체' ? '' : status);
+                setCurrentPage(1); // 카테고리 바꾸면 1페이지로
                 setIsDropdownOpen(false);
               }}>
                 {status}
@@ -70,9 +86,9 @@ const FaqList = () => {
           <S.Emptybox></S.Emptybox>
         </S.ListHeader>
 
-        {filteredFaqs.map((faq, index) => (
+        {currentFaqs.map((faq, index) => (
           <S.ContentBox key={faq.id}>
-            <S.Number>{index + 1}</S.Number>
+            <S.Number>{(currentPage - 1) * itemsPerPage + index + 1}</S.Number>
             <S.Category>{faq.faqCategory}</S.Category>
             <S.Emptybox></S.Emptybox>
             <S.TitleNavigate as={NavLink} to={`/service-center/faq/detail/${faq.id}`} end onClick={() => window.scrollTo(0, 0)}>
@@ -82,6 +98,20 @@ const FaqList = () => {
           </S.ContentBox>
         ))}
       </SF.Wrapper>
+
+      {/* 페이지네이션 */}
+      <S.Pagination>
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map(number => (
+          <S.PageButton
+            key={number}
+            onClick={() => handlePageChange(number)}
+            className={currentPage === number ? 'active' : ''}
+          >
+            {number}
+          </S.PageButton>
+        ))}
+      </S.Pagination>
+
     </S.MainWrapper>
   );
 };

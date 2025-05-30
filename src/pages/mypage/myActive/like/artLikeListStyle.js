@@ -41,9 +41,12 @@ export const Overlay = styled.div`
     text-align: center;
 `;
 export const HoverText = styled.div`
-    padding: 10px;
+    padding: 8px;
     width: 120px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 `;
+export const ArtGrid = styled.div`
+  display: grid;
+  `;

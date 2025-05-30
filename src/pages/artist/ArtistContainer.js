@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
+import S from './style';
 
 const ArtistContainer = () => {
 
@@ -10,7 +11,9 @@ const ArtistContainer = () => {
   const [cursor, setCursor] = useState(1);
   const {category} = useParams();
 
-  const onChangeValue = (e) => { setValue(e.target.value) }
+  const onChangeValue = (e) => { 
+    setValue(e.target.value) 
+  }
   const onKeyDownKeyword = (e) => { 
     if(e.key === 'Enter'){
       setKeyword(value)
@@ -18,14 +21,13 @@ const ArtistContainer = () => {
   }
   
   useEffect(() => {
-
     const params = {
-      category : category,
-      keyword : keyword,
+      order : order,
       cursor : cursor,
+      category : category || "korean",
+      keyword : keyword,
     }
-    
-    const getExhibitions = async () => {
+    const getArtists = async () => {
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/artists/api/list`, {
         method : "POST",
         headers : {
@@ -33,23 +35,30 @@ const ArtistContainer = () => {
         },
         body : JSON.stringify(params)
       })
-      if(!response.ok) return console.error("getExhibitions error")
+      // if(!response.ok) return console.error("getArtists error")
       const datas = await response.json()
       return datas
     }
-
-    getExhibitions()
-      .then(setArtists)
-      .catch(console.error)
+    getArtists()
+      .then((res) => {
+        setArtists(res.posts);
+      })
+      // .catch(console.error)
   }, [keyword, category, cursor, order])
 
   return (
-    <div>
+    <S.Container>
+      <S.Link to="/display">
+        <S.EN_H2>artist</S.EN_H2>
+      </S.Link>
       <Outlet context={{
-        artists, 
-        keyword, setKeyword, cursor, setCursor, category, order, setOrder, onKeyDownKeyword, onChangeValue
+        cursor, setCursor, 
+        keyword, setKeyword, 
+        category, order, 
+        setOrder, onKeyDownKeyword, onChangeValue,
+        artists
       }}/>
-    </div>
+    </S.Container>
   );
 };
 

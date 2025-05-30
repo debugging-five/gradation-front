@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import * as S from '../style';
 import * as SD from './mypageDeleteStyle';
+import { useSelector } from 'react-redux';
 
 const MypageDelete = () => {
+  const currentUser = useSelector(state => state.user.currentUser);
   const [isChecked, setChecked] = useState(false);
   const [popupStep, setPopupStep] = useState(0); // 0: 없음, 1: 첫팝업, 2: 두번째, 3: 완료
   const navigate = useNavigate();
 
   // 체크박스
   const toggleCheck = () => setChecked(!isChecked);
-  const checkedUrl = 'http://localhost:10000/files/api/get/checked.png?filePath=images/mypage';
-  const uncheckedUrl = 'http://localhost:10000/files/api/get/uncheck.png?filePath=images/mypage';
+  const checkedUrl = "/assets/images/icon/checked-on.png";
+  const uncheckedUrl = "/assets/images/icon/checked-off.png";
 
   const handleMainClick = () => {
     navigate('/');
@@ -29,7 +31,7 @@ const MypageDelete = () => {
   const goToNextPopup = () => setPopupStep(prev => prev + 1);
 
   const handleWithdraw = () => {
-  fetch('http://localhost:10000/api/user/withdraw/jihuni@hanmail.net', {
+  fetch(`http://localhost:10000/mypage/api/withdraw?userId=${currentUser.id}`, {
     method: 'DELETE',
   })
     .then((res) => {
@@ -61,7 +63,6 @@ const MypageDelete = () => {
         <S.EndBar />
       </SD.MainContent2>
 
-      {/* 설명 섹션들 */}
       {[
         {
           title: '개인 정보 및 기록 삭제',
@@ -119,7 +120,7 @@ const MypageDelete = () => {
               <S.BigPopUpX onClick={closePopup}>⨉</S.BigPopUpX>
             </S.BigPopUpCloseBox>
             <S.BigPopUpContent>
-              <S.BigPopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="attention" />
+              <S.BigPopUpIcon src="/assets/images/icon/attention-popup.png" alt="attention" />
               <S.BigPopUpTextDiv>
                 <S.BigPopUpTitle>회원탈퇴 하시겠습니까?</S.BigPopUpTitle>
                 <S.BigPopUpText>회원탈퇴시 24시간동안</S.BigPopUpText>
@@ -142,7 +143,7 @@ const MypageDelete = () => {
               <S.BigPopUpX onClick={closePopup}>⨉</S.BigPopUpX>
             </S.BigPopUpCloseBox>
             <S.BigPopUpContent>
-              <S.BigPopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="attention" />
+              <S.BigPopUpIcon src="/assets/images/icon/attention-popup.png" alt="attention" />
               <S.BigPopUpTextDiv>
                 <S.BigPopUpTitle>정말로 탈퇴 하시겠습니까?</S.BigPopUpTitle>
                 <S.BigPopUpText>회원탈퇴시 24시간동안</S.BigPopUpText>
@@ -165,7 +166,7 @@ const MypageDelete = () => {
               <S.BigPopUpX onClick={closePopup}>⨉</S.BigPopUpX>
             </S.BigPopUpCloseBox>
             <S.BigPopUpContent>
-              <S.BigPopUpIcon src="http://localhost:10000/files/api/get/check-circle.png?filePath=images/mypage" alt="check-circle" />
+              <S.BigPopUpIcon src="/assets/images/icon/check.png" alt="check" />
               <S.BigPopUpTextDiv>
                 <S.BigPopUpTitle>회원탈퇴 완료</S.BigPopUpTitle>
                 <S.BigPopUpText>탈퇴가 완료되었습니다.</S.BigPopUpText>

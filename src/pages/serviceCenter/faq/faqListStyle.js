@@ -42,3 +42,4 @@ export const CategoryButton = styled.button`
     background-color: transparent;
     font-size: 16px;
 `;
+

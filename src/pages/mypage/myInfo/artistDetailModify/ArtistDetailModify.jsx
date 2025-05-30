@@ -101,8 +101,8 @@ const handleSubmit = () => {
     setShowConfirmation(false);
   };
   
-  const checkedUrl = 'http://localhost:10000/files/api/get/checked.png?filePath=images/mypage';
-  const uncheckedUrl = 'http://localhost:10000/files/api/get/uncheck.png?filePath=images/mypage';
+  const checkedUrl = "/assets/images/icon/checked_on.png";
+  const uncheckedUrl = "/assets/images/icon/checked_off.png";
 
   const fields = ['한국화', '회화', '조각', '공예', '건축', '서예'];
 
@@ -300,7 +300,7 @@ const handleSubmit = () => {
             ) : ( 
               <S.OneLine>
                 <SA.Icon
-                  src="http://localhost:10000/files/api/get/calendar.png?filePath=images/mypage"
+                  src="/assets/images/icon/calendar.png"
                   alt="calendar"
                 />
                 <DateTimePicker
@@ -356,7 +356,7 @@ const handleSubmit = () => {
 
         <SA.SocialBox>
           <SA.Social>Instagram</SA.Social>
-          <SA.Icon src="http://localhost:10000/files/api/get/insta.png?filePath=images/mypage" alt="default profile" />
+          <SA.Icon src="/assets/images/icon/instagram.png" alt="default profile" />
           <S.Emptybox/>
           <SA.InputBox placeholder='아이디를 입력하세요' value={userInstagram} onChange={(e) => setUserInstagram(e.target.value)}/>
         </SA.SocialBox>
@@ -364,7 +364,7 @@ const handleSubmit = () => {
 
         <SA.SocialBox>
           <SA.Social>Youtube</SA.Social>
-          <SA.Icon src="http://localhost:10000/files/api/get/youtube.png?filePath=images/mypage" alt="default profile" />
+          <SA.Icon src="/assets/images/icon/youtube.png" alt="default profile" />
           <S.Emptybox/>
           <SA.InputBox placeholder='링크를 입력하세요' value={userYoutube} onChange={(e) => setUserYoutube(e.target.value)}/>
         </SA.SocialBox>
@@ -372,7 +372,7 @@ const handleSubmit = () => {
 
         <SA.SocialBox>
           <SA.Social>Blog</SA.Social>
-          <SA.Icon src="http://localhost:10000/files/api/get/blog.png?filePath=images/mypage" alt="default profile" />
+          <SA.Icon src="/assets/images/icon/blog.png" alt="default profile" />
           <S.Emptybox/>
           <SA.InputBox placeholder='링크를 입력하세요' value={userBlog} onChange={(e) => setUserBlog(e.target.value)}/>
         </SA.SocialBox>
@@ -414,7 +414,7 @@ const handleSubmit = () => {
         <S.PopUpOverlay>
           <S.PopUp>
             <S.PopUpContent>
-              <S.PopUpIcon src="http://localhost:10000/files/api/get/question.png?filePath=images/mypage" alt="question" />
+              <S.PopUpIcon src="/assets/images/icon/quest.png" />
               <S.PopUpText>작가 프로필을 수정하시겠습니까?</S.PopUpText>
               <S.PopUpButtonDiv>
                 <S.PopUpButtonW onClick={handleCancel}>취소</S.PopUpButtonW>
@@ -430,9 +430,9 @@ const handleSubmit = () => {
         <S.PopUpOverlay>
           <S.PopUp>
             <S.PopUpContent>
-              <S.PopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="attention" />
+              <S.PopUpIcon src="/assets/images/icon/check.png" alt="attention" />
               <S.PopUpText>작가 프로필 수정이 완료되었습니다.</S.PopUpText>
-              <S.PopUpButtonR onClick={() => setShowSuccess(false)}>확인</S.PopUpButtonR>
+              <S.PopUpButtonR onClick={() => {setShowSuccess(false);  window.location.reload();}}>확인</S.PopUpButtonR>
             </S.PopUpContent>
           </S.PopUp>
         </S.PopUpOverlay>
