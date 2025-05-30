@@ -83,7 +83,17 @@ const AuctionBiddingDetail = ({auction, timeLeft}) => {
   }
 
 	const backToList = () => {
-		navigate(`../bidding/${category}`);
+		console.log(isBiddingConfirm);
+		if(isBiddingConfirm) {
+			navigate(`../bidding/${category}`);
+			return
+		}else if(isExpectedConfirm) {
+			navigate(`../expected/${category}`);
+			return
+		}
+		navigate(`../complete/${category}`);
+		return
+		
 	}
 
 	return (
