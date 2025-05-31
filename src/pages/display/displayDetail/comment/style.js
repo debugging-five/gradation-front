@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { EN_H3, EN_H6, H10, H2, H3, H5, H6, H8 } from '../../../../../styles/common';
+import { EN_H3, EN_H6, H10, H2, H3, H5, H6, H8 } from '../../../../styles/common';
 import { Link } from 'react-router-dom';
 
 const S = {};
@@ -38,16 +38,16 @@ S.ButtonWrapper = styled.div`
   }
 `
 
-S.LikeButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  /* color: #EE3333; */
-  /* background-color: #FBFCFC; */
-  background-color: ${({$isLiked}) => ($isLiked ? "#EE3333" : "#FBFCFC")};
-  color: ${({$isLiked}) => ($isLiked ? "#FBFCFC" : "#EE3333")};
-`
+// S.LikeButton = styled.button`
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   gap: 4px;
+//   /* color: #EE3333; */
+//   /* background-color: #FBFCFC; */
+//   background-color: ${(props) => (props.isLiked ? "#EE3333" : "#FBFCFC")};
+//   color: ${(props) => (props.isLiked ? "#FBFCFC" : "#EE3333")};
+// `
 
 S.Link = styled(Link)`
   text-decoration: none;
@@ -433,6 +433,33 @@ S.CancelButton = styled.button`
   height: 35px;
   padding: 6px 12px;
 `
+// 페이지네이션
+S.PagenationWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin: 160px 0 0 0;
+`
 
+S.PagenationButton = styled.div`
+  width: 9px;
+  height: 20px;
+  color: ${(props) => (props.$active ? '#FF3333' : '#6E7476')};
+  cursor: pointer;
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+
+  &:hover {
+    color: #333333;
+  }
+`
+
+S.PagenationIcon = styled.img`
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+`
 
 export default S;

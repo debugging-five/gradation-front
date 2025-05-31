@@ -38,14 +38,8 @@ const ArtLikeButton = ({userId, artId, isLiked, setIsLiked, setPost}) => {
             },
             body: JSON.stringify(userVO),
           })
-          .then((res) => {
-            if(!res.ok) {
-              return res.json().then((res) => 
-                alert(res.message)
-              )}
-              setIsLiked(false)
-              setPost((prev) => ({...prev, artLikeCount : prev.artLikeCount - 1}))
-          })
+          setIsLiked(false)
+          setPost((prev) => ({...prev, artLikeCount : prev.artLikeCount - 1}))
         } else {
           // 좋아요 처음 => 좋아요 등록
           setIsLiked(true)
@@ -56,7 +50,7 @@ const ArtLikeButton = ({userId, artId, isLiked, setIsLiked, setPost}) => {
       }
 
       return (
-        <S.LikeButton className="button" onClick={checkIsArtLiked} $isLiked={isLiked}>
+        <S.LikeButton className="button" onClick={checkIsArtLiked} isLiked={isLiked}>
           좋아요
           <S.LikeIcon src={isLiked ? '/assets/images/icon/heart_white.png' : '/assets/images/icon/heart.png'} alt="좋아요" />
         </S.LikeButton>

@@ -45,8 +45,8 @@ S.LikeButton = styled.button`
   gap: 4px;
   /* color: #EE3333; */
   /* background-color: #FBFCFC; */
-  background-color: ${({$isLiked}) => ($isLiked ? "#EE3333" : "#FBFCFC")};
-  color: ${({$isLiked}) => ($isLiked ? "#FBFCFC" : "#EE3333")};
+  background-color: ${(props) => (props.isLiked ? "#EE3333" : "#FBFCFC")};
+  color: ${(props) => (props.isLiked ? "#FBFCFC" : "#EE3333")};
 `
 
 S.Link = styled(Link)`
@@ -114,10 +114,11 @@ S.LikeLabel = styled.p`
   width: 47px;
 `
 
-S.LikeCount = styled.p`
-  ${H5}
-  width: 66px;
-`
+// S.LikeCount = styled.p`
+//   ${H5}
+//   width: 66px;
+//   /* color: ${({ count }) => (count > 0 ? '#EE3333' : '#EEEEEE')}; */
+// `
 
 S.NoticeIconWrapper = styled.div`
   position: relative;
@@ -304,6 +305,7 @@ S.LikeWrapper = styled.div`
   gap: 8px;
   margin: 16px 0 0 40px;
   cursor: pointer;
+  height: 20px;
 `
 
 S.LikeIcon = styled.img`
@@ -313,6 +315,7 @@ S.LikeIcon = styled.img`
 
 S.LikeCount = styled.p`
   ${EN_H6}
+  color: ${({$count}) => ($count > 0 ? '#EE3333' : '#EEEEEE')};
 
   .unit {
     ${H5}
