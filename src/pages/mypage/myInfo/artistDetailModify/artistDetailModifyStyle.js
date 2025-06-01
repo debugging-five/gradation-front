@@ -19,6 +19,7 @@ export const InputContent = styled.textarea`
     font-size: 16px;
     line-height: 1.5;
     box-sizing: border-box;
+    font-family: inherit;
 `;
 
 export const CategoryBox = styled.div`
@@ -37,6 +38,10 @@ export const ArtGrid = styled.div`
 export const Icon = styled.img`
     width: 20px;
     height: 20px;
+`;
+export const IconDelete = styled.img`
+    width: 16px;
+    height: 16px;
 `;
 export const SocialBox = styled.div`
     display: flex;

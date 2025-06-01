@@ -16,6 +16,7 @@ const ArtistDetailModify = () => {
   const [histories, setHistories] = useState([]);
   const [artworks, setArtworks] = useState([]);
   
+  
   // 컴포넌트 최상단 useState 선언 아래에 추가
   const LOCAL_STORAGE_KEY = 'artist_selectedArtId';
 
@@ -64,6 +65,10 @@ const handleSubmit = () => {
   if (selectedArtId !== null && artworks[selectedArtId]) {
     userBackgroundImgName = artworks[selectedArtId].artImgName || '';
     userBackgroundImgPath = artworks[selectedArtId].artImgPath || '';
+  } else {
+    // 선택 안 된 경우 기본값 세팅
+    userBackgroundImgName = 'user-background.jpg';
+    userBackgroundImgPath = '/public/images/default/';
   }
 
   const body = {
@@ -101,8 +106,8 @@ const handleSubmit = () => {
     setShowConfirmation(false);
   };
   
-  const checkedUrl = 'http://localhost:10000/files/api/get/checked.png?filePath=images/mypage';
-  const uncheckedUrl = 'http://localhost:10000/files/api/get/uncheck.png?filePath=images/mypage';
+  const checkedUrl = "/assets/images/icon/checked_on.png";
+  const uncheckedUrl = "/assets/images/icon/checked_off.png";
 
   const fields = ['한국화', '회화', '조각', '공예', '건축', '서예'];
 
@@ -254,6 +259,16 @@ const handleSubmit = () => {
         console.error('작가 상세 정보 불러오기 실패:', err);
       });
   }, [currentUser]);
+    const itemsPerPage = 9; // 한 페이지에 9개 (3줄 * 3개)
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // 페이지네이션용 데이터 슬라이싱
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentArtworks = artworks.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(artworks.length / itemsPerPage);
 
   
 
@@ -289,62 +304,61 @@ const handleSubmit = () => {
         <S.EndBar />
       </SA.Chepter>
 
-      {/* 작가 이력 */}
       <SA.Chepter>
         <SA.Title>작가 이력</SA.Title>
-        {displayHistories.map(history => (
-        <SA.HistoryBox key={history.id}>
-          <SA.CalenderBox>
-            {history.isSaved ? (
-              <span>{formatDate(history.date)}</span>
-            ) : ( 
-              <S.OneLine>
-                <SA.Icon
-                  src="http://localhost:10000/files/api/get/calendar.png?filePath=images/mypage"
-                  alt="calendar"
-                />
-                <DateTimePicker
-                  value={history.date}
-                  onChange={(dates) => handleChange(history.id, 'date', dates[0])}
-                  placeholder="날짜 선택"
-                  dateFormat="yy.MM.dd"
-                  style={{
-                    border: 'none',
-                    width: '80px',
-                    backgroundColor: 'transparent',
-                  }}
-                />
-              </S.OneLine>
-            )}
-          </SA.CalenderBox>
 
-          {history.isSaved ? (
-            <SA.InputBox as="div">{history.content}</SA.InputBox>
-          ) : (
-            <SA.InputBox
-              placeholder="내용을 입력하세요."
-              value={history.content}
-              onChange={(e) =>
-                handleChange(history.id, 'content', e.target.value)
-              }
-            />
-          )}
+        {displayHistories
+          .filter(history => !history.isSaved)
+          .map(history => (
+            <SA.HistoryBox key={history.id}>
+              <SA.CalenderBox>
+                <S.OneLine>
+                  <SA.Icon src="/assets/images/icon/calendar.png" alt="calendar" />
+                  <DateTimePicker
+                    value={history.date}
+                    onChange={(dates) => handleChange(history.id, 'date', dates[0])}
+                    placeholder="날짜 선택"
+                    dateFormat="yy.MM.dd"
+                    style={{
+                      border: 'none',
+                      width: '80px',
+                      backgroundColor: 'transparent',
+                    }}
+                  />
+                </S.OneLine>
+              </SA.CalenderBox>
 
-          {history.isSaved ? (
-            <SA.DeleteDiv>
-              <S.Button75x35R onClick={() => handleDeleteHistory(history.id)}>
-                삭제
-              </S.Button75x35R>
-            </SA.DeleteDiv>
-          ) : (
-              <S.Button75x35R onClick={() => handleAddHistory(history.id)} disabled={!history.date || !history.content.trim()}>
-                추가
-              </S.Button75x35R>
-          )}
-        </SA.HistoryBox>
-      ))}
+              <SA.InputBox
+                placeholder="내용을 입력하세요."
+                value={history.content}
+                onChange={(e) =>
+                  handleChange(history.id, 'content', e.target.value)
+                }
+              />
 
-        
+              <S.ButtonEdit onClick={() => handleAddHistory(history.id)} disabled={!history.date || !history.content.trim()}> + </S.ButtonEdit>
+            </SA.HistoryBox>
+          ))}
+
+        {/* 2. 저장된 항목 렌더링 */}
+        {displayHistories
+          .filter(history => history.isSaved)
+          .map(history => (
+            <SA.HistoryBox key={history.id}>
+              <SA.CalenderBox>
+                <span>{formatDate(history.date)}</span>
+              </SA.CalenderBox>
+
+              <SA.InputBox as="div">{history.content}</SA.InputBox>
+
+              <SA.DeleteDiv>
+                <S.ButtonEdit onClick={() => handleDeleteHistory(history.id)}>
+                  <SA.IconDelete src="/assets/images/icon/close.png" alt="close" />
+                </S.ButtonEdit>
+              </SA.DeleteDiv>
+            </SA.HistoryBox>
+          ))}
+
         <S.EndBar />
       </SA.Chepter>
 
@@ -356,7 +370,7 @@ const handleSubmit = () => {
 
         <SA.SocialBox>
           <SA.Social>Instagram</SA.Social>
-          <SA.Icon src="http://localhost:10000/files/api/get/insta.png?filePath=images/mypage" alt="default profile" />
+          <SA.Icon src="/assets/images/icon/instagram.png" alt="default profile" />
           <S.Emptybox/>
           <SA.InputBox placeholder='아이디를 입력하세요' value={userInstagram} onChange={(e) => setUserInstagram(e.target.value)}/>
         </SA.SocialBox>
@@ -364,7 +378,7 @@ const handleSubmit = () => {
 
         <SA.SocialBox>
           <SA.Social>Youtube</SA.Social>
-          <SA.Icon src="http://localhost:10000/files/api/get/youtube.png?filePath=images/mypage" alt="default profile" />
+          <SA.Icon src="/assets/images/icon/youtube.png" alt="default profile" />
           <S.Emptybox/>
           <SA.InputBox placeholder='링크를 입력하세요' value={userYoutube} onChange={(e) => setUserYoutube(e.target.value)}/>
         </SA.SocialBox>
@@ -372,7 +386,7 @@ const handleSubmit = () => {
 
         <SA.SocialBox>
           <SA.Social>Blog</SA.Social>
-          <SA.Icon src="http://localhost:10000/files/api/get/blog.png?filePath=images/mypage" alt="default profile" />
+          <SA.Icon src="/assets/images/icon/blog.png" alt="default profile" />
           <S.Emptybox/>
           <SA.InputBox placeholder='링크를 입력하세요' value={userBlog} onChange={(e) => setUserBlog(e.target.value)}/>
         </SA.SocialBox>
@@ -386,24 +400,42 @@ const handleSubmit = () => {
         </S.OneLine>
 
         <SA.ArtGrid>
-          {artworks.map((art, idx) => (
-            <SA.ArtContainer key={idx}>
-              <S.ArtImage src={getImageUrl(art)} alt={art.artImgName} />
-              
-              <SA.OverlayButton className="overlay-button">
-                <SA.ArtLabel>
-                  <SA.ArtInput
-                    type="checkbox"
-                    checked={selectedArtId === idx}
-                    onChange={() => setSelectedArtId(prev => (prev === idx ? null : idx))}
-                  />
-                  <p>작가프로필 배경사진으로 등록</p>
-                </SA.ArtLabel>
-              </SA.OverlayButton>
-            </SA.ArtContainer>
-          ))}
+          {currentArtworks.map((art, idx) => {
+            const realIdx = (currentPage - 1) * itemsPerPage + idx;
+            return (
+              <SA.ArtContainer key={realIdx}>
+                <S.ArtImage src={getImageUrl(art)} alt={art.artImgName} />
+
+                <SA.OverlayButton className="overlay-button">
+                  <SA.ArtLabel>
+                    <SA.ArtInput
+                      type="checkbox"
+                      checked={selectedArtId === realIdx}
+                      onChange={() => setSelectedArtId(prev => (prev === realIdx ? null : realIdx))}
+                    />
+                    <p>작가프로필 배경사진으로 등록</p>
+                  </SA.ArtLabel>
+                </SA.OverlayButton>
+              </SA.ArtContainer>
+            );
+          })}
         </SA.ArtGrid>
+
+        <S.Pagination>
+          {[...Array(totalPages)].map((_, idx) => (
+            <S.PageButton
+              key={idx + 1}
+              className={currentPage === idx + 1 ? 'active' : ''}
+              onClick={() => {
+                setCurrentPage(idx + 1);
+              }}
+            >
+              {idx + 1}
+            </S.PageButton>
+          ))}
+        </S.Pagination>
       </SA.Chepter>
+
 
       <S.ButtonDiv>
         <S.Button120x45R onClick={handleConfirm}>페이지 수정</S.Button120x45R>
@@ -414,7 +446,7 @@ const handleSubmit = () => {
         <S.PopUpOverlay>
           <S.PopUp>
             <S.PopUpContent>
-              <S.PopUpIcon src="http://localhost:10000/files/api/get/question.png?filePath=images/mypage" alt="question" />
+              <S.PopUpIcon src="/assets/images/icon/quest.png" />
               <S.PopUpText>작가 프로필을 수정하시겠습니까?</S.PopUpText>
               <S.PopUpButtonDiv>
                 <S.PopUpButtonW onClick={handleCancel}>취소</S.PopUpButtonW>
@@ -430,9 +462,9 @@ const handleSubmit = () => {
         <S.PopUpOverlay>
           <S.PopUp>
             <S.PopUpContent>
-              <S.PopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="attention" />
+              <S.PopUpIcon src="/assets/images/icon/check.png" alt="attention" />
               <S.PopUpText>작가 프로필 수정이 완료되었습니다.</S.PopUpText>
-              <S.PopUpButtonR onClick={() => setShowSuccess(false)}>확인</S.PopUpButtonR>
+              <S.PopUpButtonR onClick={() => {setShowSuccess(false);  window.location.reload();}}>확인</S.PopUpButtonR>
             </S.PopUpContent>
           </S.PopUp>
         </S.PopUpOverlay>

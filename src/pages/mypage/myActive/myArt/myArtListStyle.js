@@ -17,6 +17,7 @@ export const ArtItem = styled.div`
   position: relative;
   cursor: pointer;
   overflow: hidden;
+
 `;
 
 export const ArtImage = styled.img`
@@ -31,17 +32,25 @@ export const ArtImage = styled.img`
 
 export const Overlay = styled.div`
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(0,0,0,0.5);
+  top: -20px; left: 0; right: 0; bottom: 0;
   opacity: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
-  font-weight: bold;
   font-size: 1.2rem;
   transition: opacity 0.3s ease;
   ${ArtItem}:hover & {
     opacity: 1;
   }
+`;
+export const LikeDiv = styled.div`
+    display : flex;
+    justify-content: end;
+    color: red;
+    gap: 4px;
+`;
+export const Emptybox = styled.div`
+    width: 120px;
+    height: 10px;
 `;

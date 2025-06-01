@@ -1,11 +1,16 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate, useOutletContext, useParams } from 'react-router-dom';
-import S from './style';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Navigation, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import ArtLikeButton from './button/artLikeButton/ArtLikeButton';
+import CommentLikeButton from './button/comentLikeButton/CommentLikeButton';
+import S from './style';
 
 const DisplayDetail = () => {
-  const { id } = useParams();
-  const { isLoading, isError } = useOutletContext()
+  const { id, category } = useParams();
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   const [post, setPost] = useState(null)
   const [text, setText] = useState("")
   const [comments, setComments] = useState([])
@@ -16,40 +21,82 @@ const DisplayDetail = () => {
   const [modifyCommentContent, setModifyCommentContent] = useState("")
   const [isLiked, setIsLiked] = useState(false)
   const [openMenuId, setOpenMenuId] = useState(null)
+  const [pageLength, setPageLength] = useState([]);
+  const [largeCursor, setLargeCursor] = useState(0);
 
+  
+  const navigate = useNavigate()
+  
   const { currentUser } = useSelector((state) => state.user);
   // console.log(currentUser)
   
-  const navigate = useNavigate()
-  const handleOrder = (order) => {
-    setCommentOrder(order)
-    setIsDropdownOpen(false)
-  }
+    const commentDropdownOption = {
+      date: "등록순",
+      like: "좋아요순"
+    };
+  
+    const handleOrder = (order) => {
+      setCommentOrder(order)
+      setIsDropdownOpen(false)
+    }
 
-  const commentDropdownOption = {
-    date: "등록순",
-    like: "좋아요순"
-  }
+    // 작품 단일 조회
+    useEffect(() => {
+      fetch(`${process.env.REACT_APP_BACKEND_URL}/displays/api/read/${id}`)
+        .then((res) => {
+          // console.log(res)
+          if(!res.ok) {
+            throw new Error("에러")
+          }
+          return res.json();
+        })
+        .then((res) => {
+          // console.log("res", res);
+          console.log("res.post", res.post);
+          setPost(res.post); 
+          setIsError(false)
+          setIsLoading(false)
+        })
+        .catch((error) => {
+          // console.error(error)
+          setIsError(true)
+          setIsLoading(false)
+        })
+    }, [id])
+
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/displays/api/read/${id}`)
-      .then((res) => {
-        // console.log(res)
-        if(!res.ok) {
-          throw new Error("에러")
-        }
-        return res.json();
-      })
-      .then((res) => {
-        // console.log("res", res);
-        // console.log("res.post", res.post);
-        setPost(res.post); 
-      })
-      .catch((error) => {
-        // console.error(error)
-      })
-  }, [id])
+    if (post && currentUser?.id) {
+      checkIsLiked();
+    }
+  }, [post, currentUser]);
 
+
+  // 작품 좋아요 여부
+  const checkIsLiked = async () => {
+
+    const userVO = {
+      userId: currentUser.id,
+      artId: post.artId,
+    }
+
+    try {
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/art/likes/api/liked`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userVO),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setIsLiked(data.isLiked);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const commentVO = {
     commentContent : text,
@@ -62,35 +109,6 @@ const DisplayDetail = () => {
     cursor: cursor 
   }
 
-  // 댓글 등록
-  const registerComment = async () => {
-    await fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/api/registration`, {
-      method : "POST",
-      headers : {
-        "Content-Type" : "application/json",
-      },
-      credentials: "include",
-      body : JSON.stringify(commentVO)
-    }) 
-      .then((res) => {
-        if(!res.ok) {
-          return res.json().then((res) => {
-            // console.log(res)
-            alert(res.message)
-            navigate("/login")
-          })
-        }
-        return res.json()
-      })
-      .then((res) => {
-        getCommentsList()
-        setText("")
-        alert(res.message)
-      })
-      .catch(console.error)
-  }
-
-
   // 댓글 리스트
   const getCommentsList = async () => {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/api/list`, {
@@ -100,24 +118,73 @@ const DisplayDetail = () => {
       },
       body: JSON.stringify(params)
     })
-      .then((res) => {
-        if (!res.ok) {
+    .then((res) => {
+      if(!res.ok) {
           return res.json().then((res) => {
             console.log(res);
             // alert(res.message);
-          });
+          })
         }
-        return res.json(); 
+        return res.json()
       })
       .then((res) => {
         if(res) {
           setComments(res.commentList);
           // console.log("res", res)
+          let pages = res.contents === 0? 0 : (res.contents % 10 === 0? res.contents / 10 - 1 : res.contents / 10)
+
+
+          const result = [];
+          let count = 0
+
+          // 받은 값 기준으로 2차원 배열을 만든다.
+          for (let i = 0; i < pages/5; i++) {
+            const row = [];
+            for (let j = 0; j < 5; j++) {
+              if (count < pages) {
+                row.push(count++);
+              } else {
+                row.push(null);
+              }
+            }
+            result.push(row);
+          }
+          setPageLength(result)
+          console.log(result)
         }
       })
       .catch(console.error);
-  };
-  
+    };
+    
+    // 댓글 등록
+    const registerComment = async () => {
+      await fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/api/registration`, {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json",
+        },
+        credentials: "include",
+        body : JSON.stringify(commentVO)
+      }) 
+        .then((res) => {
+          if(!res.ok) {
+            return res.json().then((res) => {
+              // console.log(res)
+              alert(res.message)
+              navigate("/login")
+            })
+          }
+          return res.json()
+        })
+        .then((res) => {
+          getCommentsList()
+          setText("")
+          alert(res.message)
+        })
+        .catch(console.error)
+    }
+
+
   useEffect(() => {
     getCommentsList()
   }, [id, commentOrder]);
@@ -170,117 +237,70 @@ const DisplayDetail = () => {
       .catch(console.error)
   }
 
-
-  // 작품 좋아요 등록
-  const registerLike = async () => {
-    //   if (!post.artId) {
-    //     console.log("post 로딩 중,,");
-    //   return;
-    // }
-    
-  const userVO = {
-    userId : currentUser.id,
-    artId: post.artId
-  }
-
-  console.log("userVO", userVO);
-
-    await fetch(`${process.env.REACT_APP_BACKEND_URL}/art/likes/api/registration`, {
-      method : "POST",
-      headers : {
-        "Content-Type" : "application/json"
-      },
-      body : JSON.stringify(userVO)
-    })
-      .then((res) => {
-        if(!res.ok) {
-          return res.json().then((res) => {
-            console.log(res)
-          })
+  
+      const minusLargeCursor = () => {
+        if (largeCursor !== 0) {
+          let value = largeCursor - 1
+          setLargeCursor(value);
         }
-        return
-      })
-      .then((res) => {
-        console.log(res)
-        setIsLiked(true)
-      })
-      .catch(console.error)
-  }
+      }
 
-  // 작품 좋아요 취소
-  const deleteLike = async () => {
-    //   if (!post.artId) {
-    //     console.log("post 로딩 중,,");
-    //   return;
-    // }
-    
-  const userVO = {
-    userId : currentUser.id,
-    artId: post.artId
-  }
-
-  console.log("userVO", userVO);
-
-    await fetch(`${process.env.REACT_APP_BACKEND_URL}/art/likes/api/delete`, {
-      method : "DELETE",
-      headers : {
-        "Content-Type" : "application/json"
-      },
-      body : JSON.stringify(userVO)
-    })
-      .then((res) => {
-        if(!res.ok) {
-          return res.json().then((res) => {
-            console.log(res)
-          })
+      const plusLargeCursor = () => {
+        if (pageLength && largeCursor !== (pageLength.length - 1)) {
+          let value = largeCursor + 1
+          setLargeCursor(value);
         }
-        return 
-      })
-      .then((res) => {
-        console.log(res)
-        setIsLiked(false)
-      })
-      .catch(console.error)
-  }
+      }
+      
 
-  if(isLoading) {
+
+  if (isLoading) {
     return <p>로딩 중,,</p>
   }
 
-  if(isError) {
-    return <p>오류 발생 ,,</p>
+
+  if (isError) { 
+    return <p>오류 발생,,</p>
   }
 
+
   if (!post) {
-    return <p>작품 정보 불러오는 중,,</p>; 
+    return <p>작품 정보 불러오는 중,,</p>
   }
 
   return (
     <S.Container>
-      {/* <p>{post.artTitle}</p>
-      <p>{post.userName}</p>
-      <p>{post.artCategory}</p>
-      <p>{post.artMaterial}</p>
-      <p>{post.artSize}</p>
-      {post.comments.length === 0 ? (
-      <p>댓글이 없습니다.</p>
-    ) : (
-      post.comments.map((comment) => (
-        <div key={comment.commentId}>
-          <p>{comment.commentContent}</p>
-        </div>
-      ))
-    )} */}
       <S.Detail>
         <S.LeftWrapper>
-          <S.ArtImg src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${post.artImgName}?filePath=${post.artImgPath}`} alt={post.artTitle}/>
+          <S.Wrapper style={{ width: "560px" }}>
+            <Swiper
+              modules={[Navigation, Pagination]}
+              navigation
+              pagination={{ clickable: true }}
+              spaceBetween={10}
+              slidesPerView={1}
+              style={{ width: "100%", height: "100%", objectFit: "contain" }}>
+              {post.images.map((img, i) => (
+                <SwiperSlide key={i}>
+                  <S.ArtImg
+                    src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${img.artImgName}?filePath=${img.artImgPath}`}
+                    alt="이미지"
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </S.Wrapper>
+
+          {/* 작품 좋아요 버튼 */}
           <S.ButtonWrapper>
-            <S.LikeButton className="button"
-              onClick={isLiked ? deleteLike : registerLike}
-              $isLiked={isLiked}>
-              좋아요
-              <S.LikeIcon src={'/assets/images/icon/heart.png'} alt="좋아요"/>
-            </S.LikeButton>
+            <ArtLikeButton
+              userId={currentUser.id}
+              artId={post.artId}
+              isLiked={isLiked}
+              setIsLiked={setIsLiked}
+              setPost={setPost}
+              setLikeCount={(count) =>
+                setPost((prev) => ({ ...prev, artLikeCount : post.artLikeCount }))} />
             <S.Link to={`/mypage/contact-artist/write/${post.userEmail}`}>
               <S.ArtistButton className="button">
                 작가와 연락
@@ -289,6 +309,7 @@ const DisplayDetail = () => {
             </S.Link>
           </S.ButtonWrapper>
         </S.LeftWrapper>
+
         <S.RightWrapper>
           <S.TitleWrapper>
             <S.Title>{post.artTitle}</S.Title>
@@ -297,6 +318,7 @@ const DisplayDetail = () => {
               <S.H3>{post.userName}</S.H3>
             </S.Artist>
           </S.TitleWrapper>
+
           <S.LikeCountWrapper>
             <S.LikeLabel>좋아요</S.LikeLabel>
             <S.LikeCount>{post.artLikeCount}<span className='unit'>개</span></S.LikeCount>
@@ -305,6 +327,7 @@ const DisplayDetail = () => {
               <S.Notice>좋아요 50개 이상인 작품은 경매 등록 가능합니다.</S.Notice>
             </S.NoticeIconWrapper>
           </S.LikeCountWrapper>
+
           <S.ArtInfoContainer>
             <S.ArtInfoWrapper>
               <S.ArtInfoLabel>제작연도</S.ArtInfoLabel>
@@ -322,8 +345,8 @@ const DisplayDetail = () => {
               <S.ArtInfoLabel>부문</S.ArtInfoLabel>
               <S.ArtInfo>{post.artCategory}</S.ArtInfo>
             </S.ArtInfoWrapper>
-
           </S.ArtInfoContainer>
+
           <S.ArtDescription>{post.artDescription}</S.ArtDescription>
         </S.RightWrapper>
       </S.Detail>
@@ -335,7 +358,7 @@ const DisplayDetail = () => {
           <S.Input type="text" placeholder="댓글을 작성하세요." maxLength={300} 
           value={text} onChange={(e) => setText(e.target.value)}/>
           <S.CountButtonWrapper>
-            <S.Count>{text.length}/300</S.Count>
+            <S.Count>{text.length} / 300</S.Count>
             <S.RegisterButton onClick={registerComment}>등록</S.RegisterButton>
           </S.CountButtonWrapper>
         </S.InputWrapper>
@@ -356,19 +379,32 @@ const DisplayDetail = () => {
           )}
         </S.Menu>
 
+        {/* 댓글 리스트 */}
         {comments.length === 0 ? (
           <p>댓글이 존재하지 않습니다.</p>
         ) : (
           comments.map((comment) => (
         <S.Comment key={comment.id}>
           <S.Wrapper>
-            <S.ProfileWrapper>
-              <S.Profile src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${comment.userImgName}?filePath=${comment.userImgPath}`} alt={post.artTitle} />
-              <S.Name>{comment.userName}</S.Name>
-            </S.ProfileWrapper>
-            <S.MoreIcon src={'/assets/images/icon/more.png'} alt="더보기"
-              onClick={() => setOpenMenuId(openMenuId === comment.id? null : comment.id)}/>
-            {/* <button onClick={() => deleteComment(comment.id)}>삭제</button> */}
+            {comment.userWriterStatus === "승인" ? (
+              <S.Link to={`/artist/${category}/detail/${comment.userId}`}>
+                <S.ProfileWrapper>
+                  <S.Profile src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${comment.userImgName}?filePath=${comment.userImgPath}`} alt={post.artTitle} />
+                  <S.Name>{comment.userName}</S.Name>
+                  <S.ArtistProfile>작가</S.ArtistProfile>
+                </S.ProfileWrapper>
+              </S.Link>
+            ) : (
+              <S.ProfileWrapper>
+                <S.Profile src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${comment.userImgName}?filePath=${comment.userImgPath}`} alt={post.artTitle} />
+                <S.Name>{comment.userName}</S.Name>
+              </S.ProfileWrapper>
+            )}
+            {currentUser.id === comment.userId && (
+              <S.MoreIcon
+               src={'/assets/images/icon/more.png'} alt="더보기"
+                onClick={() => setOpenMenuId(openMenuId === comment.id? null : comment.id)}/>
+            )}
             {openMenuId === comment.id && (
               <S.MoreMenu>
                 <S.Option onClick={() => {
@@ -379,7 +415,8 @@ const DisplayDetail = () => {
                 </S.Option>
                 <S.Option onClick={() => {
                   deleteComment(comment.id);
-                  setOpenMenuId(null);}}>
+                  setOpenMenuId(null)
+                  }}>
                   삭제
                 </S.Option>
               </S.MoreMenu>
@@ -393,6 +430,7 @@ const DisplayDetail = () => {
                 value={modifyCommentContent}
                 onChange={(e) => setModifyCommentContent(e.target.value)}
               />
+              
               <S.ButtonContainer>
                 <S.CancelButton onClick={() => setModifyCommentId(null)}>취소</S.CancelButton>
                 <S.SaveButton onClick={() => {
@@ -405,15 +443,37 @@ const DisplayDetail = () => {
             <S.Content>{comment.commentContent}</S.Content>
             )}
 
-          <S.LikeWrapper>
-            <S.LikeIcon src={'/assets/images/icon/like.png'} alt="댓글 좋아요" />
+          {/* <S.LikeWrapper>
+            <S.LikeIcon src={isLiked ? '/assets/images/icon/like.png' : '/assets/images/icon/like-red.png'} alt="댓글 좋아요" />
             <S.LikeCount>{comment.commentLikeCount}</S.LikeCount>
-          </S.LikeWrapper>
-        </S.Comment>
-      ))
-        )}
+          </S.LikeWrapper> */}
 
+          {/* 댓글 좋아요 버튼 */}
+          <CommentLikeButton
+            userId={currentUser.id}
+            commentId={comment.id}
+            isLiked={comment.isLiked}
+            commentLikeCount={comment.commentLikeCount}
+            setComments={setComments} />
+        </S.Comment>
+        ))
+      )}
       </S.CommentWrapper>
+
+      <S.PagenationWrapper>
+        <S.PagenationIcon src='/assets/images/icon/left.png' onClick={minusLargeCursor}/>
+          {pageLength.map((datas, i) => (
+            i === largeCursor ?
+            datas.map((data, i) => (
+              data !== null?
+              <S.PagenationButton key={i} onClick={() => {setCursor((data + 1))}} $active={cursor === data + 1}>
+              {data + 1}
+              </S.PagenationButton> : ''
+            )) : ''
+          ))}
+    
+        <S.PagenationIcon src='/assets/images/icon/right.png' onClick={plusLargeCursor}/>
+      </S.PagenationWrapper>
     </S.Container>
   );
 };

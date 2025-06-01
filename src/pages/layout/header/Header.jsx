@@ -57,7 +57,7 @@ const Header = ({ onLogout }) => {
             </S.Dropdown>
           </S.MenuItem>
 
-          <S.MenuItem><S.MenuLink to="/artist">artist</S.MenuLink></S.MenuItem>
+          <S.MenuItem><S.MenuLink to="/artist/korean">artist</S.MenuLink></S.MenuItem>
 
           <S.MenuItem>
             <S.MenuLink to="/auction/bidding/korean">auction</S.MenuLink>

@@ -17,10 +17,10 @@ const QnaSend = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
 
-  const categories = ['작품전시', '전시회', '경매', '업사이클', '마이페이지', '기타'];
+  const categories = ['회원', '전시', '작품', '배송', '결제', '경매', '기타'];
 
-  const checkedUrl = 'http://localhost:10000/files/api/get/checked.png?filePath=images/mypage';
-  const uncheckedUrl = 'http://localhost:10000/files/api/get/uncheck.png?filePath=images/mypage';
+  const checkedUrl = "/assets/images/icon/checked-on.png";
+  const uncheckedUrl = "/assets/images/icon/checked-off.png";
 
   // 카테고리 선택 핸들러
   const handleSelect = (category) => {
@@ -185,6 +185,7 @@ const QnaSend = () => {
         <SQ.Box>
           <SQ.Title>내용<S.Important>*</S.Important></SQ.Title>
           <SQ.InputContent
+            placeholder='내용을 입력하세요.'
             value={content}
             onChange={e => {
               setContent(e.target.value);
@@ -226,7 +227,7 @@ const QnaSend = () => {
         <S.PopUpOverlay>
           <S.PopUp>
             <S.PopUpContent>
-              <S.PopUpIcon src="http://localhost:10000/files/api/get/question.png?filePath=images/mypage" alt="question" />
+              <S.PopUpIcon src="/assets/images/icon/quest.png" alt="question" />
               <S.PopUpText>문의를 등록하시겠습니까?</S.PopUpText>
               <S.PopUpButtonDiv>
                 <S.PopUpButtonW onClick={handleCancel}>취소</S.PopUpButtonW>
@@ -242,7 +243,7 @@ const QnaSend = () => {
         <S.PopUpOverlay>
           <S.PopUp>
             <S.PopUpContent>
-              <S.PopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="attention" />
+              <S.PopUpIcon src="/assets/images/icon/check.png" alt="check" />
               <S.PopUpText>문의가 등록되었습니다.</S.PopUpText>
               <NavLink to="/service-center/qna" onClick = {() => window.scrollTo(0, 0)} ><S.PopUpButtonR onClick={() => setShowSuccess(false)}>확인</S.PopUpButtonR></NavLink>
             </S.PopUpContent>

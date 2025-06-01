@@ -56,20 +56,22 @@ S.Overlay = styled.div`
 S.Content = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 20px;
   align-items: center;
   justify-content: center;
   text-align: center;
 `
 
 S.H2 = styled.p`
-  ${H2}
+  font-size: 24px;
+  font-weight: 400;
   color: #FBFCFC;
   width: 236px;
 `
 
 S.H4 = styled.p`
-  ${H4}
+  font-size: 30px;
+  font-weight: 500;
   color: #FBFCFC;
 `
 

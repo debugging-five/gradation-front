@@ -83,6 +83,12 @@ const AuctionModal = ({
                 return
               }
 
+              if(formDatas.biddingPrice > 1000000000000) {
+                alert("사이트 정책에 위반되는 금액입니다!")
+                setIsPriceUpdate(!isPriceUpdate)
+                return
+              }
+
               if(latestUserId === myId || currentUserId === myId){
                 alert("이미 입찰 하셨습니다.");
                 setOpenBidding(false)

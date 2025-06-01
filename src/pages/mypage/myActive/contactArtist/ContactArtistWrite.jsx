@@ -101,6 +101,7 @@ const ContactArtistWrite = () => {
         <SM.Box>
           <SM.Title>내용<SM.Important>*</SM.Important></SM.Title>
           <SM.InputContent
+            placeholder='내용을 입력하세요.'
             value={content}
             onChange={e => {
               setContent(e.target.value);
@@ -120,7 +121,7 @@ const ContactArtistWrite = () => {
         <S.PopUpOverlay>
           <S.PopUp>
             <S.PopUpContent>
-              <S.PopUpIcon src="http://localhost:10000/files/api/get/question.png?filePath=images/mypage" alt="question" />
+              <S.PopUpIcon src="/assets/images/icon/quest.png" alt="question" />
               <S.PopUpText>쪽지를 보내시겠습니까?</S.PopUpText>
               <S.PopUpButtonDiv>
                 <S.PopUpButtonW onClick={() => setShowConfirmation(false)}>취소</S.PopUpButtonW>
@@ -136,7 +137,7 @@ const ContactArtistWrite = () => {
         <S.PopUpOverlay>
           <S.PopUp>
             <S.PopUpContent>
-              <S.PopUpIcon src="http://localhost:10000/files/api/get/attention.png?filePath=images/mypage" alt="success" />
+              <S.PopUpIcon src="/assets/images/icon/check.png" alt="success" />
               <S.PopUpText>쪽지가 전송되었습니다.</S.PopUpText>
               <S.PopUpButtonR onClick={() => {
                 setShowSuccess(false);

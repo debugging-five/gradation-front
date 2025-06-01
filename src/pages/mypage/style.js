@@ -135,7 +135,7 @@ export const Content = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  text-align: center;
+  /* text-align: center; */
 `;
 // 여백 및 상태, 작성일, 금액
 export const Emptybox = styled.div`
@@ -200,7 +200,23 @@ export const MailTitle = styled.p`
   font-weight: bold;
 `;
 
+export const ButtonEdit = styled.button`
+  width: 16px;
+  height: 16px;
+  background-color: transparent;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  margin-left: 56px;
+  color: red; // 활성화 상태 기본 색상
 
+  &:disabled {
+    color: gray; // 비활성화일 때 색상
+    cursor: not-allowed;
+  }
+`;
 export const Button75x35R = styled.button`
   width: 75px;
   height: 35px;
@@ -208,7 +224,7 @@ export const Button75x35R = styled.button`
   color: white;
   background-color: red;
   border: solid 1px red;
-  font-size: 18px;
+  font-size: 12px;
   text-decoration: none;
   display: flex;
   justify-content: center;
@@ -416,3 +432,19 @@ export const BigPopUpButtonR = styled.button`
     font-size: 18px;
 `;
 
+// 페이지 네이션
+export const Pagination = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+
+  .active {
+    font-weight: bold;
+    color: red;
+  }
+`;
+
+export const PageButton = styled.span`
+  margin: 0 0.5rem;
+  cursor: pointer;
+`; 

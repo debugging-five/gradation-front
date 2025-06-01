@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { EN_H3, EN_H6, H10, H2, H3, H5, H8 } from '../../../styles/common';
+import { EN_H3, EN_H6, H10, H2, H3, H5, H6, H8 } from '../../../styles/common';
 import { Link } from 'react-router-dom';
 
 const S = {};
@@ -51,6 +51,8 @@ S.LikeButton = styled.button`
 
 S.Link = styled(Link)`
   text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 `
 
 S.ArtistButton = styled.button`
@@ -258,17 +260,32 @@ S.Wrapper = styled.div`
 S.ProfileWrapper = styled.div`
   display: flex;
   gap: 8px;
+  align-items: center;
+  /* cursor: pointer; */
 `
 
 S.Profile = styled.img`
-  width: 28px;
-  height: 28px;
+  /* width: 28px;
+  height: 28px; */
+  width: 32px;
+  height: 32px;
   border-radius: 50px;
 `
 
 S.Name = styled.div`
-  ${H3}
+  ${H6}
+`
 
+S.ArtistProfile = styled.div`
+  ${H10}
+  width: 32px;
+  height: 20px;
+  background-color: #EE3333;
+  border-radius: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FBFCFC;
 `
 
 S.MoreIcon = styled.img`
@@ -278,14 +295,14 @@ S.MoreIcon = styled.img`
 `
 
 S.Content = styled.div`
-  margin: 12px 0 0 0;
+  margin: 12px 0 0 40px;
   ${H8}
 `
 
 S.LikeWrapper = styled.div`
   display: flex;
   gap: 8px;
-  margin: 16px 0 0 0;
+  margin: 16px 0 0 40px;
   cursor: pointer;
 `
 
@@ -305,17 +322,12 @@ S.LikeCount = styled.p`
 
 S.MoreMenu = styled.div`
   position: absolute;
-  /* top: 30px;  */
   left: 1144px;
-  /* left: auto; */
-  right: 0;
   background-color: #FBFCFC;
   border-radius: 2px;
-  /* display: flex; */
-  /* flex-direction: column; */
+  border: 1px solid #6E7476;
   :hover {
-    background-color: #EE3333;
-    color: #FBFCFC;
+    color: #EE3333;
   }
 `;
 
@@ -359,15 +371,15 @@ S.Dropdown = styled.div`
   z-index: 100; 
   display: flex;
   flex-direction: column;
+  border: 1px solid #6E7476;
 
   :hover {
-    background-color: #EE3333;
-    color: #FBFCFC;
+    color: #EE3333;
+    /* color: #FBFCFC; */
   }
 `
 
 S.Option = styled.div`
-  border: 1px solid #6E7476;
   width: 75px;
   height: 35px;
   ${H8}
@@ -421,6 +433,33 @@ S.CancelButton = styled.button`
   height: 35px;
   padding: 6px 12px;
 `
+// 페이지네이션
+S.PagenationWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin: 160px 0 0 0;
+`
 
+S.PagenationButton = styled.div`
+  width: 9px;
+  height: 20px;
+  color: ${(props) => (props.$active ? '#FF3333' : '#6E7476')};
+  cursor: pointer;
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+
+  &:hover {
+    color: #333333;
+  }
+`
+
+S.PagenationIcon = styled.img`
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+`
 
 export default S;

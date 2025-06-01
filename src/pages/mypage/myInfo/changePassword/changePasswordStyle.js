@@ -101,3 +101,21 @@ export const BigPopUpContent = styled.div`
     padding: 60px 0 40px;
 `;
 
+export const Error = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;  /* 세로 중앙 정렬 */
+  color: orange;
+  width: 100%;
+  font-size: 12px;
+  padding-left: 136px;
+  margin-top: 8px;
+`;
+
+export const Eye = styled.img`
+  width: 16px;
+  height: 12px;
+`;
+export const InputWrapper = styled.div`
+    position: relative
+`;

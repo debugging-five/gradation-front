@@ -79,6 +79,7 @@
         font-size: 16px;
         line-height: 1.5;
         box-sizing: border-box;
+        font-family: inherit;
     `;
 
     export const ButtonDiv = styled.div`
