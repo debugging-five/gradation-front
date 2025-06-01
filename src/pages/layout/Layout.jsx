@@ -13,7 +13,8 @@ const Layout = () => {
 
   const [searchParams] = useSearchParams();
   const jwtToken = searchParams.get("jwtToken");
-  const localJwtToken = localStorage.getItem("jwtToken");
+  // const localJwtToken = localStorage.getItem("jwtToken") 
+  const token = localStorage.getItem("jwtToken") || sessionStorage.getItem("jwtToken")
 
   const navigate = useNavigate();
 
@@ -24,13 +25,13 @@ const Layout = () => {
       navigate("/", { replace: true });
     }
 
-    if(localJwtToken){
+    if(token){
       // console.log("localJwtToken", localJwtToken)
       const getUserDatas = async () => {
         const response = await fetch("http://localhost:10000/users/api/profile", {
           method: "POST",
           headers: {
-            "Authorization": `Bearer ${localJwtToken}`
+            "Authorization": `Bearer ${token}`
           }
         })
 
@@ -46,21 +47,26 @@ const Layout = () => {
             userProvider : ""
           }));
           dispatch(setUserStatus(false));
-          localStorage.clear();
+          // localStorage.clear();
+          // sessionStorage.clear();
+          localStorage.removeItem("jwtToken")
+          sessionStorage.removeItem("jwtToken")
         }
         
         const datas = await response.json();
-        // console.log("datas", datas)
-        // console.log(datas.currentUser)
+        console.log("datas", datas)
+        console.log(datas.currentUser)
         dispatch(setUser(datas.currentUser));
         dispatch(setUserStatus(true));
       };
       getUserDatas()
     }
-  }, [localJwtToken]); 
+  }, [jwtToken]); 
 
   const handleLogout = () => {
-    localStorage.clear();
+    // localStorage.clear();
+    localStorage.removeItem("jwtToken")
+    sessionStorage.removeItem("jwtToken")
     dispatch(setUser({
       id : 0,
       userIdentification : "",
