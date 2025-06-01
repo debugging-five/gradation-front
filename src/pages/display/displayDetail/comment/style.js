@@ -1,53 +1,8 @@
 import styled from 'styled-components'
-import { EN_H3, EN_H6, H10, H2, H3, H5, H6, H8 } from '../../../../styles/common';
+import { EN_H3, H10, H3, H6, H8 } from '../../../../styles/common';
 import { Link } from 'react-router-dom';
 
 const S = {};
-
-S.Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-`
-
-S.Detail = styled.div`
-  display: flex;
-  gap: 120px;
-  margin: 70px 0 0 0;
-`
-S.LeftWrapper = styled.div`
-
-`
-
-S.ArtImg = styled.img`
-  width: 558px;
-`
-
-S.ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin: 28px 0 0 0;
-
-  .button {
-    ${H5}
-    width: 210px;
-    height: 50px;
-    border-radius: 3px;
-    border: solid 1.5px #EE3333;
-  }
-`
-
-// S.LikeButton = styled.button`
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   gap: 4px;
-//   /* color: #EE3333; */
-//   /* background-color: #FBFCFC; */
-//   background-color: ${(props) => (props.isLiked ? "#EE3333" : "#FBFCFC")};
-//   color: ${(props) => (props.isLiked ? "#FBFCFC" : "#EE3333")};
-// `
 
 S.Link = styled(Link)`
   text-decoration: none;
@@ -55,132 +10,8 @@ S.Link = styled(Link)`
   cursor: pointer;
 `
 
-S.ArtistButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  color: #FBFCFC;
-  background-color: #EE3333;
-`
-
-S.MessageIcon = styled.img`
-  width: 20px;
-  height: 20px;
-`
-
-S.RightWrapper = styled.div`
-
-`
-
-S.TitleWrapper = styled.div`
-
-`
-
-S.Title = styled.p`
-  ${H2}
-  height: 36px;
-`
-
-S.Artist = styled.div`
-  height: 25px;
-  display: flex;
-  margin: 8px 0 0 0;
-  
-  span {
-    width: 8px;
-    display: inline-block;
-    margin: 0 4px;
-  }
-`
-
 S.H3 = styled.p`
   ${H3}
-`
-
-
-S.LikeCountWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  height: 19px;
-  color: #EE3333;
-  margin: 44px 0 0 0;
-  position: relative;
-`
-
-S.LikeLabel = styled.p`
-  ${H5}
-  width: 47px;
-`
-
-S.LikeCount = styled.p`
-  ${H5}
-  width: 66px;
-`
-
-S.NoticeIconWrapper = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-
-  &:hover p {
-    display: block;
-  }
-`;
-
-S.NoticeIcon = styled.img`
-  width: 16px;
-  height: 16px;
-`
-
-S.Notice = styled.p`
-  ${H10}
-  display: none;
-  margin-left: 6px;
-  color: #6E7476;
-`
-
-S.ArtInfoContainer = styled.div`
-  border-top: solid 1px #6E7476;
-  border-bottom: solid 1px #6E7476;
-  padding: 20px 0;
-  width: 480px;
-  margin: 14px 0 0 0;
-`
-
-S.ArtInfoWrapper = styled.div`
-  display: flex;
-  margin: 0 0 28px 0;
-  height: 21px;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-`
-
-S.ArtInfoLabel = styled.p`
-  ${H5}
-  width: 120px;
-  margin: 0;
-`
-
-S.ArtInfo = styled.p`
-  ${H8}
-  color: #6E7476;
-  width: 360px;
-  margin: 0;
-`
-
-
-S.ArtDescription = styled.div`
-  width: 480px;
-  margin: 28px 0 0 0;
-
-`
-
-S.CommentContainer = styled.div`
-  
 `
 
 S.CommentWrapper = styled.div`
@@ -299,27 +130,6 @@ S.Content = styled.div`
   ${H8}
 `
 
-S.LikeWrapper = styled.div`
-  display: flex;
-  gap: 8px;
-  margin: 16px 0 0 40px;
-  cursor: pointer;
-`
-
-S.LikeIcon = styled.img`
-  width: 16px;
-  height: 16px;
-`
-
-S.LikeCount = styled.p`
-  ${EN_H6}
-
-  .unit {
-    ${H5}
-    margin: 0 0 0 2px;
-  }
-`
-
 S.MoreMenu = styled.div`
   position: absolute;
   left: 1144px;
@@ -329,8 +139,7 @@ S.MoreMenu = styled.div`
   :hover {
     color: #EE3333;
   }
-`;
-
+`
 
 S.Menu = styled.div`
   display: flex;
@@ -401,8 +210,7 @@ S.ButtonContainer = styled.div`
   right: 12px;
   display: flex;
   gap: 10px;
-`;
-
+`
 
 S.SaveButton = styled.button`
   /* position: absolute;
@@ -433,6 +241,7 @@ S.CancelButton = styled.button`
   height: 35px;
   padding: 6px 12px;
 `
+
 // 페이지네이션
 S.PagenationWrapper = styled.div`
   display: flex;

@@ -280,10 +280,6 @@ const DisplayComments = ({postId, category}) => {
           <S.Content>{comment.commentContent}</S.Content>
           )}
 
-        {/* <S.LikeWrapper>
-          <S.LikeIcon src={isLiked ? '/assets/images/icon/like.png' : '/assets/images/icon/like-red.png'} alt="댓글 좋아요" />
-          <S.LikeCount>{comment.commentLikeCount}</S.LikeCount>
-        </S.LikeWrapper> */}
 
         {/* 댓글 좋아요 버튼 */}
         <CommentLikeButton
