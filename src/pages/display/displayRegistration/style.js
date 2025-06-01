@@ -298,5 +298,19 @@ S.StyledFlatpickr = styled(Flatpickr)`
   }
 `
 
+S.ImageWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+`
+S.CloseIcon = styled.img`
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  cursor: pointer;
+  z-index: 100;
+  top: 14px;
+  right: 14px;
+`
 
 export default S;
