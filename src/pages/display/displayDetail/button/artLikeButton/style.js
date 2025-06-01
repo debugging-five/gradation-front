@@ -45,8 +45,8 @@ S.LikeButton = styled.button`
   gap: 4px;
   /* color: #EE3333; */
   /* background-color: #FBFCFC; */
-  background-color: ${(props) => (props.isLiked ? "#EE3333" : "#FBFCFC")};
-  color: ${(props) => (props.isLiked ? "#FBFCFC" : "#EE3333")};
+  background-color: ${({$isLiked}) => ($isLiked ? "#EE3333" : "#FBFCFC")};
+  color: ${({$isLiked}) => ($isLiked ? "#FBFCFC" : "#EE3333")};
 `
 
 S.Link = styled(Link)`

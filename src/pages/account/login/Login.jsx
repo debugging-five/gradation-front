@@ -16,6 +16,7 @@ const Login = () => {
   const [saveId, setSaveId] = useState("");
   const [cookies, setCookie, removeCookie] = useCookies(["saveId"])
   const [isRemember, setIsRemember] = useState(false);
+  const [isKeepLogin, setIsKeepLogin] = useState(false);
   
   const handlePasswordType = () => {
     setPasswordType(() => {
@@ -37,6 +38,10 @@ const Login = () => {
   }
 
   useEffect(() => {
+    const keepLoginFlag = localStorage.getItem("keepLogin")
+    if(keepLoginFlag === "true") {
+      setIsKeepLogin(true)
+    }
     if(cookies.saveId !== undefined) {
       setSaveId(cookies.saveId);
       setIsRemember(true)
@@ -79,7 +84,16 @@ const Login = () => {
           }else {
             removeCookie("saveId")
           }
-            navigate("/?jwtToken=" + res.jwtToken)
+
+          if(isKeepLogin) {
+            localStorage.setItem("keepLogin", "true")
+            localStorage.setItem("jwtToken", res.jwtToken)
+          } else {
+            localStorage.removeItem("keepLogin")
+            sessionStorage.setItem("jwtToken", res.jwtToken)
+          }
+            // navigate("/?jwtToken=" + res.jwtToken)
+            navigate("/")
           }
         })
         .catch(console.error)
@@ -145,8 +159,8 @@ const Login = () => {
           </S.InputContainer>
 
           <S.CheckboxWrapper>
-            <S.Login>
-              <S.Checkbox src={'/assets/images/join/checked-off.png' }/>
+            <S.Login onClick={() => setIsKeepLogin(!isKeepLogin)}>
+              <S.Checkbox src={isKeepLogin ? '/assets/images/join/checked-on.png' : '/assets/images/join/checked-off.png' }/>
                 <S.H8>로그인 상태 유지</S.H8>
             </S.Login>
             <S.Id onClick = {() => {

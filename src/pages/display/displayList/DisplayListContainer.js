@@ -28,7 +28,6 @@ const DisplayListContainer = () => {
   }
 
     useEffect(() => {
-  
       const getDisplayList = async () => {
         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/displays/api/list`, {
           method : "POST",
@@ -47,9 +46,9 @@ const DisplayListContainer = () => {
   
       getDisplayList()
         .then((data) => {
-          console.log(data)
+          // console.log(data)
           // setDisplay(res.posts)
-          console.log("작품 개수", data.postList.length);
+          // console.log("작품 개수", data.postList.length)
           setIsLoading(false)
           setIsError(false)
           // setDisplay(res.posts)
@@ -73,7 +72,7 @@ const DisplayListContainer = () => {
             result.push(row);
           }
           setPageLength(result)
-          console.log(result)
+          // console.log(result)
         })
         .catch((error) => {
           console.error(error)
@@ -135,7 +134,7 @@ const DisplayListContainer = () => {
                 i === largeCursor ?
                 datas.map((data, i) => (
                   data !== null?
-                  <S.PagenationButton key={i} onClick={() => {setCursor((data+1))}} $active={cursor === data+1}>
+                  <S.PagenationButton key={i} onClick={() => {setCursor((data + 1))}} $active={cursor === data + 1}>
                   {data + 1}
                   </S.PagenationButton> : ''
                 )) : ''

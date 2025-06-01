@@ -3,11 +3,12 @@ import S from './style';
 import SubButton from '../../../components/button/SubButton';
 import PrimaryButton from '../../../components/button/PrimaryButton';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import { useNavigate } from 'react-router-dom';
 import DisplayRegistrationModal from './displayRegistrationModal/DisplayRegistrationModal';
+import dayjs from 'dayjs';
 
 const DisplayRegistration = () => {
   const { register, handleSubmit, setValue, formState: {isSubmitting, errors} } = useForm({mode: "onBlur"});
@@ -15,9 +16,25 @@ const DisplayRegistration = () => {
   const userId = currentUser.id;
   const [thumbnailUrls, setThumbnailUrls] = useState([]);
   const [selectFiles, setSelectFiles] = useState([]);
+  const [artEndDate, setArtEndDate] = useState('');
+  const [text, setText] = useState("")
+  const [width, setWidth] = useState("")
+  const [height, setHeight] = useState("")
+  const [depth, setDepth] = useState("")
+  const fileInputRef = useRef(null);
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const navigate = useNavigate();
+
+  useEffect(() => {
+  const isAllFilled = width && height && depth;
+  setValue("artSize", isAllFilled ? `${width} X ${height} X ${depth}` : "");
+}, [width, height, depth, setValue]);
+
+
+useEffect(() => {
+  setValue("artEndDate", artEndDate || "");
+}, [artEndDate]);
 
   const categoryList = ["한국화", "조각", "공예", "건축", "서예", "회화"]
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -45,6 +62,11 @@ const DisplayRegistration = () => {
   return (
     <div>
       <form encType='multipart/form-data' autoComplete="off" onSubmit={handleSubmit(async (data) => {
+        
+        if(!data.files || !data.files === 0) {
+          alert("첨부 파일을 선택하세요!")
+          return
+        }
         const {
           userName,
           artTitle,
@@ -54,18 +76,21 @@ const DisplayRegistration = () => {
           artEndDate,
           artDescription,
         } = data;
+
         const artPostDTO = {
           userName : userName,
           artTitle : artTitle,
           artCategory : artCategory,
           artMaterial : artMaterial,
           artSize : artSize,
-          artEndDate : artEndDate,
+          // artEndDate : artEndDate,
+          artEndDate : dayjs(artEndDate).format("YYYY-MM-DD"),
+          // artDescription : artDescription,
           artDescription : artDescription,
           userId: Number(userId)
         }
-        console.log("artPostDTO", artPostDTO);
-      
+        // console.log("artPostDTO", artPostDTO);
+
       await fetch("http://localhost:10000/displays/api/registration", {
         method : "POST",
         headers : {
@@ -112,7 +137,7 @@ const DisplayRegistration = () => {
         <S.FormWrapper>
           <S.Form>
             <S.FileWrapper>
-              <S.File type="file" accept="image/*" multiple {...register("files")}
+              <S.File type="file" accept="image/*" multiple {...register("files") }
                 onChange={handleThumbnailImage} />
               {thumbnailUrls.length === 0 && (
                 <S.IconWrapper>
@@ -130,11 +155,12 @@ const DisplayRegistration = () => {
                   style={{width: "100%", height: "100%"}} >
                   {thumbnailUrls.map((url, i) => (
                     <SwiperSlide key={i}>
-                      <img src={url} alt={`previewImg${i}`}
-                        style={{ width: "100%", height: "100%",
-                        objectFit: "contain",
-                        // objectFit: "cover",
-                        }}/>
+                        <img src={url} alt={`previewImg${i}`}
+                          style={{ width: "100%", height: "100%",
+                          objectFit: "contain",
+                          // objectFit: "cover",
+                          }}/>
+                          <S.CloseIcon className="close-icon" src={"/assets/images/icon/close.png"} alt="삭제" />
                     </SwiperSlide>
                   ))}
                 </Swiper>
@@ -237,11 +263,27 @@ const DisplayRegistration = () => {
                   <S.InputWrapper>
                     <S.Label>
                       <S.H7>작품 규격<span>*</span></S.H7>
-                      <S.Input type='text' placeholder='가로 X 세로 X 높이'
+                      <S.SizeInputWrapper>
+                        <S.SizeInput type='text' placeholder='가로(cm)'
+                          value={width} onChange={(e) => setWidth(e.target.value)} />
+                        <span>X</span>
+                        <S.SizeInput type='text' placeholder='세로(cm)'
+                          value={height} onChange={(e) => setHeight(e.target.value)} />
+                        <span>X</span>
+                        <S.SizeInput type='text' placeholder='높이(cm)'
+                          value={depth} onChange={(e) => setDepth(e.target.value)} />
+
+                          {/* <input
+                            type="hidden"
+                            {...register("artSize", { required : true,})} /> */}
+                      <input type='hidden' placeholder='가로 X 세로 X 높이'
+                        value={`${width} X ${height} X ${depth}`}
                       {...register("artSize", {
                         required : true,
                       })}
                     />
+                      </S.SizeInputWrapper>
+
                     </S.Label>
                   </S.InputWrapper>
                 </S.Border>
@@ -254,11 +296,18 @@ const DisplayRegistration = () => {
                   <S.InputWrapper>
                     <S.Label>
                       <S.H7>제작 완료일<span>*</span></S.H7>
-                      <S.Input type='date' placeholder='제작 완료일'
-                      {...register("artEndDate", {
-                        required : true,
-                      })}
-                    />
+                      <S.Datewrap>
+                        <S.calendar src={`/assets/images/icon/calendar.png`} alt="calendar" />
+                        <S.StyledFlatpickr
+                          options={{ dateFormat: 'Y-m-d' }}
+                          value={artEndDate}
+                          onChange={([date]) => setArtEndDate(date)}
+                          placeholder="제작 완료일을 선택하세요." />
+                          <input 
+                            type="hidden"
+                            value={artEndDate}
+                            {...register("artEndDate", { required : true,})} />
+                      </S.Datewrap>
                     </S.Label>
                   </S.InputWrapper>
                 </S.Border>
@@ -266,17 +315,20 @@ const DisplayRegistration = () => {
                 <S.Warning>필수 항목입니다.</S.Warning>
               )}
               </S.BorderWrapper>
+              
             </S.InputContainer>
           </S.Form>
             <S.Description>
               <S.Label>
                 <S.H7>작품 설명<span>*</span></S.H7>
               </S.Label>
-                <S.InputBox type='text' placeholder='작품 설명을 입력하세요.'
+                <S.InputBox type='text' placeholder='작품 설명을 입력하세요.' maxLength={500}
+                onChange={(e) => setText(e.target.value)}
                 {...register("artDescription", {
                   required : true,
                 })}
                 />
+                <S.Count>{text.length} / 500</S.Count>
                 {errors && errors?.artDescription?.type === "required" && (
                   <S.Warning>필수 항목입니다.</S.Warning>
                 )}
