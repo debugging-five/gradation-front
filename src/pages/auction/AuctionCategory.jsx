@@ -12,8 +12,6 @@ const AuctionCategory = () => {
     ["craft", "공예"]
   ]);
 
-  const pathName = useLocation().pathname
-  // const type = pathName.split("/")[2]
   const params = useParams()
   const navigate = useNavigate();
 
@@ -248,7 +246,7 @@ const AuctionCategory = () => {
             auction
           }}/>
           <S.PagenationWrapper>
-            <S.PagenationIcon src='/assets/images/icon/left.png' onClick={plusLargeCursor}/>
+            {auction.contents > 75 ? <S.PagenationIcon src='/assets/images/icon/left.png' onClick={plusLargeCursor}/> : "" }
               {pageLength.map((datas, i) => (
                 i === largeCursor ?
                 datas.map((data, i) => (
@@ -258,8 +256,7 @@ const AuctionCategory = () => {
                   </S.PagenationButton> : ''
                 )) : ''
               ))}
-              
-            <S.PagenationIcon src='/assets/images/icon/right.png' onClick={minusLargeCursor}/>
+            {auction.contents > 75 ? <S.PagenationIcon src='/assets/images/icon/right.png' onClick={minusLargeCursor}/> : "" }
           </S.PagenationWrapper>
         </div>
         }

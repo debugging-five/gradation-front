@@ -29,6 +29,7 @@ const AuctionBiddingDetail = ({auction, timeLeft}) => {
 			// 경매 완료
 			navigate(`/auction/complete/${category}/detail/${id}`, {replace: true})
 		}
+		window.scrollTo(0, 0);
 	}, [id])
 
 	// 모달 띄우는거
@@ -138,7 +139,7 @@ const AuctionBiddingDetail = ({auction, timeLeft}) => {
 					<S.AuctionInfo2>
 						<S.AuctionInfo2Detail>
 							<S.H5>마감일</S.H5>
-							<S.H7>{dayjs(auction.auctionStartDate).add(3, 'day').format('YYYY-MM-DD HH:mm:ss')}</S.H7>
+							<S.H7>{dayjs(auction.auctionEndDate).format('YYYY-MM-DD HH:mm:ss')}</S.H7>
 						</S.AuctionInfo2Detail>
 						<S.AuctionInfo2Detail>
 							<S.H5>추정가</S.H5>

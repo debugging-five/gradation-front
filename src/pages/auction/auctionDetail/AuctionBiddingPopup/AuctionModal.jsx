@@ -5,6 +5,7 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import AuctionBiddingPopupTime from './AuctionBiddingPopupTime';
 import AuctionBiddingPopupPrice from './AuctionBiddingPopupPrice';
 import getLatestPrice from '../_function/getLatePrice';
+import { useEffect } from 'react';
 
 const AuctionModal = ({
   id, auction, setOpenBidding, auctionStartDate, auctionEndDate, auctionBidDate,
@@ -15,7 +16,7 @@ const AuctionModal = ({
   const { register, handleSubmit, getValues, formState: {isSubmitting, isSubmitted, errors}} = useForm({mode:"onChange"});
   const navigate = useNavigate();
   const pricePattern = /^[0-9]+$/;
-  
+
   if(!isLogin) {
     return <Navigate to={"/login"} />
   }
@@ -69,6 +70,11 @@ const AuctionModal = ({
               const currentUserId = price.userId;
               const latestUserId = latestPrice.price.userId;
 
+              if (!pricePattern.test(formDatas.biddingPrice)) {
+                alert("숫자만 입력해주세요.");
+                return;
+              }
+
               if(latestUserId) {
                 if(currentUserId !== latestUserId) {
                   alert("응찰가 변동으로 인한 응찰 실패\n다시 응찰 하시겠습니까?");
@@ -84,7 +90,7 @@ const AuctionModal = ({
               }
 
               if(formDatas.biddingPrice > 1000000000000) {
-                alert("사이트 정책에 위반되는 금액입니다!")
+                alert("사이트 정책에 위반되는 금액입니다")
                 setIsPriceUpdate(!isPriceUpdate)
                 return
               }
@@ -127,9 +133,6 @@ const AuctionModal = ({
                   <S.Input type="text" placeholder="응찰가를 입력해주세요." autoComplete="off"
                     {...register("biddingPrice", {
                       required : true,
-                      pattern : {
-                        value : pricePattern,
-                      }
                   })}/>
                   <AuctionBiddingPopupPrice price={price} auction={auction} />
                 </S.PopupLeft2>
