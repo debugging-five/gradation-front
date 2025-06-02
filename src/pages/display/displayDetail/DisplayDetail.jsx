@@ -4,41 +4,18 @@ import { useSelector } from 'react-redux';
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import ArtLikeButton from './likeButton/artLikeButton/ArtLikeButton';
-import CommentLikeButton from './likeButton/commentLikeButton/CommentLikeButton';
 import S from './style';
 import DisplayComments from './comment/DisplayComments';
-
 
 const DisplayDetail = () => {
   const { id, category } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [post, setPost] = useState(null)
-  const [text, setText] = useState("")
-  const [comments, setComments] = useState([])
-  const [cursor, setCursor] = useState(1)
-  const [commentOrder, setCommentOrder] = useState('date')
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const [modifyCommentId, setModifyCommentId] = useState(null)
-  const [modifyCommentContent, setModifyCommentContent] = useState("")
   const [isLiked, setIsLiked] = useState(false)
-  const [openMenuId, setOpenMenuId] = useState(null)
-  const [pageLength, setPageLength] = useState([]);
-  const [largeCursor, setLargeCursor] = useState(0);
 
-  const navigate = useNavigate()
   const { currentUser } = useSelector((state) => state.user);
   // console.log(currentUser)
-  
-  const commentDropdownOption = {
-    date : "등록순",
-    like : "좋아요순"
-  };
-  
-  const handleOrder = (order) => {
-    setCommentOrder(order)
-    setIsDropdownOpen(false)
-  }
   
   // 작품 단일 조회
   useEffect(() => {
@@ -98,158 +75,6 @@ const DisplayDetail = () => {
     }
   }, [post, currentUser])
 
-
-  // // 댓글 리스트
-  // const getCommentsList = async () => {
-
-  //   const params = {
-  //     postId: id,
-  //     order: commentOrder,
-  //     cursor: cursor 
-  //   }
-
-  //   await fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/api/list`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     },
-  //     body: JSON.stringify(params)
-  //   })
-  //   .then((res) => {
-  //     if(!res.ok) {
-  //       return res.json().then((res) => {
-  //         console.log(res);
-  //         // alert(res.message);
-  //       })
-  //     }
-  //     return res.json()
-  //   })
-  //   .then((res) => {
-  //     if(res) {
-  //       setComments(res.commentList);
-  //       // console.log("res", res)
-  //       let pages = res.contents === 0 ? 0 : (res.contents % 10 === 0 ? res.contents / 10 - 1 : res.contents / 10)
-        
-  //       const result = [];
-  //       let count = 0
-        
-  //       // 받은 값 기준으로 2차원 배열을 만든다.
-  //       for(let i = 0; i < pages / 5; i++) {
-  //         const row = [];
-  //         for (let j = 0; j < 5; j++) {
-  //           if(count < pages) {
-  //             row.push(count++);
-  //           } else {
-  //             row.push(null);
-  //           }
-  //         }
-  //         result.push(row);
-  //       }
-  //       setPageLength(result)
-  //       console.log(result)
-  //     }
-  //   })
-  //   .catch(console.error);
-  // }
-    
-  // // 댓글 등록
-  // const registerComment = async () => {
-  //   const commentVO = {
-  //     commentContent : text,
-  //     artPostId : id
-  //   }
-
-  //   await fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/api/registration`, {
-  //     method : "POST",
-  //     headers : {
-  //       "Content-Type" : "application/json",
-  //     },
-  //     credentials: "include",
-  //     body : JSON.stringify(commentVO)
-  //   }) 
-  //   .then((res) => {
-  //     if(!res.ok) {
-  //       return res.json().then((res) => {
-  //         // console.log(res)
-  //         alert(res.message)
-  //         navigate("/login")
-  //       })
-  //     }
-  //     return res.json()
-  //   })
-  //   .then((res) => {
-  //     getCommentsList()
-  //     setText("")
-  //     alert(res.message)
-  //   })
-  //   .catch(console.error)
-  // }
-    
-  // useEffect(() => {
-  //   getCommentsList()
-  // }, [id, commentOrder, cursor]);
-
-
-  // // 댓글 삭제
-  // const deleteComment = async (commentId) => {
-  //   // const id = comment.id;
-  //   await fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/api/delete/${commentId}`, {
-  //     method : "DELETE",
-  //   })
-  //   .then((res) => {
-  //     if(!res.ok) {
-  //       return res.json().then((res) => {
-  //         console.log(res)
-  //       })
-  //     }
-  //     return res.json()
-  //   })
-  //   .then((res) => {
-  //     console.log(res)
-  //     alert(res.message)
-  //     getCommentsList()
-  //   })
-  //   .catch(console.error)
-  // }
-
-  // // 댓글 수정
-  // const modifyComment = async (commentId, commentContent) => {
-  //   // const id = comment.id;
-  //   await fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/api/modify/${commentId}`, {
-  //     method : "PUT",
-  //     headers : {
-  //       "Content-Type" : "application/json"
-  //     },
-  //     body: JSON.stringify({ commentContent }),
-  //   })
-  //   .then((res) => {
-  //     if(!res.ok) {
-  //       return res.json().then((res) => {
-  //         // console.log(res)
-  //       })
-  //     }
-  //     return res.json()
-  //   })
-  //   .then((res) => {
-  //     console.log(res)
-  //     getCommentsList()
-  //   })
-  //   .catch(console.error)
-  // }
-  
-  // const minusLargeCursor = () => {
-  //   if (largeCursor !== 0) {
-  //     let value = largeCursor - 1
-  //     setLargeCursor(value);
-  //   }
-  // }
-
-  // const plusLargeCursor = () => {
-  //   if (pageLength && largeCursor !== (pageLength.length - 1)) {
-  //     let value = largeCursor + 1
-  //     setLargeCursor(value);
-  //   }
-  // }
 
   if (isLoading) {
     return <p>로딩 중,,</p>

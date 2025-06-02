@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { EN_H2, H1, H10, H2, H3, H4, H6, H7, H8 } from '../../../styles/common';
+import { EN_H2, EN_H6, H1, H10, H2, H3, H4, H6, H7, H8 } from '../../../styles/common';
 import { Link } from 'react-router-dom';
 const primary = "#EE3333";
 const gray900 = "#6E7476";
@@ -73,6 +73,12 @@ S.SnS = styled.div`
   display: flex;
   gap: 10px;
   margin-left: 28px;
+  text-decoration: none;
+  color: inherit; 
+
+  p {
+    ${EN_H6};
+  }
 `
 
 S.SnSIcon = styled.img`

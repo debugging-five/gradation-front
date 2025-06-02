@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import S from './style';
 import CommentLikeButton from '../likeButton/commentLikeButton/CommentLikeButton';
 import { useSelector } from 'react-redux';
+import ConfirmAlert from '../../alert/confirmAlert/ConfirmAlert';
+import InfoAlert from '../../alert/infoAlert/InfoAlert';
 
 const DisplayComments = ({postId, category}) => {
   // const { id, category } = useParams();
@@ -13,13 +15,41 @@ const DisplayComments = ({postId, category}) => {
   const [commentOrder, setCommentOrder] = useState('date')
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [modifyCommentId, setModifyCommentId] = useState(null)
+  const [deleteCommentId, setDeleteCommentId] = useState(null)
   const [modifyCommentContent, setModifyCommentContent] = useState("")
   const [openMenuId, setOpenMenuId] = useState(null)
   const [pageLength, setPageLength] = useState([]);
   const [largeCursor, setLargeCursor] = useState(0);
   const navigate = useNavigate()
   const { currentUser } = useSelector((state) => state.user);
+
+  const [isShowConfirm, setIsShowConfirm] = useState(false)
+  const [isShowAlert, setIsShowAlert] = useState(false)
+  const [alertMessage, setAlertMessage] = useState("")
+  const [isShowDeleteConfirm, setIsShowDeleteConfirm] = useState(false)
   
+  const handleCommentRegister = () => {
+    setIsShowConfirm(true)
+  }
+
+  const handleConfirmOk = () => {
+    setIsShowConfirm(false)
+    registerComment()
+    setAlertMessage("댓글이 등록되었습니다.")
+    setIsShowAlert(true)
+  }
+
+  const handleCloseAlert = () => {
+    setIsShowAlert(false)
+  }
+
+  const handleDeleteOk = () => {
+    setIsShowDeleteConfirm(false)
+    deleteComment(deleteCommentId)
+    setAlertMessage("댓글이 삭제되었습니다.")
+    setIsShowAlert(true)
+  }
+
 
   const commentDropdownOption = {
     date : "등록순",
@@ -104,7 +134,7 @@ const DisplayComments = ({postId, category}) => {
         if(!res.ok) {
           return res.json().then((res) => {
             // console.log(res)
-            alert(res.message)
+            // alert(res.message)
             navigate("/login")
           })
         }
@@ -114,7 +144,7 @@ const DisplayComments = ({postId, category}) => {
         setCursor(1)
         getCommentsList()
         setText("")
-        alert(res.message)
+        // alert(res.message)
       })
       .catch(console.error)
     }
@@ -142,7 +172,7 @@ const DisplayComments = ({postId, category}) => {
       })
       .then((res) => {
         console.log(res)
-        alert(res.message)
+        // alert(res.message)
         getCommentsList()
       })
       .catch(console.error)
@@ -188,127 +218,150 @@ const DisplayComments = ({postId, category}) => {
     }
   
   return (
-    <S.CommentWrapper>
-      <S.EnH3>comments</S.EnH3>
-      <S.Line />
-      <S.InputWrapper>
-        <S.Input type="text" placeholder="댓글을 작성하세요." maxLength={300} 
-        value={text} onChange={(e) => setText(e.target.value)}/>
-        <S.CountButtonWrapper>
-          <S.Count>{text.length} / 300</S.Count>
-          <S.RegisterButton onClick={registerComment}>등록</S.RegisterButton>
-        </S.CountButtonWrapper>
-      </S.InputWrapper>
-
-      {/* 댓글 드롭다운 */}
-      <S.Menu>
-        <S.DropdownWrapper onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-          <S.DropdownButton>
-            {commentDropdownOption[commentOrder]}
-          </S.DropdownButton>
-        <S.DropdownIcon src={'/assets/images/icon/down.png'} alt='드롭다운' />
-        </S.DropdownWrapper>
-        {isDropdownOpen && (
-          <S.Dropdown>
-            <S.Option onClick={() => handleOrder("date")}>등록순</S.Option>
-            <S.Option onClick={() => handleOrder("like")}>좋아요순</S.Option>
-          </S.Dropdown>
-        )}
-      </S.Menu>
-
-      {/* 댓글 리스트 */}
-      {comments.length === 0 ? (
-        <p>댓글이 존재하지 않습니다.</p>
-      ) : (
-        comments.map((comment) => (
-      <S.Comment key={comment.id}>
-        <S.Wrapper>
-          {comment.userWriterStatus === "승인" ? (
-            <S.Link to={`/artist/${category}/detail/${comment.userId}`}>
+    <div>
+      <S.CommentWrapper>
+        <S.EnH3>comments</S.EnH3>
+        <S.Line />
+        <S.InputWrapper>
+          <S.Input type="text" placeholder="댓글을 작성하세요." maxLength={300}
+          value={text} onChange={(e) => setText(e.target.value)}/>
+          <S.CountButtonWrapper>
+            <S.Count>{text.length} / 300</S.Count>
+            {/* <S.RegisterButton onClick={registerComment}>등록</S.RegisterButton> */}
+            <S.RegisterButton onClick={handleCommentRegister}>등록</S.RegisterButton>
+          </S.CountButtonWrapper>
+        </S.InputWrapper>
+        {/* 댓글 드롭다운 */}
+        <S.Menu>
+          <S.DropdownWrapper onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+            <S.DropdownButton>
+              {commentDropdownOption[commentOrder]}
+            </S.DropdownButton>
+          <S.DropdownIcon src={'/assets/images/icon/down.png'} alt='드롭다운' />
+          </S.DropdownWrapper>
+          {isDropdownOpen && (
+            <S.Dropdown>
+              <S.Option onClick={() => handleOrder("date")}>등록순</S.Option>
+              <S.Option onClick={() => handleOrder("like")}>좋아요순</S.Option>
+            </S.Dropdown>
+          )}
+        </S.Menu>
+        {/* 댓글 리스트 */}
+        {comments.length === 0 ? (
+          <p>댓글이 존재하지 않습니다.</p>
+        ) : (
+          comments.map((comment) => (
+        <S.Comment key={comment.id}>
+          <S.Wrapper>
+            {comment.userWriterStatus === "승인" ? (
+              <S.Link to={`/artist/${category}/detail/${comment.userId}`}>
+                <S.ProfileWrapper>
+                  <S.Profile src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${comment.userImgName}?filePath=${comment.userImgPath}`} alt="프로필" />
+                  <S.Name>{comment.userName}</S.Name>
+                  <S.ArtistProfile>작가</S.ArtistProfile>
+                </S.ProfileWrapper>
+              </S.Link>
+            ) : (
               <S.ProfileWrapper>
                 <S.Profile src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${comment.userImgName}?filePath=${comment.userImgPath}`} alt="프로필" />
                 <S.Name>{comment.userName}</S.Name>
-                <S.ArtistProfile>작가</S.ArtistProfile>
               </S.ProfileWrapper>
-            </S.Link>
-          ) : (
-            <S.ProfileWrapper>
-              <S.Profile src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${comment.userImgName}?filePath=${comment.userImgPath}`} alt="프로필" />
-              <S.Name>{comment.userName}</S.Name>
-            </S.ProfileWrapper>
-          )}
-          {currentUser.id === comment.userId && (
-            <S.MoreIcon
-              src={'/assets/images/icon/more.png'} alt="더보기"
-              onClick={() => setOpenMenuId(openMenuId === comment.id? null : comment.id)}/>
-          )}
-          {openMenuId === comment.id && (
-            <S.MoreMenu>
-              <S.Option onClick={() => {
-                setModifyCommentContent(comment.commentContent);
-                setModifyCommentId(comment.id);
-                setOpenMenuId(null); }}>
-                수정
-              </S.Option>
-              <S.Option onClick={() => {
-                deleteComment(comment.id);
-                setOpenMenuId(null)
-                }}>
-                삭제
-              </S.Option>
-            </S.MoreMenu>
-          )}
-        </S.Wrapper>
-        { modifyCommentId === comment.id ? (
-          <S.ModifyWrapper>
-            <S.Input
-              type="text"
-              maxLength={300}
-              value={modifyCommentContent}
-              onChange={(e) => setModifyCommentContent(e.target.value)}
-            />
-            
-            <S.ButtonContainer>
-              <S.CancelButton onClick={() => setModifyCommentId(null)}>취소</S.CancelButton>
-              <S.SaveButton onClick={() => {
-                modifyComment(comment.id, modifyCommentContent);
-                setModifyCommentId(null);
-              }}>저장</S.SaveButton>
-            </S.ButtonContainer>
-          </S.ModifyWrapper>
-          ) : (
-          <S.Content>{comment.commentContent}</S.Content>
-          )}
+            )}
+            {currentUser.id === comment.userId && (
+              <S.MoreIcon
+                src={'/assets/images/icon/more.png'} alt="더보기"
+                onClick={() => setOpenMenuId(openMenuId === comment.id? null : comment.id)}/>
+            )}
+            {openMenuId === comment.id && (
+              <S.MoreMenu>
+                <S.Option onClick={() => {
+                  setModifyCommentContent(comment.commentContent)
+                  setModifyCommentId(comment.id)
+                  setOpenMenuId(null) }}>
+                  수정
+                </S.Option>
+                <S.Option onClick={() => {
+                  // deleteComment(comment.id)
+                  setDeleteCommentId(comment.id)
+                  setIsShowDeleteConfirm(true)
+                  setOpenMenuId(null)
+                  }}>
+                  삭제
+                </S.Option>
+              </S.MoreMenu>
+            )}
+          </S.Wrapper>
+          { modifyCommentId === comment.id ? (
+            <S.ModifyWrapper>
+              <S.Input
+                type="text"
+                maxLength={300}
+                value={modifyCommentContent}
+                onChange={(e) => setModifyCommentContent(e.target.value)}
+              />
+      
+              <S.ButtonContainer>
+                <S.CancelButton onClick={() => setModifyCommentId(null)}>취소</S.CancelButton>
+                <S.SaveButton onClick={() => {
+                  modifyComment(comment.id, modifyCommentContent);
+                  setModifyCommentId(null);
+                }}>저장</S.SaveButton>
+              </S.ButtonContainer>
+            </S.ModifyWrapper>
+            ) : (
+            <S.Content>{comment.commentContent}</S.Content>
+            )}
+          {/* 댓글 좋아요 버튼 */}
+          <CommentLikeButton
+            userId={currentUser.id}
+            commentId={comment.id}
+            isLiked={comment.isLiked}
+            commentLikeCount={comment.commentLikeCount}
+            setComments={setComments} />
+        </S.Comment>
+        ))
+      )}
+      {pageLength.length > 0 &&
+        <S.PagenationWrapper>
+          <S.PagenationIcon src='/assets/images/icon/left.png' onClick={minusLargeCursor}/>
+            {pageLength.map((datas, i) => (
+              i === largeCursor ?
+              datas.map((data, i) => (
+                data !== null?
+                <S.PagenationButton key={i} onClick={() => {setCursor((data + 1))}} $active={cursor === data + 1}>
+                {data + 1}
+                </S.PagenationButton> : ''
+              )) : ''
+            ))}
+          <S.PagenationIcon src='/assets/images/icon/right.png' onClick={plusLargeCursor}/>
+        </S.PagenationWrapper>
+        }
+      </S.CommentWrapper>
 
+      {/* 댓글 등록 confirm */}
+        {isShowConfirm && (
+          <ConfirmAlert src="/assets/images/icon/question.png"
+            message="댓글을 등록하시겠습니까?" 
+            handleOk={handleConfirmOk}
+            handleCancel={() => setIsShowConfirm(false)} />
+        )}
 
-        {/* 댓글 좋아요 버튼 */}
-        <CommentLikeButton
-          userId={currentUser.id}
-          commentId={comment.id}
-          isLiked={comment.isLiked}
-          commentLikeCount={comment.commentLikeCount}
-          setComments={setComments} />
-      </S.Comment>
-      ))
-    )}
+        {/* 댓글 등록 완료, 댓글 삭제 완료 alert */}
+        {isShowAlert && (
+          <InfoAlert src="/assets/images/icon/check.png"
+            message={alertMessage}
+            handleOk={handleCloseAlert}
+          />
+        )}
 
-    {pageLength.length > 0 &&
-      <S.PagenationWrapper>
-        <S.PagenationIcon src='/assets/images/icon/left.png' onClick={minusLargeCursor}/>
-          {pageLength.map((datas, i) => (
-            i === largeCursor ?
-            datas.map((data, i) => (
-              data !== null?
-              <S.PagenationButton key={i} onClick={() => {setCursor((data + 1))}} $active={cursor === data + 1}>
-              {data + 1}
-              </S.PagenationButton> : ''
-            )) : ''
-          ))}
-
-        <S.PagenationIcon src='/assets/images/icon/right.png' onClick={plusLargeCursor}/>
-      </S.PagenationWrapper>
-      }
-        </S.CommentWrapper>
+        {/* 댓글 삭제 confirm */}
+        {isShowDeleteConfirm && (
+          <ConfirmAlert src="/assets/images/icon/question.png"
+            message="댓글을 삭제하시겠습니까?"
+            handleOk={handleDeleteOk}
+            handleCancel={() => setIsShowDeleteConfirm(false)} />
+        )}
+    </div>
   );
 };
 

@@ -213,7 +213,6 @@ useEffect(() => {
                           </S.H8>
                         </S.DropdownButton>
                         <S.DropdownIcon src="/assets/images/icon/down.png" alt="드롭다운" />
-                      </S.DropdownWrapper>
                       {isDropdownOpen && (
                         <S.OptionList>
                           {categoryList.map((category) => (
@@ -223,6 +222,7 @@ useEffect(() => {
                           ))}
                         </S.OptionList>
                       )}
+                      </S.DropdownWrapper>
                       <S.Input type='hidden' value={selectedCategory}
                       {...register("artCategory", {
                         required : true,
