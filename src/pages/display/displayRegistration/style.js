@@ -237,19 +237,30 @@ S.DropdownWrapper = styled.div`
 S.DropdownButton = styled.div`
 `
 
+// S.OptionList = styled.div`
+//   position: absolute;
+//   /* left: 0; */
+//   top: 645px;
+//   left: 810px;
+//   /* right: auto; */
+//   width: 75px;
+//   border: solid 1px #6E7476;
+//   /* display: flex;
+//   flex-direction: column;
+//   align-items: center; */
+//   background-color: #FCFBFB;
+//   border-radius: 2px;
+// `
+
 S.OptionList = styled.div`
   position: absolute;
-  /* left: 0; */
-  top: 645px;
-  left: 810px;
-  /* right: auto; */
-  width: 75px;
+  top: 32px;
+  left: 0;
+  width: 75px; 
   border: solid 1px #6E7476;
-  /* display: flex;
-  flex-direction: column;
-  align-items: center; */
   background-color: #FCFBFB;
   border-radius: 2px;
+  z-index: 10;
 `
 
 S.Option = styled.div`
