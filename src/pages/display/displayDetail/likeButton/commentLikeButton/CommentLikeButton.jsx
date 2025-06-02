@@ -22,7 +22,7 @@ const CommentLikeButton = ({userId, commentId, isLiked, setIsLiked, commentLikeC
     })
       .then((res) => {
         if(!res.ok) {
-          return res.json().than((res) => {
+          return res.json().then((res) => {
             console.log(res)
           })
         }
@@ -31,17 +31,15 @@ const CommentLikeButton = ({userId, commentId, isLiked, setIsLiked, commentLikeC
         .then((res) => {
           // 이미 좋아요 클릭된 상태 => 좋아요 취소
           if(res.isLiked) {
-            fetch(`${process.env.REACT_APP_BACKEND_URL}/comment/likes/api/delete`, {
+            fetch(`${process.env.REACT_APP_BACKEND_URL}/comment/likes/api/delete/${commentId}?userId=${userId}`, {
               method: "DELETE",
-              headers: {
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify(commentLikeVO)
             })
+            // 좋아요 -1
             setComments(prev => prev.map(comment => comment.id === commentId ?
               { ...comment, isLiked : false, commentLikeCount : comment.commentLikeCount - 1 } : comment ))
             } else {
               // 좋아요 처음 => 좋아요 등록
+              // 좋아요 +1
               setComments(prev => prev.map(comment => comment.id === commentId ? 
                 { ...comment, isLiked : true, commentLikeCount : comment.commentLikeCount + 1 } : comment ))
               }

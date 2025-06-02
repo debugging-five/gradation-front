@@ -164,6 +164,9 @@ const shapeCSS = {
 }
 
 const Button = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   ${({$variant}) => variantCSS[$variant]}
   ${({$fontSize}) => fontSizeCSS[$fontSize]}
   ${({$fontWeight}) => fontWeightCSS[$fontWeight]}
