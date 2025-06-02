@@ -143,7 +143,7 @@ const ExhibitionRegistration = () => {
             ))}
           </S.UploadedFileList>
       </S.InputForm>
-      <S.PrimaryButton type="sumit">신청</S.PrimaryButton>
+      <S.PrimaryButton type="submit">신청</S.PrimaryButton>
     </S.FormWrapper>
   );
 };

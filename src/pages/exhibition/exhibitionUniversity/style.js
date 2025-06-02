@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { H10, H6, H8, H9 } from '../../../styles/common';
+import { H10, H4, H6, H8, H9 } from '../../../styles/common';
 import { SwiperSlide } from 'swiper/react';
+import { Link } from 'react-router-dom';
 const primary = "#EE3333";
 const gray900 = "#6E7476";
 const gray500 = "#C0C5C7";
@@ -12,7 +13,6 @@ const S = {};
 S.Map = styled.div`
   width: 1160px;
   height: 425px;
-  border: 1px solid ${black};
   margin-top: 84px;
   text-align: center;
 
@@ -163,17 +163,19 @@ S.RedBox = styled.div`
   top: 20px;
   width: 8px;
   height: 80px;
-  background-color: #EE3333;
+  background-color: ${primary};
   border-radius: 10px;
-  opacity: 0;
+  opacity: ${({ visible }) => (visible ? 1 : 0)};
   transition: opacity 0.2s ease;
   z-index: 1;
+
+  
 `;
 
 S.UniversityItem = styled.div`
   width: 456px;
   height: 128px;
-  margin-top: 12px;
+  margin-top: 16px;
   display: flex;
   position: relative;
   cursor: pointer;
@@ -270,14 +272,19 @@ S.LikeButton = styled.button`
   margin-left: auto;
   cursor: pointer;
 
+  background-color: ${({ $liked }) => ($liked ? primary : white)};
+  color: ${({ $liked }) => ($liked ? white : primary)};
   border: 1px solid ${primary};
-  background-color: ${({ liked }) => (liked ? primary : white)};
-  color: ${({ liked }) => (liked ? white : primary)};
 `;
 
+S.heartText = styled.p`
+  ${H8};
+`
+
 S.heart = styled.img`
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
+  margin-left: 4px;
 `
 
 S.SwiperSlide = styled(SwiperSlide)`
@@ -287,6 +294,41 @@ S.SwiperSlide = styled(SwiperSlide)`
   align-items: center;
   justify-content: center;
 `;
+
+
+
+S.ButtonWrap = styled.div`
+  display: flex;
+  gap: 80px;
+  margin: 100px auto 0;
+`;
+
+S.ContactButton = styled.button`
+  ${H4};
+  width: 300px;
+  height: 60px;
+  border: 1.5px solid ${primary};
+  color: ${primary};
+  border-radius: 3px;
+  background-color: ${white};
+  cursor: pointer;
+`;
+
+S.RegistrationButton = styled.button`
+  ${H4};
+  width: 300px;
+  height: 60px;
+  color: ${white};
+  border: 1.5px solid ${primary};
+  background-color: ${primary};
+  border-radius: 3px;
+  cursor: pointer;
+  transition: 0.2s;
+`;
+
+S.Link = styled(Link)`
+  text-decoration: none;
+`
 
 
 export default S;
