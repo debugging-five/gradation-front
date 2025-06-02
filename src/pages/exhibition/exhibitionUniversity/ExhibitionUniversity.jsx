@@ -5,28 +5,32 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination } from 'swiper/modules';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const ExhibitionUniversity = () => {
-  
-  // 주소
+  const navigate = useNavigate();
+  const { currentUser } = useSelector((state) => state.user);
   const [selectedAddress, setSelectedAddress] = useState("서울특별시 중구 세종대로 110");
-
   const [location, setLocation] = useState("전체지역")
   const [universityExhibitionStatus, setUniversityExhibitionStatus] = useState("예정전시")
   const [universityExhibitions, setUniversityExhibitions] = useState([]);
-  // 좋아요 누른 전시회 목록
-  // const [liked, setLiked] = useState([]);
-
   // 드롭다운
   const [locationDrop, setLocationDrop] = useState(false);
   const [exhibitionStatusDrop, setExhibitionStatusDrop] = useState(false);
-
   const [value, setValue] = useState("")
   const [keyword, setKeyword] = useState("")
-  
+  // 대학교 클릭 상태 추가
+  const [selectedUniversityId, setSelectedUniversityId] = useState(null);
   // 대학교 이미지
   const [universityImgs, setUniversityImgs] = useState([]);
 
+  useEffect(() => {
+    if (universityExhibitions.length > 0 && universityImgs.length === 0) {
+      const firstId = universityExhibitions[0].id;
+      handleUniversityClick(firstId);
+    }
+  }, [universityExhibitions]);
 
   const locationList = ["서울", "경기", "강원", "인천", "충남", "충북", "대전", "경북", "경남", "대구", "부산", "전북", "전남", "광주", "제주"]
   const handleLocation = (location) => { setLocation(location) }
@@ -40,11 +44,13 @@ const ExhibitionUniversity = () => {
   }
 
   useEffect(() => {
+    if(!currentUser) return;
 
     const params = {
       location : location,
       keyword : keyword,
       universityExhibitionStatus : universityExhibitionStatus,
+      userId: currentUser.id
     }
     
     const getExhibitions = async () => {
@@ -55,21 +61,21 @@ const ExhibitionUniversity = () => {
         },
         body : JSON.stringify(params)
       })
-      if(!response.ok) return console.error("getExhibitions error")
+      // if(!response.ok) return console.error("getExhibitions error")
       const datas = await response.json()
       setUniversityExhibitions(datas.university);
       return datas
     }
 
     getExhibitions()
-      .then(console.log)
-      .catch(console.error)
+      // .then(console.log)
+      // .catch(console.error)
 
-    console.log("location", location)
-    console.log("keyword", keyword)
-    console.log("universityExhibitionStatus", universityExhibitionStatus)
+    // console.log("location", location)
+    // console.log("keyword", keyword)
+    // console.log("universityExhibitionStatus", universityExhibitionStatus)
  
-  }, [location, keyword, universityExhibitionStatus])
+  }, [location, keyword, universityExhibitionStatus, currentUser])
 
   const formatDate = (dateStr) => {
     const date = new Date(dateStr);
@@ -87,16 +93,17 @@ const ExhibitionUniversity = () => {
       }
       const data = await response.json();
       setUniversityImgs(data.images);
+      setSelectedUniversityId(id);
 
       const selected = universityExhibitions.find(item => item.id === id);
       if (selected) {
-        console.log("선택된 주소:", selected.universityLocation);
+        // console.log("선택된 주소:", selected.universityLocation);
         setSelectedAddress(selected.universityLocation);
       }
 
-      console.log(data.message);
+      // console.log(data.message);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 
@@ -131,7 +138,7 @@ const ExhibitionUniversity = () => {
 
           map.setCenter(coords);
         } else {
-          console.log("주소 검색 실패:", selectedAddress);
+          // console.log("주소 검색 실패:", selectedAddress);
         }
       });
     };
@@ -152,12 +159,67 @@ const ExhibitionUniversity = () => {
     }
   }, [selectedAddress]);
 
+  // 좋아요 처리
+  const handleLikeToggle = async (e, exhibitionId) => {
+    e.stopPropagation();
+
+    if(!currentUser || !currentUser.id) {
+      navigate("/login");
+      return;
+    }
+
+    const body = {
+      userId: currentUser.id,
+      universityExhibitionId: exhibitionId,
+    };
+
+    try {
+      // 좋아요 여부 확인
+      const checkResponse = await fetch(`${process.env.REACT_APP_BACKEND_URL}/exhibitions/api/liked`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify(body),
+      });
+      const checkResult = await checkResponse.json();
+
+      // 좋아요면 삭제
+      if (checkResult.isLiked) {
+        await fetch(`${process.env.REACT_APP_BACKEND_URL}/exhibitions/api/university/unlike`, {
+          method: 'DELETE',
+          headers: { 
+            'Content-Type': 'application/json' 
+          },
+          body: JSON.stringify(body),
+        });
+      } else {
+        // 좋아요 등록
+        await fetch(`${process.env.REACT_APP_BACKEND_URL}/exhibitions/api/university/like`, {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json' 
+          },
+          body: JSON.stringify(body),
+        });
+      }
+
+      setUniversityExhibitions((prev) =>
+        prev.map((item) =>
+          item.id === exhibitionId ? { ...item, liked: !checkResult.isLiked } : item
+        )
+      );
+    } catch (error) {
+      // console.error("좋아요 처리 오류:", error);
+    }
+  };
+
 
   return (
     <div>
 
       <S.Map>
-        <div id="map">학교 지도</div>
+        <div id="map"></div>
       </S.Map>
 
       <S.Wrap>
@@ -214,8 +276,8 @@ const ExhibitionUniversity = () => {
             </S.TipWrap>
 
             {universityExhibitions.map((item, i) => (
-              <S.UniversityItem key={i} onClick={() => handleUniversityClick(item.id)}>
-                <S.RedBox className='redBox' />
+              <S.UniversityItem key={i} onClick={() => handleUniversityClick(item.id)} selected={item.id === selectedUniversityId}>
+                <S.RedBox $visible={item.id === selectedUniversityId} className='redBox' />
                 <S.UniversityLogoBox>
                   <S.UniversityLogo src={`http://localhost:10000/files/api/get/${item.universityLogoImgName}?filePath=${item.universityLogoImgPath}`} alt="uniLogo" />
                 </S.UniversityLogoBox>
@@ -237,9 +299,9 @@ const ExhibitionUniversity = () => {
                         <p>{item.universityExhibitionState}</p>
                       </S.VisitButton>
                     </a>
-                    <S.LikeButton>
-                      <p>좋아요</p>
-                      <S.heart src={`/assets/images/icon/heart.png`} alt="question" />
+                    <S.LikeButton $liked={item.liked} onClick={(e) => handleLikeToggle(e, item.id)}>
+                      <S.heartText>좋아요</S.heartText>
+                      <S.heart src={`/assets/images/icon/${item.liked? "heart_white.png" : "heart.png"}`} alt="heart" />
                     </S.LikeButton>
                   </S.ButtonWrapper>
                 </S.UniversityInfo>
@@ -276,12 +338,11 @@ const ExhibitionUniversity = () => {
           </S.ImgWrap>
         </S.ContentWrap>
 
-          
+        <S.ButtonWrap>
+          <S.Link to="/service-center/registration"><S.ContactButton>문의하기</S.ContactButton></S.Link>
+          <S.Link to="/exhibition/university/registration"><S.RegistrationButton>학교 등록 신청</S.RegistrationButton></S.Link>
+        </S.ButtonWrap>
       </S.Wrap>
-
-
-
-
 
       {/* <div className='category' style={{display: "flex", gap: "10px"}}>
         <div>
