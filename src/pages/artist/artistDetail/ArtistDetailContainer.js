@@ -42,20 +42,26 @@ const ArtistDetailContainer = () => {
         </S.Button>
 
         <S.SNSWrap>
-          <S.SnS>
-            <Link>
-            <S.SnSIcon src={`/assets/images/icon/artist-detail-instagram.png`} alt="message" />
-            <p>{artist.userInstagram}</p>
-            </Link>
-          </S.SnS>
-          <S.SnS>
-            <S.SnSIcon src={`/assets/images/icon/artist-detail-blog.png`} alt="message" />
-            <p>{artist.userBlog}</p>
-          </S.SnS>
-          <S.SnS>
-            <S.SnSIcon src={`/assets/images/icon/artist-detail-youtube.png`} alt="message" />
-            <p>{artist.userYoutube}</p>
-          </S.SnS>
+          {artist.userInstagram && (
+            <S.SnS as="a" href={`https://instagram.com/${artist.userInstagram}`} target="_blank" rel="noopener noreferrer">
+              <S.SnSIcon src={`/assets/images/icon/artist-detail-instagram.png`} alt="Instagram" />
+              <p>{artist.userInstagram}</p>
+            </S.SnS>
+          )}
+
+          {artist.userBlog && (
+            <S.SnS as="a" href={`https://blog.com/${artist.userBlog}`} target="_blank" rel="noopener noreferrer">
+              <S.SnSIcon src={`/assets/images/icon/artist-detail-blog.png`} alt="Blog" />
+              <p>{artist.userBlog}</p>
+            </S.SnS>
+          )}
+
+          {artist.userYoutube && (
+            <S.SnS as="a" href={`https://youtube.com/${artist.userYoutube}`} target="_blank" rel="noopener noreferrer">
+              <S.SnSIcon src={`/assets/images/icon/artist-detail-youtube.png`} alt="YouTube" />
+              <p>{artist.userYoutube}</p>
+            </S.SnS>
+          )}
         </S.SNSWrap>
       </S.Left>
 

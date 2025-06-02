@@ -51,6 +51,21 @@ S.Menu = styled.ul`
   gap: 60px;
 `;
 
+S.MenuItemWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 48px; // 드롭다운까지의 거리
+  }
+  
+`;
+
 S.MenuItem = styled.li`
   position: relative;
 
@@ -74,8 +89,6 @@ S.MenuLink = styled(Link)`
 `;
 
 S.Dropdown = styled.ul`
-  visibility: hidden;
-  opacity: 0;
   position: absolute;
   top: 48px;
   left: 50%;

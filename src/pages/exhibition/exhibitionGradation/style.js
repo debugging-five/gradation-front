@@ -1,7 +1,10 @@
 import styled from "styled-components";
-import { H1, H5, H8, H7, EN_H3, H3, EN_H4 } from "../../../styles/common";
+import { H1, H5, H8, H7, EN_H3, H3, EN_H4, H6 } from "../../../styles/common";
 import { SwiperSlide } from "swiper/react";
 import { NavLink } from "react-router-dom";
+const primary = "#EE3333";
+const gray900 = "#6E7476";
+const black = "#333333";
 
 const S = {};
 
@@ -77,17 +80,66 @@ S.InfoContainer = styled.div`
 `
 
 S.InfoWrap = styled.div`
+  position: relative;
+  width: 1124px;
   margin: 200px 0 56px 0;
-  gap: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  `
+`;
+
+S.ButtonArea = styled.div`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(312px);
+  display: flex;
+  gap: 20px;
+`;
+
+S.AddButton = styled.button`
+  ${H6};
+  width: 120px;
+  height: 45px;
+  background: white;
+  color: ${primary};
+  border: 1.5px solid  ${primary};
+  border-radius: 3px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${primary};
+    border: 1.5px solid  ${primary};
+    color: white;
+  }
+`;
+
+S.EditButton = styled.button`
+  ${H6};
+  width: 120px;
+  height: 45px;
+  background: white;
+  color: ${black};
+  border: 1.5px solid ${black};
+  border-radius: 3px;
+  cursor: pointer;
+`;
   
-  S.Infomation = styled.p`
-  ${EN_H3};
-  color: ${({ theme }) => theme.PALLETE.black};
-  `
+S.Input = styled.input`
+  ${H8};
+  color: ${gray900};
+  border: none;
+  border-bottom: 1px solid ${gray900};
+  background: transparent;
+  width: 100%;
+  outline: none;
+  margin-left: 28px;
+`;
+
+S.Infomation = styled.p`
+${EN_H3};
+color: ${({ theme }) => theme.PALLETE.black};
+`
 
 S.Guide = styled.p`
   ${H5}
@@ -95,12 +147,12 @@ S.Guide = styled.p`
 `
 
 S.Map = styled.div`
-  width:520px; 
+  width: 520px; 
   height: 520px;
 `
 
 S.MapWrap = styled.div`
-  width: 1124px;
+  width: 1160px;
   display: flex;
   gap: 160px;
 `
@@ -113,7 +165,7 @@ S.InfoDetail = styled.div`
 
 S.InfoName = styled.p`
   ${H7}
-  width: 80px;
+  width: 108px;
   margin-right: 12px;
 `
 S.bar = styled.p`
