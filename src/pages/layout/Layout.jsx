@@ -61,7 +61,7 @@ const Layout = () => {
       };
       getUserDatas()
     }
-  }, [jwtToken]); 
+  }, [token]); 
 
   const handleLogout = () => {
     // localStorage.clear();
