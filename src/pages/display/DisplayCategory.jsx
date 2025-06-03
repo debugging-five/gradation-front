@@ -118,6 +118,7 @@ const handleUpload = () => {
           onChange={onChangeValue}
           onKeyDown={handleSearch}
         />
+        <S.SearchIcon src="/assets/images/icon/search.png" alt="돋보기" />
       </S.InputWrapper>
 
       <S.Menu>
