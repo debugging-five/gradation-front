@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { H5, EN_H4, H7, H8, H10 } from '../../../styles/common'
+import { H5, EN_H4, H7, H8, H10, H6 } from '../../../styles/common'
 import PrimaryButton from '../../../components/button/PrimaryButton';
 import Flatpickr from "react-flatpickr";
 
@@ -34,6 +34,7 @@ S.InputForm = styled.div`
 
 S.InputButtonWrap = styled.div`
    margin : 48px 0 0 0;
+   position: relative;
    display : flex;
    align-items : center;
    justify-content : space-between;
@@ -42,6 +43,7 @@ S.InputButtonWrap = styled.div`
 
 S.InputText = styled.div`
    display : flex;
+   position: relative;
 `;
 
 S.Label = styled.label`
@@ -55,6 +57,8 @@ S.Label = styled.label`
 `
 
 S.Button = styled.button`
+   position: absolute;
+   right: 0;
    transform: translateY(-7px);
    width : 125px;
    height : 35px;
@@ -89,6 +93,7 @@ S.InputWrap = styled.div`
    display : flex;
    align-items : center;
    border-bottom : solid 1px ${({ theme }) => theme.PALLETE.gray[900]};
+   position: relative;
 `
 
 S.calendar = styled.img`
@@ -174,7 +179,8 @@ S.FileLabel = styled.label`
 `;
 
 S.PrimaryButton = styled(PrimaryButton)`
-   margin: 0 0 200px auto;
+   ${H5};
+   margin-left: auto;
 `;
 
 
@@ -198,6 +204,14 @@ S.DeleteButton = styled.button`
   color: ${({ theme }) => theme.PALLETE.primary.main};
   cursor: pointer;
 `;
+
+S.Warning = styled.p`
+  ${H10}
+  color: #E49804;
+  position: absolute;
+  top: 100%;
+  margin: 4px 0 0 160px;
+`
 
 
 export default S;
