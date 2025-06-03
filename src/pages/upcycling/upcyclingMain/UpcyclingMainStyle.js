@@ -1,7 +1,19 @@
 import * as CS from "../../../styles/common";
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 const S = {};
+
+const fadeInUp = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
 
 S.Container = styled.div`
   display: flex;
@@ -17,6 +29,7 @@ S.UpcyclingWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 350px;
 `;
 
 S.UpcycleTitle = styled.h1`
@@ -369,15 +382,29 @@ S.TimelineTitle = styled.h2`
 
 S.TimelineText = styled.h3`
   ${CS.H3};
-  overflow: hidden;
-  opacity: 0;
-  max-height: 0;
   margin-left: 30px;
-  transform: translateY(-10px);
-  transition: all 0.4s ease;
   margin-top: 30px;
   margin-bottom: 0;
+
+  ${({ $shouldAnimate, $delay }) =>
+    $shouldAnimate
+      ? css`
+          opacity: 0;
+          transform: translateY(10px);
+          animation: ${fadeInUp} 0.6s ease forwards;
+          animation-delay: ${$delay * 0.3}s;
+          animation-fill-mode: backwards;
+        `
+      : css`
+          opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
+          transform: ${({ $isOpen }) =>
+            $isOpen ? "translateY(0)" : "translateY(10px)"};
+          transition: opacity 0.4s ease, transform 0.4s ease;
+          transition-delay: ${$delay * 0.1}s;
+        `}
 `;
+
+
 
 S.Step = styled.div`
   display: flex;
@@ -392,26 +419,12 @@ S.Step = styled.div`
     top: 36px;
     left: 114px;
     width: 5px;
-    height: 0;
+    height: ${({ $isOpen, $isLast }) =>
+      $isLast ? "0" : $isOpen ? "calc(100% + 60px)" : "0"};
     background-color: #c0c5c7;
     z-index: 0;
     transition: height 1s ease;
-    opacity: ${({ isLast }) => (isLast ? 0 : 1)};
-  }
-
-  ${({ isLast }) =>
-    !isLast &&
-    css`
-      &:hover::before {
-        height: calc(100% + 60px);
-      }
-    `}
-
-  &:hover ${S.TimelineText} {
-    max-height: 500px;
-    opacity: 1;
-    margin-bottom: 8px;
-    transform: translateY(0);
+    opacity: ${({ $isLast }) => ($isLast ? 0 : 1)};
   }
 `;
 
@@ -457,5 +470,25 @@ S.InquiryButton = styled.button`
   background-color: #EE3333;
   color: #FBFCFC;
 `;
+
+S.CheckboxWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+  cursor: pointer;
+`;
+
+S.Checkbox = styled.img`
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+`;
+
+S.Terms = styled.span`
+  ${CS.H8}
+  color: ${({ checked }) => (checked ? "#333333" : "#C0C5C7")};
+  cursor: pointer;
+`;
+
 
 export default S;
