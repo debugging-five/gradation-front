@@ -63,6 +63,11 @@ const AuctionPayment = () => {
       const response = await fetch(`http://localhost:10000/auction/api/detail/${id}`)
       const auctionData = await response.json();
       const data = await auctionData.auction;
+      if (data === null) {
+        alert("잘못된 접근입니다!")
+        navigate("/auction", { replace : true })
+      }
+      
       setData(data);
       const isPaidResponse = await fetch(`http://localhost:10000/payments/api/payment/auction/${id}`)
       const isPaid = await isPaidResponse.json();
@@ -71,7 +76,7 @@ const AuctionPayment = () => {
     fetchData()
       .then((data) => {
         if(data) {
-          navigate("/auction", { replace : true})
+          navigate("/auction", { replace : true })
         }
       })
   }, [id])
@@ -120,7 +125,7 @@ const AuctionPayment = () => {
     }
   }, [])
   
-  if(data.argImgList && currentUser) {
+  if(data !== null && data.argImgList && currentUser) {
     
     if(userData !== null && userData.id !== 0){
       

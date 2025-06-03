@@ -131,21 +131,31 @@ S.SchoolSearchRow = styled.div`
 S.Input = styled.input`
   ${CS.H8}
   flex: 1;
-  padding: 10px;
   border: none;
   background: transparent;
+  margin-left: 50px;
+  margin-bottom: 4px;
   &:focus {
     outline: none;
   }
-  &:-webkit-autofill {
-    box-shadow: 0 0 0px 1000px #fff inset !important;
-    -webkit-box-shadow: 0 0 0px 1000px #fbfcfc inset !important;
-    -webkit-text-fill-color: #000 !important;
+`;
+
+S.InputEmail = styled.input`
+  ${CS.H8}
+  flex: 1;
+  border: none;
+  background: transparent;
+  margin-left: 45px;
+  margin-bottom: 4px;
+  &:focus {
+    outline: none;
   }
 `;
 
 S.SearchButton = styled.button`
-  padding: 10px 16px;
+  width: 100px;
+  height: 30px;
+  margin-left: -5px;
   background-color: #ee3333;
   color: #fbfcfc;
   font-size: 16px;
@@ -225,6 +235,7 @@ S.InputWrapper = styled.div`
   align-items: center;
   gap: 6px;
   border-bottom: 2px solid #000;
+  
   input {
     width: 30px;
     padding: 6px;
@@ -261,15 +272,16 @@ S.MaterialSection = styled.div`
 `;
 
 S.CheckboxGroup = styled.div`
+
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 24px;
   font-size: 14px;
   margin-top: 15px;
   label {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     line-height: 1.5;
     font-family: "Pretendard-Regular";
     cursor: pointer;
@@ -289,10 +301,9 @@ S.Textarea = styled.textarea`
   padding: 10px;
   font-size: 14px;
   border: 2px solid #cccccc;
-  border-radius: 2px;
   resize: none;
   margin-top: 15px;
-  color: #cccccc;
+  color: #C0C5C7;
   background-color: #fbfcfc;
 `;
 

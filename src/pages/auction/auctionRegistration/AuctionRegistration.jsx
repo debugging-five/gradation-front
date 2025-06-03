@@ -109,8 +109,7 @@ const AuctionExpectedModify = () => {
                 return res.json()
               })
               .then(data => {
-                console.log(auctionVO);
-                navigate(window.location.href = `/auction/expected/korean/detail/${data.status.id}`, { replace: true })
+                navigate(window.location.href = `/auction/expected/korean/detail/${data.request.id}`, { replace: true })
               })
               .catch(console.error)
           })}>

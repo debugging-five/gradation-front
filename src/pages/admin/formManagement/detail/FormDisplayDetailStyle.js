@@ -8,8 +8,6 @@ S.Container = styled.div`
   margin: 40px auto 0 auto;
   background: #FBFCFC;
   padding: 36px 48px 48px 48px;
-  border-radius: 10px;
-
   min-height: 700px;
 `;
 

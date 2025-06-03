@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import S from "./UpcyclingRegistrationStyle";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/light.css";
@@ -6,6 +6,31 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const UpcyclingRegistration = () => {
+  // useEffect로 페이지 진입할 때마다 체크
+useEffect(() => {
+  const token = localStorage.getItem("jwtToken");
+  if (!token) return;
+
+  fetch("http://localhost:10000/users/api/profile", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then(res => res.json())
+    .then(data => {
+      console.log("👉 profile API 응답", data);
+      const banStatus = Number(data.currentUser?.userBanOk);
+      if (banStatus === 2) {
+        alert("영구정지된 계정입니다. 서비스 이용이이 제한됩니다.");
+        localStorage.removeItem("jwtToken");
+        window.location.href = "/login";
+      }
+    })
+    .catch(err => console.error("유저 상태 확인 실패", err));
+}, []);
+
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     schoolName: "",
@@ -229,10 +254,10 @@ const UpcyclingRegistration = () => {
               <S.Label>
                 이메일<S.Required>*</S.Required>
               </S.Label>
-              <S.Input
+              <S.InputEmail
                 name="email"
                 type="email"
-                placeholder="이메일을 입력하세요"
+                placeholder=" 이메일을 입력하세요"
                 value={formData.email}
                 onChange={handleInputChange}
               />
