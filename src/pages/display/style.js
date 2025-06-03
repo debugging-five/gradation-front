@@ -78,6 +78,7 @@ S.CategoryWrapper = styled.div`
 S.InputWrapper = styled.div`
   display: flex;
   margin: 84px 0 0 0;
+  position: relative;
 `
 
 S.Input = styled.input`
@@ -88,13 +89,22 @@ S.Input = styled.input`
   margin-left: auto;
   background-color: #FBFCFC;
   outline: none;
-  padding: 0 0 0 9px;
   ${H10}
-
+  
   &::placeholder {
     ${H10}
     color: #6E7476;
+    width: 157px;
+    padding: 0 0 0 12px;
   }
+`
+
+S.SearchIcon = styled.img`
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  right: 12px;
+  top: 12px;
 `
 
 S.Upload = styled.div`

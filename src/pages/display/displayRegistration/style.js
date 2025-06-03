@@ -4,6 +4,10 @@ import Flatpickr from 'react-flatpickr';
 
 const S = {};
 
+S.Wrapper = styled.div`
+
+`
+
 S.Container = styled.div`
   background-color: #FBFCFC;
   margin: 70px 0 0 0;
@@ -21,7 +25,7 @@ S.ENH3 = styled.p`
 `
 
 S.FormWrapper = styled.div`
-  margin: 80px 0 60px 0;
+  margin: 80px 0 0 0;
 `
 
 S.Form = styled.div`
@@ -37,6 +41,7 @@ S.FileWrapper = styled.label`
   justify-content: center;
   align-items: center;
   position: relative;
+  cursor: pointer;
 `
 
 S.File = styled.input`
@@ -167,7 +172,7 @@ S.ButtonWrapper = styled.div`
   display: flex;
   gap: 20px;
   justify-content: flex-end;
-
+  margin: 90px 0 0 0;
 `
 
 S.CheckboxContainer = styled.div`
@@ -322,6 +327,16 @@ S.CloseIcon = styled.img`
   z-index: 100;
   top: 14px;
   right: 14px;
+`
+
+S.DescriptionWarning = styled.div`
+  ${H10}
+  color: #E49804;
+  margin: 4px 0 0 0;
+`
+
+S.DescriptionWrapper = styled.div`
+  height: 363px;
 `
 
 export default S;
