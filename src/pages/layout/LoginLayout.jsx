@@ -7,7 +7,8 @@ const LoginLayout = () => {
   const { isLogin } = useSelector((state) => state.user);
 
   // 토큰이 없을 때 강제로 로그인
-  if(localStorage.getItem("jwtToken") === null) {
+  const token = localStorage.getItem("jwtToken") || sessionStorage.getItem("jwtToken")
+  if(!token) {
     return <Navigate to="/login" replace={true} />
   }
   
