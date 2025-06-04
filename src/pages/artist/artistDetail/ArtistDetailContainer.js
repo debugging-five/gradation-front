@@ -56,7 +56,7 @@ const ArtistDetailContainer = () => {
           {artist.userInstagram && (
             <S.SnS as="a" href={`https://instagram.com/${artist.userInstagram}`} target="_blank" rel="noopener noreferrer">
               <S.SnSIcon src={`/assets/images/icon/artist-detail-instagram.png`} alt="Instagram" />
-              <S.SnSText>@{extractId(artist.userInstagram)}</S.SnSText>
+              <S.SnSText>{extractId(artist.userInstagram)}</S.SnSText>
             </S.SnS>
           )}
 

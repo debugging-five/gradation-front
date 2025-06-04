@@ -5,7 +5,7 @@ import S from './style';
 const ArtistListContainer = () => {
   const { category } = useParams();
   const { currentUser } = useSelector((state) => state.user);
-  const { artists, cursor, setCursor, largeCursor, pageLength, plusLargeCursor, minusLargeCursor } = useOutletContext();
+  const { artists, cursor, setCursor, largeCursor, pageLength, plusLargeCursor, minusLargeCursor, contents} = useOutletContext();
   const navigate = useNavigate();
 
   if (!artists || artists.length === 0) {
@@ -13,14 +13,16 @@ const ArtistListContainer = () => {
   }
 
   const myId = currentUser?.id;
+  
   const artistData = currentUser ? artists.find((artist) => artist.id === myId) : null;
   const myCard = currentUser && artistData
   ? { ...currentUser, ...artistData }
   : null;
   const userCards = artists.filter((artist) => artist.id !== myId);
 
-  // console.log("myprofile", myCard);
-  // console.log("artist", artists);
+  console.log("current", currentUser);
+  console.log("myprofile", myCard);
+  console.log("artist", artists);
 
   return (
     <S.Container>
@@ -58,7 +60,7 @@ const ArtistListContainer = () => {
                   ? `${process.env.REACT_APP_BACKEND_URL}/files/api/get/${artist.userBackgroundImgName}?filePath=${artist.userBackgroundImgPath}`
                   : `${process.env.REACT_APP_BACKEND_URL}/files/api/get/${artist.artImgName}?filePath=${artist.artImgPath}`
               }
-              alt="배경사진"
+              alt="배경 사진"
             />
             <S.ProfileImg src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${artist.userImgName}?filePath=${artist.userImgPath}`} alt={artist.userName} />
             <S.CardWrap>
@@ -70,7 +72,10 @@ const ArtistListContainer = () => {
       </S.ArtistWrap>
 
       <S.PagenationWrapper>
-        <S.PagenationIcon src='/assets/images/icon/left.png' onClick={minusLargeCursor}/>
+        {contents > 75 ? 
+          <S.PagenationIcon src='/assets/images/icon/left.png' onClick={minusLargeCursor}/>
+          : ""
+        }
           {pageLength.map((datas, i) => (
             i === largeCursor ?
             datas.map((data, i) => (
@@ -80,8 +85,10 @@ const ArtistListContainer = () => {
               </S.PagenationButton> : ''
             )) : ''
           ))}
-    
-        <S.PagenationIcon src='/assets/images/icon/right.png' onClick={plusLargeCursor}/>
+        {contents > 75 ?
+         <S.PagenationIcon src='/assets/images/icon/right.png' onClick={plusLargeCursor}/>
+          : ""
+        }
       </S.PagenationWrapper>
 
     </S.Container>
