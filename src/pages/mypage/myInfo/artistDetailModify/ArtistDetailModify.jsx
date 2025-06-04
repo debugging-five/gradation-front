@@ -226,7 +226,8 @@ const handleSubmit = () => {
     return `${yy}.${mm}.${dd}`;
   };
 
-   useEffect(() => {
+  // 작가 정보 불러오기 (소개, 분야, 이력 등)
+  useEffect(() => {
     if (!currentUser?.id) return;
 
     fetch(`http://localhost:10000/artists/api/detail/${currentUser.id}`)
@@ -241,7 +242,6 @@ const handleSubmit = () => {
         setUserYoutube(data.userYoutube || '');
         setUserBlog(data.userBlog || '');
 
-        // 작가 이력 추가
         if (data.historyList && Array.isArray(data.historyList)) {
           const historyItems = data.historyList.map((item) => ({
             id: item.id, 
@@ -251,15 +251,31 @@ const handleSubmit = () => {
           }));
           setHistories(historyItems);
         }
-        if (data.artImgList) {
-          setArtworks(data.artImgList);
-        }
       })
       .catch(err => {
         console.error('작가 상세 정보 불러오기 실패:', err);
       });
   }, [currentUser]);
-    const itemsPerPage = 9; // 한 페이지에 9개 (3줄 * 3개)
+
+  // 작품 불러오기
+  useEffect(() => {
+    if (!currentUser?.id) return;
+
+    fetch(`http://localhost:10000/artists/api/detail/${currentUser.id}/arts`)
+      .then(res => {
+        if (!res.ok) throw new Error('작품 목록 불러오기 실패');
+        return res.json();
+      })
+      .then(data => {
+        if (Array.isArray(data.arts)) {
+          setArtworks(data.arts);
+        }
+      })
+      .catch(err => {
+        console.error('작품 이미지 불러오기 실패:', err);
+      });
+  }, [currentUser]);
+    const itemsPerPage = 9; 
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -407,7 +423,6 @@ const handleSubmit = () => {
             return (
               <SA.ArtContainer key={realIdx}>
                 <S.ArtImage src={getImageUrl(art)} alt={art.artImgName} />
-
                 <SA.OverlayButton className="overlay-button">
                   <SA.ArtLabel>
                     <SA.ArtInput

@@ -75,8 +75,7 @@ const MyPaymentList = () => {
             <div>
               <div>
                 <SP.StatusDiv>
-                  <SP.Status>{payment.deliveryStatus || '배송준비'}</SP.Status>
-                  <SP.Day>{payment.estimatedArrival || '배송일 미정'}</SP.Day>
+                  <SP.Status>{payment.deliveryState || '배송준비'}</SP.Status>
                 </SP.StatusDiv>
               </div>
 
