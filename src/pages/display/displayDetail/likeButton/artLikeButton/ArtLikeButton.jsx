@@ -38,7 +38,7 @@ const ArtLikeButton = ({userId, artId, isLiked, setIsLiked, setPost}) => {
     .then((res) => {
       if(!res.ok) {
         return res.json().then((res) => {
-          console.log(res)
+          // console.log(res)
         })
       }
       return res.json()
@@ -66,7 +66,7 @@ const ArtLikeButton = ({userId, artId, isLiked, setIsLiked, setPost}) => {
       }
 
       useEffect(() => {
-        console.log("isLiked:", isLiked);
+        // console.log("isLiked", isLiked);
       }, [isLiked]);
 
 

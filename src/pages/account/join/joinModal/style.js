@@ -1,6 +1,7 @@
 // 회원가입 완료 modal
 import styled from 'styled-components'
 import { H2, H5} from '../../../../styles/common';
+import { Link } from 'react-router-dom';
 
 const S = {};
 
@@ -77,6 +78,11 @@ S.ButtonWrapper = styled.div`
   display: flex;
   gap: 20px;
   margin: 40px 0 0 0;
+`
+
+S.Link = styled(Link)`
+  text-decoration: none;
+  color: inherit;
 `
 
 export default S;

@@ -14,26 +14,28 @@ import "aos/dist/aos.css";
 
 const MainContainer = () => {
   const [artList, setArtList] = useState([]);
+  const categoryMap = new Map([
+  ["한국화", "korean"],
+  ["회화", "painting"],
+  ["건축", "architecture"],
+  ["조각", "sculpture"],
+  ["서예", "calligraphy"],
+  ["공예", "craft"]
+]);
 
   useEffect(() => {
     const fetchArts = async () => {
-      const response = await fetch('http://localhost:10000/displays/api/list/main', {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({})
-      });
-      console.log("qwer", response.status);
+      const response = await fetch('http://localhost:10000/displays/api/list/main');
+      // console.log("qwer", response.status);
       if (!response.ok) throw new Error('mainArtsList fetch Error');
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       setArtList(data.artListForMain);
       return data;
     };
     fetchArts()
       .then((res) => {
-        console.log(res)
+        // console.log(res)
       })
       .catch((error) => {
         console.error(error)
@@ -70,7 +72,7 @@ const MainContainer = () => {
                   // pauseOnMouseEnter: true,
                 }}
               >
-                {console.log("arts", artList)}
+                {/* {console.log("arts", artList)} */}
                 {artList.map((art, idx) => (
                   <S.SwiperSlide key={idx} >
                     <S.ImgWrap>
@@ -78,7 +80,7 @@ const MainContainer = () => {
                         src={`http://localhost:10000/files/api/get/${art.artImgName}?filePath=${art.artImgPath}`}
                         alt={art.artTitle}
                       />
-                      <NavLink to={`/display/${art.artCategory}/detail/${art.id}`}>
+                      <NavLink to={`/display/${categoryMap.get(art.artCategory)}/detail/${art.artPostId}`}>
                         <S.ArtInfo>
                           <S.ArtTitle>{art.artTitle}</S.ArtTitle>
                           <S.UserName>{art.userName}</S.UserName>
