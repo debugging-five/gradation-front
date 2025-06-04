@@ -18,8 +18,9 @@ const DisplayComments = ({postId, category}) => {
   const [deleteCommentId, setDeleteCommentId] = useState(null)
   const [modifyCommentContent, setModifyCommentContent] = useState("")
   const [openMenuId, setOpenMenuId] = useState(null)
-  const [pageLength, setPageLength] = useState([]);
-  const [largeCursor, setLargeCursor] = useState(0);
+  const [pageLength, setPageLength] = useState([])
+  const [largeCursor, setLargeCursor] = useState(0)
+  const [totalCount, setTotalCount] = useState(0)
   const navigate = useNavigate()
   // const { currentUser } = useSelector((state) => state.user);
 
@@ -27,7 +28,7 @@ const DisplayComments = ({postId, category}) => {
   const [isShowAlert, setIsShowAlert] = useState(false)
   const [alertMessage, setAlertMessage] = useState("")
   const [isShowDeleteConfirm, setIsShowDeleteConfirm] = useState(false)
-  const { isLogin, currentUser } = useSelector((state) => state.user);
+  const { isLogin, currentUser } = useSelector((state) => state.user)
   
   const handleCommentRegister = () => {
     if(!isLogin) {
@@ -122,7 +123,8 @@ const DisplayComments = ({postId, category}) => {
       })
       .then((res) => {
         if(res) {
-          setComments(res.commentList);
+          setComments(res.commentList)
+          setTotalCount(res.contents)
           // console.log("res", res)
           let pages = res.contents === 0 ? 0 : (res.contents % 10 === 0 ? res.contents / 10 - 1 : res.contents / 10)
           
@@ -359,7 +361,7 @@ const DisplayComments = ({postId, category}) => {
       )}
       {pageLength.length > 0 &&
         <S.PagenationWrapper>
-          {comments.length > 50 ? <S.PagenationIcon src='/assets/images/icon/left.png' onClick={minusLargeCursor}/> : ""}
+          {totalCount > 50 ? <S.PagenationIcon src='/assets/images/icon/left.png' onClick={minusLargeCursor}/> : ""}
             {pageLength.map((datas, i) => (
               i === largeCursor ?
               datas.map((data, i) => (
@@ -369,7 +371,7 @@ const DisplayComments = ({postId, category}) => {
                 </S.PagenationButton> : ''
               )) : ''
             ))}
-          {comments.length > 50 ? <S.PagenationIcon src='/assets/images/icon/right.png' onClick={plusLargeCursor}/> : ""}
+          {totalCount > 50 ? <S.PagenationIcon src='/assets/images/icon/right.png' onClick={plusLargeCursor}/> : ""}
         </S.PagenationWrapper>
         }
       </S.CommentWrapper>

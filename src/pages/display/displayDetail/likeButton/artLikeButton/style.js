@@ -23,28 +23,32 @@ S.ArtImg = styled.img`
   width: 558px;
 `
 
-S.ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin: 28px 0 0 0;
+// S.ButtonWrapper = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   gap: 20px;
+//   margin: 28px 0 0 0;
 
-  .button {
-    ${H5}
-    width: 210px;
-    height: 50px;
-    border-radius: 3px;
-    border: solid 1.5px #EE3333;
-  }
-`
+//   .button {
+//     ${H5}
+//     width: 210px;
+//     height: 50px;
+//     border-radius: 3px;
+//     border: solid 1.5px #EE3333;
+//   }
+// `
 
 S.LikeButton = styled.button`
+  ${H5}
+  width: 210px;
+  height: 50px;
+  border-radius: 3px;
+  border: solid 1.5px #EE3333;
+
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 4px;
-  /* color: #EE3333; */
-  /* background-color: #FBFCFC; */
   background-color: ${({ $isLiked }) => ($isLiked ? "#EE3333" : "#FBFCFC")};
   color: ${({ $isLiked }) => ($isLiked ? "#FBFCFC" : "#EE3333")};
 `

@@ -18,6 +18,7 @@ const DisplayListContainer = () => {
   const [isUpdate, setIsUpdate] = useState(false)
   const [pageLength, setPageLength] = useState([]);
   const [largeCursor, setLargeCursor] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
 
   const params = {
     order : order,
@@ -53,6 +54,7 @@ const DisplayListContainer = () => {
           setIsError(false)
           // setDisplay(res.posts)
           setDisplay(data.postList)
+          setTotalCount(data.contents)
           let pages = data.contents === 0? 0 : (data.contents % 15 === 0? data.contents / 15 - 1 : data.contents / 15)
 
 
@@ -129,7 +131,7 @@ const DisplayListContainer = () => {
           ))}
         </S.Wrapper>
           <S.PagenationWrapper>
-            {display.contetns > 75 ? <S.PagenationIcon src='/assets/images/icon/left.png' onClick={minusLargeCursor}/> : "" }
+            {totalCount > 75 ? <S.PagenationIcon src='/assets/images/icon/left.png' onClick={minusLargeCursor}/> : "" }
               {pageLength.map((datas, i) => (
                 i === largeCursor ?
                 datas.map((data, i) => (
@@ -139,7 +141,7 @@ const DisplayListContainer = () => {
                   </S.PagenationButton> : ''
                 )) : ''
               ))}
-            {display.contents > 75 ? <S.PagenationIcon src='/assets/images/icon/right.png' onClick={plusLargeCursor}/> : "" }
+            {totalCount > 75 ? <S.PagenationIcon src='/assets/images/icon/right.png' onClick={plusLargeCursor}/> : "" }
           </S.PagenationWrapper>
       </S.Container>
     );
