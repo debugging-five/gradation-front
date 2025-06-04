@@ -9,6 +9,7 @@ import { Navigation, Pagination } from 'swiper/modules';
 import { useNavigate } from 'react-router-dom';
 import DisplayRegistrationModal from './displayRegistrationModal/DisplayRegistrationModal';
 import dayjs from 'dayjs';
+import InfoAlert from '../alert/infoAlert/InfoAlert';
 
 const DisplayRegistration = () => {
   const { register, handleSubmit, setValue, formState: {isSubmitting, errors} } = useForm({mode: "onBlur"});
@@ -21,10 +22,21 @@ const DisplayRegistration = () => {
   const [width, setWidth] = useState("")
   const [height, setHeight] = useState("")
   const [depth, setDepth] = useState("")
-  const fileInputRef = useRef(null);
+  const [isShowAlert, setIsShowAlert] = useState(false)
+  const [alertMessage, setAlertMessage] = useState("")
+  const [isCancel, setIsCancel] = useState(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const navigate = useNavigate();
+
+  const handleCloseAlert = () => {
+    setIsShowAlert(false)
+
+    if (isCancel) {
+      navigate("/display/korean")
+      setIsCancel(false)
+    }
+  }
 
   useEffect(() => {
   const isAllFilled = width && height && depth;
@@ -55,16 +67,33 @@ useEffect(() => {
   };
 
   const handleCancel = () => {
-    navigate("/display/korean");
-    alert("등록을 취소하시겠습니까?")
-  }
+    // alert("등록을 취소하시겠습니까?")
+    // setAlertMessage("등록을 취소하시겠습니까?")
+    // setIsShowAlert(true)
+    // navigate("/display/korean");
+     setAlertMessage("등록을 취소하시겠습니까?");
+      setIsCancel(true); //
+      setIsShowAlert(true);
+    };
+
+
+  const handleNumberInput = (setter) => (e) => {
+    const value = e.target.value;
+    const regex = /^[0-9]*$/;
+    if (regex.test(value)) {
+      setter(value);
+    }
+  };
+
 
   return (
     <div>
       <form encType='multipart/form-data' autoComplete="off" onSubmit={handleSubmit(async (data) => {
         
-        if(!data.files || !data.files === 0) {
-          alert("첨부 파일을 선택하세요!")
+        if(!data.files || data.files.length === 0) {
+          // alert("첨부 파일을 선택하세요!")
+          setAlertMessage("첨부 파일을 선택하세요.")
+          setIsShowAlert(true)
           return
         }
         const {
@@ -110,7 +139,8 @@ useEffect(() => {
           console.log(artId)
           setIsModalOpen(true)
           if(!data.files) {
-            alert("첨부 파일을 선택하세요.")
+            // alert("첨부 파일을 선택하세요.")
+            setIsShowAlert(true)
             return;
           }
             const formData = new FormData();
@@ -265,13 +295,16 @@ useEffect(() => {
                         <S.H7>작품 규격<span>*</span></S.H7>
                         <S.SizeInputWrapper>
                           <S.SizeInput type='text' placeholder='가로(cm)' maxLength={6}
-                            value={width} onChange={(e) => setWidth(e.target.value)} />
+                            // value={width} onChange={(e) => setWidth(e.target.value)} />
+                            value={width} onChange={handleNumberInput(setWidth)} />
                           <span>X</span>
                           <S.SizeInput type='text' placeholder='세로(cm)' maxLength={6}
-                            value={height} onChange={(e) => setHeight(e.target.value)} />
+                            // value={height} onChange={(e) => setHeight(e.target.value)} />
+                            value={height} onChange={handleNumberInput(setHeight)} />
                           <span>X</span>
                           <S.SizeInput type='text' placeholder='높이(cm)' maxLength={6}
-                            value={depth} onChange={(e) => setDepth(e.target.value)} />
+                            // value={depth} onChange={(e) => setDepth(e.target.value)} />
+                            value={depth} onChange={handleNumberInput(setDepth)} />
                             {/* <input
                               type="hidden"
                               {...register("artSize", { required : true,})} /> */}
@@ -340,6 +373,13 @@ useEffect(() => {
             <PrimaryButton disabled={isSubmitting}>등록</PrimaryButton>
           </S.ButtonWrapper>
       </form>
+      {isShowAlert && (
+        <InfoAlert
+          src="/assets/images/icon/check.png" 
+          message={alertMessage}
+          handleOk={handleCloseAlert}
+        />
+      )}
       {isModalOpen && <DisplayRegistrationModal />}
     </div>
   );
