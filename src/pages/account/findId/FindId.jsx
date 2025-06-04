@@ -6,6 +6,7 @@ import UncheckedButton from '../../../components/button/UncheckedButton';
 import FindIdSuccessModal from './findIdModal/successModal/FindIdSuccessModal';
 import SocialModal from './findIdModal/socialModal/SocialModal';
 import NotFoundModal from './findIdModal/notFoundModal/NotFoundModal';
+import InfoAlert from '../../display/alert/infoAlert/InfoAlert';
 
 const FindId = () => {
 
@@ -29,6 +30,8 @@ const FindId = () => {
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isSocialModalOpen, setIsSocialModalOpen] = useState(false);
   const [isNotFoundModalOpen, setIsNotFoundModalOpen] = useState(false);
+  const [showAlert, setShowAlert] = useState(false)
+  const [alertMessage, setAlertMessage] = useState("")
 
   const isFindId = isValid && confirmVerificationCode === true;
 
@@ -37,6 +40,8 @@ const FindId = () => {
 const getVerificationCodeEmail = async () => {
   if(!userEmail) {
     // alert("이메일을 입력하세요.")
+    setAlertMessage("이메일을 입력하세요.")
+    setShowAlert(true)
     setVerificationMessage("필수 항목입니다.")
     return;
   }
@@ -66,6 +71,8 @@ const getVerificationCodeEmail = async () => {
     
     if(!code) {
       // alert("인증번호를 입력하세요.")
+      setAlertMessage("인증번호를 입력하세요.")
+      setShowAlert(true)
       setVerificationMessage("필수 항목입니다.")
       return;
     }
@@ -115,13 +122,17 @@ const getVerificationCodeEmail = async () => {
 
           // 이메일 인증
           if(!isSendVerificationCode) {
-            alert("이메일 인증을 진행해주세요.")
+            // alert("이메일 인증을 진행해주세요.")
+            setAlertMessage("이메일 인증을 진행해주세요.")
+            setShowAlert(true)
             return;
           }
 
           // 인증번호
           if(!confirmVerificationCode) {
-            alert("인증번호 확인은 필수입니다.")
+            // alert("인증번호 확인은 필수입니다.")
+            setAlertMessage("인증번호 확인은 필수입니다.")
+            setShowAlert(true)
             return;
           }
         
@@ -277,6 +288,15 @@ const getVerificationCodeEmail = async () => {
               </S.Wrapper>
             </S.Container>
           </form>
+
+          {showAlert && (
+            <InfoAlert
+              src="/assets/images/icon/check.png"
+              message={alertMessage}
+              handleOk={() => setShowAlert(false)}
+            />
+          )}
+
           {isSuccessModalOpen && <FindIdSuccessModal userId={foundId} userEmail={foundEmail} />}
           {isSocialModalOpen && <SocialModal />}
           {isNotFoundModalOpen && <NotFoundModal />}

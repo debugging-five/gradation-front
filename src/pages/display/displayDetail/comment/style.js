@@ -107,6 +107,12 @@ S.Name = styled.div`
   ${H6}
 `
 
+S.Time = styled.span`
+  margin-left: 8px;
+  color: #6E7476;
+  ${H8}
+`
+
 S.ArtistProfile = styled.div`
   ${H10}
   width: 32px;

@@ -89,13 +89,14 @@ S.Input = styled.input`
   margin-left: auto;
   background-color: #FBFCFC;
   outline: none;
+  padding: 0 0 0 12px;
   ${H10}
   
   &::placeholder {
     ${H10}
     color: #6E7476;
     width: 157px;
-    padding: 0 0 0 12px;
+    /* padding: 0 0 0 12px; */
   }
 `
 

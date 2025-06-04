@@ -13,8 +13,7 @@ S.Container = styled.div`
   z-index: 1;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding-top: 56px;
+  align-items: center;
 `
 
 S.Wrapper = styled.div`
