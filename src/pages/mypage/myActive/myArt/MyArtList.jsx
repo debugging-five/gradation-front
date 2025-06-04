@@ -69,7 +69,7 @@ const MyArtList = () => {
         )}
       </SA.ArtGrid>
 
-      {/* ✅ 페이지네이션 */}
+      {/* 페이지네이션 */}
       {totalPages > 1 && (
         <S.Pagination>
           {pageNumbers.map((number) => (

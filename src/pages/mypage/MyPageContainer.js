@@ -153,7 +153,6 @@ const MyPageContainer = () => {
 
         {isAdmin && (
           <>
-            <S.EndBar />
             <S.BarTitle>관리자</S.BarTitle>
             <S.BarContentWapper>
               <S.BarContent as={NavLink} to="admin/faq" end onClick={() => window.scrollTo(0, 0)}>

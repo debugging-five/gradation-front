@@ -40,6 +40,7 @@ export const Overlay = styled.div`
   color: white;
   font-size: 1.2rem;
   transition: opacity 0.3s ease;
+  text-align: center;
   ${ArtItem}:hover & {
     opacity: 1;
   }
