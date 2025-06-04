@@ -87,7 +87,19 @@ const MyAuctionList = () => {
           <S.ContentBox key={item.ID}>
             <S.Number>{indexOfFirstItem + index + 1}</S.Number>
             <S.Category>{item.artCategory}</S.Category>
-            <S.RedText>{item.auctionAttracted ? '낙찰' : '진행중'}</S.RedText>
+            <S.RedText status={
+              item.auctionAttracted
+                ? item.userId === userId
+                  ? 'win'
+                  : 'fail'
+                : 'progress'
+            }>
+              {item.auctionAttracted
+                ? item.userId === userId
+                  ? '낙찰'
+                  : '패찰'
+                : '진행중'}
+            </S.RedText>
             <S.TitleNavigate
               as={NavLink}
               to={`/auction/complete/${categoryMap[item.artCategory]}/detail/${item.id}`}

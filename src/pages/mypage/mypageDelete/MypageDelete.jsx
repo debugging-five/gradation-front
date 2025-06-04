@@ -10,7 +10,6 @@ const MypageDelete = () => {
   const [popupStep, setPopupStep] = useState(0); // 0: 없음, 1: 첫팝업, 2: 두번째, 3: 완료
   const navigate = useNavigate();
 
-  // 체크박스
   const toggleCheck = () => setChecked(!isChecked);
   const checkedUrl = "/assets/images/icon/checked-on.png";
   const uncheckedUrl = "/assets/images/icon/checked-off.png";
@@ -21,7 +20,7 @@ const MypageDelete = () => {
 
   const handleDeleteClick = () => {
     if (isChecked) {
-      setPopupStep(1); // 첫 팝업 오픈
+      setPopupStep(1);
     } else {
       alert('탈퇴 동의에 체크해 주세요.');
     }
@@ -37,7 +36,7 @@ const MypageDelete = () => {
     .then((res) => {
       if (res.ok) {
         console.log('탈퇴 성공');
-        setPopupStep(3); // 탈퇴 완료 팝업 표시
+        setPopupStep(3); 
       } else {
         alert('탈퇴 실패');
       }

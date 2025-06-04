@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import S from './style';
 import { Swiper } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
@@ -24,6 +24,51 @@ const ExhibitionGradation = () => {
     gradationExhibitionRealAddress: '',
     gradationExhibitionDate: ''
   });
+  const [photoForms, setPhotoForms] = useState([]);
+  const handleAddPhotoForm = () => {
+    if (photoForms.length >= 3) {
+        return;
+    }
+    const newId = Date.now(); // 임시 id 생성
+    setPhotoForms([...photoForms, { id: newId, preview: null, file: null, existing: false }]);
+  };
+console.log(form.preview);
+  useEffect(() => {
+  if (edit && info?.images) {
+    const initialForms = info.images.map(img => ({
+      id: img.id,
+      preview: `http://localhost:10000/files/api/get/${img.gradationExhibitionImgName}?filePath=${img.gradationExhibitionImgPath}`,
+      file: null,
+      existing: true,
+    }));
+    setPhotoForms(initialForms);
+  }
+}, [edit, info]);
+
+  const handleRemovePhotoForm = (id) => {
+    setPhotoForms((prevForms) => prevForms.filter((form) => form.id !== id));
+  };
+  const fileInputRefs = useRef({});
+  const handleFileClick = (id) => {
+    if (fileInputRefs.current[id]) {
+      fileInputRefs.current[id].click();
+    }
+  };
+  const handleFileChange = (e, id) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onloadend = () => {
+    setPhotoForms((prevForms) =>
+      prevForms.map((form) =>
+        form.id === id ? { ...form, preview: reader.result, file } : form
+      )
+    );
+  };
+  reader.readAsDataURL(file);
+};
+
 
   useEffect(() => {
     if (edit && info?.gradation) {
@@ -223,14 +268,73 @@ const ExhibitionGradation = () => {
         </S.gradationContainer>
       </S.InfoContainer>
 
-      {info?.images?.length > 0 && (
+      
         <S.GradationImgWrap>
           <S.GradationInfo>공간 정보</S.GradationInfo>
-          {info.images.map((img, idx) => (
-            <S.GradationImg key={idx} src={`http://localhost:10000/files/api/get/${img.gradationExhibitionImgName}?filePath=${img.gradationExhibitionImgPath}`} alt={`${idx}번째 전시회 이미지`} />
-          ))}
+          <S.AddFormDiv>
+            {edit && (
+              <S.AddForm onClick={handleAddPhotoForm}>사진폼 추가</S.AddForm>
+            )}
+          </S.AddFormDiv>
+
+          <S.AddPhoto onClick={() => edit && document.getElementById('file-input-single').click()}>
+            {form.preview ? (
+              <S.ImgFile src={form.preview} alt="preview" />
+            ) : (
+              <>
+                <S.AddImg src="/assets/images/icon/add.png" alt="add" />
+                첨부파일 업로드
+              </>
+            )}
+          </S.AddPhoto>
+
+          <input
+            type="file"
+            id="file-input-single"
+            accept="image/*"
+            style={{ display: 'none' }}
+            onChange={(e) => {
+              const file = e.target.files[0];
+              if (!file) return;
+              const reader = new FileReader();
+              reader.onloadend = () => {
+                setForm((prev) => ({ ...prev, preview: reader.result, file }));
+              };
+              reader.readAsDataURL(file);
+            }}
+          />
         </S.GradationImgWrap>
-      )}
+      
+      <S.UploadDiv>
+      {photoForms.map((form) => (
+        <div key={form.id}>
+          <S.AddFormDiv>
+            {edit && (
+              <S.AddForm onClick={() => handleRemovePhotoForm(form.id)}>사진폼 삭제</S.AddForm>
+            )}
+          </S.AddFormDiv>
+
+          <S.AddPhoto onClick={() => edit && document.getElementById(`file-input-${form.id}`).click()}>
+            {form.preview ? (
+              <S.ImgFile src={form.preview} alt="preview" />
+            ) : (
+              <>
+                <S.AddImg src="/assets/images/icon/add.png" alt="add" />
+                첨부파일 업로드
+              </>
+            )}
+          </S.AddPhoto>
+
+          <input
+            type="file"
+            id={`file-input-${form.id}`}
+            accept="image/*"
+            style={{ display: 'none' }}
+            onChange={(e) => handleFileChange(e, form.id)}
+          />
+        </div>
+      ))}
+    </S.UploadDiv>
     </div>
   );
 };

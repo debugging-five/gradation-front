@@ -233,12 +233,48 @@ S.GradationImgWrap = styled.div`
 
 S.GradationInfo = styled.p`
   ${H3}
-  margin-bottom: 60px;
+`
+S.AddForm = styled.button`
+  border: solid 1px;
+  width: 120px;
+  height: 45px;
+  ${H6}
+  background-color: transparent;
+  margin-top: 52px;
+`
+S.AddFormDiv = styled.div`
+  padding: 0 0 24px 640px;
 `
 
 S.GradationImg = styled.img`
   width: 100%;
   height: 480px;
+`
+S.UploadDiv = styled.div`
+  width: 760px;
+  margin: 1px auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+S.AddPhoto = styled.div`
+  width: 760px;
+  height: 480px;
+  background-color: #D9D9D9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 32px;
+`
+S.AddImg = styled.img`
+  width: 36px;
+  height: 36px;
+`
+S.ImgFile = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 `
 
 export default S;

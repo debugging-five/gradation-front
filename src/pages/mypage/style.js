@@ -157,11 +157,10 @@ export const Emptybox = styled.div`
   text-align: center;
 `;
 export const RedText = styled.div`
-width: 120px;
-text-align: center;
-color: red;
+  width: 120px;
+  text-align: center;
+  color: ${props => props.status === 'fail' ? 'gray' : 'red'};
 `;
-
 
 
 export const TitleNavigate = styled(NavLink)`
