@@ -15,6 +15,8 @@ const ArtistContainer = () => {
   const [cursor, setCursor] = useState(1);
   const [pageLength, setPageLength] = useState([]);
   const [largeCursor, setLargeCursor] = useState(0);
+  const [contents, setContents] = useState(0);
+  
 
   const onChangeValue = (e) => { 
     setValue(e.target.value) 
@@ -49,6 +51,7 @@ const ArtistContainer = () => {
         setIsLoading(false)
         setIsError(false)
         setArtists(data.posts);
+        setContents(data.contents);
         let pages = data.contents === 0? 0 : (data.contents % 15 === 0? data.contents / 15 - 1 : data.contents / 15)
 
         const result = [];
@@ -75,7 +78,7 @@ const ArtistContainer = () => {
       })
   }, [keyword, category, cursor, order])
 
-    const minusLargeCursor = () => {
+  const minusLargeCursor = () => {
     if (largeCursor !== 0) {
       let value = largeCursor - 1
       setLargeCursor(value);
@@ -91,7 +94,7 @@ const ArtistContainer = () => {
 
   return (
     <S.Container>
-      <S.Link to="/display">
+      <S.Link to="/artist/korean">
         <S.EN_H2>artist</S.EN_H2>
       </S.Link>
       <Outlet context={{
@@ -104,7 +107,8 @@ const ArtistContainer = () => {
         artists, setArtists, 
         largeCursor, setLargeCursor, 
         pageLength, setPageLength,
-        isLoading, 
+        isLoading,
+        contents
       }}/>
     </S.Container>
   );

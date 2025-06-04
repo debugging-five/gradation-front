@@ -5,7 +5,7 @@ const primary = "#EE3333";
 const gray900 = "#6E7476";
 const gray500 = "#C0C5C7";
 const black = "#333333";
-const white = "#FFFFFF"
+const white = "#FBFCFC"
 
 const S = {};
 
@@ -181,12 +181,16 @@ S.Content = styled.div`
 `
 S.H2 = styled.p`
   ${H2}
-  color: #FBFCFC;
-  `
+  font-size: 16px;
+  font-weight: 300;
+  color: ${white};
+`
 
 S.H4 = styled.p`
   ${H4}
-  color: #FBFCFC;
+  font-size: 24px;
+  font-weight: 200;
+  color: ${white};
 `
 
 export default S;
