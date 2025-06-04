@@ -6,7 +6,7 @@ const ArtistCategory = () => {
   const navigate = useNavigate();
   const context = useOutletContext();
 
-  const { artists, keyword, setKeyword, cursor, setCursor, category, order, setOrder, onKeyDownKeyword, onChangeValue } = context;
+  const { artists, keyword, setKeyword, cursor, setCursor, category, order, setOrder, onKeyDownKeyword, onChangeValue, contents } = context;
   const [value, setValue] = useState("")
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   
