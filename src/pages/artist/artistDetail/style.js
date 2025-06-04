@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { EN_H2, EN_H6, H1, H10, H2, H3, H4, H6, H7, H8 } from '../../../styles/common';
+import { EN_H2, EN_H6, H1, H10, H2, H3, H4, H5, H6, H7, H8 } from '../../../styles/common';
 import { Link } from 'react-router-dom';
 const primary = "#EE3333";
 const gray900 = "#6E7476";
@@ -52,6 +52,7 @@ S.Button = styled.button`
   gap: 4px;
 
   p {
+    ${H5};
     color: ${white};
   }
 `;
@@ -81,18 +82,32 @@ S.SnS = styled.div`
   }
 `
 
+S.SnSText = styled.p`
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: break-all;
+`
+
 S.SnSIcon = styled.img`
   width: 20px;
   height: 20px;
 
 `
 
+S.Link = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+`
+
 S.Right = styled.div`
 `;
 
 S.Container = styled.div`
-
 `
+
 S.WriterIntroWrap = styled.div`
   width: 840px;
   margin-bottom: 60px;
