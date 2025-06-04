@@ -2,9 +2,9 @@ import React from 'react';
 import S from './style';
 import { Link } from 'react-router-dom';
 
-const Footer = () => {
+const Footer = ({ref}) => {
   return (
-    <S.FooterWrap>
+    <S.FooterWrap ref={ref}>
       <S.FooterInner>
         <S.FooterMenu>
           <S.Menu>

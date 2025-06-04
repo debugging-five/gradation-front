@@ -113,6 +113,14 @@ S.ImgWrap = styled.div`
   width: 558px;
   height: 444px;
   margin-left: auto;
+
+  & .swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background-color: white !important;
+  }
+
+  & .swiper-button-next, .swiper-button-prev {
+    color: white !important;
+  }
 `
 
 S.ContentWrap = styled.div`

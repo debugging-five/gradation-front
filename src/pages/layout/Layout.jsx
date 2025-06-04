@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import Header from './header/Header';
 import Footer from './footer/Footer';
@@ -13,7 +13,6 @@ const Layout = () => {
 
   const [searchParams] = useSearchParams();
   const jwtToken = searchParams.get("jwtToken");
-  // const localJwtToken = localStorage.getItem("jwtToken") 
   const token = localStorage.getItem("jwtToken") || sessionStorage.getItem("jwtToken")
 
   const navigate = useNavigate();
@@ -26,12 +25,13 @@ const Layout = () => {
     }
 
     if(token){
-      // console.log("localJwtToken", localJwtToken)
+      console.log("token", token)
       const getUserDatas = async () => {
         const response = await fetch("http://localhost:10000/users/api/profile", {
           method: "POST",
           headers: {
-            "Authorization": `Bearer ${token}`
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
           }
         })
 
@@ -51,9 +51,11 @@ const Layout = () => {
           // sessionStorage.clear();
           localStorage.removeItem("jwtToken")
           sessionStorage.removeItem("jwtToken")
+          return;
         }
         
         const datas = await response.json();
+        console.log(datas)
         // console.log("datas", datas)
         // console.log(datas.currentUser)
         dispatch(setUser(datas.currentUser));
@@ -61,7 +63,7 @@ const Layout = () => {
       };
       getUserDatas()
     }
-  }, [token]); 
+  }, [dispatch]); 
 
   const handleLogout = () => {
     // localStorage.clear();
@@ -81,13 +83,16 @@ const Layout = () => {
     window.location.href = "http://localhost:10000/logout";
   };
 
+  
+  const footerRef = useRef(null);
+
   return (
     <S.Container>
       <Header onLogout={handleLogout} />
       <S.Main>
-        <Outlet />
+        <Outlet context={{ footerRef }}/>
       </S.Main>
-      <Footer />
+      <Footer ref={footerRef}/>
     </S.Container>
   );
 };

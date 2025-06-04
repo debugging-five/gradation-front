@@ -35,6 +35,17 @@ S.VerticalSwiper = styled(Swiper)`
     display: flex;
     flex-direction: column;
   }
+
+  & .swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets {
+  
+    right: 60px;
+
+    & .swiper-pagination-bullet-active {
+      background-color: white !important;
+    }
+  }
+
+
 `;
 
 S.MainSection = styled.div`
