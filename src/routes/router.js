@@ -60,10 +60,7 @@ import AdminQnaDetail from "../pages/admin/qna/AdminQnaDetail";
 import AdminQnaCompletedList from "../pages/admin/qna/AdminQnaCompletedList";
 import AdminQnaAnswer from "../pages/admin/qna/AdminQnaAnswer";
 import FormManagementLayout from "../pages/admin/formManagement/FormManagementLayout";
-import FormManagementApprovedList from "../pages/admin/formManagement/list/FormManagementApprovedList";
 import FormManagementDetailContainer from "../pages/admin/formManagement/detail/FormManagementDetailContainer";
-import FormManageMentCategory from "../pages/admin/formManagement/FormManageMentCategory";
-import UserManagementContainer from "../pages/admin/userManagement/UserManagementContainer";
 import UserInfoContainer from "../pages/mypage/myInfo/userInfo/UserInfoContainer";
 import ChangePasswordContainer from "../pages/mypage/myInfo/changePassword/ChangePasswordContainer";
 import AuctionLayout from "../pages/auction/AuctionLayout";
@@ -97,6 +94,10 @@ import NewPassword from "../pages/account/newPassword/NewPassword";
 import MainContainer from "../pages/main/MainContainer";
 import MainLayout from "../pages/layout/MainLayout";
 import DisplayDetail from "../pages/display/displayDetail/DisplayDetail";
+import UserManagementLayout from "../pages/admin/userManagement/UserManagementLayout";
+import FormManagementPendingList from "../pages/admin/formManagement/list/FormManagementPendingList";
+import FormManagementCompletedList from "../pages/admin/formManagement/list/FormManagementCompletedList";
+import UserManagementPendingList from "../pages/admin/userManagement/UserManagementPendingList";
 
 const router = createBrowserRouter([
   {
@@ -508,20 +509,18 @@ const router = createBrowserRouter([
                         element: <FormManagementLayout />,
                         children: [
                           {
-                            path: "",
-                            element: <FormManageMentCategory />,
-                            children: [
-                              {
-                                path: ":type",
-                                element: <FormManagementApprovedList />,
-                              },
-                            ],
+                            path: "pending/:category",
+                            element: <FormManagementPendingList />,
                           },
+                          {
+                            path: "completed/:category",
+                            element: <FormManagementCompletedList />,
+                          },
+                          {
+                            path: "detail/:category/:id",
+                            element: <FormManagementDetailContainer />,
+                          }
                         ],
-                      },
-                      {
-                        path: "form-management/detail/:type/:id",
-                        element: <FormManagementDetailContainer />,
                       },
                       {
                         path: "qna/detail/:id",
@@ -529,7 +528,13 @@ const router = createBrowserRouter([
                       },
                       {
                         path: "user-management",
-                        element: <UserManagementContainer />,
+                        element: <UserManagementLayout />,
+                        children: [
+                          {
+                            path: "",
+                            element: <UserManagementPendingList />,
+                          },
+                        ],
                       },
                     ],
                   },

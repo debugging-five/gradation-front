@@ -129,7 +129,7 @@ const DisplayListContainer = () => {
           ))}
         </S.Wrapper>
           <S.PagenationWrapper>
-            <S.PagenationIcon src='/assets/images/icon/left.png' onClick={minusLargeCursor}/>
+            {display.contetns > 75 ? <S.PagenationIcon src='/assets/images/icon/left.png' onClick={minusLargeCursor}/> : "" }
               {pageLength.map((datas, i) => (
                 i === largeCursor ?
                 datas.map((data, i) => (
@@ -139,8 +139,7 @@ const DisplayListContainer = () => {
                   </S.PagenationButton> : ''
                 )) : ''
               ))}
-        
-            <S.PagenationIcon src='/assets/images/icon/right.png' onClick={plusLargeCursor}/>
+            {display.contents > 75 ? <S.PagenationIcon src='/assets/images/icon/right.png' onClick={plusLargeCursor}/> : "" }
           </S.PagenationWrapper>
       </S.Container>
     );

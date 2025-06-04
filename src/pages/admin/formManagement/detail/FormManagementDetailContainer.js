@@ -1,44 +1,24 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import FormDisplayDetail from './FormDisplayDetail';
-import FormExhibitionDetail from './FormExhibitionDetail';
-import FormUniversityDetail from './FormUniversityDetail';
-import FormUpcyclingDetail from './FormUpcyclingDetail';
+import React from "react";
+import { useParams } from "react-router-dom";
+import FormDisplayDetail from "./FormDisplayDetail"
+import FormExhibitionDetail from "./FormExhibitionDetail";
+import FormUpcyclingDetail from "./FormUpcyclingDetail";
+import FormUniversityDetail from "./FormUniversityDetail";
 
 const FormManagementDetailContainer = () => {
-  
-  // "display", "exhibition", "university", "upcycling"
-  const {type, id} = useParams();
-
-  console.log(type)
-  console.log(id)
-
-  const [formData, setFormData] = useState({}) 
-
-  // useEffect(() => {
-  //   const getDatas = async () => {
-  //     const response = await fetch(`/${type}s/api/${type}/${id}`)
-  //     const datas = await response.json()
-  //     return datas
-  //   }
-
-  //   getDatas().then(setFormData).catch(console.error)
-  // }, [])
-
-  return (
-    <div>
-      컨테이너
-      <div>
-        이름 : 연락처 뭐시기 스타일
-      </div>
-      <div>
-        {type === "display" && <FormDisplayDetail formData={formData} />}
-        {type === "exhibition" && <FormExhibitionDetail formData={formData} />}
-        {type === "university" && <FormUniversityDetail formData={formData} />}
-        {type === "upcycling" && <FormUpcyclingDetail formData={formData} />}
-      </div>
-    </div>
-  );
+  const { category, id } = useParams ();
+    switch (category) {
+        case "display":
+        return <FormDisplayDetail id={id} />;
+      case "exhibition":
+        return <FormExhibitionDetail id={id} />;
+      case "university":
+        return <FormUniversityDetail id={id} />;
+      case "upcycling":
+        return <FormUpcyclingDetail id={id} />;
+      default:
+        return <div>잘못된 접근입니다.</div>;
+  }
 };
 
 export default FormManagementDetailContainer;

@@ -5,6 +5,9 @@ import S from './style';
 import { useCookies } from 'react-cookie';
 
 const Login = () => {
+    useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const { register, handleSubmit, setValue, trigger, formState: {isSubmitting, errors, isValid}} = useForm({mode : "onBlur"});
   

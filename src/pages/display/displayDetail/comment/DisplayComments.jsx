@@ -21,14 +21,24 @@ const DisplayComments = ({postId, category}) => {
   const [pageLength, setPageLength] = useState([]);
   const [largeCursor, setLargeCursor] = useState(0);
   const navigate = useNavigate()
-  const { currentUser } = useSelector((state) => state.user);
+  // const { currentUser } = useSelector((state) => state.user);
 
   const [isShowConfirm, setIsShowConfirm] = useState(false)
   const [isShowAlert, setIsShowAlert] = useState(false)
   const [alertMessage, setAlertMessage] = useState("")
   const [isShowDeleteConfirm, setIsShowDeleteConfirm] = useState(false)
+  const { isLogin, currentUser } = useSelector((state) => state.user);
   
   const handleCommentRegister = () => {
+    if(!isLogin) {
+      navigate("/login")
+      return
+    } 
+    if(text.trim() === "") {
+      setAlertMessage("댓글을 작성하세요.")
+      setIsShowAlert(true)
+      return
+    }
     setIsShowConfirm(true)
   }
 
@@ -50,6 +60,13 @@ const DisplayComments = ({postId, category}) => {
     setIsShowAlert(true)
   }
 
+//   const handleUpload = () => {
+//   if(!isLogin) {
+//     navigate("/login")
+//   } 
+// }
+
+
 
   const commentDropdownOption = {
     date : "등록순",
@@ -61,6 +78,22 @@ const DisplayComments = ({postId, category}) => {
     setCommentOrder(order)
     setIsDropdownOpen(false)
   }
+
+  const formatRelativeTime = (timeString) => {
+  const now = new Date();
+  const writtenTime = new Date(timeString)
+  const diffMs = now - writtenTime
+
+  const diffSeconds = Math.floor(diffMs / 1000)
+  const diffMinutes = Math.floor(diffSeconds / 60)
+  const diffHours = Math.floor(diffMinutes / 60)
+  const diffDays = Math.floor(diffHours / 24)
+
+  if (diffSeconds < 60) return `${diffSeconds}초 전`
+  if (diffMinutes < 60) return `${diffMinutes}분 전`
+  if (diffHours < 24) return `${diffHours}시간 전`
+  return `${diffDays}일 전`
+}
 
   // 댓글 리스트
     const getCommentsList = async () => {
@@ -252,6 +285,7 @@ const DisplayComments = ({postId, category}) => {
         ) : (
           comments.map((comment) => (
         <S.Comment key={comment.id}>
+          
           <S.Wrapper>
             {comment.userWriterStatus === "승인" ? (
               <S.Link to={`/artist/${category}/detail/${comment.userId}`}>
@@ -259,12 +293,14 @@ const DisplayComments = ({postId, category}) => {
                   <S.Profile src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${comment.userImgName}?filePath=${comment.userImgPath}`} alt="프로필" />
                   <S.Name>{comment.userName}</S.Name>
                   <S.ArtistProfile>작가</S.ArtistProfile>
+                  <S.Time>{formatRelativeTime(comment.commentDate)}</S.Time>
                 </S.ProfileWrapper>
               </S.Link>
             ) : (
               <S.ProfileWrapper>
                 <S.Profile src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${comment.userImgName}?filePath=${comment.userImgPath}`} alt="프로필" />
                 <S.Name>{comment.userName}</S.Name>
+                <S.Time>{formatRelativeTime(comment.commentDate)}</S.Time>
               </S.ProfileWrapper>
             )}
             {currentUser.id === comment.userId && (
@@ -323,7 +359,7 @@ const DisplayComments = ({postId, category}) => {
       )}
       {pageLength.length > 0 &&
         <S.PagenationWrapper>
-          <S.PagenationIcon src='/assets/images/icon/left.png' onClick={minusLargeCursor}/>
+          {comments.length > 50 ? <S.PagenationIcon src='/assets/images/icon/left.png' onClick={minusLargeCursor}/> : ""}
             {pageLength.map((datas, i) => (
               i === largeCursor ?
               datas.map((data, i) => (
@@ -333,7 +369,7 @@ const DisplayComments = ({postId, category}) => {
                 </S.PagenationButton> : ''
               )) : ''
             ))}
-          <S.PagenationIcon src='/assets/images/icon/right.png' onClick={plusLargeCursor}/>
+          {comments.length > 50 ? <S.PagenationIcon src='/assets/images/icon/right.png' onClick={plusLargeCursor}/> : ""}
         </S.PagenationWrapper>
         }
       </S.CommentWrapper>
