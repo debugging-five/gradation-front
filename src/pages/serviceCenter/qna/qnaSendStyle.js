@@ -98,7 +98,7 @@
         color: red;
         cursor: pointer;
         border: none;
-        background-color: white;
+        background-color: transparent;
     `;
     export const ErrorMessege = styled.p`
         color: #E49804;

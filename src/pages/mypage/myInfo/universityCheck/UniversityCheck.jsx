@@ -82,7 +82,7 @@ const UniversityCheck = () => {
 
       <SU.Box>
         <S.OneLine>
-          <S.TitleBox>학교</S.TitleBox>
+          <S.TitleBox>학교 <S.Important>*</S.Important></S.TitleBox>
           <S.InputBox 
             placeholder="학교를 입력하세요." 
             value={university} 
@@ -97,7 +97,7 @@ const UniversityCheck = () => {
 
       <SU.Box>
         <S.OneLine>
-          <S.TitleBox>학과</S.TitleBox>
+          <S.TitleBox>학과 <S.Important>*</S.Important></S.TitleBox>
           <S.InputBox placeholder="학과를 입력하세요." 
             value={major} 
             onChange={(e) => {
@@ -111,7 +111,7 @@ const UniversityCheck = () => {
 
       <S.OneLine>
         <SU.AddBox>
-          <S.TitleBox>첨부파일</S.TitleBox>
+          <S.TitleBox>첨부파일 <S.Important>*</S.Important></S.TitleBox>
           <SU.AddButton onClick={() => fileInputRef.current.click()}>파일첨부</SU.AddButton>
           <input type="file" accept="image/*" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileChange} />
           {selectedFile ? (

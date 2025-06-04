@@ -26,6 +26,7 @@ export const EndBar = styled.p`
   width: 800px;
   border-bottom: solid 1px;
   margin-top: 7px;
+  color: #333333;
 `;
 
 // 한줄로 처리할 때
@@ -115,6 +116,19 @@ export const ContentBox = styled.div`
   border-bottom: solid 1px;
   width: 800px;
   gap: 10px;
+
+  /* a 태그 스타일 초기화 */
+  color: inherit;
+  text-decoration: none;
+
+  /* ContentBox가 Link일 경우에도 글씨 스타일 유지 */
+  &:link,
+  &:visited,
+  &:hover,
+  &:active {
+    color: inherit;
+    text-decoration: none;
+  }
 `;
 // 번호 
 export const Number = styled.div`
@@ -316,45 +330,51 @@ export const PopUpOverlay = styled.div`
     z-index: 1000; /* 최상단 */
 `;
 export const PopUp = styled.div`
-    width: 400px;
-    height: 200px;
-    background-color: white;
-    transform: translateY(-200px); /* 위로 50px 올림 */
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5); // 팝업 상자 자체의 그림자
+    background-color: #FBFCFC;
+    border: solid 1px #EE3333;
+    border-radius: 1.2px;
+    width: 320px;
+    height: 164px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+
+    /* 가운데 정렬 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 `;
 export const PopUpContent = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: solid 1px red;
     border-radius: 2px;
     padding: 24px;
     background-color: white;
 `;
 export const PopUpIcon = styled.img`
-    width: 48px;
-    height: 48px;
+    width: 32px;
+    height: 32px;
 `;
 export const PopUpText = styled.div`
     font-size: 16px;
-    padding: 20px 0 32px;
+    padding: 16px 0 24px;
 `;
 export const PopUpButtonDiv = styled.div`
     display: flex;
     gap: 10px;
 `;
 export const PopUpButtonW = styled.button`
-    width: 75px;
-    height: 35px;
+    width: 60px;
+    height: 24px;
     color: red;
     background-color: white;
     border: solid 1px red;
     border-radius: 2px;
 `;
 export const PopUpButtonR = styled.button`
-    width: 75px;
-    height: 35px;
+    width: 60px;
+    height: 24px;
     color: white;
     background-color: red;
     border: solid 1px red;
@@ -448,3 +468,29 @@ export const PageButton = styled.span`
   margin: 0 0.5rem;
   cursor: pointer;
 `; 
+
+export const InputContent = styled.textarea`
+    margin-top: 7px;
+    width: 800px;
+    height: 320px;
+    padding: 12px;
+    resize: none;
+    font-size: 16px;
+    line-height: 1.5;
+    box-sizing: border-box;
+    font-family: inherit;
+    color: #333333;
+
+    /* 포커스 시 스타일 변형 방지 */
+    border: 1px solid #333333; /* 원하는 기본 테두리 */
+    outline: none;
+
+    &:focus {
+        border: 1px solid #333333; /* 포커스돼도 테두리 그대로 */
+        outline: none;
+    }
+`;
+export const NoneText = styled.p`
+    padding: 20px 0;
+    text-align: center;
+`;

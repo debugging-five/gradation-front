@@ -170,7 +170,7 @@ const MyPaymentList = () => {
               </SP.OneLine>
               <SP.OneLine>
                 <SP.BigPopUpCost>총 상품가격</SP.BigPopUpCost>
-                <SP.BigPopUpCost>{selectedPayment.paymentAmount?.toLocaleString() || ''} 원</SP.BigPopUpCost>
+                <SP.BigPopUpCost>{selectedPayment.paymentAmount?.toLocaleString() || '0'} 원</SP.BigPopUpCost>
               </SP.OneLine>
             </SP.BigPopUpTextDiv>
           </SP.BigPopUp>

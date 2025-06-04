@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import * as S from '../../style';
+import { Link } from 'react-router-dom';
 
 const Comment = () => {
   const currentUser = useSelector(state => state.user.currentUser);
@@ -33,7 +34,6 @@ const Comment = () => {
     fetchComments();
   }, [currentUser]);
 
-  // 페이징 처리
   const totalPages = Math.ceil(comments.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -46,29 +46,30 @@ const Comment = () => {
       <S.Wrapper>
         {/* 리스트 헤더 */}
         <S.ListHeader>
-          <S.Number>번호</S.Number>
-          <S.Category>작품명</S.Category>
+          <S.NumberBold>번호</S.NumberBold>
+          <S.CategoryBold>작품명</S.CategoryBold>
           <S.Emptybox></S.Emptybox>
           <S.Title>내 댓글</S.Title>
-          <S.Emptybox>작성일</S.Emptybox>
+          <S.EmptyboxBold>작성일</S.EmptyboxBold>
         </S.ListHeader>
 
         {/* 댓글 목록 */}
         {currentItems.length > 0 ? (
-          currentItems.map((comment, idx) => (
-            <S.ContentBox key={comment.id || idx}>
-              <S.Number>{indexOfFirstItem + idx + 1}</S.Number>
-              <S.Category>{comment.artTitle || '작품명 없음'}</S.Category>
-              <S.Emptybox></S.Emptybox>
-              <S.TitleNavigate to={`/display/${categoryMap[comment.artCategory]}/detail/${comment.artId}`}>
-                <S.Content>{comment.commentContent || '댓글 내용 없음'}</S.Content>
-              </S.TitleNavigate>
-              <S.Emptybox>{new Date(comment.commentDate || '-').toLocaleDateString('ko-KR')}</S.Emptybox>
-            </S.ContentBox>
-          ))
-        ) : (
-          <div style={{ padding: "1rem", textAlign: "center" }}>작성한 댓글이 없습니다.</div>
-        )}
+  currentItems.map((comment, idx) => {
+    const linkTo = `/display/${categoryMap[comment.artCategory]}/detail/${comment.artPostId}`;
+    return (
+      <S.ContentBox as={Link} to={linkTo} key={comment.id || idx}>
+        <S.Number>{indexOfFirstItem + idx + 1}</S.Number>
+        <S.Category>{comment.artTitle || '작품명 없음'}</S.Category>
+        <S.Emptybox></S.Emptybox>
+        <S.Content>{comment.commentContent || '댓글 내용 없음'}</S.Content>
+        <S.Emptybox>{new Date(comment.commentDate || '-').toLocaleDateString('ko-KR')}</S.Emptybox>
+      </S.ContentBox>
+    );
+  })
+) : (
+  <div style={{ padding: "1rem", textAlign: "center" }}>작성한 댓글이 없습니다.</div>
+)}
 
         {/* 페이지네이션 */}
         {totalPages > 1 && (
