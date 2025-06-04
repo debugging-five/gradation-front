@@ -20,7 +20,7 @@ S.MyCard = styled.div`
   border-radius: 10px;
   background-size: cover;
   background-position: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   cursor: pointer;
 `;
 
@@ -32,7 +32,7 @@ S.ArtistCard = styled.div`
   background-size: cover;
   background-position: center;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   cursor: pointer;
 `;
 
@@ -85,5 +85,34 @@ S.Line = styled.hr`
   width: 100%;
   color: 1px solid ${gray900};
 `;
+
+// 페이지네이션
+S.PagenationWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin: 160px 0 0 0;
+`
+
+S.PagenationButton = styled.div`
+  width: 9px;
+  height: 20px;
+  color: ${(props) => (props.$active ? '#FF3333' : '#6E7476')};
+  cursor: pointer;
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+
+  &:hover {
+    color: #333333;
+  }
+`
+
+S.PagenationIcon = styled.img`
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+`
 
 export default S;

@@ -61,27 +61,29 @@ S.Bar = styled.p`
 S.InputWrapper = styled.div`
   display: flex;
   margin: 84px 0 0 0;
+  position: relative;
 `
 
 S.Input = styled.input`
   width: 200px;
   height: 32px;
   border: solid 1px #6E7476;
-  border-radius: 3px;
+  border-radius: 1px;
   margin-left: auto;
   background-color: #FBFCFC;
   outline: none;
-  padding: 0 0 0 9px;
   ${H10}
+  padding: 0 0 0 12px;    
 
   &::placeholder {
     ${H10}
     color: #6E7476;
+    width: 157px;
   }
 `
 
 S.Menu = styled.div`
-  margin: 20px 0 0 auto;
+  margin: 20px 0 40px auto;
   width: 1160px;
   position: relative;
 `
@@ -115,15 +117,17 @@ S.Dropdown = styled.div`
   background-color: #FBFCFC;
   border-radius: 2px;
   z-index: 100; 
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #6E7476;
 
   :hover {
-    background-color: #EE3333;
-    color: #FBFCFC;
+    /* background-color: #EE3333; */
+    color: ${primary};
   }
 `
 
 S.Option = styled.div`
-  border: 1px solid #6E7476;
   width: 75px;
   height: 35px;
   ${H8}
@@ -131,7 +135,14 @@ S.Option = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+`
 
+S.SearchIcon = styled.img`
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  right: 12px;
+  top: 12px;
 `
 
 

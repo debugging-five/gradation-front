@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 
 const Header = ({ onLogout }) => {
   const { currentUser, isLogin } = useSelector((state) => state.user);
+  const [ latestPastId, setLatestPastId ] = useState();
 
   // 스크롤
   const [showHeader, setShowHeader] = useState(true);
@@ -37,6 +38,17 @@ const Header = ({ onLogout }) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const fetchLatestPastExhibition = async () => {
+      const res = await fetch('http://localhost:10000/exhibitions/api/gradation/past');
+      const data = await res.json();
+      if (data?.exhibitions?.length > 0) {
+        setLatestPastId(data.exhibitions[0].id);
+      }
+    };
+    fetchLatestPastExhibition();
+  }, []);
+  
 
   return (
     <S.Header className={showHeader ? "show" : "hide"}>
@@ -89,13 +101,14 @@ const Header = ({ onLogout }) => {
             <S.MenuItem>
               <S.MenuLink to="/exhibition/gradation">exhibition</S.MenuLink>
             </S.MenuItem>
-            {openMenu === 2 && (
-              <S.Dropdown>
-                <li><S.DropdownLink to="/exhibition/gradation">그라데이션 전시회</S.DropdownLink></li>
-                <li><S.DropdownLink to="/exhibition/university">대학교 전시회</S.DropdownLink></li>
-                <li><S.DropdownLink to="/exhibition/university/registration">학교 신청</S.DropdownLink></li>
-              </S.Dropdown>
-            )}
+              {openMenu === 2 && (
+                <S.Dropdown>
+                  <li><S.DropdownLink to="/exhibition/gradation">그라데이션 전시회</S.DropdownLink></li>
+                  <li><S.DropdownLink to={`/exhibition/gradation/past/${latestPastId}`} $sub>지난 전시회</S.DropdownLink></li>
+                  <li><S.DropdownLink to="/exhibition/university">대학교 전시회</S.DropdownLink></li>
+                  <li><S.DropdownLink to="/exhibition/university/registration">학교 신청</S.DropdownLink></li>
+                </S.Dropdown>
+              )}
           </S.MenuItemWrapper>
 
           <S.MenuItemWrapper
