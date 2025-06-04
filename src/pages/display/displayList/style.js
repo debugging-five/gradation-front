@@ -24,6 +24,12 @@ S.Display = styled(Link)`
   height: 300px;
   text-decoration: none;
   color: inherit;
+  
+  border-width: 4px;
+  border: 4px solid transparent;
+  border-image: linear-gradient(135deg, rgba(255, 254, 248, .8) 0%, rgba(255, 255, 255, .5) 20%, rgba(255, 255, 255, .8) 50%, rgba(200, 200, 200, .8) 100%) 1;
+  box-shadow: -4px 10px 5px rgba(0, 0, 0, 0.1);
+  background-color: #111;
 
   img {
     width: 100%;

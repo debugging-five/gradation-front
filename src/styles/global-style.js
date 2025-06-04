@@ -90,16 +90,13 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
     color: #333333;
     font-family: 'Pretendard', sans-serif !important;
-    
+    line-height: 1.3;
     background-color : #FBFCFC;
+    overflow-x: hidden;
   }
 
   .sub {
     font-family: 'SUIT', sans-serif !important;
-  }
-
-  body {
-    line-height: 1.3;
   }
 
   button {

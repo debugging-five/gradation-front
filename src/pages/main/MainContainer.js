@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import S from './style';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Mousewheel, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/pagination';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useOutletContext } from 'react-router-dom';
 
 // aos
 import AOS from "aos";
 import "aos/dist/aos.css";
+import useFooterObserver from '../../hooks/swiper/useFooterObserver';
 
 
 const MainContainer = () => {
@@ -22,6 +23,12 @@ const MainContainer = () => {
   ["서예", "calligraphy"],
   ["공예", "craft"]
 ]);
+
+
+  const { footerRef } = useOutletContext();
+  const swiperRef = useRef(null);
+
+  useFooterObserver(footerRef, swiperRef);
 
   useEffect(() => {
     const fetchArts = async () => {
@@ -47,9 +54,58 @@ const MainContainer = () => {
       // .catch((error) => console.error(error));
   }, []);
 
+ useEffect(() => {
+  const swiper = swiperRef.current?.swiper;
+  if (!swiper) return;
+
+  let canScroll = false;
+  let scrolled = false;
+
+  const handleTransitionEnd = () => {
+    if (swiper.activeIndex === swiper.slides.length - 1) {
+      canScroll = true;
+    }
+  };
+
+    const handleWheel = (e) => {
+      const isLast = swiper.activeIndex === swiper.slides.length - 1;
+
+      if (isLast && e.deltaY > 0 && canScroll && !scrolled) {
+        e.preventDefault();
+        scrolled = true;
+        swiper.mousewheel.disable();
+
+        setTimeout(() => {
+          requestAnimationFrame(() => {
+            window.scrollBy({ top: 100, behavior: 'smooth' });
+          });
+        }, 100);
+      }
+    };
+
+    swiper.on('slideChangeTransitionEnd', handleTransitionEnd);
+    swiper.on('slideChangeTransitionStart', () => {
+      canScroll = false;
+      scrolled = false;
+    });
+
+    const container = swiper.el;
+    container.addEventListener('wheel', handleWheel, { passive: false });
+
+    return () => {
+      swiper.off('slideChangeTransitionEnd', handleTransitionEnd);
+      swiper.off('slideChangeTransitionStart', () => {
+        canScroll = false;
+        scrolled = false;
+      });
+      container.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
+
   return (
     <>
       <S.VerticalSwiper 
+        ref={swiperRef}
         className='vertical-swiper'
         direction="vertical"
         slidesPerView={1}

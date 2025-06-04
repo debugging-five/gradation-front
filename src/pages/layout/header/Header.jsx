@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 const Header = ({ onLogout }) => {
   const { currentUser, isLogin } = useSelector((state) => state.user);
   const [ latestPastId, setLatestPastId ] = useState();
-
+  
   // 스크롤
   const [showHeader, setShowHeader] = useState(true);
   const [showBellDropdown, setShowBellDropdown] = useState(false)
@@ -178,7 +178,7 @@ const Header = ({ onLogout }) => {
               onMouseLeave={() => setOpenMenu(null)}
             >
               <S.SignInWrap>
-                <span className="sign-in">{currentUser.userNickName || currentUser.userName}님</span>
+                <span className="sign-in">{currentUser?.userNickName || currentUser?.userName}님</span>
                 {openMenu === 4 && (
                   <S.Dropdown>
                     <li><S.DropdownLink to="/mypage">마이페이지</S.DropdownLink></li>
