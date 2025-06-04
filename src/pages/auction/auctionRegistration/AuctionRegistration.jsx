@@ -5,6 +5,7 @@ import S from './style';
 import Flatpickr from "react-flatpickr";
 import dayjs from 'dayjs';
 import { Controller, useForm } from 'react-hook-form';
+import InfoAlert from '../../../modules/alert/infoAlert/InfoAlert';
 
 const AuctionExpectedModify = () => {
   let { id } = useParams();
@@ -15,6 +16,13 @@ const AuctionExpectedModify = () => {
   const [auctionVO, setAuctionVO] = useState({});
   const [back, setBack] = useState(false);
   const [imageData, setImageData] = useState({});
+  const pricePattern = /^[0-9]+$/;
+  const [isShowConfirm, setIsShowConfirm] = useState(false)
+  const [isShowAlert, setIsShowAlert] = useState(false)
+  const [isShowAlertAuction, setIsShowAlertAuction] = useState(false)
+  const [alertMessage, setAlertMessage] = useState("")
+  const [isShowLoginAlert, setIsShowLoginAlert] = useState(false)
+  const [auctionId, setAuctionId] = useState(0);
   
   const [inputMinWidth, setInputMinWidth] = useState("160px")
   const [inputMaxWidth, setInputMaxWidth] = useState("160px")
@@ -35,7 +43,7 @@ const AuctionExpectedModify = () => {
       });
       
       if (isExist || auctionData.artLikeCount < 50 || auctionData.userId !== currentUser.id) {
-        alert("등록 권한이 없습니다")
+        alert("잘못된 접근입니다")
         navigate("/auction");
         return
       }
@@ -50,7 +58,7 @@ const AuctionExpectedModify = () => {
 
   const goBack = () => {
     setBack(true)
-    navigate(`/display/korean/detail/${id}`, { replace: true })
+    navigate(`/mypage/my-art/available-auction-art-list`, { replace: true })
     return
   }
 
@@ -83,6 +91,18 @@ const AuctionExpectedModify = () => {
 
           <form onSubmit={handleSubmit(async (auctionData) => {
             if(back) return
+
+            if (!pricePattern.test(auctionData.auctionEstimatedMinPrice) || !pricePattern.test(auctionData.auctionEstimatedMaxPrice) || !pricePattern.test(auctionData.auctionStartPrice)) {
+              setAlertMessage("숫자만 입력해주세요.")
+              setIsShowAlert(true)
+              return
+            }
+
+            if(auctionData.auctionStartPrice > 1000000000000) {
+              setAlertMessage("사이트 정책에 위반되는 금액입니다")
+              setIsShowAlert(true)
+              return
+            }
             
             setAuctionVO({
               auctionStartDate: auctionData.auctionStartDate ? auctionData.auctionStartDate : null,
@@ -90,7 +110,7 @@ const AuctionExpectedModify = () => {
               auctionEstimatedMaxPrice: auctionData.auctionEstimatedMaxPrice,
               auctionStartPrice: auctionData.auctionStartPrice
             });
-            
+
             await fetch("http://localhost:10000/auction/api/registration", {
               method : "POST",
               headers : {
@@ -104,12 +124,12 @@ const AuctionExpectedModify = () => {
                   alert(response.message);
                   return
                 }
-                alert("등록에 성공하셨습니다");
-                
                 return res.json()
               })
               .then(data => {
-                navigate(window.location.href = `/auction/expected/korean/detail/${data.request.id}`, { replace: true })
+                setAlertMessage(data.message)
+                setAuctionId(data.request.id)
+                setIsShowAlertAuction(true)
               })
               .catch(console.error)
           })}>
@@ -375,6 +395,14 @@ const AuctionExpectedModify = () => {
           </form>
         </S.InfoDiv>
       </S.ContentWrap>
+      {isShowAlert && (
+        <InfoAlert src="/assets/images/icon/check.png"
+          message={alertMessage} handleOk={() => setIsShowAlert(false)} />
+      )}
+      {isShowAlertAuction && (
+        <InfoAlert src="/assets/images/icon/check.png"
+          message={alertMessage} handleOk={() => navigate(`/auction/expected/korean/detail/${auctionId}`, { replace: true })} />
+      )}
     </S.Container>
   );
 };

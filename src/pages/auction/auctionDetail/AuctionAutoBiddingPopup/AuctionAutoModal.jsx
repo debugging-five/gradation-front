@@ -5,6 +5,9 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import getLatestPrice from '../_function/getLatePrice';
 import AuctionBiddingPopupTime from '../AuctionBiddingPopup/AuctionBiddingPopupTime';
 import AuctionBiddingPopupPrice from '../AuctionBiddingPopup/AuctionBiddingPopupPrice';
+import { useState } from 'react';
+import InfoAlert from '../../alert/infoAlert/InfoAlert';
+import ConfirmAlert from '../../alert/confirmAlert/ConfirmAlert';
 
 const AuctionAutoModal = ({
   id, auction, setOpenAutoBidding, auctionStartDate, auctionEndDate, auctionBidDate,
@@ -15,12 +18,18 @@ const AuctionAutoModal = ({
   const { register, handleSubmit, getValues, formState: {isSubmitting, isSubmitted, errors}} = useForm({mode:"onChange"});
   const navigate = useNavigate();
   const pricePattern = /^[0-9]+$/;
+  const [isShowConfirm, setIsShowConfirm] = useState(false)
+  const [isShowAlert, setIsShowAlert] = useState(false)
+  const [isShowAlertClose, setIsShowAlertClose] = useState(false)
+  const [alertMessage, setAlertMessage] = useState("")
   
+  const handleConfirmOk = () => {
+    navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`)
+  }
+
   if(!isLogin) {
     return <Navigate to={"/login"} />
   }
-  console.log(auction);
-  
 
   return (
     <S.PopupBody>
@@ -71,23 +80,36 @@ const AuctionAutoModal = ({
               const currentUserId = price.userId;
               const latestUserId = latestPrice.price.userId;
 
+              if (!pricePattern.test(formDatas.biddingPrice)) {
+                setAlertMessage("숫자만 입력해주세요.")
+		            setIsShowAlert(true)
+                return
+              }
+
               if(latestUserId) {
                 if(currentUserId !== latestUserId) {
-                  alert("응찰가 변동으로 인한 응찰 실패\n다시 응찰 하시겠습니까?");
-                  navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`)
+                  setIsShowConfirm(true)
                   return
                 }
               }
 
               if(formDatas.price < (price.auctionBiddingMinimumPrice || Math.ceil(auction?.auctionStartPrice * 1.1 / 1000) * 1000)){
-                alert("응찰가는 반드시\n최소 응찰가 이상이어야 합니다.");
+                setAlertMessage("응찰가는 반드시 최소 응찰가 이상이어야 합니다.")
+		            setIsShowAlert(true)
+                setIsPriceUpdate(!isPriceUpdate)
+                return
+              }
+
+              if(formDatas.biddingPrice > 1000000000000) {
+                setAlertMessage("사이트 정책에 위반되는 금액입니다")
+		            setIsShowAlert(true)
                 setIsPriceUpdate(!isPriceUpdate)
                 return
               }
 
               if(latestUserId === myId || currentUserId === myId){
-                alert("이미 입찰 하셨습니다.");
-                setOpenAutoBidding(false)
+                setAlertMessage("이미 입찰 하셨습니다")
+		            setIsShowAlertClose(true)
                 setIsPriceUpdate(!isPriceUpdate)
                 return
               }
@@ -112,9 +134,9 @@ const AuctionAutoModal = ({
                       alert(res.message)
                     })
                   }
-                  alert("응찰에 성공하셨습니다");
-                  setOpenAutoBidding(false)
-                  setIsPriceUpdate(!isPriceUpdate) // 가격 반영
+                  setAlertMessage("응찰에 성공하셨습니다")
+                  setIsShowAlertClose(true)
+                  setIsPriceUpdate(!isPriceUpdate)
                 })
                 .catch(console.error)
             })}>
@@ -122,10 +144,7 @@ const AuctionAutoModal = ({
                 <S.PopupLeft2>
                   <S.Input type="text" placeholder="응찰가를 입력해주세요." autoComplete="off"
                     {...register("biddingPrice", {
-                      required : true,
-                      pattern : {
-                        value : pricePattern,
-                      }
+                      required : true
                   })}/>
                   <AuctionBiddingPopupPrice price={price} auction={auction} />
                 </S.PopupLeft2>
@@ -145,6 +164,27 @@ const AuctionAutoModal = ({
           </S.Notice>
 		    </S.Popup>
       </S.PopupContainer>
+      {isShowAlert && (
+        <S.AlertBody>
+          <InfoAlert src="/assets/images/icon/check.png"
+            message={alertMessage} handleOk={() => setIsShowAlert(false)} />
+        </S.AlertBody>
+      )}
+      {isShowAlertClose && (
+        <S.AlertBody>
+          <InfoAlert src="/assets/images/icon/check.png"
+            message={alertMessage} handleOk={() => setOpenAutoBidding(false)} />
+        </S.AlertBody>
+      )}
+      {isShowConfirm && (
+        <S.AlertBody>
+          <ConfirmAlert src="/assets/images/icon/question.png"
+            message="응찰가 변동으로 인한 응찰 실패"
+            message1="다시 응찰 하시겠습니까?"
+            handleOk={handleConfirmOk}
+            handleCancel={handleConfirmOk} />
+        </S.AlertBody>
+      )}
     </S.PopupBody>
   );
 };

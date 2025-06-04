@@ -8,11 +8,18 @@ import { useSelector } from 'react-redux';
 import AuctionTime from './AuctionTime';
 import AuctionPrice from './AuctionPrice';
 import getLatestPrice from './_function/getLatePrice';
+import InfoAlert from '../../../modules/alert/infoAlert/InfoAlert.jsx';
+import ConfirmAlert from '../../../modules/alert/confirmAlert/ConfirmAlert.jsx';
 const AuctionBiddingDetail = ({auction, timeLeft}) => {
 	
 	const {id, category} = useParams();
 	const { currentUser } = useSelector((state) => state.user);
 	const navigate = useNavigate();
+
+	const [isShowConfirm, setIsShowConfirm] = useState(false)
+  const [isShowAlert, setIsShowAlert] = useState(false)
+  const [alertMessage, setAlertMessage] = useState("")
+  const [isShowLoginAlert, setIsShowLoginAlert] = useState(false)
 
 	// 먼저 페이지 경매예정, 경매중, 경매완료 검사 후 라우팅
 
@@ -67,16 +74,10 @@ const AuctionBiddingDetail = ({auction, timeLeft}) => {
 		return () => clearInterval(getPrice)
 	}, [isPriceUpdate, id])
 
-	// 본인일 때 수정
 	  const remove = async () => {
-    // eslint-disable-next-line no-restricted-globals
-    if(confirm("예정된 경매를 삭제하시겠습니까?")){
-      await fetch(`http://localhost:10000/auction/api/delete/${auction.id}`, {
-        method: 'DELETE',
-      });
-      alert("경매가 삭제되었습니다");
-      navigate(`../expected/${category}`, { replace: true });
-    };
+		await fetch(`http://localhost:10000/auction/api/delete/${auction.id}`, {
+			method: 'DELETE',
+		});
   }
 
 	const modify = () => {
@@ -95,6 +96,12 @@ const AuctionBiddingDetail = ({auction, timeLeft}) => {
 		return
 		
 	}
+	const handleConfirmOk = () => {
+    setIsShowConfirm(false)
+		setAlertMessage("경매가 삭제되었습니다")
+		setIsShowAlert(true)
+    remove()
+  }
 
 	return (
 		<S.Wrapper>
@@ -116,7 +123,7 @@ const AuctionBiddingDetail = ({auction, timeLeft}) => {
 							{isExpectedConfirm && currentUser && auction.artistId === currentUser.id?
 								<S.TitleButtonWrapper>
 									<S.TitleButton1 onClick={modify}>수정하기</S.TitleButton1>
-									<S.TitleButton2 onClick={remove}>삭제하기</S.TitleButton2>
+									<S.TitleButton2 onClick={() => setIsShowConfirm(true)}>삭제하기</S.TitleButton2>
 								</S.TitleButtonWrapper>
 							: <></>}
 						</S.TitleWrapper>
@@ -252,6 +259,16 @@ const AuctionBiddingDetail = ({auction, timeLeft}) => {
 					</S.PopupBody>
 						: null
 				}
+				{isShowAlert && (
+					<InfoAlert src="/assets/images/icon/check.png"
+						message={alertMessage} handleOk={() => navigate(`../expected/${category}`, { replace: true })} />
+				)}
+				{isShowConfirm && (
+					<ConfirmAlert src="/assets/images/icon/question.png"
+						message="예정된 경매를 삭제하시겠습니까?" 
+						handleOk={handleConfirmOk}
+						handleCancel={() => setIsShowConfirm(false)} />
+				)}
 		</S.Wrapper>
 	);
 };
