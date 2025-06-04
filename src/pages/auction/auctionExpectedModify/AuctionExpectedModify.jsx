@@ -321,7 +321,7 @@ const AuctionExpectedModify = () => {
         </S.InfoDiv>
       </S.ContentWrap>
       {isShowAlert && (
-        <InfoAlert src="/assets/images/icon/check.png"
+        <InfoAlert src="/assets/images/icon/confirm.png"
           message={alertMessage} handleOk={() => setIsShowAlert(false)} />
       )}
       {isShowAlertClose && (
