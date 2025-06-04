@@ -5,7 +5,9 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import AuctionBiddingPopupTime from './AuctionBiddingPopupTime';
 import AuctionBiddingPopupPrice from './AuctionBiddingPopupPrice';
 import getLatestPrice from '../_function/getLatePrice';
-import { useEffect } from 'react';
+import { useState } from 'react';
+import InfoAlert from '../../alert/infoAlert/InfoAlert';
+import ConfirmAlert from '../../alert/confirmAlert/ConfirmAlert';
 
 const AuctionModal = ({
   id, auction, setOpenBidding, auctionStartDate, auctionEndDate, auctionBidDate,
@@ -16,6 +18,14 @@ const AuctionModal = ({
   const { register, handleSubmit, getValues, formState: {isSubmitting, isSubmitted, errors}} = useForm({mode:"onChange"});
   const navigate = useNavigate();
   const pricePattern = /^[0-9]+$/;
+  const [isShowConfirm, setIsShowConfirm] = useState(false)
+  const [isShowAlert, setIsShowAlert] = useState(false)
+  const [isShowAlertClose, setIsShowAlertClose] = useState(false)
+  const [alertMessage, setAlertMessage] = useState("")
+
+  const handleConfirmOk = () => {
+    navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`)
+  }
 
   if(!isLogin) {
     return <Navigate to={"/login"} />
@@ -71,33 +81,35 @@ const AuctionModal = ({
               const latestUserId = latestPrice.price.userId;
 
               if (!pricePattern.test(formDatas.biddingPrice)) {
-                alert("숫자만 입력해주세요.");
-                return;
+                setAlertMessage("숫자만 입력해주세요.")
+		            setIsShowAlert(true)
+                return
               }
 
               if(latestUserId) {
                 if(currentUserId !== latestUserId) {
-                  alert("응찰가 변동으로 인한 응찰 실패\n다시 응찰 하시겠습니까?");
-                  navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`)
+                  setIsShowConfirm(true)
                   return
                 }
               }
 
               if(formDatas.biddingPrice < price.auctionBiddingMinimumPrice || formDatas.biddingPrice < auction?.auctionStartPrice){
-                alert("응찰가는 반드시\n최소 응찰가 이상이어야 합니다.");
+                setAlertMessage("응찰가는 반드시 최소 응찰가 이상이어야 합니다.")
+		            setIsShowAlert(true)
                 setIsPriceUpdate(!isPriceUpdate)
                 return
               }
 
               if(formDatas.biddingPrice > 1000000000000) {
-                alert("사이트 정책에 위반되는 금액입니다")
+                setAlertMessage("사이트 정책에 위반되는 금액입니다")
+		            setIsShowAlert(true)
                 setIsPriceUpdate(!isPriceUpdate)
                 return
               }
 
               if(latestUserId === myId || currentUserId === myId){
-                alert("이미 입찰 하셨습니다.");
-                setOpenBidding(false)
+                setAlertMessage("이미 입찰 하셨습니다")
+		            setIsShowAlertClose(true)
                 setIsPriceUpdate(!isPriceUpdate)
                 return
               }
@@ -122,9 +134,9 @@ const AuctionModal = ({
                       alert(res.message)
                     })
                   }
-                  alert("응찰에 성공하셨습니다");
-                  setOpenBidding(false)
-                  setIsPriceUpdate(!isPriceUpdate) // 가격 반영
+                  setAlertMessage("응찰에 성공하셨습니다")
+                  setIsShowAlertClose(true)
+                  setIsPriceUpdate(!isPriceUpdate)
                 })
                 .catch(console.error)
             })}>
@@ -152,6 +164,27 @@ const AuctionModal = ({
           </S.Notice>
 		    </S.Popup>
       </S.PopupContainer>
+      {isShowAlert && (
+        <S.AlertBody>
+          <InfoAlert src="/assets/images/icon/confirm.png"
+            message={alertMessage} handleOk={() => setIsShowAlert(false)} />
+        </S.AlertBody>
+      )}
+      {isShowAlertClose && (
+        <S.AlertBody>
+          <InfoAlert src="/assets/images/icon/check.png"
+            message={alertMessage} handleOk={() => setOpenBidding(false)} />
+        </S.AlertBody>
+      )}
+      {isShowConfirm && (
+        <S.AlertBody>
+          <ConfirmAlert src="/assets/images/icon/question.png"
+            message="응찰가 변동으로 인한 응찰 실패"
+            message1="다시 응찰 하시겠습니까?"
+            handleOk={handleConfirmOk}
+            handleCancel={handleConfirmOk} />
+        </S.AlertBody>
+      )}
     </S.PopupBody>
   );
 };

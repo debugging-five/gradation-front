@@ -183,5 +183,9 @@ S.NoticeP = styled.p`
   
 `
 
+S.AlertBody = styled.div`
+  z-index: 100;
+`
+
 
 export default S;

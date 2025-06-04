@@ -3,6 +3,7 @@ import S from './style';
 import getTimeLeft from './_function/getTimeLeft';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import endBidding from './_function/endBidding';
+import InfoAlert from '../../../modules/alert/infoAlert/InfoAlert';
 
 // 상태만 업데이트
 const AuctionTime = ({id, auctionStartDate, auctionEndDate, auctionBidDate}) => {
@@ -24,9 +25,10 @@ const AuctionTime = ({id, auctionStartDate, auctionEndDate, auctionBidDate}) => 
   
   const { days, hours, minutes, seconds } = isBidding; 
   if(isAuction === "경매중" && days === 0 && hours === 0 && minutes === 0 && seconds === 0) {
-    alert("경매가 종료되었습니다!")
     endBidding(id).then(() => {
-      return <Navigate to={`/auction/complete/korean/detail/${id}`} />
+      return (<InfoAlert src="/assets/images/icon/check.png"
+				message={"경매가 종료되었습니다!"} handleOk={() => navigate(`/auction/complete/korean/detail/${id}`)} />
+      )
     })
   }
 

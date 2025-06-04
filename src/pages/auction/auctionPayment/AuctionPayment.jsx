@@ -157,7 +157,6 @@ const AuctionPayment = () => {
             </S.imgWrapper>
             
             <S.StyledForm onSubmit={handleSubmit((pay) => {
-              // alert("폼 제출");
               const data1 = {...pay,
                 auctionId: data.id,
                 productPrice: data.auctionBidPrice , 

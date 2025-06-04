@@ -5,6 +5,7 @@ import S from './style';
 import Flatpickr from "react-flatpickr";
 import dayjs from 'dayjs';
 import { useForm } from 'react-hook-form';
+import InfoAlert from '../../../modules/alert/infoAlert/InfoAlert';
 
 const AuctionExpectedModify = () => {
   let { type, category, id } = useParams();
@@ -18,6 +19,12 @@ const AuctionExpectedModify = () => {
   const [inputMinWidth, setInputMinWidth] = useState("")
   const [inputMaxWidth, setInputMaxWidth] = useState("")
 
+  const [isShowAlert, setIsShowAlert] = useState(false)
+  const [isShowAlertClose, setIsShowAlertClose] = useState(false)
+  const [alertMessage, setAlertMessage] = useState("")
+  
+  const pricePattern = /^[0-9]+$/;
+
   useEffect(() => {
     const fetchAuction = async () => {
       const response = await fetch(`http://localhost:10000/auction/api/detail/${id}`);
@@ -26,7 +33,6 @@ const AuctionExpectedModify = () => {
       
       setData(auctionData);
       if (auctionData.artistId !== currentUser.id) {
-        alert("수정 권한이 없습니다!")
         navigate(`/auction/bidding/${category}/detail/${id}`, { replace: true })
         return
       }
@@ -83,13 +89,22 @@ const AuctionExpectedModify = () => {
             const currentAuction = await getCurrentAuction.json();
 
             if(dayjs(currentAuction.auctionStartDate) > dayjs()){
-              alert("이미 시작된 경매입니다.");
-              navigate(window.location.href = `/auction/bidding/${category}/detail/${id}`, { replace: true })
+              setAlertMessage("이미 시작된 경매입니다.")
+              setIsShowAlertClose(true)
               return
             }
-            
 
-            console.log(auctionVO);
+            if (!pricePattern.test(auctionData.auctionEstimatedMinPrice) || !pricePattern.test(auctionData.auctionEstimatedMaxPrice) || !pricePattern.test(auctionData.auctionStartPrice)) {
+              setAlertMessage("숫자만 입력해주세요.")
+              setIsShowAlert(true)
+              return
+            }
+
+            if(auctionData.auctionStartPrice > 1000000000000) {
+              setAlertMessage("사이트 정책에 위반되는 금액입니다")
+              setIsShowAlert(true)
+              return
+            }
             
             await fetch("http://localhost:10000/auction/api/modify", {
               method : "PUT",
@@ -104,8 +119,9 @@ const AuctionExpectedModify = () => {
                     alert(res.message)
                   })
                 }
-                alert("수정에 성공하셨습니다");
-                navigate(window.location.href = `/auction/expected/${category}/detail/${id}`, { replace: true })
+                
+                setAlertMessage("수정이 성공하였습니다")
+                setIsShowAlertClose(true)
                 return res.json()
               })
               .catch(console.error)
@@ -304,6 +320,14 @@ const AuctionExpectedModify = () => {
           </form>
         </S.InfoDiv>
       </S.ContentWrap>
+      {isShowAlert && (
+        <InfoAlert src="/assets/images/icon/confirm.png"
+          message={alertMessage} handleOk={() => setIsShowAlert(false)} />
+      )}
+      {isShowAlertClose && (
+        <InfoAlert src="/assets/images/icon/check.png"
+          message={alertMessage} handleOk={() => navigate(window.location.href = `/auction/expected/${category}/detail/${id}`, { replace: true })} />
+      )}
     </S.Container>
   );
 };
