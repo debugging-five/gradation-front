@@ -40,7 +40,7 @@ const handleUpload = () => {
   if(!isLogin) {
     navigate("/login")
   } else if (currentUser.userWriterStatus === "미승인") {
-    alert("작가 아님!")
+    alert("대학교 인증을 진행해주세요.")
   } else {
     navigate("/display/registration")
   }

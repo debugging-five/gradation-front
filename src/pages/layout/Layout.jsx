@@ -63,7 +63,7 @@ const Layout = () => {
       };
       getUserDatas()
     }
-  }, [dispatch]); 
+  }, [dispatch, jwtToken, token]); 
 
   const handleLogout = () => {
     // localStorage.clear();
