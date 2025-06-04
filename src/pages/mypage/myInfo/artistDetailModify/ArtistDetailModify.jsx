@@ -15,6 +15,7 @@ const ArtistDetailModify = () => {
   const [userBlog, setUserBlog] = useState('');
   const [histories, setHistories] = useState([]);
   const [artworks, setArtworks] = useState([]);
+  const [cursor, setCursor] = useState(1);
   
   
   // 컴포넌트 최상단 useState 선언 아래에 추가
@@ -261,7 +262,7 @@ const handleSubmit = () => {
   useEffect(() => {
     if (!currentUser?.id) return;
 
-    fetch(`http://localhost:10000/artists/api/detail/${currentUser.id}/arts`)
+    fetch(`http://localhost:10000/artists/api/detail/${currentUser.id}/arts?cursor=${cursor}`)
       .then(res => {
         if (!res.ok) throw new Error('작품 목록 불러오기 실패');
         return res.json();
@@ -274,7 +275,7 @@ const handleSubmit = () => {
       .catch(err => {
         console.error('작품 이미지 불러오기 실패:', err);
       });
-  }, [currentUser]);
+  }, [currentUser, cursor]);
     const itemsPerPage = 9; 
 
   const [currentPage, setCurrentPage] = useState(1);

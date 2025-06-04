@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Outlet, useParams } from 'react-router-dom';
+import { Link, Outlet, useNavigate, useParams } from 'react-router-dom';
 import S from './style'
+import { useSelector } from 'react-redux';
 
 const ArtistDetailContainer = () => {
 
   const { id } = useParams();
   const [artist, setArtist] = useState(null);
+  const navigate = useNavigate();
+  const { currentUser } = useSelector((state) => state.user)
+  const myId = currentUser?.id;
 
   useEffect(() => {
     const fetchArtistDetail = async () => {
@@ -20,7 +24,7 @@ const ArtistDetailContainer = () => {
   }
   fetchArtistDetail()
     .then((res) => {
-      // console.log("디테일", res)
+      console.log("res", res)
     })
     .catch((error) => {
       // console.error(error)
@@ -32,7 +36,7 @@ const ArtistDetailContainer = () => {
   const extractId = (url) => {
     try {
       const u = new URL(url);
-      return u.pathname.replace(/^\/+/, '').slice(0, 20); // 경로만, 너무 길면 자르기
+      return u.pathname.replace(/^\/+/, '').slice(0, 20);
     } catch {
       return url;
     }
@@ -45,12 +49,18 @@ const ArtistDetailContainer = () => {
         <S.Name>{artist.userName}</S.Name>
         <S.University>{artist.universityName}</S.University>
 
-        <S.Link to={`/mypage/contact-artist/write/${artist.userEmail}`}>
-          <S.Button>
-            <p>작가와 연락</p>
-            <S.MessageIcon src={`/assets/images/icon/message-white.png`} alt="message" />
+        {artist?.id !== undefined && myId === artist.id ? (
+          <S.Button onClick={() => navigate('/mypage/artist-datail-modify')}>
+            <p>작가페이지 수정</p>
           </S.Button>
-        </S.Link>
+        ) : (
+          <S.Link to={`/mypage/contact-artist/write/${artist.userEmail}`}>
+            <S.Button>
+              <p>작가와 연락</p>
+              <S.MessageIcon src={`/assets/images/icon/message-white.png`} alt="message" />
+            </S.Button>
+          </S.Link>
+        )}
 
         <S.SNSWrap>
           {artist.userInstagram && (
