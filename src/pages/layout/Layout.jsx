@@ -54,8 +54,8 @@ const Layout = () => {
         }
         
         const datas = await response.json();
-        console.log("datas", datas)
-        console.log(datas.currentUser)
+        // console.log("datas", datas)
+        // console.log(datas.currentUser)
         dispatch(setUser(datas.currentUser));
         dispatch(setUserStatus(true));
       };

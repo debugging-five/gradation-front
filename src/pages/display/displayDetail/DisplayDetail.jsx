@@ -12,7 +12,8 @@ const DisplayDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [post, setPost] = useState(null)
-  const [isLiked, setIsLiked] = useState(false)
+  // const [isLiked, setIsLiked] = useState(false)
+  const [isLiked, setIsLiked] = useState(null)
 
   const { currentUser } = useSelector((state) => state.user);
   // console.log(currentUser)

@@ -67,7 +67,7 @@ const ArtLikeButton = ({userId, artId, isLiked, setIsLiked, setPost}) => {
 
       return (
         <div>
-          <S.LikeButton className="button" onClick={checkIsArtLiked} isLiked={isLiked}>
+          <S.LikeButton className="button" onClick={checkIsArtLiked} $isLiked={isLiked}>
             좋아요
             <S.LikeIcon src={isLiked ? '/assets/images/icon/heart_white.png' : '/assets/images/icon/heart.png'} alt="좋아요" />
           </S.LikeButton>
