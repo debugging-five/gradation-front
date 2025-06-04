@@ -115,7 +115,7 @@ const DisplayComments = ({postId, category}) => {
       .then((res) => {
         if(!res.ok) {
           return res.json().then((res) => {
-            console.log(res);
+            // console.log(res)
             // alert(res.message);
           })
         }
@@ -144,7 +144,7 @@ const DisplayComments = ({postId, category}) => {
             result.push(row);
           }
           setPageLength(result)
-          console.log(result)
+          // console.log(result)
         }
       })
       .catch(console.error);
@@ -191,7 +191,7 @@ const DisplayComments = ({postId, category}) => {
   
     // 댓글 삭제
     const deleteComment = async (commentId) => {
-      console.log(commentId)
+      // console.log(commentId)
       // const id = comment.id;
       await fetch(`${process.env.REACT_APP_BACKEND_URL}/comments/api/delete/${commentId}`, {
         method : "DELETE",
@@ -200,13 +200,13 @@ const DisplayComments = ({postId, category}) => {
       .then((res) => {
         if(!res.ok) {
           return res.json().then((res) => {
-            console.log(res)
+            // console.log(res)
           })
         }
         return res.json()
       })
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         // alert(res.message)
         getCommentsList()
       })
@@ -232,7 +232,7 @@ const DisplayComments = ({postId, category}) => {
         return res.json()
       })
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         getCommentsList()
       })
       .catch(console.error)

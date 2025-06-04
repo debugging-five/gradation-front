@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { H10, H8 } from '../../../styles/common';
 const primary = "#EE3333";
 const gray100 = "#FBFCFC";
 const gray500 = "#C0C5C7";
@@ -148,6 +149,8 @@ S.LoginSection = styled.div`
 S.BellWrap = styled.div`
   position: relative;
   cursor: pointer;
+  justify-content: center;
+  align-items: center;
 `
 
 S.BellIcon = styled.img`
@@ -177,6 +180,63 @@ S.SignInWrap = styled.div`
     opacity: 1;
   }
 `;
+
+S.BellDropdown = styled.div`
+  width: 180px;
+  height: 412px;
+  border: solid 1px #C0C5C7;
+  background-color: #FBFCFC;
+  position: absolute;
+  /* top: 100%; */
+  top: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+`
+
+S.Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  height: 43px;
+  border-bottom: solid 1px #C0C5C7;
+  align-items: center;
+`
+
+S.Alarm = styled.p`
+  ${H8}
+  margin: 0 0 0 12px;
+`
+
+S.Read = styled.p`
+  ${H10}
+  color: #EE3333;
+  margin: 0 12px 0 0;
+`
+
+S.Content = styled.div`
+
+`
+
+S.MoreAlarm = styled.div`
+  background-color: #C0C5C7;
+  ${H10}
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+S.AlarmContent = styled.div`
+  border-bottom: solid 1px #C0C5C7;
+  height: 34px;
+`
+
+S.Message = styled.p`
+  ${H10}
+  color: #6E7476;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
 
 
 export default S;

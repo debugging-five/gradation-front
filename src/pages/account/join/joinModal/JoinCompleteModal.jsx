@@ -19,12 +19,12 @@ const JoinCompleteModal = ({onClose}) => {
             </S.Notice>
 
             <S.ButtonWrapper>
-              <Link to={"/"}>
+              <S.Link to={"/"}>
                 <PrimaryButton>메인으로</PrimaryButton>
-              </Link>
-              <Link to={"/login"}>
+              </S.Link>
+              <S.Link to={"/login"}>
                 <SubButton>로그인</SubButton>
-              </Link>
+              </S.Link>
             </S.ButtonWrapper>
           </S.Content>
         </S.Line>

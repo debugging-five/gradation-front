@@ -9,11 +9,34 @@ const Header = ({ onLogout }) => {
 
   // 스크롤
   const [showHeader, setShowHeader] = useState(true);
+  const [showBellDropdown, setShowBellDropdown] = useState(false)
+  // const [alarmContents, setAlarmContents] = useState([])
+  const alarmContents = [
+  { id : 1, message : "작품 등록이 승인되었습니다." },
+  { id : 2, message : "업사이클 신청이 승인되었습니다." },
+  { id : 3, message : "작품에 댓글이 달렸습니다." },
+  { id : 4, message : "작품 등록이 승인되었습니다." },
+  { id : 5, message : "업사이클 신청이 승인되었습니다." },
+  { id : 6, message : "작품에 댓글이 달렸습니다." },
+  { id : 7, message : "작품 등록이 승인되었습니다." },
+  { id : 8, message : "업사이클 신청이 승인되었습니다." },
+  { id : 9, message : "작품에 댓글이 달렸습니다." },
+]
+
+
   const lastScrollTop = useRef(0); // 스크롤 위치를 저장
   const delta = 5; // 민감도
 
   const [openMenu, setOpenMenu] = useState(null);
   const location = useLocation();
+
+  const handleBellClick = () => {
+    if (showBellDropdown) {
+      setShowBellDropdown(false)
+    } else {
+      setShowBellDropdown(true)
+    }
+  }
 
   useEffect(() => {
     setOpenMenu(null);
@@ -48,6 +71,7 @@ const Header = ({ onLogout }) => {
     };
     fetchLatestPastExhibition();
   }, []);
+  
   
 
   return (
@@ -128,8 +152,24 @@ const Header = ({ onLogout }) => {
         </S.Menu>
 
         <S.LoginSection>
-          <S.BellWrap>
+          <S.BellWrap onClick={handleBellClick}>
             <S.BellIcon className="header-bell" src={`/assets/images/icon/bell.png`} alt="bell" />
+            {showBellDropdown && (
+              <S.BellDropdown>
+                <S.Title>
+                  <S.Alarm>알림</S.Alarm>
+                  <S.Read>모두 읽음</S.Read>
+                </S.Title>
+                <S.Content>
+                  {alarmContents.map((content) => (
+                    <S.AlarmContent key={content.id}>
+                      <S.Message>{content.message}</S.Message>
+                    </S.AlarmContent>
+                  ))}
+                </S.Content>
+                <S.MoreAlarm>알림 더보기</S.MoreAlarm>
+              </S.BellDropdown>
+            )}
           </S.BellWrap>
 
           {isLogin ? (
