@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const MainWrapper = styled.div`
   display : flex;
   justify-content: center; 
-  padding : 184px 380px 300px 380px;
+  padding : 84px 380px 200px 380px;
   gap: 120px;
 `;
 
@@ -64,7 +64,6 @@ export const ProfileImage = styled.img`
   width: 80px;
   height: 80px;
   border-radius: 50px;
-  border-bottom: solid 1px;
   object-fit: cover;  
   object-position: center; 
 `;

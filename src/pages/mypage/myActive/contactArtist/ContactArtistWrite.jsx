@@ -100,7 +100,7 @@ const ContactArtistWrite = () => {
         {/* 내용 입력 */}
         <SM.Box>
           <SM.Title>내용<SM.Important>*</SM.Important></SM.Title>
-          <SM.InputContent
+          <S.InputContent
             placeholder='내용을 입력하세요.'
             value={content}
             onChange={e => {

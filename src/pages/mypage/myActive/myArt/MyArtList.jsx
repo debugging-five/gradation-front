@@ -65,7 +65,7 @@ const MyArtList = () => {
             </SA.ArtItem>
           ))
         ) : (
-          <p>작품이 없습니다.</p>
+          <S.NoneText>작품이 없습니다.</S.NoneText>
         )}
       </SA.ArtGrid>
 

@@ -8,6 +8,7 @@ const MyAuctionList = () => {
   const userId = currentUser?.id;
 
   const [auctions, setAuctions] = useState([]);
+  const [bidPrices, setBidPrices] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,6 +23,7 @@ const MyAuctionList = () => {
     '서예': 'calligraphy',
   };
 
+  // 전체 경매 목록 불러오기
   useEffect(() => {
     if (!userId) return;
 
@@ -31,8 +33,9 @@ const MyAuctionList = () => {
         return res.json();
       })
       .then(data => {
-        setAuctions(data.auction || []);
-        setLoading(false);
+        const list = data.auction || [];
+        setAuctions(list);
+        fetchAllBidPrices(list);
       })
       .catch(err => {
         setError(err.message);
@@ -40,7 +43,25 @@ const MyAuctionList = () => {
       });
   }, [userId]);
 
-  // 페이지네이션 계산
+  // 경매 ID별 현재 입찰가 호출
+  const fetchAllBidPrices = async (auctionList) => {
+    const prices = {};
+    await Promise.all(
+      auctionList.map(async (item) => {
+        try {
+          const res = await fetch(`http://localhost:10000/auction/api/read-bidder/${item.id}`);
+          const data = await res.json();
+          prices[item.id] = data.auctionBiddingPrice || 0;
+        } catch (err) {
+          prices[item.id] = null;
+        }
+      })
+    );
+    setBidPrices(prices);
+    setLoading(false);
+  };
+
+  // 페이지네이션
   const totalPages = Math.ceil(auctions.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -59,7 +80,7 @@ const MyAuctionList = () => {
           <S.CategoryBold>구분</S.CategoryBold>
           <S.EmptyboxBold>경매상태</S.EmptyboxBold>
           <S.Title>상품명</S.Title>
-          <S.EmptyboxBold>가격</S.EmptyboxBold>
+          <S.EmptyboxBold>현재 입찰가</S.EmptyboxBold>
         </S.ListHeader>
 
         {currentAuctions.map((item, index) => (
@@ -74,11 +95,14 @@ const MyAuctionList = () => {
             >
               <S.Content>{item.artTitle}</S.Content>
             </S.TitleNavigate>
-            <S.Emptybox>{item.auctionBidPrice?.toLocaleString()} 원</S.Emptybox>
+            <S.Emptybox>
+              {bidPrices[item.id] != null
+                ? `${bidPrices[item.id].toLocaleString()} 원`
+                : '불러오는 중...'}
+            </S.Emptybox>
           </S.ContentBox>
         ))}
 
-        {/* 페이지네이션 */}
         {totalPages > 1 && (
           <S.Pagination>
             {pageNumbers.map(number => (

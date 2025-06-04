@@ -20,6 +20,7 @@ const ServiceCenterContainer = () => {
     <MainWrapper>
       <Leftbar>
         <BarTitle>고객센터</BarTitle>
+        <EndBar></EndBar>  
           <BarContentWapper>
             <BarContent  as={NavLink} to="/service-center/qna" onClick={() => window.scrollTo(0, 0)}>내 문의 목록</BarContent>
             <BarContent  as={NavLink} to="/service-center/registration" onClick={() => window.scrollTo(0, 0)}>1 : 1 문의하기</BarContent>

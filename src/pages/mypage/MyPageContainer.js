@@ -86,6 +86,7 @@ const MyPageContainer = () => {
         </S.ProfileBox>
 
         {/* 메뉴 그룹 */}
+        <S.EndBar />
         <S.BarTitle>내 정보</S.BarTitle>
         <S.BarContentWapper>
           <S.BarContent as={NavLink} to="" end onClick={() => window.scrollTo(0, 0)}>
@@ -147,6 +148,8 @@ const MyPageContainer = () => {
             <S.DeleteIdFont>회원 탈퇴</S.DeleteIdFont>
           </S.BarContent>
         </S.BarContentWapper>
+        <S.EndBar />
+
 
         {isAdmin && (
           <>

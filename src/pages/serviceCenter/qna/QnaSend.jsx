@@ -184,7 +184,7 @@ const QnaSend = () => {
         {/* 내용 입력 */}
         <SQ.Box>
           <SQ.Title>내용<S.Important>*</S.Important></SQ.Title>
-          <SQ.InputContent
+          <S.InputContent
             placeholder='내용을 입력하세요.'
             value={content}
             onChange={e => {

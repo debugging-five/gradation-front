@@ -11,6 +11,7 @@ export const Title = styled.p`
 
 
 export const InputContent = styled.textarea`
+    color: #333333;
     margin-top : 7px;
     width: 800px;
     height: 228px;
@@ -20,6 +21,14 @@ export const InputContent = styled.textarea`
     line-height: 1.5;
     box-sizing: border-box;
     font-family: inherit;
+        /* 포커스 시 스타일 변형 방지 */
+    border: 1px solid #333333; /* 원하는 기본 테두리 */
+    outline: none;
+
+    &:focus {
+        border: 1px solid #333333; /* 포커스돼도 테두리 그대로 */
+        outline: none;
+    }
 `;
 
 export const CategoryBox = styled.div`
@@ -39,6 +48,10 @@ export const Icon = styled.img`
     width: 20px;
     height: 20px;
 `;
+export const IconYoutube = styled.img`
+    width: 20px;
+    height: 15px;
+`;
 export const IconDelete = styled.img`
     width: 16px;
     height: 16px;
@@ -46,14 +59,20 @@ export const IconDelete = styled.img`
 export const SocialBox = styled.div`
     display: flex;
     padding-top: 12px;
+    align-items: center;
 `;
 export const Social = styled.div`
     width: 100px;
+    font-weight: bold;
 `;
 export const SmallTitle = styled.span`
     margin-left: 10px;
     font-size: 12px;
     color: gray;
+`;
+export const Date = styled.span`
+    font-weight: bold;
+    font-size: 14px;
 `;
 
 export const Category = styled.div`

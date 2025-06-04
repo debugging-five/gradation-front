@@ -57,6 +57,7 @@ const ArtLikeList = () => {
                 alt={art.artTitle || '좋아요 작품 이미지'}
               />
               <SL.Overlay className="overlay">
+                
                 <SL.HoverText>{art.artTitle}</SL.HoverText>
                 <SL.HoverText>{art.userName}</SL.HoverText>
               </SL.Overlay>
@@ -65,7 +66,7 @@ const ArtLikeList = () => {
         ))}
       </S.ArtGrid>
 
-      {/* ✅ 페이지네이션 */}
+      {/* 페이지네이션 */}
       {totalPages > 1 && (
         <S.Pagination>
           {pageNumbers.map((number) => (

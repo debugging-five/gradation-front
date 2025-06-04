@@ -11,6 +11,7 @@ export const ContentBox = styled.div`
 `;
 export const NoneText = styled.p`
     padding: 20px 0;
+    text-align: center;
 `;
 export const Button75x35R = styled.button`
   width: 75px;

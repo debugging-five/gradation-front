@@ -279,6 +279,7 @@ const handleSubmit = () => {
       <SA.Chepter>
         <SA.Title>작가 소개</SA.Title>
         <SA.InputContent
+          placeholder='내용을 입력하세요.'
           value={userIntroduce}
           onChange={(e) => setUserIntroduce(e.target.value)}
         />
@@ -339,6 +340,7 @@ const handleSubmit = () => {
               <S.ButtonEdit onClick={() => handleAddHistory(history.id)} disabled={!history.date || !history.content.trim()}> + </S.ButtonEdit>
             </SA.HistoryBox>
           ))}
+          <S.EndBar />
 
         {/* 2. 저장된 항목 렌더링 */}
         {displayHistories
@@ -346,7 +348,7 @@ const handleSubmit = () => {
           .map(history => (
             <SA.HistoryBox key={history.id}>
               <SA.CalenderBox>
-                <span>{formatDate(history.date)}</span>
+                <SA.Date>{formatDate(history.date)}</SA.Date>
               </SA.CalenderBox>
 
               <SA.InputBox as="div">{history.content}</SA.InputBox>
@@ -359,7 +361,7 @@ const handleSubmit = () => {
             </SA.HistoryBox>
           ))}
 
-        <S.EndBar />
+        
       </SA.Chepter>
 
       <SA.Chepter>
@@ -378,7 +380,7 @@ const handleSubmit = () => {
 
         <SA.SocialBox>
           <SA.Social>Youtube</SA.Social>
-          <SA.Icon src="/assets/images/icon/youtube.png" alt="default profile" />
+          <SA.IconYoutube src="/assets/images/icon/youtube.png" alt="default profile" />
           <S.Emptybox/>
           <SA.InputBox placeholder='링크를 입력하세요' value={userYoutube} onChange={(e) => setUserYoutube(e.target.value)}/>
         </SA.SocialBox>
