@@ -32,7 +32,7 @@ const ExhibitionGradationPast = () => {
     }
     fetchArt()
       .then((data) => {
-        console.log(data)
+        // console.log(data)
         let pages = data.contents === 0? 0 : (data.contents % 15 === 0? data.contents / 15 - 1 : data.contents / 15)
 
         const result = [];
