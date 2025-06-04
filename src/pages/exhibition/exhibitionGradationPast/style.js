@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 import { EN_H2, H3, H8 } from '../../../styles/common';
+const primary = "#EE3333";
+const gray900 = "#6E7476";
+const black = "#333333";
 
 const S = {};
 
@@ -57,6 +60,14 @@ S.ListItem = styled.div`
   width: 200px;
   cursor: pointer;
   margin: 16px 0 16px 0 ;
+
+  &.active {
+    color: ${primary};
+  }
+
+  &:hover {
+    color: ${primary};
+  }
 `;
 
 S.ListWrap2 = styled.div`

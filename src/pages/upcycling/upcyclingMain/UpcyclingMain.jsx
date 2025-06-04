@@ -6,22 +6,38 @@ const UpcyclingMain = () => {
   const navigate = useNavigate();
 
   // 타임라인 줄그리기
-  const StepItem = ({ number, numCircle, title, texts, isLast }) => {
+  const StepItem = ({ index, number, numCircle, title, texts, isLast }) => {
+const isOpen = openedSteps.includes(index);
+const shouldAnimate = isOpen && !animatedSteps.includes(index);
+
+
     return (
-      <S.Step $isLast={isLast}>
+      <S.Step
+        $isLast={isLast}
+        $isOpen={isOpen}
+        onMouseEnter={() => handleHover(index)}
+      >
         <S.CircleContainer>
           <S.Number>{number}</S.Number>
           {numCircle}
         </S.CircleContainer>
         <S.TimelineContent>
           <S.TimelineTitle>{title}</S.TimelineTitle>
-          {texts.map((line, i) => ( // 설명부분이 여러줄이라 배열을 맵으로 각각 랜더링
-            <S.TimelineText key={i}>{line}</S.TimelineText>
-          ))}
+{texts.map((line, i) => (
+  <S.TimelineText
+    key={`${index}-${i}`}
+    $isOpen={isOpen}
+    $shouldAnimate={shouldAnimate}
+    $delay={i}
+  >
+    {line}
+  </S.TimelineText>
+))}
         </S.TimelineContent>
       </S.Step>
     );
   };
+
 
   const chapter2Ref = useRef(null);
   const [isImgVisible, setIsImgVisible] = useState(false);
@@ -62,6 +78,14 @@ const UpcyclingMain = () => {
     };
   }, []);
 
+const [openedSteps, setOpenedSteps] = useState([]);
+const [animatedSteps, setAnimatedSteps] = useState([]);
+const handleHover = (index) => {
+  setOpenedSteps((prev) => (prev.includes(index) ? prev : [...prev, index]));
+  setAnimatedSteps((prev) => (prev.includes(index) ? prev : [...prev, index]));
+};
+
+  
 
   return (
     <S.UpcyclingWrapper>
@@ -216,6 +240,7 @@ const UpcyclingMain = () => {
 
       <S.Chapter4>
         <StepItem
+          index={0}
           number="01"
           numCircle={<S.BlueCircle />}
           title="신청 - 손쉽게 기부하고 참여하세요!"
@@ -225,6 +250,7 @@ const UpcyclingMain = () => {
           ]}
         />
         <StepItem
+          index={1}
           number="02"
           numCircle={<S.GrayCircle />}
           title="방문 수거 - 직접 찾아갑니다!"
@@ -234,6 +260,7 @@ const UpcyclingMain = () => {
           ]}
         />
         <StepItem
+          index={2}
           number="03"
           numCircle={<S.RedCircle />}
           title="폐기물 분류 - 사용 가능한 재료 선별"
@@ -244,6 +271,7 @@ const UpcyclingMain = () => {
           ]}
         />
         <StepItem
+          index={3}
           number="04"
           numCircle={<S.WhiteCircle />}
           title="가공 및 생산 - 새로운 제품 제작을 위한 변신"
@@ -256,6 +284,7 @@ const UpcyclingMain = () => {
           ]}
         />
         <StepItem
+          index={4}
           number="05"
           numCircle={<S.YellowCircle />}
           title="판매와 기부 - 예술의 순환"

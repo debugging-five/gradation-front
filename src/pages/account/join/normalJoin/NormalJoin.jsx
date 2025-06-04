@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import CheckedButton from '../../../../components/button/CheckedButton';
 import UncheckedButton from '../../../../components/button/UncheckedButton';
 import JoinCompleteModal from '../joinModal/JoinCompleteModal';
+import InfoAlert from '../../../display/alert/infoAlert/InfoAlert';
 
 const NormalJoin = () => {
   
@@ -34,7 +35,10 @@ const NormalJoin = () => {
   const[passwordType, setPasswordType] = useState({type : 'password', visible : false});
   const[passwordConfirmType, setPasswordConfirmType] = useState({type : 'password', visible : false});
 
-  const[isModalOpen, setIsModalOpen] = useState(false);
+  const[isModalOpen, setIsModalOpen] = useState(false)
+
+  const [showAlert, setShowAlert] = useState(false)
+  const [alertMessage, setAlertMessage] = useState("")
 
   const isJoin = isValid && isAllRequiredAgreed && isIdAvailable === true && confirmVerificationCode === true
 
@@ -78,10 +82,12 @@ const NormalJoin = () => {
   
   // 아이디 중복 체크
   const checkId = async () => {
-    console.log("userIdentification", userIdentification)
+    // console.log("userIdentification", userIdentification)
     
     if(!userIdentification) {
-      alert("아이디를 입력하세요.")
+      // alert("아이디를 입력하세요.")
+      setAlertMessage("아이디를 입력하세요.")
+      setShowAlert(true)
       return;
     }
     
@@ -98,7 +104,7 @@ const NormalJoin = () => {
       return res.json()
     })
     .then((res) => {
-      console.log(res)
+      // console.log(res)
       setIdCheckMessage(res.message)
       setIsIdAvailable(true)
     })
@@ -108,7 +114,9 @@ const NormalJoin = () => {
   // 이메일 중복 체크 + 이메일 인증번호 전송
   const getVerificationCodeEmail = async () => {
     if(!userEmail) {
-      alert("이메일을 입력하세요.")
+      // alert("이메일을 입력하세요.")
+      setAlertMessage("이메일을 입력하세요.")
+      setShowAlert(true)
       return;
     }
 
@@ -121,7 +129,7 @@ const NormalJoin = () => {
         // 이미 사용중인 이메일
         res.json().then((res) => {
           setEmailCheckMessage(res.message)
-          throw new Error("이미 사용중인 이메일입니다.")
+          // throw new Error("이미 사용중인 이메일입니다.")
         })
       }
       return res.json();
@@ -154,6 +162,8 @@ const NormalJoin = () => {
   // 인증번호 검증
   const getIsVerificationCode = async () => {
     if(!code) {
+      setAlertMessage("인증번호를 입력하세요.")
+      setShowAlert(true)
       setVerificationMessage("필수 항목입니다.")
       return;
     }
@@ -167,7 +177,7 @@ const NormalJoin = () => {
       })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         if(!res.isFlag) {
           const updateErrorCount = errorCount + 1;
           if(updateErrorCount >= 3) {
@@ -187,7 +197,7 @@ const NormalJoin = () => {
       })
       .catch(console.error)
     }
-    console.log("confirmVerificationCode", confirmVerificationCode)
+    // console.log("confirmVerificationCode", confirmVerificationCode)
     
     return (
     <div>
@@ -195,25 +205,33 @@ const NormalJoin = () => {
 
         // 아이디 중복 체크
         if(!isIdAvailable) {
-          alert("아이디 중복 체크 필수입니다.")
+          // alert("아이디 중복 체크 필수입니다.")
+          setAlertMessage("아이디 중복 체크 필수입니다.")
+          setShowAlert(true)
           return;
         }
-
+        
         // 이메일 인증
         if(!isSendVerificationCode) {
-          alert("이메일 인증을 진행해주세요.")
+          // alert("이메일 인증을 진행해주세요.")
+          setAlertMessage("이메일 인증을 진행해주세요.")
+          setShowAlert(true)
           return;
         }
-          
+        
         // 인증번호 확인
         if(!confirmVerificationCode) {
-          alert("인증번호 확인은 필수입니다.")
+          // alert("인증번호 확인은 필수입니다.")
+          setAlertMessage("인증번호 확인은 필수입니다.")
+          setShowAlert(true)
           return;
         }
-      
+        
         // 필수 약관 동의
         if(!isAllRequiredAgreed) {
-          alert("필수 약관에 동의해주세요.")
+          // alert("필수 약관에 동의해주세요.")
+          setAlertMessage("필수 약관에 동의해주세요.")
+          setShowAlert(true)
           return;
         }
           
@@ -248,14 +266,14 @@ const NormalJoin = () => {
         .then((res) => {
           if(!res.ok) {
             return res.json().then((res) => {
-              console.log(res)
+              // console.log(res)
               // alert(`${res.message}`)
             })
           }
           return res.json()
         })
         .then((res) => {
-          console.log(res)
+          // console.log(res)
           // alert(res.message)
           setIsModalOpen(true)
           // navigate("/login")
@@ -314,7 +332,7 @@ const NormalJoin = () => {
                     <S.InputWrapper>
                       <S.Label>
                         <S.H7>비밀번호<span>*</span></S.H7>
-                        <S.Input type={passwordType.type} placeholder='8~12자 영문, 숫자, 특수문자 조합으로 입력하세요.'
+                        <S.Input type={passwordType.type} placeholder='8~12자 영문, 숫자, 특수문자 조합으로 입력하세요.' autoComplete="off"
                         {...register("userPassword", {
                           required : true,
                           pattern : {
@@ -346,7 +364,7 @@ const NormalJoin = () => {
                     <S.InputWrapper>
                       <S.Label>
                         <S.H7>비밀번호 확인<span>*</span></S.H7>
-                        <S.Input type={passwordConfirmType.type} placeholder='8~12자 영문, 숫자, 특수문자 조합으로 입력하세요.'
+                        <S.Input type={passwordConfirmType.type} placeholder='8~12자 영문, 숫자, 특수문자 조합으로 입력하세요.' autoComplete="off"
                         {...register("passwordConfirm", {
                           // required : true,
                           required : "필수 항목입니다.",
@@ -543,6 +561,14 @@ const NormalJoin = () => {
           </S.Wrapper>
         </S.Container>
       </form>
+
+    {showAlert && (
+      <InfoAlert
+        src="/assets/images/icon/check.png"
+        message={alertMessage}
+        handleOk={() => setShowAlert(false)}
+      />
+    )}
       {isModalOpen && <JoinCompleteModal onClose={() => {setIsModalOpen(false)}} />}
     </div>
   );

@@ -20,7 +20,7 @@ const ArtistDetail = () => {
     }
     fetchArts()
     .then((res) => {
-      console.log(res)
+      // console.log("data.arts:", res.arts); 
     })
     .catch((error) => {
       console.error(error)

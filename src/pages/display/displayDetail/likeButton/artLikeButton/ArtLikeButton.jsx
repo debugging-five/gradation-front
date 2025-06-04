@@ -2,6 +2,7 @@ import { useState } from 'react';
 import S from './style';
 import InfoAlert from '../../../alert/infoAlert/InfoAlert';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const ArtLikeButton = ({userId, artId, isLiked, setIsLiked, setPost}) => {
 
@@ -9,12 +10,18 @@ const ArtLikeButton = ({userId, artId, isLiked, setIsLiked, setPost}) => {
   const [alertMessage, setAlertMessage] = useState("")
   const navigate = useNavigate()
   const [isShowLoginAlert, setIsShowLoginAlert] = useState(false)
+  const { isLogin, currentUser } = useSelector((state) => state.user);
 
   const checkIsArtLiked = async () => {
-    if(!userId || !artId) {
-      setIsShowLoginAlert(true)
+    if(!isLogin) {
+      navigate("/login")
       return
-    }
+    } 
+
+    // if(!userId || !artId) {
+    //   setIsShowLoginAlert(true)
+    //   return
+    // }
 
     const userVO = {
       userId : userId,
@@ -60,7 +67,7 @@ const ArtLikeButton = ({userId, artId, isLiked, setIsLiked, setPost}) => {
 
       return (
         <div>
-          <S.LikeButton className="button" onClick={checkIsArtLiked} isLiked={isLiked}>
+          <S.LikeButton className="button" onClick={checkIsArtLiked} $isLiked={isLiked}>
             좋아요
             <S.LikeIcon src={isLiked ? '/assets/images/icon/heart_white.png' : '/assets/images/icon/heart.png'} alt="좋아요" />
           </S.LikeButton>
@@ -72,13 +79,13 @@ const ArtLikeButton = ({userId, artId, isLiked, setIsLiked, setPost}) => {
           )}
 
           {/* 로그인 alert */}
-          {isShowLoginAlert && (
+          {/* {isShowLoginAlert && (
             <InfoAlert src="/assets/images/icon/check.png"
               message="로그인이 필요합니다."
               handleOk={() => {
                 setIsShowLoginAlert(false)
                 navigate("/login")}} />
-          )}
+          )} */}
 
 
         </div>

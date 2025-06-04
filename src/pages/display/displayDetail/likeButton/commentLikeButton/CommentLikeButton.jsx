@@ -1,8 +1,18 @@
+import { useSelector } from 'react-redux';
 import S from './style';
+import { useNavigate } from 'react-router-dom';
 
 const CommentLikeButton = ({userId, commentId, isLiked, setIsLiked, commentLikeCount, setComments}) => {
 
+  const navigate = useNavigate()
+  const { isLogin, currentUser } = useSelector((state) => state.user);
+
   const checkIsCommentLiked = async () => {
+
+    if(!isLogin) {
+      navigate("/login")
+      return
+    } 
 
     if(!userId || !commentId) {
       return

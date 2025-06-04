@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Navigation, Pagination } from 'swiper/modules';
@@ -12,7 +12,8 @@ const DisplayDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const [post, setPost] = useState(null)
-  const [isLiked, setIsLiked] = useState(false)
+  // const [isLiked, setIsLiked] = useState(false)
+  const [isLiked, setIsLiked] = useState(null)
 
   const { currentUser } = useSelector((state) => state.user);
   // console.log(currentUser)
@@ -89,6 +90,17 @@ const DisplayDetail = () => {
   if (!post) {
     return <p>작품 정보 불러오는 중,,</p>
   }
+  
+  // 작품 설명 \n 제거
+  const renderWithLineBreaks = (text) =>
+    (text ? text.split('\\n') : []).map((line, i) => (
+    <React.Fragment key={i}>
+      {line}
+      <br />
+    </React.Fragment>
+    )
+  );
+
 
   return (
     <S.Container>
@@ -158,7 +170,7 @@ const DisplayDetail = () => {
               <S.ArtInfo>{post.artMaterial}</S.ArtInfo>
             </S.ArtInfoWrapper>
             <S.ArtInfoWrapper>
-              <S.ArtInfoLabel>규격</S.ArtInfoLabel>
+              <S.ArtInfoLabel>규격 (cm)</S.ArtInfoLabel>
               <S.ArtInfo>{post.artSize}</S.ArtInfo>
             </S.ArtInfoWrapper>
             <S.ArtInfoWrapper>
@@ -167,7 +179,8 @@ const DisplayDetail = () => {
             </S.ArtInfoWrapper>
           </S.ArtInfoContainer>
 
-          <S.ArtDescription>{post.artDescription}</S.ArtDescription>
+          {/* <S.ArtDescription>{post.artDescription}</S.ArtDescription> */}
+          <S.ArtDescription>{renderWithLineBreaks(post.artDescription)}</S.ArtDescription>
         </S.RightWrapper>
       </S.Detail>
 

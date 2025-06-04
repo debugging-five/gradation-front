@@ -77,7 +77,7 @@ const MyPageContainer = () => {
               onChange={handleFileChange}
               />
             <S.CameraImage
-              src="/assets/images/icon/camera.png"
+              src="http://localhost:10000/files/api/get/profile-update.png?filePath=images/mypage"
               alt="edit img"
               onClick={handleCameraClick}
               />
@@ -164,7 +164,7 @@ const MyPageContainer = () => {
               </S.BarContent>
               <S.BarContent
                 as={NavLink}
-                to="admin/form-management"
+                to="admin/form-management/pending/display"
                 end
                 onClick={() => window.scrollTo(0, 0)}
               >
