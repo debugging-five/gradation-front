@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import S from './style';
 import InfoAlert from '../../../alert/infoAlert/InfoAlert';
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +10,7 @@ const ArtLikeButton = ({userId, artId, isLiked, setIsLiked, setPost}) => {
   const [alertMessage, setAlertMessage] = useState("")
   const navigate = useNavigate()
   const [isShowLoginAlert, setIsShowLoginAlert] = useState(false)
-  const { isLogin, currentUser } = useSelector((state) => state.user);
+  const { isLogin } = useSelector((state) => state.user);
 
   const checkIsArtLiked = async () => {
     if(!isLogin) {
@@ -65,9 +65,14 @@ const ArtLikeButton = ({userId, artId, isLiked, setIsLiked, setPost}) => {
         .catch(console.error)
       }
 
+      useEffect(() => {
+        console.log("isLiked:", isLiked);
+      }, [isLiked]);
+
+
       return (
         <div>
-          <S.LikeButton className="button" onClick={checkIsArtLiked} $isLiked={isLiked}>
+          <S.LikeButton onClick={checkIsArtLiked} $isLiked={isLiked}>
             좋아요
             <S.LikeIcon src={isLiked ? '/assets/images/icon/heart_white.png' : '/assets/images/icon/heart.png'} alt="좋아요" />
           </S.LikeButton>
