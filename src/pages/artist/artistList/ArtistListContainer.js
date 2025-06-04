@@ -13,6 +13,7 @@ const ArtistListContainer = () => {
   }
 
   const myId = currentUser?.id;
+  
   const artistData = currentUser ? artists.find((artist) => artist.id === myId) : null;
   const myCard = currentUser && artistData
   ? { ...currentUser, ...artistData }
@@ -59,7 +60,7 @@ const ArtistListContainer = () => {
                   ? `${process.env.REACT_APP_BACKEND_URL}/files/api/get/${artist.userBackgroundImgName}?filePath=${artist.userBackgroundImgPath}`
                   : `${process.env.REACT_APP_BACKEND_URL}/files/api/get/${artist.artImgName}?filePath=${artist.artImgPath}`
               }
-              alt="배경사진"
+              alt="배경 사진"
             />
             <S.ProfileImg src={`${process.env.REACT_APP_BACKEND_URL}/files/api/get/${artist.userImgName}?filePath=${artist.userImgPath}`} alt={artist.userName} />
             <S.CardWrap>
