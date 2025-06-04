@@ -166,7 +166,7 @@ const AuctionModal = ({
       </S.PopupContainer>
       {isShowAlert && (
         <S.AlertBody>
-          <InfoAlert src="/assets/images/icon/check.png"
+          <InfoAlert src="/assets/images/icon/confirm.png"
             message={alertMessage} handleOk={() => setIsShowAlert(false)} />
         </S.AlertBody>
       )}
