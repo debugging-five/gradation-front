@@ -28,9 +28,15 @@ const Footer = () => {
           </S.Menu>
 
           <S.IconWrap>
-            <S.Link to={"https://www.instagram.com/gradationOfficial"}><img src="/assets/images/icon/instagram.png" alt="instagram" /></S.Link>
-            <S.Link to={"https://www.facebook.com/gradationOfficial"}><img src="/assets/images/icon/facebook.png" alt="facebook" /></S.Link>
-            <S.Link to={"https://www.youtube.com/gradationOfficial"}><img src="/assets/images/icon/youtube.png" alt="youtube" /></S.Link>
+            <a href="https://www.instagram.com/gradationOfficial" target="_blank" rel="noopener noreferrer">
+              <img src="/assets/images/icon/instagram.png" alt="instagram" />
+            </a>
+            <a href="https://www.facebook.com/gradationOfficial" target="_blank" rel="noopener noreferrer">
+              <img src="/assets/images/icon/facebook.png" alt="facebook" />
+            </a>
+            <a href="https://www.youtube.com/gradationOfficial" target="_blank" rel="noopener noreferrer">
+              <img src="/assets/images/icon/youtube.png" alt="youtube" />
+            </a>
           </S.IconWrap>
         </S.FooterMenu>
 

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { NavLink, Outlet, useNavigate, useOutletContext } from 'react-router-dom';
+import { Outlet, useNavigate, useOutletContext } from 'react-router-dom';
 import S from './style'
 
 const ArtistCategory = () => {
   const navigate = useNavigate();
+  const context = useOutletContext();
 
-  const {artists, keyword, setKeyword, cursor, setCursor, category, order, setOrder, onKeyDownKeyword, onChangeValue} = useOutletContext()
-  
+  const { artists, keyword, setKeyword, cursor, setCursor, category, order, setOrder, onKeyDownKeyword, onChangeValue } = context;
   const [value, setValue] = useState("")
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   
@@ -92,6 +92,7 @@ const ArtistCategory = () => {
           onChange={onChangeValue}
           onKeyDown={onKeyDownKeyword}
         />
+        <S.SearchIcon src="/assets/images/icon/search.png" alt="돋보기" />
       </S.InputWrapper>
 
       <S.Menu>
@@ -103,15 +104,14 @@ const ArtistCategory = () => {
         </S.DropdownWrapper>
         {isDropdownOpen && (
           <S.Dropdown>
-            <S.Option onClick={(e) => handleOrder("recent")}>최근</S.Option>
+            <S.Option onClick={(e) => handleOrder("recent")}>최근순</S.Option>
             <S.Option onClick={(e) => handleOrder("name")}>이름순</S.Option>
           </S.Dropdown>
         )}
       </S.Menu>
       
       <div>
-        <Outlet context={{ artists }}
-        />
+        <Outlet context={ context }/>
       </div>
     </div>
   );

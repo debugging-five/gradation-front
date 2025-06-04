@@ -8,8 +8,13 @@ const ArtistContainer = () => {
   const [value, setValue] = useState("")
   const [keyword, setKeyword] = useState("")
   const [order, setOrder] = useState("recent")
-  const [cursor, setCursor] = useState(1);
   const {category} = useParams();
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+  
+  const [cursor, setCursor] = useState(1);
+  const [pageLength, setPageLength] = useState([]);
+  const [largeCursor, setLargeCursor] = useState(0);
 
   const onChangeValue = (e) => { 
     setValue(e.target.value) 
@@ -40,11 +45,49 @@ const ArtistContainer = () => {
       return datas
     }
     getArtists()
-      .then((res) => {
-        setArtists(res.posts);
+      .then((data) => {
+        setIsLoading(false)
+        setIsError(false)
+        setArtists(data.posts);
+        let pages = data.contents === 0? 0 : (data.contents % 15 === 0? data.contents / 15 - 1 : data.contents / 15)
+
+        const result = [];
+        let count = 0
+
+        // 받은 값 기준으로 2차원 배열을 만든다.
+        for (let i = 0; i < pages/5; i++) {
+          const row = [];
+          for (let j = 0; j < 5; j++) {
+            if (count < pages) {
+              row.push(count++);
+            } else {
+              row.push(null);
+            }
+          }
+          result.push(row);
+        }
+        setPageLength(result)
       })
-      // .catch(console.error)
+      .catch((error) => {
+        // console.error(error)
+        setIsLoading(false)
+        setIsError(true)        
+      })
   }, [keyword, category, cursor, order])
+
+    const minusLargeCursor = () => {
+    if (largeCursor !== 0) {
+      let value = largeCursor - 1
+      setLargeCursor(value);
+    }
+  }
+
+  const plusLargeCursor = () => {
+    if (pageLength && largeCursor !== (pageLength.length - 1)) {
+      let value = largeCursor + 1
+      setLargeCursor(value);
+    }
+  }
 
   return (
     <S.Container>
@@ -54,9 +97,14 @@ const ArtistContainer = () => {
       <Outlet context={{
         cursor, setCursor, 
         keyword, setKeyword, 
-        category, order, 
-        setOrder, onKeyDownKeyword, onChangeValue,
-        artists
+        category,
+        order, setOrder, 
+        onKeyDownKeyword, onChangeValue,
+        minusLargeCursor, plusLargeCursor,
+        artists, setArtists, 
+        largeCursor, setLargeCursor, 
+        pageLength, setPageLength,
+        isLoading, 
       }}/>
     </S.Container>
   );

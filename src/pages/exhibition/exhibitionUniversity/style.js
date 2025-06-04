@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import { H10, H4, H6, H8, H9 } from '../../../styles/common';
+import { H1, H10, H4, H6, H8, H9 } from '../../../styles/common';
 import { SwiperSlide } from 'swiper/react';
 import { Link } from 'react-router-dom';
 const primary = "#EE3333";
 const gray900 = "#6E7476";
 const gray500 = "#C0C5C7";
 const black = "#333333";
-const white = "#FFFFFF"
+const white = "#FBFCFC"
 
 const S = {};
 
@@ -53,7 +53,7 @@ S.DropdownButton = styled.button`
   align-items: center;
   padding: 0 12px;
   box-sizing: border-box;
-  background-color: ${white};
+  background-color: ${white} !important;
   border: none;
   cursor: pointer;
 `;
@@ -65,7 +65,7 @@ S.DropdownList = styled.ul`
   left: 0;
   width: 88px;
   padding-left: 12px;
-  background-color: ${white};
+  background-color: ${white} !important;
   border: 1px solid #ccc;
   z-index: 10;
   max-height: 400px;
@@ -77,12 +77,10 @@ S.DropdownList = styled.ul`
     cursor: pointer;
 
     &:hover {
-      background-color: ${primary};
-      color: ${white};
+      color: ${primary};
     }
   }
 `;
-
 
 S.DropdownIcon = styled.img`
   width: 16px;
@@ -95,11 +93,13 @@ S.SearchBox = styled.div`
   position: relative;
 
   input {
+    ${H8};
     width: 184px;
     height: 32px;
     border: 1px solid ${gray900};
     border-radius: 3px;
     padding: 0 32px 0 8px;
+    outline: none;
   }
 `;
 
@@ -160,16 +160,15 @@ S.ListWrap = styled.div`
 S.RedBox = styled.div`
   position: absolute;
   left: 132px;
-  top: 20px;
+  top: 50%;
+  transform: translateY(-50%);
   width: 8px;
   height: 80px;
   background-color: ${primary};
   border-radius: 10px;
-  opacity: ${({ visible }) => (visible ? 1 : 0)};
+  opacity: ${({ $visible }) => ($visible ? 1 : 0)};
   transition: opacity 0.2s ease;
   z-index: 1;
-
-  
 `;
 
 S.UniversityItem = styled.div`
