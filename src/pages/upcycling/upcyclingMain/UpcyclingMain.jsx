@@ -23,16 +23,16 @@ const shouldAnimate = isOpen && !animatedSteps.includes(index);
         </S.CircleContainer>
         <S.TimelineContent>
           <S.TimelineTitle>{title}</S.TimelineTitle>
-{texts.map((line, i) => (
-  <S.TimelineText
-    key={`${index}-${i}`}
-    $isOpen={isOpen}
-    $shouldAnimate={shouldAnimate}
-    $delay={i}
-  >
-    {line}
-  </S.TimelineText>
-))}
+        {texts.map((line, i) => (
+          <S.TimelineText
+            key={`${index}-${i}`}
+            $isOpen={isOpen}
+            $shouldAnimate={shouldAnimate}
+            $delay={i}
+          >
+            {line}
+          </S.TimelineText>
+        ))}
         </S.TimelineContent>
       </S.Step>
     );

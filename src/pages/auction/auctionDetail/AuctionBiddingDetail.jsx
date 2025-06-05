@@ -229,6 +229,7 @@ const AuctionBiddingDetail = ({auction, timeLeft}) => {
 							</>
 						)}
 						<S.ListButton onClick={backToList}>목록으로</S.ListButton>
+						{auction.userId && auction.userId === currentUser.id? <S.PaymentButton onClick={() => navigate(`/auction/payment/${id}`)}>결제하기</S.PaymentButton> : "" }
 					</S.ButtonWrapper>
 				</S.AuctionInfo>
 			</S.AuctionDetail>
