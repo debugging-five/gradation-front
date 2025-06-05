@@ -48,7 +48,9 @@ const QnaList = () => {
           <S.ContentBox key={qna.qnaId}>
             <S.Number>{(currentPage - 1) * itemsPerPage + index + 1}</S.Number>
             <S.Category>{qna.qnaCategory}</S.Category>
-            <S.RedText>{qna.qnaAnswerTitle ? '답변완료' : '답변대기'}</S.RedText>
+            <S.QnaText status={qna.qnaAnswerTitle ? '답변완료' : '답변대기'}>
+              {qna.qnaAnswerTitle ? '답변완료' : '답변대기'}
+            </S.QnaText>
             <S.TitleNavigate as={NavLink} to={`/service-center/qna/detail/${qna.qnaId}`} end>
               <S.Content>{qna.qnaTitle}</S.Content>
             </S.TitleNavigate>
