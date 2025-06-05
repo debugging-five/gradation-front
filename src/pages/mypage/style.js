@@ -161,6 +161,11 @@ export const RedText = styled.div`
   text-align: center;
   color: ${props => props.status === 'fail' ? 'gray' : 'red'};
 `;
+export const QnaText = styled.div`
+  width: 120px;
+  text-align: center;
+  color: ${({ status }) => status === '답변대기' ? 'gray' : 'red'};
+`;
 
 
 export const TitleNavigate = styled(NavLink)`
