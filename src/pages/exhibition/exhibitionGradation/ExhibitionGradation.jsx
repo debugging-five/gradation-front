@@ -199,6 +199,7 @@ const handleFileChange = (e, id) => {
 
     setEdit(false);
     setInfos((prev) => ({ ...prev, gradation: result }));
+    window.location.reload();
 
   } catch (err) {
     console.error(err);
