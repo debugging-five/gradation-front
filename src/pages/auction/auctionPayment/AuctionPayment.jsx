@@ -38,7 +38,6 @@ const AuctionPayment = () => {
         // }
         
         if (true) {
-          console.log("결제 성공");
           setSuccessModal(true)
         } else {
           console.log("결제 실패");
@@ -136,9 +135,6 @@ const AuctionPayment = () => {
         navigate("/auction", { replace : true})
       }
 
-      console.log(userData.userAddress);
-      
-      
       return (
         <S.Wrapper>
           <S.Payment>
