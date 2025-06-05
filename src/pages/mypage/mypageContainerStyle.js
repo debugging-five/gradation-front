@@ -66,6 +66,8 @@ export const ProfileImage = styled.img`
   border-radius: 50px;
   object-fit: cover;  
   object-position: center; 
+  border: solid 0.5px #6E7476;
+
 `;
 
 export const DeleteIdFont = styled.p`
