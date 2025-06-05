@@ -180,6 +180,16 @@ S.ListButton = styled.button`
   color: ${primary};
 `
 
+S.PaymentButton = styled.button`
+  ${H5}
+  width : 120px;
+  height : 45px;
+  border-radius : 3px;
+  border: none;
+  background-color: ${primary};
+  color: ${gray100};
+`
+
 S.BiddingButton = styled.button`
   ${H5}
   width : 120px;
