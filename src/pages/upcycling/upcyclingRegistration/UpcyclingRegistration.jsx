@@ -200,7 +200,7 @@ useEffect(() => {
           <S.ImageBox onClick={() => document.getElementById("file-input").click()}>
             {!formData.imagePreview && (
               <>
-                <S.UploadIcon  src="http://localhost:10000/files/api/get/add.png?filePath=images/icons" alt="add-icon" />
+                <S.UploadIcon  src="/assets/images/icon/add.png" alt="add-icon" />
                 <span>첨부파일 업로드</span>
               </>
             )}
@@ -292,7 +292,7 @@ useEffect(() => {
                   const {options, render, ...filteredProps} = props;
                   return(
                   <S.CalendarInput {...filteredProps} ref={ref}>
-                    <S.CalendarIcon src="http://localhost:10000/files/api/get/calendar.png?filePath=images/icons" alt="calendar-icon" />
+                    <S.CalendarIcon src="/assets/images/icon/calendar.png" alt="calendar-icon" />
                     <span>{formData.pickupDate ? formData.pickupDate.toLocaleDateString('ko-KR') : '날짜를 선택해주세요.'}</span>
                   </S.CalendarInput>
                   );
@@ -370,7 +370,7 @@ useEffect(() => {
     {alertMessage && (
       <S.PopupOverlay>
         <S.PopupBox>
-          <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/attention.png?filePath=images/icons" alt="attention-icon" />
+          <S.PopupIcon as="img" src="/assets/images/icon/attention.png" alt="attention-icon" />
           <S.PopupMessage>{alertMessage}</S.PopupMessage>
           <S.PopupButtonGroup>
             <S.PopupButton className="confirm" onClick={() => setAlertMessage("")}>확인</S.PopupButton>
@@ -381,7 +381,7 @@ useEffect(() => {
     {showConfirmPopup && (
       <S.PopupOverlay>
         <S.PopupBox>
-          <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/question.png?filePath=images/icons" alt="question-icon" />
+          <S.PopupIcon as="img" src="/assets/images/icon/question.png" alt="question-icon" />
           <S.PopupMessage>신청하시겠습니까?</S.PopupMessage>
           <S.PopupButtonGroup>
             <S.PopupButton className="cancel" onClick={() => setShowConfirmPopup(false)}>취소</S.PopupButton>
@@ -396,7 +396,7 @@ useEffect(() => {
     {showSuccessPopup && (
       <S.PopupOverlay>
         <S.PopupBox>
-          <S.PopupIcon as="img" src="http://localhost:10000/files/api/get/ok.png?filePath=images/icons" alt="ok-icon" />
+          <S.PopupIcon as="img" src="/assets/images/icon/ok.png" alt="ok-icon" />
           <S.PopupMessage>신청이 완료되었습니다!</S.PopupMessage>
           <S.PopupButtonGroup>
             <S.PopupButton
