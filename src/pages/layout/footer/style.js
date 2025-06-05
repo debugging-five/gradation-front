@@ -42,7 +42,12 @@ S.Link = styled(Link)`
 
   &.menu {
     color: ${({ theme }) => theme.PALLETE.gray[900]};
+
+    &:hover {
+      color: #EE3333;
+    }
   }
+
 `;
 
 S.IconWrap = styled.p`

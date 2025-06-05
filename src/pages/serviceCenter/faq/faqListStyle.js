@@ -13,7 +13,8 @@ export const CategoryUl = styled.ul`
 `;
 export const CategoryLi = styled.li`
     font-size: 16px;
-    border: solid 1px gray;
+    border-left: solid 1px gray;
+    border-right: solid 1px gray;
     width: 75px;
     height: 35px;
     background-color: white;
@@ -21,10 +22,23 @@ export const CategoryLi = styled.li`
     align-items: center;
     justify-content: center;
     cursor: pointer;
-      &:hover {
+      /* &:hover {
     background-color: red;
-    color: white;
+    color: white; */
+
+      &:hover {
+    background-color: #FBFCFC;
+    color: #EE3333;
   }
+
+  &:first-child {
+    border-top: 1px solid gray;
+  }
+
+  &:last-child {
+    border-bottom: 1px solid gray;
+  }
+  
 `;
 
 export const CategoryBox = styled.div`

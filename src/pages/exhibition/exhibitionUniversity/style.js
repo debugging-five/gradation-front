@@ -93,11 +93,11 @@ S.SearchBox = styled.div`
   position: relative;
 
   input {
-    ${H8};
+    ${H10};
     width: 184px;
     height: 32px;
     border: 1px solid ${gray900};
-    border-radius: 3px;
+    /* border-radius: 3px; */
     padding: 0 32px 0 8px;
     outline: none;
   }

@@ -278,9 +278,9 @@ S.AddImg = styled.img`
   height: 36px;
 `
 S.ImgFile = styled.img`
-  width: 100%;
+  /* width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: contain; */
 `
 
 export default S;
