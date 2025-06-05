@@ -78,8 +78,17 @@ S.CategoryWrapper = styled.div`
 `
 
 S.InputWrapper = styled.div`
+  position: relative;
   display: flex;
   margin: 84px 0 0 0;
+`
+
+S.SearchIcon = styled.img`
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  right: 12px;
+  top: 12px;
 `
 
 S.Input = styled.input`
